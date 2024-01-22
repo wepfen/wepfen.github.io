@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bluehens on Wepfen</title>
+    <link>https://tyron.alwaysdata.net/tags/bluehens/</link>
+    <description>Recent content in Bluehens on Wepfen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 01 Nov 2023 23:11:27 +0100</lastBuildDate>
+    <atom:link href="https://tyron.alwaysdata.net/tags/bluehens/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writeup - Least Significant Color</title>
+      <link>https://tyron.alwaysdata.net/posts/least-significant-color/</link>
+      <pubDate>Wed, 01 Nov 2023 23:11:27 +0100</pubDate>
+      <guid>https://tyron.alwaysdata.net/posts/least-significant-color/</guid>
+      <description>Bluehens CTF 2023 - Least significant color CTFtime
+I can&amp;rsquo;t decide which color is the least significant&amp;hellip; red xor green?
+-azroberts
+So for this challenge we got an image file provided encoded.png. All we have to know is in the title AND in the description.
+Before giving the solution, we need to have in mind two things: Least significant bit (LSB) and the representation of an image.
+Reminder Images An image is basically a 2D list of tuples (R=red, G=green, B=blue) of 3 values.</description>
+    </item>
+  </channel>
+</rss>
