@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Wepfen</title>
+    <title>wepfen.top</title>
     <link>https://tyron.alwaysdata.net/</link>
-    <description>Recent content on Wepfen</description>
+    <description>Recent content on wepfen.top</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 02 Nov 2023 00:31:01 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 03 Nov 2023 00:54:45 +0100</lastBuildDate>
     <atom:link href="https://tyron.alwaysdata.net/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>All my cramptés</title>
       <link>https://tyron.alwaysdata.net/cramptes/</link>
       <pubDate>Thu, 02 Nov 2023 18:31:49 +0100</pubDate>
       <guid>https://tyron.alwaysdata.net/cramptes/</guid>
-      <description>Links I like URL longener PEM file decoder Reputation search engine
+      <description>Links I like URL longener
+PEM file decoder
+Reputation search engine
 CLI mega cheatsheet
-Games I play Friday Night Funkin&amp;rsquo; The binding of Isaac: repentance Super Smash Flash Brawlhalla Pokemon Trading Card Game Live
-$olitary (Roblox drift game)</description>
+Make your 88x31
+Buttons wall
+Games I play Friday Night Funkin&#39;
+The binding of Isaac: repentance
+Super Smash Flash
+Brawlhalla
+Pokemon Trading Card Game Live
+$olitary (Roblox drift game)
+Assetto Corsa (plan to buy)
+Bomb rush cyberfunk (plan to buy)</description>
     </item>
     <item>
       <title>Projects</title>
@@ -24,24 +34,25 @@ $olitary (Roblox drift game)</description>
       <pubDate>Thu, 02 Nov 2023 02:28:56 +0100</pubDate>
       <guid>https://tyron.alwaysdata.net/projects/</guid>
       <description>
-Personal Nothing to see here for the moment&amp;hellip; School Expert in data, network and system security | École2600 | 2023 - 2026 Nothing to see here for the moment&amp;hellip; French BTEC higher apprenticeship equivalent in IT | Ensitech | 2021 - 2023 TLDR: Building a company network with class homies Coding a portfolio (which is today down and replaced by this minimalist website) </description>
+PersonalNothing to see here for the moment&amp;hellip;SchoolExpert in data, network and system security | École2600 | 2023 - 2026 Nothing to see here for the moment&amp;hellip; French BTEC higher apprenticeship equivalent in IT | Ensitech | 2021 - 2023 TLDR: Building a company network with class homies Coding a portfolio (which is today down and replaced by this minimalist website) </description>
     </item>
     <item>
       <title>Whoami</title>
       <link>https://tyron.alwaysdata.net/whoami/</link>
       <pubDate>Thu, 02 Nov 2023 01:27:12 +0100</pubDate>
       <guid>https://tyron.alwaysdata.net/whoami/</guid>
-      <description>Actually student in computer science and cybersecurity school Ecole 2600. I like learning new things and playing CTFs with my team 0xA28.
-I like sexy JDM cars and am a drift enthusiaist and is interested in automobile cybersecurity (haven&amp;rsquo;t started learing this tho).
-&amp;ldquo;No need to worry, there&amp;rsquo;s still time&amp;rdquo; (there&amp;rsquo;s 3 seconds time left)
+      <description>Actually student in computer science and cybersecurity school Ecole 2600 and play with my CTF team 0xA28.
+I spend my time learning new things, code clashing and also skateboarding.
+I like sexy JDM cars and am a drift enthusiaist. I&amp;rsquo;m also interested in automobile cybersecurity (haven&amp;rsquo;t started learning this tho).
+&amp;ldquo;No need to worry, there&amp;rsquo;s still time&amp;rdquo;
 Whatilike Artemis Skateboarding Jazz and liquid DNB and sometimes listening to both Cryptography challenges Maths Unordered lists </description>
     </item>
     <item>
       <title></title>
-      <link>https://tyron.alwaysdata.net/posts/flag/</link>
+      <link>https://tyron.alwaysdata.net/flag/</link>
       <pubDate>Thu, 02 Nov 2023 00:31:01 +0100</pubDate>
-      <guid>https://tyron.alwaysdata.net/posts/flag/</guid>
-      <description>Peace in the world canceled by (Ri)cha(r)d Watterson nofake: https://www.youtube.com/watch?v=-VgEVCJ-TCI&amp;amp;t=203s</description>
+      <guid>https://tyron.alwaysdata.net/flag/</guid>
+      <description>[nofake] Peace in the world canceled by (Ri)cha(r)d Watterson: https://www.youtube.com/watch?v=-VgEVCJ-TCI&amp;amp;t=203s</description>
     </item>
     <item>
       <title>Writeup - Least Significant Color</title>

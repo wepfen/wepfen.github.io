@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Wepfen</title>
+    <title>Posts on wepfen.top</title>
     <link>https://tyron.alwaysdata.net/posts/</link>
-    <description>Recent content in Posts on Wepfen</description>
+    <description>Recent content in Posts on wepfen.top</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 02 Nov 2023 00:31:01 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 01 Nov 2023 23:11:27 +0100</lastBuildDate>
     <atom:link href="https://tyron.alwaysdata.net/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title></title>
-      <link>https://tyron.alwaysdata.net/posts/flag/</link>
-      <pubDate>Thu, 02 Nov 2023 00:31:01 +0100</pubDate>
-      <guid>https://tyron.alwaysdata.net/posts/flag/</guid>
-      <description>Peace in the world canceled by (Ri)cha(r)d Watterson nofake: https://www.youtube.com/watch?v=-VgEVCJ-TCI&amp;amp;t=203s</description>
-    </item>
     <item>
       <title>Writeup - Least Significant Color</title>
       <link>https://tyron.alwaysdata.net/posts/least-significant-color/</link>
