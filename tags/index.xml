@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on wepfen</title>
+    <link>https://wepfen.github.io/tags/</link>
+    <description>Recent content in Tags on wepfen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 01 Nov 2023 23:11:27 +0100</lastBuildDate>
+    <atom:link href="https://wepfen.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Misc</title>
+      <link>https://wepfen.github.io/tags/misc/</link>
+      <pubDate>Wed, 01 Nov 2023 23:11:27 +0100</pubDate>
+      <guid>https://wepfen.github.io/tags/misc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Stego</title>
+      <link>https://wepfen.github.io/tags/stego/</link>
+      <pubDate>Wed, 01 Nov 2023 23:11:27 +0100</pubDate>
+      <guid>https://wepfen.github.io/tags/stego/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Writeup</title>
+      <link>https://wepfen.github.io/tags/writeup/</link>
+      <pubDate>Wed, 01 Nov 2023 23:11:27 +0100</pubDate>
+      <guid>https://wepfen.github.io/tags/writeup/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
