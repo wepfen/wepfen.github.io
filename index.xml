@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>wepfen</title>
+    <title>wepfen.crampté</title>
     <link>https://wepfen.github.io/</link>
-    <description>Recent content on wepfen</description>
+    <description>Recent content on wepfen.crampté</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Fri, 03 Nov 2023 00:54:45 +0100</lastBuildDate>
@@ -14,8 +14,7 @@
       <pubDate>Thu, 02 Nov 2023 18:31:49 +0100</pubDate>
       <guid>https://wepfen.github.io/cramptes/</guid>
       <description>Links I like URL longener
-PEM file decoder
-Reputation search engine
+Dark souls images maker
 CLI mega cheatsheet
 Make your 88x31
 Buttons wall
@@ -41,14 +40,14 @@ PersonalNothing to see here for the moment&amp;hellip;SchoolExpert in data, n
       <link>https://wepfen.github.io/whoami/</link>
       <pubDate>Thu, 02 Nov 2023 01:27:12 +0100</pubDate>
       <guid>https://wepfen.github.io/whoami/</guid>
-      <description>Actually student in computer science and cybersecurity school Ecole 2600 and play with my CTF team 0xA28.
+      <description>Actually student in computer science and cybersecurity at Ecole 2600 and play with my CTF team 0xA28.
 I spend my time learning new things, code clashing and also skateboarding.
 I like sexy JDM cars and am a drift enthusiaist. I&amp;rsquo;m also interested in automobile cybersecurity (haven&amp;rsquo;t started learning this tho).
 &amp;ldquo;No need to worry, there&amp;rsquo;s still time&amp;rdquo;
 Whatilike Artemis Skateboarding Jazz and liquid DNB and sometimes listening to both Cryptography challenges Maths Unordered lists </description>
     </item>
     <item>
-      <title></title>
+      <title>Flag</title>
       <link>https://wepfen.github.io/flag/</link>
       <pubDate>Thu, 02 Nov 2023 00:31:01 +0100</pubDate>
       <guid>https://wepfen.github.io/flag/</guid>
