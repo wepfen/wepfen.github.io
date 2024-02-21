@@ -14,7 +14,7 @@ from pathlib import Path
 from io import BytesIO
 from typing import (
     Dict, List, Any, Optional,
-    cast, Tuple,
+    cast, Tuple, Union,
 )
 
 # (todo) : not a standard import
@@ -37,7 +37,7 @@ _COLORS_END         = '\033[0m'
 _URL_GIT_HTTP       = 'https://git.ecole2600.com'
 _URL_GIT_SSH        = 'git@git.ecole2600.com'
 _SENTINEL_SERVER    = 'https://sentinel.ecole2600.com'
-_SENTINEL_VERSION   = '2.0.2'
+_SENTINEL_VERSION   = '2.1.2'
 
 _BANNER = rf"""
   _________              __  .__              .__
@@ -92,12 +92,17 @@ class _SentinelException(Exception):
 ## helpers
 ##
 
+
 def _warning(text: str) -> None:
     """ display string in stderr with yellow color
     """
     print(f"{_COLORS_WARN}WARNING: {text}{_COLORS_END}", file=sys.stderr)
 
-def _run_cmd(git_dir: Path, command: Tuple[str,...], error_msg: str) -> str:
+def _run_cmd(
+    git_dir: Path,
+    command: Tuple[str,...],
+    error_msg: str,
+) -> str:
     """ run a command using subprocess
     """
     with subprocess.Popen(
@@ -143,7 +148,7 @@ def _api_request(
         ) from err
     except requests.exceptions.ReadTimeout as err:
         raise _SentinelException(
-            '[request] API request timeout, abord'
+            '[request] API request timeout, abort'
         ) from err
 
 ##
@@ -170,7 +175,9 @@ def __preliminary_check_tags(userinfo: _UserInfo) -> None:
         return
     workaround = '\n   * '.join(sentinel_tags)
     raise _SentinelException(
-        f"[git] Commit already tested in TAG:\n   * {workaround}"
+        '[git] This commit has already been tested by sentinel:\n'
+        f"   * {workaround}\n"
+        'So, no correction will be requested\n'
     )
 
 def __preliminary_check_commit_valid(userinfo: _UserInfo) -> None:
@@ -272,6 +279,42 @@ def _git_check_meta(git_dir: Path) -> _UserInfo:
     )
 
 ##
+## Timeout mechanism
+##
+
+def __timeout_signal_handler(_: int, __: Any) -> None:
+    """ display PID information
+    """
+    print(
+        '- it seems that the command execution is taking time, you can '
+        f"manually kill the process using 'kill -15 {os.getpid()}'"
+    )
+    signal.alarm(15)
+
+def _timeout_ctor() -> Any:
+    """ setup the ALARM signal if available
+    """
+    if not hasattr(signal, 'SIGALRM'):
+        _warning(
+            'Unable to setup timeout mechanism since your '
+            'Operating System does not provide the SIGALARM signal.\n'
+            'You can manually kill the process using '
+            f"'kill -15 {os.getpid()}' if needed"
+        )
+        return None
+    handler_origin = signal.signal(signal.SIGALRM, __timeout_signal_handler)
+    signal.alarm(15)
+    return handler_origin
+
+def _timeout_dtor(origin_handler: Any) -> None:
+    """ stop the ALARM signal if needed
+    """
+    if not hasattr(signal, 'SIGALRM'):
+        return
+    signal.alarm(0)
+    signal.signal(signal.SIGALRM, origin_handler)
+
+##
 ## project params request operations
 ##
 
@@ -296,16 +339,16 @@ def _request_cmd(
         'returncode': str(proc.returncode),
     }
 
-def _request_file(request: Dict[str,str], userinfo: _UserInfo) -> BytesIO:
+def _request_file(
+    request: Dict[str,str],
+    userinfo: _UserInfo,
+) -> Union[BytesIO,None]:
     """ handle FileResourceParams request type
     """
     if not (filepath := Path(request['path'])).is_absolute():
         filepath = (userinfo.git_dir/request['path']).resolve()
-    # (todo) : better behaviour if file missing
     if not filepath.exists():
-        raise _SentinelException(
-            f"[file] Unable to find the file '{filepath}'"
-        )
+        return None
     with open(filepath, 'rb') as fileinfo:
         return BytesIO(fileinfo.read())
 
@@ -317,7 +360,8 @@ def _request_dir(request: Dict[str,str], userinfo: _UserInfo) -> BytesIO:
         pathname = (userinfo.git_dir/request['path']).resolve()
     if not pathname.exists():
         raise _SentinelException(
-            f"[dir] Unable to find the directory prefix '{request['path']}'"
+            '[dir] Unable to find the directory prefix '
+            f"'{request['path']}'"
         )
     files = []
     for filepath in pathname.rglob('*'):
@@ -360,11 +404,13 @@ def _project_fetch(userinfo: _UserInfo) -> _ProjectInfo:
             f"[project] {received.raw.decode('utf-8')}"
         )
     data = cast(Dict[str,Any],received.data)
+    for warning in data['warnings']:
+        _warning(warning)
     return _ProjectInfo(
-        name        = data['name'],
-        type        = data['type'],
-        requests    = data['required_cmds'],
-        raw         = data,
+        name        = data['project']['name'],
+        type        = data['project']['type'],
+        requests    = data['project']['required_cmds'],
+        raw         = data['project'],
     )
 
 def _project_exec(
@@ -382,6 +428,7 @@ def _project_exec(
         files       = [],
         requests    = [],
     )
+    handler_origin = _timeout_ctor()
     for cmd in project.requests:
         if cmd['type'] not in mapper:
             raise _SentinelException(
@@ -389,13 +436,17 @@ def _project_exec(
             )
         data: Any = mapper[cmd['type']](cmd['request'], userinfo)
         if cmd['type'] != 'CmdResourceParams':
-            results.files.append(('files', data))
-            data = len(results.files) - 1
+            if data:
+                results.files.append(('files', data))
+                data = len(results.files) - 1
+            else:
+                data = -1
         results.requests.append({
             'name' : cmd['name'],
             'type' : cmd['type'],
             'data' : data
         })
+    _timeout_dtor(handler_origin)
     return results
 
 def _project_send_result(
@@ -419,7 +470,10 @@ def _project_send_result(
         raise _SentinelException(f"[project] {resp.raw.decode('utf-8')}")
     return cast(Dict[str,Any],resp.data)
 
-def _project_asr_report(report: Dict[str,Any], userinfo: _UserInfo) -> None:
+def _project_asr_report(
+    report: Dict[str,Any],
+    userinfo: _UserInfo,
+) -> None:
     """ display the report, generate the tokens file and commit
     """
     # display report
@@ -511,7 +565,7 @@ def _userinfo_fetch() -> _UserInfo:
         if current != Path.cwd():
             print(f"- found project directory at '{str(current)}'")
         return _git_check_meta(git_dir.parent)
-    raise _SentinelException("[git] No .git directory found, abord")
+    raise _SentinelException("[git] No .git directory found, abort")
 
 ##
 ## main entry
