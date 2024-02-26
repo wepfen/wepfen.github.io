@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on wepfen.crampté</title>
-    <link>https://wepfen.github.io/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on wepfen.crampté</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 24 Feb 2024 18:39:49 +0100</lastBuildDate>
-    <atom:link href="https://wepfen.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>crypto</title>
-      <link>https://wepfen.github.io/tags/crypto/</link>
+      <title>Crypto</title>
+      <link>http://localhost:1313/tags/crypto/</link>
       <pubDate>Sat, 24 Feb 2024 18:39:49 +0100</pubDate>
-      <guid>https://wepfen.github.io/tags/crypto/</guid>
+      <guid>http://localhost:1313/tags/crypto/</guid>
       <description></description>
     </item>
     <item>
-      <title>writeup</title>
-      <link>https://wepfen.github.io/tags/writeup/</link>
+      <title>Writeup</title>
+      <link>http://localhost:1313/tags/writeup/</link>
       <pubDate>Sat, 24 Feb 2024 18:39:49 +0100</pubDate>
-      <guid>https://wepfen.github.io/tags/writeup/</guid>
+      <guid>http://localhost:1313/tags/writeup/</guid>
       <description></description>
     </item>
     <item>
-      <title>misc</title>
-      <link>https://wepfen.github.io/tags/misc/</link>
+      <title>Misc</title>
+      <link>http://localhost:1313/tags/misc/</link>
       <pubDate>Wed, 01 Nov 2023 23:11:27 +0100</pubDate>
-      <guid>https://wepfen.github.io/tags/misc/</guid>
+      <guid>http://localhost:1313/tags/misc/</guid>
       <description></description>
     </item>
     <item>
-      <title>stego</title>
-      <link>https://wepfen.github.io/tags/stego/</link>
+      <title>Stego</title>
+      <link>http://localhost:1313/tags/stego/</link>
       <pubDate>Wed, 01 Nov 2023 23:11:27 +0100</pubDate>
-      <guid>https://wepfen.github.io/tags/stego/</guid>
+      <guid>http://localhost:1313/tags/stego/</guid>
       <description></description>
     </item>
   </channel>

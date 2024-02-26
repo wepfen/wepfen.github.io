@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>writeup on wepfen.crampté</title>
-    <link>https://wepfen.github.io/tags/writeup/</link>
-    <description>Recent content in writeup on wepfen.crampté</description>
+    <title>Writeup on wepfen.crampté</title>
+    <link>http://localhost:1313/tags/writeup/</link>
+    <description>Recent content in Writeup on wepfen.crampté</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 24 Feb 2024 18:39:49 +0100</lastBuildDate>
-    <atom:link href="https://wepfen.github.io/tags/writeup/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/writeup/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>BraekerCTF 2024 - Block construction</title>
-      <link>https://wepfen.github.io/posts/block_construction/</link>
+      <link>http://localhost:1313/posts/block_construction/</link>
       <pubDate>Sat, 24 Feb 2024 18:39:49 +0100</pubDate>
-      <guid>https://wepfen.github.io/posts/block_construction/</guid>
-      <description>&amp;ldquo;Sir, sir! This is a construction site.&amp;rdquo; You look up at what you thought was a building being constructed, but you realize it is a construction bot. &amp;ldquo;Sir please move aside. I had to have these blocks in order since last week, but some newbie construction bot shuffled them.&amp;rdquo; &amp;ldquo;I can move aside, &amp;quot; you tell the bot, &amp;ldquo;but I might be able to help you out.&amp;rdquo;
-Source code import binascii from Crypto.</description>
+      <guid>http://localhost:1313/posts/block_construction/</guid>
+      <description>&amp;ldquo;Sir, sir! This is a construction site.&amp;rdquo; You look up at what you thought was a building being constructed, but you realize it is a construction bot. &amp;ldquo;Sir please move aside. I had to have these blocks in order since last week, but some newbie construction bot shuffled them.&amp;rdquo; &amp;ldquo;I can move aside, &amp;quot; you tell the bot, &amp;ldquo;but I might be able to help you out.&amp;rdquo;&#xA;Source code import binascii from Crypto.</description>
     </item>
     <item>
-      <title>Writeup - Least Significant Color</title>
-      <link>https://wepfen.github.io/posts/least-significant-color/</link>
+      <title>BluehensCTF 2023- Least Significant Color</title>
+      <link>http://localhost:1313/posts/least-significant-color/</link>
       <pubDate>Wed, 01 Nov 2023 23:11:27 +0100</pubDate>
-      <guid>https://wepfen.github.io/posts/least-significant-color/</guid>
-      <description>Bluehens CTF 2023 - Least significant color CTFtime
-I can&amp;rsquo;t decide which color is the least significant&amp;hellip; red xor green?
--azroberts
-So for this challenge we got an image file provided encoded.png. All we have to know is in the title AND in the description.
-Before giving the solution, we need to have in mind two things: Least significant bit (LSB) and the representation of an image.
-Reminder Images An image is basically a 2D list of tuples (R=red, G=green, B=blue) of 3 values.</description>
+      <guid>http://localhost:1313/posts/least-significant-color/</guid>
+      <description>Bluehens CTF 2023 - Least significant color CTFtime&#xA;I can&amp;rsquo;t decide which color is the least significant&amp;hellip; red xor green?&#xA;-azroberts&#xA;So for this challenge we got an image file provided encoded.png. All we have to know is in the title AND in the description.&#xA;Before giving the solution, we need to have in mind two things: Least significant bit (LSB) and the representation of an image.&#xA;Reminder Images An image is basically a 2D list of tuples (R=red, G=green, B=blue) of 3 values.</description>
     </item>
   </channel>
 </rss>
