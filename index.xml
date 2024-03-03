@@ -6,8 +6,15 @@
     <description>Recent content on wepfen.crampté</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 24 Feb 2024 18:39:49 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 03 Mar 2024 12:17:53 +0100</lastBuildDate>
     <atom:link href="https://wepfen.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BraekerCTF 2024 - Messengesus 1</title>
+      <link>https://wepfen.github.io/posts/messengesus1/</link>
+      <pubDate>Sun, 03 Mar 2024 12:17:53 +0100</pubDate>
+      <guid>https://wepfen.github.io/posts/messengesus1/</guid>
+      <description>Introduction You encounter a bot meditating in the park. He opens his cameras and begins to speak.&#xA;&amp;ldquo;Hear the word of RNGesus. Complexity is the enemy of security. Let your encryption be as simple as possible, as to secure it, thusly&amp;rdquo;. He hands you a flyer with a snippet of code. &amp;ldquo;Secure every message you have with it. Only those who see can enter.&amp;rdquo;&#xA;What do you think? Is it simple enough to be secure?</description>
+    </item>
     <item>
       <title>BraekerCTF 2024 - Block construction</title>
       <link>https://wepfen.github.io/posts/block_construction/</link>

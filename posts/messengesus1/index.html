@@ -6,11 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.123.4">
-  <link rel="canonical" href="https://wepfen.github.io/tags/crypto/" />
+  <link rel="canonical" href="https://wepfen.github.io/posts/messengesus1/" />
 
   
     
-    <meta name="description" content="Crypto">
+    <meta name="description" content="Introduction You encounter a bot meditating in the park. He opens his cameras and begins to speak.
+“Hear the word of RNGesus. Complexity is the enemy of security. Let your encryption be as simple as possible, as to secure it, thusly”. He hands you a flyer with a snippet of code. “Secure every message you have with it. Only those who see can enter.”
+What do you think? Is it simple enough to be secure?">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://wepfen.github.io/apple-touch-icon.png">
@@ -58,7 +60,7 @@
 
   
   
-  <title>Crypto | wepfen.crampté</title>
+  <title>BraekerCTF 2024 - Messengesus 1 | wepfen.crampté</title>
 </head>
 
   <body>
@@ -224,7 +226,7 @@
       
       
       
-      <a href="/tags/" aria-current="page">
+      <a href="/tags/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -292,45 +294,156 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Crypto</h1>
+  <main id="main">
+    <h1>
+      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+        <use href="#bookmark"></use>
+      </svg>
+      BraekerCTF 2024 - Messengesus 1
+    </h1>
+
+    <div class="date">
+      
+      
+      <strong>Publish date: </strong>Mar 3, 2024
+      
+        
+      
+    </div>
+
+    
+      <div class="tags">
+        <strong>Tags: </strong>
+        <ul aria-label="tags">
+          
+            <li>
+              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+                <use href="#tag"></use>
+              </svg>
+              
+              <a href="/tags/crypto/">crypto</a>
+            </li>
+          
+            <li>
+              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+                <use href="#tag"></use>
+              </svg>
+              
+              <a href="/tags/writeup/">writeup</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+
+    
+
+
+    <h1 id="introduction">Introduction</h1>
+<blockquote>
+<p>You encounter a bot meditating in the park. He opens his cameras and begins to speak.</p>
+<p>&ldquo;Hear the word of RNGesus. Complexity is the enemy of security. Let your encryption be as simple as possible, as to secure it, thusly&rdquo;. He hands you a flyer with a snippet of code. &ldquo;Secure every message you have with it. Only those who see can enter.&rdquo;</p>
+<p>What do you think? Is it simple enough to be secure?</p>
+</blockquote>
+<h2 id="source-code">Source code</h2>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+
+int main() {
+
+    char secret[] = &quot;brck{not_the_flag}&quot;;
+    char *key = NULL;
+    size_t read_length, buffer_length = 0;
+    
+    // Read One Time Key
+    FILE *random_bytes = fopen(&quot;/dev/urandom&quot;, &quot;r&quot;); //incassable comme d'hab
+    read_length = getline(&amp;key, &amp;buffer_length, random_bytes); 
+    fclose(random_bytes); 
+
+    // Encrypt
+    for (int i = 0; i &lt; strlen(secret); i++)
+        secret[i] = secret[i] ^ key[i%read_length];
+
+    // Return encrypted secret
+    printf(&quot;%s&quot;, secret);
+
+    free(key);
+    return 0;
+}
+</code></pre>
+<h1 id="recon">Recon</h1>
+<p>Reading man for <code>getline()</code> (thanks to <a href="https://github.com/spipm">admin</a> adivce), we understand that getline take bytes from a file until a <code>\n</code> or 0x0A bytes is encoutered.</p>
+<p>So each time we connect to the server we got a ciphertext xored with a key from <code>/dev/urandom</code> and it&rsquo;s length can vary it only depends of the presence of <code>0x0A</code> bytes. So the key can have a length of 1 or even 500.</p>
+<p>The solution is to request a server until the key is short enoguh, (1 or 2 bytes).</p>
+<p>And we can know that by xoring 1st character of the known plaintext which is <code>'b'</code> from <code>'brck{'</code> and comparing it with the xor of the 2nd known character with the 2nd character of the ciphertext.</p>
+<h1 id="solve">Solve</h1>
+<pre><code class="language-python">from pwn import *
+
+host = '0.cloud.chals.io'
+port = 26265
+
+
+
+flag = b'' # known plaintext 1
+kpt1 = b'b'
+kpt2 = b'r'
+kpt1bis = b'c'
+kpt2bis = b'k'
+
+kpt3 = b'br' 
+kpt4 = b'ck'
+
+context.log_level = 'critical'
+
+print(&quot;[+] Début du brute force de fou bz&quot;)
+
+print(&quot;[+] Sanity check&quot;)
+conn = remote(host, port)
+print(conn.recv())
+conn.close()
+
+while not flag:
+    
+    conn = remote(host, port)
+    ciphertext = conn.recvS()
+
+    key1 = xor(ciphertext[0], kpt1)
+    key2 = xor(ciphertext[1], kpt2)
+    key1bis = xor(ciphertext[2], kpt1bis)
+    key2bis = xor(ciphertext[3], kpt2bis)
+
+    key3 = xor(ciphertext[0:2], kpt3)
+    key4 = xor(ciphertext[2:4], kpt4)
+
+    if key1 == key2 and key1bis == key2bis:
+        print(f&quot;[+] Clé de taille 1 trouvée: {key1.hex()}&quot;)
+        print(f&quot;[+] Ciphertext: {ciphertext.hex()}&quot;)
+        flag = xor(ciphertext, key1)
+        print(f&quot;[+] Flag: {flag}&quot;)
+        conn.close()
+        break
+        
+    if key3 == key4:
+        print(f&quot;[+] Clé de taille 2 trouvée: {key1.hex()}&quot;)
+        print(f&quot;[+] Ciphertext: {ciphertext.hex()}&quot;)
+        flag = xor(ciphertext, key3)
+        print(f&quot;[+] Flag: {flag}&quot;)
+        conn.close()
+        break
+    
+    conn.close()
+</code></pre>
+<p>Flag: <code>brck{SiMPl1c1Ty_1s_K3Y_But_N0t_th3_4nSW3r}</code></p>
+
+  </main>
+  <div id="disqus-container">
   
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/posts/messengesus1/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          BraekerCTF 2024 - Messengesus 1
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/posts/block_construction/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          BraekerCTF 2024 - Block construction
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+</div>
+
+  
+
 
           
             <footer role="contentinfo">
