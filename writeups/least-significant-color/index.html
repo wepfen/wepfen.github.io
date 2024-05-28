@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<html lang="en"><head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <meta name="description" content="Bluehens CTF 2023 - Least significant color CTFtime
+   <meta name="description" content="CTFtime
 I can&rsquo;t decide which color is the least significant&hellip; red xor green?
 -azroberts
+Difficulty : Easy
 So for this challenge we got an image file provided encoded.png. All we have to know is in the title AND in the description.
 Before giving the solution, we need to have in mind two things: Least significant bit (LSB) and the representation of an image.
 Reminder Images An image is basically a 2D list of tuples (R=red, G=green, B=blue) of 3 values.">  
@@ -21,7 +22,7 @@ Reminder Images An image is basically a 2D list of tuples (R=red, G=green, B=blu
   
   
   
-  <link rel="stylesheet" href="/css/main.c191f59e25147a6cb2040dd9e2aa62ef41c7f75a879dc52697d942c286dd5a9a6760deaa11dad165619a405bb6b955f86c941196b09e764dd3b1cb629cf4d19a.css" integrity="sha512-wZH1niUUemyyBA3Z4qpi70HH91qHncUml9lCwobdWppnYN6qEdrRZWGaQFu2uVX4bJQRlrCedk3TsctinPTRmg==" />
+  <link rel="stylesheet" href="/css/main.230a33d61d1b6e1743ca8251fd2e295aefc69810b5762fd18e2d797228a68119f3aba203518f58eec7f6c58cc1829692fff5555dfb739ec5d917e92862505c5b.css" integrity="sha512-Iwoz1h0bbhdDyoJR/S4pWu/GmBC1di/Rji15ciimgRnzq6IDUY9Y7sf2xYzBgpaS//VVXftznsXZF&#43;koYlBcWw==" />
   
 </head>
 <body a="auto">
@@ -40,12 +41,34 @@ Reminder Images An image is basically a 2D list of tuples (R=red, G=green, B=blu
     <h1>BluehensCTF 2023- Least Significant Color [Misc]</h1>
 
     
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#reminder">Reminder</a>
+      <ul>
+        <li><a href="#images">Images</a></li>
+        <li><a href="#least-significant-bit">Least Significant Bit</a></li>
+      </ul>
+    </li>
+    <li><a href="#solution">Solution</a>
+      <ul>
+        <li><a href="#script">Script</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
 
-    <h1 id="bluehens-ctf-2023---least-significant-color">Bluehens CTF 2023 - Least significant color</h1>
+    <blockquote>
 <p><a href="https://ctftime.org/writeup/38123">CTFtime</a></p>
+</blockquote>
 <blockquote>
 <p>I can&rsquo;t decide which color is the least significant&hellip; red xor green?</p>
 <p>-azroberts</p>
+</blockquote>
+<blockquote>
+<p>Difficulty : Easy</p>
 </blockquote>
 <p><img src="https://github.com/1Tyron140/writeups/blob/main/Bluehens_CTF/2023/misc/least_significant_color/least_significant_color.png?raw=true" alt="encoded.png">
 So for this challenge we got an image file provided <code>encoded.png</code>. <br>
