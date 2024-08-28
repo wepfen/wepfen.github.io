@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<html lang="en"><head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,7 +22,7 @@ Recon TL;DR So for solving i just have to :">
   
   
   
-  <link rel="stylesheet" href="/css/main.c239d1e3ec2e14e03f007253c150c0b0981a0c7a7aa2f99b4f1f7828b27e3131403a05fdbbea59f487b6881cb2582a708b8646de332069e002ffef9fc9a48f89.css" integrity="sha512-wjnR4&#43;wuFOA/AHJTwVDAsJgaDHp6ovmbTx94KLJ&#43;MTFAOgX9u&#43;pZ9Ie2iByyWCpwi4ZG3jMgaeAC/&#43;&#43;fyaSPiQ==" />
+  <link rel="stylesheet" href="/css/main.613514b3942cabf3581076691f38c1ed92322c15aacc0a04dba86f549dd8f3a9abbeab6c4f6b84895381be831f07f7bb1fb0fc0952b388dbf00133b58f919693.css" integrity="sha512-YTUUs5Qsq/NYEHZpHzjB7ZIyLBWqzAoE26hvVJ3Y86mrvqtsT2uEiVOBvoMfB/e7H7D8CVKziNvwATO1j5GWkw==" />
   
 </head>
 <body a="dark">
@@ -87,74 +87,73 @@ Recon TL;DR So for solving i just have to :">
 </ul>
 <h2 id="code">Code</h2>
 <p>MetaVault.sol</p>
-<pre><code class="language-solidity">// SPDX-License-Identifier: MoD-Internal-v1.0
-pragma solidity 0.8.25;
-
-/**
- * @title MetaVault
- * @author Ministry of Defense
- * @notice MoD (Ministry of Defense) Smart Contract storing the country's ETH reserves.
- */
-contract MetaVault {
-    /**
-     * @notice Keccak256 hashed secret passphrase to enable emergency mode.
-     * @dev plaintext secret: WeLoveNukaCola!!MoD-2024 
-     * @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.
-     */ 
-    bytes32 constant private VAULT_SECRET_K256 = 0x42c10591ced4987005f70d29b498348ecc8ab18dd28c5b93db931375ca826b5e; 
-    
-    event Deposit(
-        address indexed _from,
-        uint256 indexed _value,
-        uint256 indexed _updatedBalance
-    );
-    event FailedLoginAttempt(
-        address indexed _from,
-        string  indexed _attempt,
-        bytes32 indexed _hashedAttempt
-    );
-    event EmergencyMode(
-        address indexed _by,
-        address indexed _fundsDestination
-    ); 
-
-    /**
-     * @dev Retrieves the current ETH balance of the vault.
-     * @return balance of the vault in wei.
-     */
-    function getVaultBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
-
-    /**
-     * @notice Deposit function to receive ETH deposits.
-     * @dev emits a Deposit event with the depositor, the value deposited and the updated balance after deposit.
-     */
-    function deposit() public payable {
-        emit Deposit(
-            msg.sender,
-            msg.value,
-            getVaultBalance()
-        );        
-    }
-
-    /**
-     * @notice Function to fire the emergency mode by selfdestructing the contract and transfering the funds away.
-     * @param _secret The secret passphrase required to activate emergency mode.
-     * @dev The secret is shared only to MoD devs.
-     */
-    function emergency(string memory _secret) external {
-        bytes32 attempt_k256 = keccak256(bytes(_secret));
-        if (attempt_k256 == VAULT_SECRET_K256) {
-            emit EmergencyMode(msg.sender, msg.sender);
-            selfdestruct(payable(msg.sender));
-        } else {
-            emit FailedLoginAttempt(msg.sender, _secret, attempt_k256);
-        }
-    }
-}
-</code></pre>
-<p>Looking at the source code of <code>MetaVault.sol</code> we can notice</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#928374;font-style:italic">// SPDX-License-Identifier: MoD-Internal-v1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span><span style="color:#fe8019">pragma solidity</span> <span style="color:#d3869b">0</span>.<span style="color:#d3869b">8</span>.<span style="color:#d3869b">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"> * @title MetaVault
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"> * @author Ministry of Defense
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"> * @notice MoD (Ministry of Defense) Smart Contract storing the country&#39;s ETH reserves.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">contract</span> MetaVault {
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @notice Keccak256 hashed secret passphrase to enable emergency mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @dev plaintext secret: WeLoveNukaCola!!MoD-2024 
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     */</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">bytes32</span> <span style="color:#fe8019">constant</span> <span style="color:#fe8019">private</span> VAULT_SECRET_K256 <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x42c10591ced4987005f70d29b498348ecc8ab18dd28c5b93db931375ca826b5e</span>; 
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> Deposit(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> <span style="color:#fe8019">indexed</span> _from,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> <span style="color:#fe8019">indexed</span> _value,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> <span style="color:#fe8019">indexed</span> _updatedBalance
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> FailedLoginAttempt(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> <span style="color:#fe8019">indexed</span> _from,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">string</span>  <span style="color:#fe8019">indexed</span> _attempt,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes32</span> <span style="color:#fe8019">indexed</span> _hashedAttempt
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> EmergencyMode(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> <span style="color:#fe8019">indexed</span> _by,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> <span style="color:#fe8019">indexed</span> _fundsDestination
+</span></span><span style="display:flex;"><span>    ); 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @dev Retrieves the current ETH balance of the vault.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @return balance of the vault in wei.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">getVaultBalance</span>() <span style="color:#fe8019">public</span> <span style="color:#fe8019">view</span> <span style="color:#fe8019">returns</span> (<span style="color:#fabd2f">uint256</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> <span style="color:#fabd2f">address</span>(<span style="color:#fabd2f">this</span>).<span style="color:#fabd2f">balance</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @notice Deposit function to receive ETH deposits.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @dev emits a Deposit event with the depositor, the value deposited and the updated balance after deposit.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">deposit</span>() <span style="color:#fe8019">public</span> <span style="color:#fe8019">payable</span> {
+</span></span><span style="display:flex;"><span>        emit Deposit(
+</span></span><span style="display:flex;"><span>            <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">value</span>,
+</span></span><span style="display:flex;"><span>            getVaultBalance()
+</span></span><span style="display:flex;"><span>        );        
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @notice Function to fire the emergency mode by selfdestructing the contract and transfering the funds away.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @param _secret The secret passphrase required to activate emergency mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     * @dev The secret is shared only to MoD devs.
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">emergency</span>(<span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _secret) <span style="color:#fe8019">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes32</span> attempt_k256 <span style="color:#fe8019">=</span> <span style="color:#fabd2f">keccak256</span>(<span style="color:#fabd2f">bytes</span>(_secret));
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> (attempt_k256 <span style="color:#fe8019">==</span> VAULT_SECRET_K256) {
+</span></span><span style="display:flex;"><span>            emit EmergencyMode(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#fabd2f">selfdestruct</span>(<span style="color:#fe8019">payable</span>(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>));
+</span></span><span style="display:flex;"><span>        } <span style="color:#fe8019">else</span> {
+</span></span><span style="display:flex;"><span>            emit FailedLoginAttempt(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, _secret, attempt_k256);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Looking at the source code of <code>MetaVault.sol</code> we can notice</p>
 <ul>
 <li>A function <code>deposit()</code> allowing us to deposit ether on the contract</li>
 <li>A function <code>getVaultBalance()</code> to return balance of the vault in wei</li>
@@ -162,14 +161,13 @@ contract MetaVault {
 <li>And also many comments in the <a href="https://docs.soliditylang.org/en/latest/natspec-format.html">NatSpec</a> format.</li>
 </ul>
 <p>Reading comments, we understand that the password for <code>emergency</code> was stored in plaintext. But the devs affirms that <code>comments are not compiled</code>:</p>
-<pre><code class="language-solidity">* @dev plaintext secret: [REDACTED]
-* @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.     
-</code></pre>
-<p>Luckily for us, reading this <a href="https://playground.sourcify.dev/">page</a> (which i find by googling <code>solidity meta-data lookup</code> and reading <a href="https://docs.sourcify.dev/docs/metadata/">https://docs.sourcify.dev/docs/metadata/</a>) we can understand that they actually are. We just have to supply the contract bytecode (the source code but <a href="https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/">translated</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">*</span> @dev plaintext secret<span style="color:#fe8019">:</span> [REDACTED]
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">*</span> @dev The secret will be stripped before open sourcing the <span style="color:#fabd2f">code</span>. Comments are not compiled anyway.     
+</span></span></code></pre></div><p>Luckily for us, reading this <a href="https://playground.sourcify.dev/">page</a> (which i find by googling <code>solidity meta-data lookup</code> and reading <a href="https://docs.sourcify.dev/docs/metadata/">https://docs.sourcify.dev/docs/metadata/</a>) we can understand that they actually are. We just have to supply the contract bytecode (the source code but <a href="https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/">translated</a>.</p>
 <h2 id="interacting-with-the-instance">Interacting with the instance</h2>
 <p>Launching the instance i got 3 ips, one for the rpc endpoint, one which is the webpage of MetaSafe (the name of the vault for the scenario) and one IP to manage the instance an get the flag.</p>
 <p>I contact the last IP with nc <code>nc 94.237.61.244 38186</code> and request the information for the challenge:</p>
-<pre><code>1 - Connection information
+<pre tabindex="0"><code>1 - Connection information
 2 - Restart Instance
 3 - Get flag
 action? 1
@@ -178,9 +176,7 @@ Private key     :  0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863
 Address         :  0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
 Target contract :  0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
 Setup contract  :  0x6224fF48Af65663fB8b10CF830ECAC6F75B674f6
-
-</code></pre>
-<p>So now i got my address, my private key and the target address.</p>
+</code></pre><p>So now i got my address, my private key and the target address.</p>
 <h1 id="solve">Solve</h1>
 <h2 id="casting-spells">Casting spells</h2>
 <p>We will use foundry to solve and it&rsquo;s <strong>EXTREMELY</strong> useful <strong>cast</strong> command. Here is the doc: <a href="https://book.getfoundry.sh/reference/cli/cast.html">https://book.getfoundry.sh/reference/cli/cast.html</a>.</p>
@@ -189,23 +185,21 @@ Setup contract  :  0x6224fF48Af65663fB8b10CF830ECAC6F75B674f6
 <p>With foundry installed installed ( i use a debian VM for the challenges ), we will set up environment variable to make everything prettier and easier.</p>
 <h3 id="environment-variables">environment variables</h3>
 <p>create a <code>.env</code> (or whatever you want to call it) file with this content:</p>
-<pre><code>PRIVATE_KEY=0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
+<pre tabindex="0"><code>PRIVATE_KEY=0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
 RPC_URL=http://94.237.61.244:38424/
 TARGET=0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
 ATTACKER=0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
-</code></pre>
-<p>And then execute : <code>source .env</code> to have all our variable set</p>
+</code></pre><p>And then execute : <code>source .env</code> to have all our variable set</p>
 <blockquote>
 <p>Notice that they will be set for the shell where you executed the command only.</p>
 </blockquote>
 <h3 id="foundrytoml">foundry.toml</h3>
 <p>In the challenge files we got a foundry.toml</p>
 <p>We will only append the RPC endpoint url at the end of it:</p>
-<pre><code>[rpc_endpoints]
+<pre tabindex="0"><code>[rpc_endpoints]
 
-sepolia = &quot;http://94.237.61.244:38424&quot;
-</code></pre>
-<p>Now we are ready to exploit.</p>
+sepolia = &#34;http://94.237.61.244:38424&#34;
+</code></pre><p>Now we are ready to exploit.</p>
 <ol>
 <li>Let&rsquo;s get first the bytecode of the target contract with the <code>cast code</code> function:</li>
 </ol>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<html lang="en"><head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +20,7 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
   
   
   
-  <link rel="stylesheet" href="/css/main.c239d1e3ec2e14e03f007253c150c0b0981a0c7a7aa2f99b4f1f7828b27e3131403a05fdbbea59f487b6881cb2582a708b8646de332069e002ffef9fc9a48f89.css" integrity="sha512-wjnR4&#43;wuFOA/AHJTwVDAsJgaDHp6ovmbTx94KLJ&#43;MTFAOgX9u&#43;pZ9Ie2iByyWCpwi4ZG3jMgaeAC/&#43;&#43;fyaSPiQ==" />
+  <link rel="stylesheet" href="/css/main.613514b3942cabf3581076691f38c1ed92322c15aacc0a04dba86f549dd8f3a9abbeab6c4f6b84895381be831f07f7bb1fb0fc0952b388dbf00133b58f919693.css" integrity="sha512-YTUUs5Qsq/NYEHZpHzjB7ZIyLBWqzAoE26hvVJ3Y86mrvqtsT2uEiVOBvoMfB/e7H7D8CVKziNvwATO1j5GWkw==" />
   
 </head>
 <body a="dark">
@@ -75,148 +75,138 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
 <p>We got three contracts <code>ArcadeMachine.sol</code>, <code>Coin.sol</code> and <code>Setup.sol</code></p>
 <p>The main contract is <code>Coin.sol</code> which have the ether to steal.</p>
 <p>To solve the challenge we need to have 13.37 or more ether on our balance and to be registered, in <code>Setup</code> contract :</p>
-<pre><code class="language-solidity">function isSolved() external view returns (bool) {
-        return player != address(0) &amp;&amp; player.balance &gt;= 13.37 ether;
-    }
-</code></pre>
-<p>To register we have to interact with <code>Setup</code> with the function <code>Register</code></p>
-<pre><code class="language-solidity">function register() external {
-        require(player == address(0));
-        player = msg.sender;
-        coin.transfer(msg.sender, 1337);    // free coins for new players :)
-    }
-</code></pre>
-<h2 id="setup">Setup</h2>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">function</span> <span style="color:#fabd2f">isSolved</span>() <span style="color:#fe8019">external</span> <span style="color:#fe8019">view</span> <span style="color:#fe8019">returns</span> (<span style="color:#fabd2f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> player <span style="color:#fe8019">!=</span> <span style="color:#fabd2f">address</span>(<span style="color:#d3869b">0</span>) <span style="color:#fe8019">&amp;&amp;</span> player.<span style="color:#fabd2f">balance</span> <span style="color:#fe8019">&gt;=</span> <span style="color:#d3869b">13</span>.<span style="color:#d3869b">37</span> <span style="color:#fe8019">ether</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>To register we have to interact with <code>Setup</code> with the function <code>Register</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">function</span> <span style="color:#fabd2f">register</span>() <span style="color:#fe8019">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(player <span style="color:#fe8019">==</span> <span style="color:#fabd2f">address</span>(<span style="color:#d3869b">0</span>));
+</span></span><span style="display:flex;"><span>        player <span style="color:#fe8019">=</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>;
+</span></span><span style="display:flex;"><span>        coin.<span style="color:#fabd2f">transfer</span>(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#d3869b">1337</span>);    <span style="color:#928374;font-style:italic">// free coins for new players :)
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>    }
+</span></span></code></pre></div><h2 id="setup">Setup</h2>
 <p>But before all of that we got to start instance, i will be short on this part but all we had to interact with the server and choose to start an instance with the command:
 <code>ncat --ssl play-to-earn.chals.sekai.team 1337</code>.</p>
 <p>And it will give us the setup address, my address, my private key, and URL and a personnal UUID for identifiying myself and get the flag.</p>
 <p>And we can get Coin and ArcadeMachine addresses by using cast on Setup contract as they are defined in the latter:</p>
-<pre><code class="language-solidity">contract Setup {
-
-    Coin public coin;
-    ArcadeMachine public arcadeMachine;
-
-    address player;
-	
-	...
-</code></pre>
-<p>For Coin : <code>cast call -r $RPC $SETUP &quot;coin()&quot;</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">contract</span> Setup {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Coin <span style="color:#fe8019">public</span> coin;
+</span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#fe8019">public</span> arcadeMachine;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">address</span> player;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	...
+</span></span></code></pre></div><p>For Coin : <code>cast call -r $RPC $SETUP &quot;coin()&quot;</code></p>
 <p>For ArcadeMachine : <code>cast call -r $RPC $SETUP &quot;arcadeMachine()&quot;</code></p>
 <p>I set up an environment variable via a file <code>.env</code> file to go faster and a way to get Coin and ArcadeMachine address automatically each time i apply the <code>.env</code> file with <code>source .env</code>.</p>
-<pre><code class="language-bash">MY_UUID=05d37b3f-db11-4398-a036-fe2de2532bdd
-RPC=https://play-to-earn.chals.sekai.team/05d37b3f-db11-4398-a036-fe2de2532bdd
-PKEY=0x9f9ab104ea0ea88cbfea172e21ef9ad3c779039b16d0403ea4b69714b68570fc
-ADDRESS=0x7689DDAcC618C9FABca377B7630E5C5546726139
-SETUP=0x85f5C75dd2A6e4F6e046F74921aDf2FD25496F05
-
-ARCADEMACHINE=&quot;0x$(cast call $SETUP -r $RPC &quot;arcadeMachine()&quot; | tail -c 41)&quot;
-COIN=&quot;0x$(cast call $SETUP -r $RPC &quot;coin()&quot; | tail -c 41)&quot;
-
-alias check_wallet='cast balance $ADDRESS -r $RPC'
-</code></pre>
-<p><code>check_wallet</code> is to rapidly check if the instance is still up because we only got 30 minutes per instance.</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>MY_UUID<span style="color:#fe8019">=</span>05d37b3f-db11-4398-a036-fe2de2532bdd
+</span></span><span style="display:flex;"><span>RPC<span style="color:#fe8019">=</span>https://play-to-earn.chals.sekai.team/05d37b3f-db11-4398-a036-fe2de2532bdd
+</span></span><span style="display:flex;"><span>PKEY<span style="color:#fe8019">=</span>0x9f9ab104ea0ea88cbfea172e21ef9ad3c779039b16d0403ea4b69714b68570fc
+</span></span><span style="display:flex;"><span>ADDRESS<span style="color:#fe8019">=</span>0x7689DDAcC618C9FABca377B7630E5C5546726139
+</span></span><span style="display:flex;"><span>SETUP<span style="color:#fe8019">=</span>0x85f5C75dd2A6e4F6e046F74921aDf2FD25496F05
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ARCADEMACHINE<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;0x</span><span style="color:#fe8019">$(</span>cast call $SETUP -r $RPC <span style="color:#b8bb26">&#34;arcadeMachine()&#34;</span> | tail -c 41<span style="color:#fe8019">)</span><span style="color:#b8bb26">&#34;</span>
+</span></span><span style="display:flex;"><span>COIN<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;0x</span><span style="color:#fe8019">$(</span>cast call $SETUP -r $RPC <span style="color:#b8bb26">&#34;coin()&#34;</span> | tail -c 41<span style="color:#fe8019">)</span><span style="color:#b8bb26">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fabd2f">alias</span> check_wallet<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;cast balance $ADDRESS -r $RPC&#39;</span>
+</span></span></code></pre></div><p><code>check_wallet</code> is to rapidly check if the instance is still up because we only got 30 minutes per instance.</p>
 <h2 id="recon">Recon</h2>
 <p>Now i can register : <code>cast send -r $RPC --private-key $PKEY $SETUP &quot;register()&quot; </code> which grant e=me 1337 coins.</p>
 <p>Using <code>withdraw()</code> from Coin i can convert this coin to ether.</p>
 <p>Also the challenge name <code>Play to earn</code> stand for the ability to play the arcade machine using the function <code>play(uint256)</code></p>
-<pre><code class="language-solidity">function play(uint256 times) external {
-        // burn the coins
-        require(coin.transferFrom(msg.sender, address(0), 1 ether * times));
-        // Have fun XD
-    }
-</code></pre>
-<p>It transferFrom(src, dst) so it transfer something to sender to address(0) (which is an address with only zero, so it corresponds to nothing : <code>0x0000000000000000000000000000000000000000</code>)</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">function</span> <span style="color:#fabd2f">play</span>(<span style="color:#fabd2f">uint256</span> times) <span style="color:#fe8019">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// burn the coins
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fabd2f">require</span>(coin.transferFrom(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#fabd2f">address</span>(<span style="color:#d3869b">0</span>), <span style="color:#d3869b">1</span> <span style="color:#fe8019">ether</span> <span style="color:#fe8019">*</span> times));
+</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// Have fun XD
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>    }
+</span></span></code></pre></div><p>It transferFrom(src, dst) so it transfer something to sender to address(0) (which is an address with only zero, so it corresponds to nothing : <code>0x0000000000000000000000000000000000000000</code>)</p>
 <p>Let&rsquo;s look at <code>transferFrom()</code>:</p>
-<pre><code class="language-solidity">function transferFrom(address src, address dst, uint wad)
-        public
-        returns (bool)
-    {
-        require(balanceOf[src] &gt;= wad);
-
-        if (src != msg.sender &amp;&amp; allowance[src][msg.sender] != type(uint256).max) {
-            require(allowance[src][msg.sender] &gt;= wad);
-            allowance[src][msg.sender] -= wad;
-        }
-
-        balanceOf[src] -= wad;
-        balanceOf[dst] += wad;
-
-        emit Transfer(src, dst, wad);
-
-        return true;
-    }
-</code></pre>
-<p>If the dst != src and the allowance of the sender on src allowance list is different to uint256 = 115792089237316195423570985008687907853269984665640564039457584007913129639936 (these conditions are always True in this challenge if you transfer coin to another account)</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">function</span> <span style="color:#fabd2f">transferFrom</span>(<span style="color:#fabd2f">address</span> src, <span style="color:#fabd2f">address</span> dst, <span style="color:#fabd2f">uint</span> wad)
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">public</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">returns</span> (<span style="color:#fabd2f">bool</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(balanceOf[src] <span style="color:#fe8019">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> (src <span style="color:#fe8019">!=</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span> <span style="color:#fe8019">&amp;&amp;</span> allowance[src][<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>] <span style="color:#fe8019">!=</span> <span style="color:#fabd2f">type</span>(uint256).<span style="color:#fabd2f">max</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#fabd2f">require</span>(allowance[src][<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>] <span style="color:#fe8019">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>            allowance[src][<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>] <span style="color:#fe8019">-=</span> wad;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        balanceOf[src] <span style="color:#fe8019">-=</span> wad;
+</span></span><span style="display:flex;"><span>        balanceOf[dst] <span style="color:#fe8019">+=</span> wad;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit Transfer(src, dst, wad);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> <span style="color:#fe8019">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>If the dst != src and the allowance of the sender on src allowance list is different to uint256 = 115792089237316195423570985008687907853269984665640564039457584007913129639936 (these conditions are always True in this challenge if you transfer coin to another account)</p>
 <p>Then it require msg.sender to have enough allowance on src account.</p>
 <p>So it transfer coin from src account to dst account (if src != msg.sender, substract the value to transfer from msg.sender allowance on src) and then substract the transferred amount from src coin balance and increase dst balance.</p>
 <p>Then, <code>play(uint256 times)</code> function transfer 1 ether == 10**18 * times to msg.sender coin balance to address(0) coin balance.</p>
 <p>From the challenge scenario, <code>play(19)</code> is used at setup that&rsquo;s why there is a comment saying people played before us.</p>
-<pre><code class="language-solidity">    constructor() payable {
-        coin = new Coin();
-        arcadeMachine = new ArcadeMachine(coin);
-
-        // Assume that many people have played before you ;)
-        require(msg.value == 20 ether);
-        coin.deposit{value: 20 ether}();
-        coin.approve(address(arcadeMachine), 19 ether);
-        arcadeMachine.play(19);
-    }
-</code></pre>
-<p>So actually, address(0) got a balance of 19 ** 10**18 coins, which will makes 19 ether if they are withdrawn.</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>    <span style="color:#fe8019">constructor</span>() <span style="color:#fe8019">payable</span> {
+</span></span><span style="display:flex;"><span>        coin <span style="color:#fe8019">=</span> <span style="color:#fe8019">new</span> Coin();
+</span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#fe8019">=</span> <span style="color:#fe8019">new</span> ArcadeMachine(coin);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// Assume that many people have played before you ;)
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fabd2f">require</span>(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">value</span> <span style="color:#fe8019">==</span> <span style="color:#d3869b">20</span> <span style="color:#fe8019">ether</span>);
+</span></span><span style="display:flex;"><span>        coin.deposit{<span style="color:#fabd2f">value</span><span style="color:#fe8019">:</span> <span style="color:#d3869b">20</span> <span style="color:#fe8019">ether</span>}();
+</span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#fabd2f">address</span>(arcadeMachine), <span style="color:#d3869b">19</span> <span style="color:#fe8019">ether</span>);
+</span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#d3869b">19</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>So actually, address(0) got a balance of 19 ** 10**18 coins, which will makes 19 ether if they are withdrawn.</p>
 <p>To get these we need to find a way to transfer coins from address(0) balance to our balance using <code>transferFrom()</code>, for that we need to have an allowance amount superior equal the value we want to transfer and then withdraw them.</p>
 <p>To make short, we have two interesting functions, <code>privilegeWithdraw</code> and <code>permit</code>.</p>
 <p>The first one transfer address(0) coin to msg.sender but we need to be the owner of the contract so it sucks.</p>
-<pre><code class="language-solidity">function privilegedWithdraw() onlyOwner external {
-        uint wad = balanceOf[address(0)];
-        balanceOf[address(0)] = 0;
-        payable(msg.sender).transfer(wad);
-        emit PrivilegedWithdrawal(msg.sender, wad);
-    }
-</code></pre>
-<p>The second one ask us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm we are the owner by verifiying a signature with ecdsa.</p>
-<pre><code class="language-solidity"> function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external {
-        require(block.timestamp &lt;= deadline, &quot;signature expired&quot;);
-        bytes32 structHash = keccak256(
-            abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]++, deadline)
-        );
-        bytes32 h = _hashTypedDataV4(structHash);
-        address signer = ecrecover(h, v, r, s);
-        require(signer == owner, &quot;invalid signer&quot;);
-        allowance[owner][spender] = value;
-</code></pre>
-<p>So we need to have <code>signer == owner</code> meaning : <code>ecrecover(h,v,r,s) == 0x0000000000000000000000000000000000000000</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">function</span> <span style="color:#fabd2f">privilegedWithdraw</span>() onlyOwner <span style="color:#fe8019">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint</span> wad <span style="color:#fe8019">=</span> balanceOf[<span style="color:#fabd2f">address</span>(<span style="color:#d3869b">0</span>)];
+</span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#fabd2f">address</span>(<span style="color:#d3869b">0</span>)] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">payable</span>(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>).<span style="color:#fabd2f">transfer</span>(wad);
+</span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, wad);
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>The second one ask us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm we are the owner by verifiying a signature with ecdsa.</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#fe8019">function</span> <span style="color:#fabd2f">permit</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> owner,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> spender,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> <span style="color:#fabd2f">value</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> deadline,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint8</span> v,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes32</span> r,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes32</span> s
+</span></span><span style="display:flex;"><span>    ) <span style="color:#fe8019">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(<span style="color:#fabd2f">block</span>.<span style="color:#fabd2f">timestamp</span> <span style="color:#fe8019">&lt;=</span> deadline, <span style="color:#b8bb26">&#34;signature expired&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes32</span> structHash <span style="color:#fe8019">=</span> <span style="color:#fabd2f">keccak256</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#fabd2f">abi</span>.<span style="color:#fabd2f">encode</span>(PERMIT_TYPEHASH, owner, spender, <span style="color:#fabd2f">value</span>, nonces[owner]<span style="color:#fe8019">++</span>, deadline)
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes32</span> h <span style="color:#fe8019">=</span> _hashTypedDataV4(structHash);
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> signer <span style="color:#fe8019">=</span> <span style="color:#fabd2f">ecrecover</span>(h, v, r, s);
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(signer <span style="color:#fe8019">==</span> owner, <span style="color:#b8bb26">&#34;invalid signer&#34;</span>);
+</span></span><span style="display:flex;"><span>        allowance[owner][spender] <span style="color:#fe8019">=</span> <span style="color:#fabd2f">value</span>;
+</span></span></code></pre></div><p>So we need to have <code>signer == owner</code> meaning : <code>ecrecover(h,v,r,s) == 0x0000000000000000000000000000000000000000</code></p>
 <h2 id="vulnerability">Vulnerability</h2>
 <p>Here the vulnerability is that we can choose the v, r and s parameter in order to get a null signature.</p>
 <p>Testing <code>ecrecover()</code> locally i found that with any <code>h</code> if <code>v = r = s = 0</code> , then <code>ecrecover(h,v,r,s) == 0 == address(0)</code></p>
 <p>With this test contract :</p>
-<pre><code class="language-solidity">pragma solidity ^0.8.25;
-
-contract Testsignatures {
-
-    bytes32 public hash = 0x24c36029f1c6a76aeef30e9ab8c3eeacb5609cc1ee2962e660ce2313c5696c4a;
-    uint8 public v = 0;
-    bytes32 public r = 0x0000000000000000000000000000000000000000000000000000000000000000;
-    bytes32 public s = 0x0000000000000000000000000000000000000000000000000000000000000000;
-
-    address public signer = 0x55EB72D6588c64E202AA006b4Ea380275E9A4B25;
-    
-    function sign() public {
-
-        signer = ecrecover(hash, v, r, s);
-    }
-    
-
-}
-</code></pre>
-<h1 id="solving">Solving</h1>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">pragma solidity</span> <span style="color:#fe8019">^</span><span style="color:#d3869b">0</span>.<span style="color:#d3869b">8</span>.<span style="color:#d3869b">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">contract</span> Testsignatures {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">bytes32</span> <span style="color:#fe8019">public</span> hash <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x24c36029f1c6a76aeef30e9ab8c3eeacb5609cc1ee2962e660ce2313c5696c4a</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">uint8</span> <span style="color:#fe8019">public</span> v <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">bytes32</span> <span style="color:#fe8019">public</span> r <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x0000000000000000000000000000000000000000000000000000000000000000</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">bytes32</span> <span style="color:#fe8019">public</span> s <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x0000000000000000000000000000000000000000000000000000000000000000</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">address</span> <span style="color:#fe8019">public</span> signer <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x55EB72D6588c64E202AA006b4Ea380275E9A4B25</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">sign</span>() <span style="color:#fe8019">public</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        signer <span style="color:#fe8019">=</span> <span style="color:#fabd2f">ecrecover</span>(hash, v, r, s);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="solving">Solving</h1>
 <p>So finally we need to :</p>
 <ul>
 <li>register</li>

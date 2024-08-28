@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<html lang="en"><head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,7 +18,7 @@ Source files In the post-apocalyptic wasteland, the remnants of human and machin
   
   
   
-  <link rel="stylesheet" href="/css/main.c239d1e3ec2e14e03f007253c150c0b0981a0c7a7aa2f99b4f1f7828b27e3131403a05fdbbea59f487b6881cb2582a708b8646de332069e002ffef9fc9a48f89.css" integrity="sha512-wjnR4&#43;wuFOA/AHJTwVDAsJgaDHp6ovmbTx94KLJ&#43;MTFAOgX9u&#43;pZ9Ie2iByyWCpwi4ZG3jMgaeAC/&#43;&#43;fyaSPiQ==" />
+  <link rel="stylesheet" href="/css/main.613514b3942cabf3581076691f38c1ed92322c15aacc0a04dba86f549dd8f3a9abbeab6c4f6b84895381be831f07f7bb1fb0fc0952b388dbf00133b58f919693.css" integrity="sha512-YTUUs5Qsq/NYEHZpHzjB7ZIyLBWqzAoE26hvVJ3Y86mrvqtsT2uEiVOBvoMfB/e7H7D8CVKziNvwATO1j5GWkw==" />
   
 </head>
 <body a="dark">
@@ -63,91 +63,90 @@ Source files In the post-apocalyptic wasteland, the remnants of human and machin
 <h1 id="recon">Recon</h1>
 <h2 id="code-reading">Code reading</h2>
 <p>NotADemocraticElection.sol</p>
-<pre><code class="language-solidity">pragma solidity 0.8.25;
-
-contract NotADemocraticElection {
-    // ****************************************************
-    // ******* NOTE: THIS NOT A DEMOCRATIC ELECTION *******
-    // ****************************************************
-
-    uint256 constant TARGET_VOTES = 1000e18;
-
-    struct Party {
-        string  fullname;
-        uint256 totalvotes;
-    }
-    struct Voter {
-        uint256 weight;
-        address addr;
-    }
-
-    mapping(bytes3 _id =&gt; Party) public parties;
-    mapping(bytes _sig =&gt; Voter) public voters;
-    mapping(string _name =&gt; mapping(string _surname =&gt; address _addr)) public uniqueVoters;
-    bytes3 public winner;
-
-    event Voted(
-        address _voter,
-        bytes3  _party
-    );
-    event VoterDeposited(
-        address _voter,
-        uint256 _weight
-    );
-    event ElectionWinner(
-        bytes3 _party
-    );
-
-    constructor(
-       bytes3 _partyAsymbol , string memory _partyAfullname,
-       bytes3 _partyBsymbol , string memory _partyBfullname
-    ) {
-        parties[_partyAsymbol].fullname = _partyAfullname;
-        parties[_partyBsymbol].fullname = _partyBfullname;
-    }
-
-    function getVotesCount(bytes3 _party) public view returns (uint256) {
-        return parties[_party].totalvotes;
-    }
-    
-    function getVoterSig(string memory _name, string memory _surname) public pure returns (bytes memory) {
-        return abi.encodePacked(_name, _surname);
-    }
-
-    function checkWinner(bytes3 _party) public {
-        if (parties[_party].totalvotes &gt;= TARGET_VOTES) {
-            winner = _party; 
-            emit ElectionWinner(_party);
-        }
-    }
-
-    function depositVoteCollateral(string memory _name, string memory _surname) external payable {
-        require(uniqueVoters[_name][_surname] == address(0), &quot;Already deposited&quot;);
-
-        bytes memory voterSig = getVoterSig(_name, _surname);
-        voters[voterSig].weight += msg.value;
-        uniqueVoters[_name][_surname] = msg.sender;
-
-        emit VoterDeposited(msg.sender, msg.value);
-    }
-
-    function vote(
-        bytes3 _party,
-        string memory _name,
-        string memory _surname
-    ) public {
-        require(uniqueVoters[_name][_surname] == msg.sender, &quot;You cannot vote on behalf of others.&quot;);
-
-        bytes memory voterSig = getVoterSig(_name, _surname);
-        uint256 voterWeight = voters[voterSig].weight == 0 ? 1 : voters[voterSig].weight;
-        parties[_party].totalvotes += 1 * voterWeight;
-        
-        emit Voted(msg.sender, _party);
-        checkWinner(_party);
-    }
-}
-</code></pre>
-<ul>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">pragma solidity</span> <span style="color:#d3869b">0</span>.<span style="color:#d3869b">8</span>.<span style="color:#d3869b">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">contract</span> NotADemocraticElection {
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic">// ****************************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>    <span style="color:#928374;font-style:italic">// ******* NOTE: THIS NOT A DEMOCRATIC ELECTION *******
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>    <span style="color:#928374;font-style:italic">// ****************************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">uint256</span> <span style="color:#fe8019">constant</span> TARGET_VOTES <span style="color:#fe8019">=</span> <span style="color:#d3869b">1000</span>e18;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">struct</span> Party {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">string</span>  fullname;
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> totalvotes;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">struct</span> Voter {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> weight;
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> addr;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">bytes3</span> _id <span style="color:#fe8019">=&gt;</span> Party) <span style="color:#fe8019">public</span> parties;
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">bytes</span> _sig <span style="color:#fe8019">=&gt;</span> Voter) <span style="color:#fe8019">public</span> voters;
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">string</span> _name <span style="color:#fe8019">=&gt;</span> <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">string</span> _surname <span style="color:#fe8019">=&gt;</span> <span style="color:#fabd2f">address</span> _addr)) <span style="color:#fe8019">public</span> uniqueVoters;
+</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">bytes3</span> <span style="color:#fe8019">public</span> winner;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> Voted(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> _voter,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes3</span>  _party
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> VoterDeposited(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> _voter,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> _weight
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> ElectionWinner(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes3</span> _party
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">constructor</span>(
+</span></span><span style="display:flex;"><span>       <span style="color:#fabd2f">bytes3</span> _partyAsymbol , <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _partyAfullname,
+</span></span><span style="display:flex;"><span>       <span style="color:#fabd2f">bytes3</span> _partyBsymbol , <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _partyBfullname
+</span></span><span style="display:flex;"><span>    ) {
+</span></span><span style="display:flex;"><span>        parties[_partyAsymbol].fullname <span style="color:#fe8019">=</span> _partyAfullname;
+</span></span><span style="display:flex;"><span>        parties[_partyBsymbol].fullname <span style="color:#fe8019">=</span> _partyBfullname;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">getVotesCount</span>(<span style="color:#fabd2f">bytes3</span> _party) <span style="color:#fe8019">public</span> <span style="color:#fe8019">view</span> <span style="color:#fe8019">returns</span> (<span style="color:#fabd2f">uint256</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> parties[_party].totalvotes;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">getVoterSig</span>(<span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _name, <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _surname) <span style="color:#fe8019">public</span> <span style="color:#fe8019">pure</span> <span style="color:#fe8019">returns</span> (<span style="color:#fabd2f">bytes</span> <span style="color:#fe8019">memory</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> <span style="color:#fabd2f">abi</span>.<span style="color:#fabd2f">encodePacked</span>(_name, _surname);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">checkWinner</span>(<span style="color:#fabd2f">bytes3</span> _party) <span style="color:#fe8019">public</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> (parties[_party].totalvotes <span style="color:#fe8019">&gt;=</span> TARGET_VOTES) {
+</span></span><span style="display:flex;"><span>            winner <span style="color:#fe8019">=</span> _party; 
+</span></span><span style="display:flex;"><span>            emit ElectionWinner(_party);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">depositVoteCollateral</span>(<span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _name, <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _surname) <span style="color:#fe8019">external</span> <span style="color:#fe8019">payable</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(uniqueVoters[_name][_surname] <span style="color:#fe8019">==</span> <span style="color:#fabd2f">address</span>(<span style="color:#d3869b">0</span>), <span style="color:#b8bb26">&#34;Already deposited&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes</span> <span style="color:#fe8019">memory</span> voterSig <span style="color:#fe8019">=</span> getVoterSig(_name, _surname);
+</span></span><span style="display:flex;"><span>        voters[voterSig].weight <span style="color:#fe8019">+=</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">value</span>;
+</span></span><span style="display:flex;"><span>        uniqueVoters[_name][_surname] <span style="color:#fe8019">=</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit VoterDeposited(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">vote</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes3</span> _party,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _name,
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _surname
+</span></span><span style="display:flex;"><span>    ) <span style="color:#fe8019">public</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(uniqueVoters[_name][_surname] <span style="color:#fe8019">==</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#b8bb26">&#34;You cannot vote on behalf of others.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes</span> <span style="color:#fe8019">memory</span> voterSig <span style="color:#fe8019">=</span> getVoterSig(_name, _surname);
+</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> voterWeight <span style="color:#fe8019">=</span> voters[voterSig].weight <span style="color:#fe8019">==</span> <span style="color:#d3869b">0</span> <span style="color:#fe8019">?</span> <span style="color:#d3869b">1</span> <span style="color:#fe8019">:</span> voters[voterSig].weight;
+</span></span><span style="display:flex;"><span>        parties[_party].totalvotes <span style="color:#fe8019">+=</span> <span style="color:#d3869b">1</span> <span style="color:#fe8019">*</span> voterWeight;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        emit Voted(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, _party);
+</span></span><span style="display:flex;"><span>        checkWinner(_party);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>You can register to vote by submitting your name and surname, and if you transfer ether your vote will carry more weight (I&rsquo;m getting a kick out of this representation of corruption). A vote count 10 times if it&rsquo;s weight is 10.</li>
 <li>When the contract is initialized, there&rsquo;s a member who&rsquo;s already registered with 100 ether = 100 * 10^18 (they can whippin everything by casting just 10 votes)</li>
 <li>His name is Satoshi Nakamoto</li>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<html lang="en"><head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,7 +21,7 @@ Recon Interacting with the website Accessing to the webpage at its address, we c
   
   
   
-  <link rel="stylesheet" href="/css/main.c239d1e3ec2e14e03f007253c150c0b0981a0c7a7aa2f99b4f1f7828b27e3131403a05fdbbea59f487b6881cb2582a708b8646de332069e002ffef9fc9a48f89.css" integrity="sha512-wjnR4&#43;wuFOA/AHJTwVDAsJgaDHp6ovmbTx94KLJ&#43;MTFAOgX9u&#43;pZ9Ie2iByyWCpwi4ZG3jMgaeAC/&#43;&#43;fyaSPiQ==" />
+  <link rel="stylesheet" href="/css/main.613514b3942cabf3581076691f38c1ed92322c15aacc0a04dba86f549dd8f3a9abbeab6c4f6b84895381be831f07f7bb1fb0fc0952b388dbf00133b58f919693.css" integrity="sha512-YTUUs5Qsq/NYEHZpHzjB7ZIyLBWqzAoE26hvVJ3Y86mrvqtsT2uEiVOBvoMfB/e7H7D8CVKziNvwATO1j5GWkw==" />
   
 </head>
 <body a="dark">
@@ -73,163 +73,161 @@ Recon Interacting with the website Accessing to the webpage at its address, we c
 <p>Where the parameter <code>message</code> is base64 encoded &ldquo;{&rsquo;test1&rsquo;: [False]}&rdquo; and the parameter <code>token</code> is the <code>message</code> parameter encrypted with rsa</p>
 <h2 id="reading-the-code">Reading the code</h2>
 <p>Here is the source code</p>
-<pre><code class="language-python">from flask import Flask, render_template, request, redirect, url_for, jsonify
-import hashlib
-import base64
-import json
-import time
-import random
-import hashlib
-from Crypto.Util.number import bytes_to_long, isPrime
-import math
-
-app = Flask(__name__)
-
-def hash_string_sha256(message):
-    message_bytes = message.encode('utf-8')
-    sha256_hash = hashlib.sha256()
-    sha256_hash.update(message_bytes)
-    hashed_message = sha256_hash.digest()
-
-    return int.from_bytes(hashed_message, byteorder='big')
-
-def generate_signature(message, private_key):
-    n, d = private_key
-    hashed_message = hash_string_sha256(message)
-    signature = pow(hashed_message, d, n)
-    
-    return signature
-
-def verify_signature(msg, public_key, signature):
-    initial_hash = hash_string_sha256(msg)
-    
-    n, e = public_key
-    
-    recoved_hash = pow(int(signature),e,n)
-    
-    return initial_hash == recoved_hash
-
-@app.route('/')
-def welcome():
-    return render_template('welcome.html')
-
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    # Check if the user exists
-    if username not in users:
-        return redirect(url_for('login', reason='unknown_user'))
-
-    # Check if the password is correct
-    if password != users[username][0]:
-        return redirect(url_for('login', reason='incorrect_password'))
-    
-    public_key, private_key = generate_key(username)
-    
-    public_key_users[username] = public_key
-    
-    signature = generate_signature(str({username : [users[username][1]]}), private_key)
-    
-    return redirect(url_for('news', token=signature, message=base64.b64encode(str({username : [users[username][1]]}).encode()).decode()))
-
-@app.route('/news', methods=['GET'])
-def news():
-    signature = request.args.get('token')
-    message = base64.b64decode(request.args.get('message')).decode()
-    
-    message = json.loads(message.replace(&quot;'&quot;, '&quot;').replace(&quot;False&quot;, &quot;false&quot;).replace(&quot;True&quot;, &quot;true&quot;))
-    
-    username = list(message.keys())[0]
-    subscribe = list(message.values())[0][0]
-
-    if signature:
-        is_sign = verify_signature(str(message), public_key_users[username], signature)
-        if is_sign:
-            return render_template('news.html', username=username, subscribe=subscribe)
-
-    return redirect(url_for('login', reason='unauthorized'))
-
-@app.route('/login', methods=['GET'])
-def show_login():
-    # Extract the reason from the query parameters
-    reason = request.args.get('reason')
-
-    # Display a pop-up message based on the reason
-    if reason == 'unknown_user':
-        pop_up_message = &quot;Unknown user. Please check your credentials.&quot;
-    elif reason == 'incorrect_password':
-        pop_up_message = &quot;Incorrect password. Please try again.&quot;
-    elif reason == 'unauthorized':
-        pop_up_message = &quot;Unauthorized access. Please log in.&quot;
-    else:
-        pop_up_message = None
-
-    return render_template('login.html', pop_up_message=pop_up_message)
-
-@app.route('/create_user', methods=['POST'])
-def create_user():
-    new_username = request.form.get('new_username')
-    new_password = request.form.get('new_password')
-
-    # Check if the username already exists
-    if new_username in users:
-        return redirect(url_for('login', reason='username_exists'))
-
-    # Add the new user to the dictionary
-    users[new_username] = [new_password, False]
-
-    # Display a pop-up message
-    pop_up_message = &quot;Thanks for registering! The admin will soon activate your profile if you have subscribed.&quot;
-
-    return render_template('login.html', pop_up_message=pop_up_message)
-
-def generate_key(username):
-    
-	length = lambda x : len(bin(x)[2:])
-
-	s = bytes_to_long(username.encode())
-
-	random.seed(s)
-
-	e = 0x1001
-	phi = 0
-    
-	while math.gcd(phi,e) != 1:
-		n = 1
-		factors = []
-
-		while length(n) &lt; 2048:
-			temp_n = random.getrandbits(48)
-			if isPrime(temp_n):
-				n *= temp_n
-				factors.append(temp_n)
-		phi = 1
-		for f in factors:
-			phi *= (f - 1)
-
-	d = pow(e, -1, phi)
-
-	return (n,e), (n,d)
-
-# A simple dictionary to store user credentials and subscription status
-users = {
-    'GCC': ['securePassword', False]
-}
-public_key_users = {}
-
-if __name__ == '__main__':
-    app.run(debug=False)
-</code></pre>
-<p>There is a kind of handmade database to manage users.</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">from</span> flask <span style="color:#fe8019">import</span> Flask, render_template, request, redirect, url_for, jsonify
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> base64
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">from</span> Crypto.Util.number <span style="color:#fe8019">import</span> bytes_to_long, isPrime
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app <span style="color:#fe8019">=</span> Flask(__name__)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">hash_string_sha256</span>(message):
+</span></span><span style="display:flex;"><span>    message_bytes <span style="color:#fe8019">=</span> message<span style="color:#fe8019">.</span>encode(<span style="color:#b8bb26">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    sha256_hash <span style="color:#fe8019">=</span> hashlib<span style="color:#fe8019">.</span>sha256()
+</span></span><span style="display:flex;"><span>    sha256_hash<span style="color:#fe8019">.</span>update(message_bytes)
+</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#fe8019">=</span> sha256_hash<span style="color:#fe8019">.</span>digest()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> <span style="color:#fabd2f">int</span><span style="color:#fe8019">.</span>from_bytes(hashed_message, byteorder<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;big&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">generate_signature</span>(message, private_key):
+</span></span><span style="display:flex;"><span>    n, d <span style="color:#fe8019">=</span> private_key
+</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#fe8019">=</span> hash_string_sha256(message)
+</span></span><span style="display:flex;"><span>    signature <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(hashed_message, d, n)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> signature
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">verify_signature</span>(msg, public_key, signature):
+</span></span><span style="display:flex;"><span>    initial_hash <span style="color:#fe8019">=</span> hash_string_sha256(msg)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    n, e <span style="color:#fe8019">=</span> public_key
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    recoved_hash <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(<span style="color:#fabd2f">int</span>(signature),e,n)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> initial_hash <span style="color:#fe8019">==</span> recoved_hash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">welcome</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;welcome.html&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/login&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">login</span>():
+</span></span><span style="display:flex;"><span>    username <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;username&#39;</span>)
+</span></span><span style="display:flex;"><span>    password <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;password&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Check if the user exists</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> username <span style="color:#fe8019">not</span> <span style="color:#fe8019">in</span> users:
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;unknown_user&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Check if the password is correct</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> password <span style="color:#fe8019">!=</span> users[username][<span style="color:#d3869b">0</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;incorrect_password&#39;</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    public_key, private_key <span style="color:#fe8019">=</span> generate_key(username)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    public_key_users[username] <span style="color:#fe8019">=</span> public_key
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    signature <span style="color:#fe8019">=</span> generate_signature(<span style="color:#fabd2f">str</span>({username : [users[username][<span style="color:#d3869b">1</span>]]}), private_key)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;news&#39;</span>, token<span style="color:#fe8019">=</span>signature, message<span style="color:#fe8019">=</span>base64<span style="color:#fe8019">.</span>b64encode(<span style="color:#fabd2f">str</span>({username : [users[username][<span style="color:#d3869b">1</span>]]})<span style="color:#fe8019">.</span>encode())<span style="color:#fe8019">.</span>decode()))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/news&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;GET&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">news</span>():
+</span></span><span style="display:flex;"><span>    signature <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>args<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;token&#39;</span>)
+</span></span><span style="display:flex;"><span>    message <span style="color:#fe8019">=</span> base64<span style="color:#fe8019">.</span>b64decode(request<span style="color:#fe8019">.</span>args<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;message&#39;</span>))<span style="color:#fe8019">.</span>decode()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    message <span style="color:#fe8019">=</span> json<span style="color:#fe8019">.</span>loads(message<span style="color:#fe8019">.</span>replace(<span style="color:#b8bb26">&#34;&#39;&#34;</span>, <span style="color:#b8bb26">&#39;&#34;&#39;</span>)<span style="color:#fe8019">.</span>replace(<span style="color:#b8bb26">&#34;False&#34;</span>, <span style="color:#b8bb26">&#34;false&#34;</span>)<span style="color:#fe8019">.</span>replace(<span style="color:#b8bb26">&#34;True&#34;</span>, <span style="color:#b8bb26">&#34;true&#34;</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    username <span style="color:#fe8019">=</span> <span style="color:#fabd2f">list</span>(message<span style="color:#fe8019">.</span>keys())[<span style="color:#d3869b">0</span>]
+</span></span><span style="display:flex;"><span>    subscribe <span style="color:#fe8019">=</span> <span style="color:#fabd2f">list</span>(message<span style="color:#fe8019">.</span>values())[<span style="color:#d3869b">0</span>][<span style="color:#d3869b">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> signature:
+</span></span><span style="display:flex;"><span>        is_sign <span style="color:#fe8019">=</span> verify_signature(<span style="color:#fabd2f">str</span>(message), public_key_users[username], signature)
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> is_sign:
+</span></span><span style="display:flex;"><span>            <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;news.html&#39;</span>, username<span style="color:#fe8019">=</span>username, subscribe<span style="color:#fe8019">=</span>subscribe)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;unauthorized&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/login&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;GET&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">show_login</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Extract the reason from the query parameters</span>
+</span></span><span style="display:flex;"><span>    reason <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>args<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;reason&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Display a pop-up message based on the reason</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> reason <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;unknown_user&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Unknown user. Please check your credentials.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">elif</span> reason <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;incorrect_password&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Incorrect password. Please try again.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">elif</span> reason <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;unauthorized&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Unauthorized access. Please log in.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">else</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#fe8019">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;login.html&#39;</span>, pop_up_message<span style="color:#fe8019">=</span>pop_up_message)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/create_user&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">create_user</span>():
+</span></span><span style="display:flex;"><span>    new_username <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;new_username&#39;</span>)
+</span></span><span style="display:flex;"><span>    new_password <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;new_password&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Check if the username already exists</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> new_username <span style="color:#fe8019">in</span> users:
+</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;username_exists&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Add the new user to the dictionary</span>
+</span></span><span style="display:flex;"><span>    users[new_username] <span style="color:#fe8019">=</span> [new_password, <span style="color:#fe8019">False</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Display a pop-up message</span>
+</span></span><span style="display:flex;"><span>    pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Thanks for registering! The admin will soon activate your profile if you have subscribed.&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;login.html&#39;</span>, pop_up_message<span style="color:#fe8019">=</span>pop_up_message)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">generate_key</span>(username):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	length <span style="color:#fe8019">=</span> <span style="color:#fe8019">lambda</span> x : <span style="color:#fabd2f">len</span>(<span style="color:#fabd2f">bin</span>(x)[<span style="color:#d3869b">2</span>:])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	s <span style="color:#fe8019">=</span> bytes_to_long(username<span style="color:#fe8019">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	random<span style="color:#fe8019">.</span>seed(s)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	e <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x1001</span>
+</span></span><span style="display:flex;"><span>	phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">while</span> math<span style="color:#fe8019">.</span>gcd(phi,e) <span style="color:#fe8019">!=</span> <span style="color:#d3869b">1</span>:
+</span></span><span style="display:flex;"><span>		n <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
+</span></span><span style="display:flex;"><span>		factors <span style="color:#fe8019">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">while</span> length(n) <span style="color:#fe8019">&lt;</span> <span style="color:#d3869b">2048</span>:
+</span></span><span style="display:flex;"><span>			temp_n <span style="color:#fe8019">=</span> random<span style="color:#fe8019">.</span>getrandbits(<span style="color:#d3869b">48</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#fe8019">if</span> isPrime(temp_n):
+</span></span><span style="display:flex;"><span>				n <span style="color:#fe8019">*=</span> temp_n
+</span></span><span style="display:flex;"><span>				factors<span style="color:#fe8019">.</span>append(temp_n)
+</span></span><span style="display:flex;"><span>		phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">for</span> f <span style="color:#fe8019">in</span> factors:
+</span></span><span style="display:flex;"><span>			phi <span style="color:#fe8019">*=</span> (f <span style="color:#fe8019">-</span> <span style="color:#d3869b">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	d <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(e, <span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">return</span> (n,e), (n,d)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># A simple dictionary to store user credentials and subscription status</span>
+</span></span><span style="display:flex;"><span>users <span style="color:#fe8019">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#b8bb26">&#39;GCC&#39;</span>: [<span style="color:#b8bb26">&#39;securePassword&#39;</span>, <span style="color:#fe8019">False</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>public_key_users <span style="color:#fe8019">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">if</span> __name__ <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    app<span style="color:#fe8019">.</span>run(debug<span style="color:#fe8019">=</span><span style="color:#fe8019">False</span>)
+</span></span></code></pre></div><p>There is a kind of handmade database to manage users.</p>
 <p>The DB got the users, its password, a boolean (True or False) for describing the admin role and the public key of the users.</p>
-<pre><code class="language-python">users = {
-    'GCC': ['securePassword', False]
-}
-public_key_users = {}
-</code></pre>
-<p>When creating an user, it is appended to the dict of users :</p>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>users <span style="color:#fe8019">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#b8bb26">&#39;GCC&#39;</span>: [<span style="color:#b8bb26">&#39;securePassword&#39;</span>, <span style="color:#fe8019">False</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>public_key_users <span style="color:#fe8019">=</span> {}
+</span></span></code></pre></div><p>When creating an user, it is appended to the dict of users :</p>
 <p><code>users[new_username] = [new_password, False]</code></p>
 <p>So when creating an &ldquo;test1&rdquo; account with &ldquo;password&rdquo; as password :</p>
 <p>users[&ldquo;test1&rdquo;][0] = &ldquo;password&rdquo;
@@ -238,35 +236,34 @@ users[&ldquo;test1&rdquo;][1] = False</p>
 <p>public_key_users[test] = <code>its public key</code></p>
 <p>The public and private keys are generated with the random module and a seed based on the username. So knowing the username we can recover the public key and ce private key.</p>
 <p>We can just reuse the challenge <code>generate_key</code> function for that :</p>
-<pre><code class="language-python">def generate_key(username):
-    
-	length = lambda x : len(bin(x)[2:])
-
-	s = bytes_to_long(username.encode())
-
-	random.seed(s)
-
-	e = 0x1001
-	phi = 0
-    
-	while math.gcd(phi,e) != 1:
-		n = 1
-		factors = []
-
-		while length(n) &lt; 2048:
-			temp_n = random.getrandbits(48)
-			if isPrime(temp_n):
-				n *= temp_n
-				factors.append(temp_n)
-		phi = 1
-		for f in factors:
-			phi *= (f - 1)
-
-	d = pow(e, -1, phi)
-
-	return (n,e), (n,d)
-</code></pre>
-<h1 id="solving">Solving</h1>
+<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">generate_key</span>(username):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	length <span style="color:#fe8019">=</span> <span style="color:#fe8019">lambda</span> x : <span style="color:#fabd2f">len</span>(<span style="color:#fabd2f">bin</span>(x)[<span style="color:#d3869b">2</span>:])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	s <span style="color:#fe8019">=</span> bytes_to_long(username<span style="color:#fe8019">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	random<span style="color:#fe8019">.</span>seed(s)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	e <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x1001</span>
+</span></span><span style="display:flex;"><span>	phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">while</span> math<span style="color:#fe8019">.</span>gcd(phi,e) <span style="color:#fe8019">!=</span> <span style="color:#d3869b">1</span>:
+</span></span><span style="display:flex;"><span>		n <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
+</span></span><span style="display:flex;"><span>		factors <span style="color:#fe8019">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">while</span> length(n) <span style="color:#fe8019">&lt;</span> <span style="color:#d3869b">2048</span>:
+</span></span><span style="display:flex;"><span>			temp_n <span style="color:#fe8019">=</span> random<span style="color:#fe8019">.</span>getrandbits(<span style="color:#d3869b">48</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#fe8019">if</span> isPrime(temp_n):
+</span></span><span style="display:flex;"><span>				n <span style="color:#fe8019">*=</span> temp_n
+</span></span><span style="display:flex;"><span>				factors<span style="color:#fe8019">.</span>append(temp_n)
+</span></span><span style="display:flex;"><span>		phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">for</span> f <span style="color:#fe8019">in</span> factors:
+</span></span><span style="display:flex;"><span>			phi <span style="color:#fe8019">*=</span> (f <span style="color:#fe8019">-</span> <span style="color:#d3869b">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	d <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(e, <span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">return</span> (n,e), (n,d)
+</span></span></code></pre></div><h1 id="solving">Solving</h1>
 <p>Now we know how to recover the private key, the steps for solving are :</p>
 <ul>
 <li>Create an user</li>
@@ -274,16 +271,14 @@ users[&ldquo;test1&rdquo;][1] = False</p>
 <li>Send a GET request with our forged <code>token</code> and <code>message</code></li>
 </ul>
 <p>So for test_1 using generate_key:</p>
-<pre><code>n = 1457342553157259295407930365261800696748888551794075108779100697531249469132443259759166251334393209534527011340120848417513504763172687425603817169965420203182841446416766927653960650018998669899183487322211178874589822726651093254803792218788609932755617725086287444735520634631250205847736080158111696592654206975607049821230615196941817479903763249457613376371498407355381921851845673217419213581082634290438881135049162320418983797388015232666055696476182329585445835040160266557584246137158655921759590380096558137315519737417711810732976599747165793134280706192438024871206616099076425065259626152010714200822870951819946361
+<pre tabindex="0"><code>n = 1457342553157259295407930365261800696748888551794075108779100697531249469132443259759166251334393209534527011340120848417513504763172687425603817169965420203182841446416766927653960650018998669899183487322211178874589822726651093254803792218788609932755617725086287444735520634631250205847736080158111696592654206975607049821230615196941817479903763249457613376371498407355381921851845673217419213581082634290438881135049162320418983797388015232666055696476182329585445835040160266557584246137158655921759590380096558137315519737417711810732976599747165793134280706192438024871206616099076425065259626152010714200822870951819946361
 
 e = 4097
 
 d = 1169929132860778172266790416717795055395425023673769128941398634078612313645586470723460559979322746878492767894986894386607392692140809768119253135545569481619614863351561130269497874373374376730775005845964346721784822629714480091633306912534377109787422319793085109077376760278513449726222323801791791327104545390490456210290681860991997191841252970404345272643125273777571879120765801234951744562986758112686603976623970900646525392530237245486976063443733613254268981773171814398056537380882163353704864394235638123739162367944267985527667019876092910225809715528375163004211021207853239200740123762076468891204439491139858433
-</code></pre>
-<p>I can now sign the message and get my token :</p>
-<pre><code>1328296459116198513481005775994265654367244256157496762561215663749001313544888752691095431811838915662861275916069253599131094326519037807982403437366383963609593961610229519349629126583667198784483067627762487710405124208069398517977162311635739503788545076940068444011356528681958458727410341989686589824878872706145702838453900839690220411045955898590237403687023436729802836403464839928576644511341708090007448358389413162908097505464282026490604831559303689920713332959415629965026776263798033479321497305831022519726249152589296200270547520256311793654758651445601039583377445016016582341166189227484558460201850695658065
-</code></pre>
-<p>And encode <code>{'test1': [True]}</code> in base64: <code>eyd0ZXN0MSc6IFtUcnVlXX0=</code></p>
+</code></pre><p>I can now sign the message and get my token :</p>
+<pre tabindex="0"><code>1328296459116198513481005775994265654367244256157496762561215663749001313544888752691095431811838915662861275916069253599131094326519037807982403437366383963609593961610229519349629126583667198784483067627762487710405124208069398517977162311635739503788545076940068444011356528681958458727410341989686589824878872706145702838453900839690220411045955898590237403687023436729802836403464839928576644511341708090007448358389413162908097505464282026490604831559303689920713332959415629965026776263798033479321497305831022519726249152589296200270547520256311793654758651445601039583377445016016582341166189227484558460201850695658065
+</code></pre><p>And encode <code>{'test1': [True]}</code> in base64: <code>eyd0ZXN0MSc6IFtUcnVlXX0=</code></p>
 <p>And send this GET request :</p>
 <p><code>http://worker02.gcc-ctf.com:13307/news?token=1328296459116198513481005775994265654367244256157496762561215663749001313544888752691095431811838915662861275916069253599131094326519037807982403437366383963609593961610229519349629126583667198784483067627762487710405124208069398517977162311635739503788545076940068444011356528681958458727410341989686589824878872706145702838453900839690220411045955898590237403687023436729802836403464839928576644511341708090007448358389413162908097505464282026490604831559303689920713332959415629965026776263798033479321497305831022519726249152589296200270547520256311793654758651445601039583377445016016582341166189227484558460201850695658065&amp;message=eyd0ZXN0MSc6IFtUcnVlXX0%3D</code></p>
 <blockquote>
