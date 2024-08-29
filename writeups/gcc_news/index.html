@@ -73,160 +73,160 @@ Recon Interacting with the website Accessing to the webpage at its address, we c
 <p>Where the parameter <code>message</code> is base64 encoded &ldquo;{&rsquo;test1&rsquo;: [False]}&rdquo; and the parameter <code>token</code> is the <code>message</code> parameter encrypted with rsa</p>
 <h2 id="reading-the-code">Reading the code</h2>
 <p>Here is the source code</p>
-<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">from</span> flask <span style="color:#fe8019">import</span> Flask, render_template, request, redirect, url_for, jsonify
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> hashlib
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> base64
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> json
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> time
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> random
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> hashlib
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">from</span> Crypto.Util.number <span style="color:#fe8019">import</span> bytes_to_long, isPrime
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> math
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">flask</span> <span style="color:#ff7b72">import</span> Flask, render_template, request, redirect, url_for, jsonify
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">hashlib</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">base64</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">json</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">time</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">random</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">hashlib</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">Crypto.Util.number</span> <span style="color:#ff7b72">import</span> bytes_to_long, isPrime
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">math</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>app <span style="color:#fe8019">=</span> Flask(__name__)
+</span></span><span style="display:flex;"><span>app <span style="color:#ff7b72;font-weight:bold">=</span> Flask(__name__)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">hash_string_sha256</span>(message):
-</span></span><span style="display:flex;"><span>    message_bytes <span style="color:#fe8019">=</span> message<span style="color:#fe8019">.</span>encode(<span style="color:#b8bb26">&#39;utf-8&#39;</span>)
-</span></span><span style="display:flex;"><span>    sha256_hash <span style="color:#fe8019">=</span> hashlib<span style="color:#fe8019">.</span>sha256()
-</span></span><span style="display:flex;"><span>    sha256_hash<span style="color:#fe8019">.</span>update(message_bytes)
-</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#fe8019">=</span> sha256_hash<span style="color:#fe8019">.</span>digest()
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">hash_string_sha256</span>(message):
+</span></span><span style="display:flex;"><span>    message_bytes <span style="color:#ff7b72;font-weight:bold">=</span> message<span style="color:#ff7b72;font-weight:bold">.</span>encode(<span style="color:#a5d6ff">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    sha256_hash <span style="color:#ff7b72;font-weight:bold">=</span> hashlib<span style="color:#ff7b72;font-weight:bold">.</span>sha256()
+</span></span><span style="display:flex;"><span>    sha256_hash<span style="color:#ff7b72;font-weight:bold">.</span>update(message_bytes)
+</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#ff7b72;font-weight:bold">=</span> sha256_hash<span style="color:#ff7b72;font-weight:bold">.</span>digest()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> <span style="color:#fabd2f">int</span><span style="color:#fe8019">.</span>from_bytes(hashed_message, byteorder<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;big&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> int<span style="color:#ff7b72;font-weight:bold">.</span>from_bytes(hashed_message, byteorder<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#39;big&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">generate_signature</span>(message, private_key):
-</span></span><span style="display:flex;"><span>    n, d <span style="color:#fe8019">=</span> private_key
-</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#fe8019">=</span> hash_string_sha256(message)
-</span></span><span style="display:flex;"><span>    signature <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(hashed_message, d, n)
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">generate_signature</span>(message, private_key):
+</span></span><span style="display:flex;"><span>    n, d <span style="color:#ff7b72;font-weight:bold">=</span> private_key
+</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#ff7b72;font-weight:bold">=</span> hash_string_sha256(message)
+</span></span><span style="display:flex;"><span>    signature <span style="color:#ff7b72;font-weight:bold">=</span> pow(hashed_message, d, n)
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> signature
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> signature
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">verify_signature</span>(msg, public_key, signature):
-</span></span><span style="display:flex;"><span>    initial_hash <span style="color:#fe8019">=</span> hash_string_sha256(msg)
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">verify_signature</span>(msg, public_key, signature):
+</span></span><span style="display:flex;"><span>    initial_hash <span style="color:#ff7b72;font-weight:bold">=</span> hash_string_sha256(msg)
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    n, e <span style="color:#fe8019">=</span> public_key
+</span></span><span style="display:flex;"><span>    n, e <span style="color:#ff7b72;font-weight:bold">=</span> public_key
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    recoved_hash <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(<span style="color:#fabd2f">int</span>(signature),e,n)
+</span></span><span style="display:flex;"><span>    recoved_hash <span style="color:#ff7b72;font-weight:bold">=</span> pow(int(signature),e,n)
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> initial_hash <span style="color:#fe8019">==</span> recoved_hash
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> initial_hash <span style="color:#ff7b72;font-weight:bold">==</span> recoved_hash
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/&#39;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">welcome</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;welcome.html&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">@app.route</span>(<span style="color:#a5d6ff">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">welcome</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> render_template(<span style="color:#a5d6ff">&#39;welcome.html&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/login&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;POST&#39;</span>])
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">login</span>():
-</span></span><span style="display:flex;"><span>    username <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;username&#39;</span>)
-</span></span><span style="display:flex;"><span>    password <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;password&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">@app.route</span>(<span style="color:#a5d6ff">&#39;/login&#39;</span>, methods<span style="color:#ff7b72;font-weight:bold">=</span>[<span style="color:#a5d6ff">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">login</span>():
+</span></span><span style="display:flex;"><span>    username <span style="color:#ff7b72;font-weight:bold">=</span> request<span style="color:#ff7b72;font-weight:bold">.</span>form<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#a5d6ff">&#39;username&#39;</span>)
+</span></span><span style="display:flex;"><span>    password <span style="color:#ff7b72;font-weight:bold">=</span> request<span style="color:#ff7b72;font-weight:bold">.</span>form<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#a5d6ff">&#39;password&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Check if the user exists</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> username <span style="color:#fe8019">not</span> <span style="color:#fe8019">in</span> users:
-</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;unknown_user&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic"># Check if the user exists</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> username <span style="color:#ff7b72;font-weight:bold">not</span> <span style="color:#ff7b72;font-weight:bold">in</span> users:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> redirect(url_for(<span style="color:#a5d6ff">&#39;login&#39;</span>, reason<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#39;unknown_user&#39;</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Check if the password is correct</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> password <span style="color:#fe8019">!=</span> users[username][<span style="color:#d3869b">0</span>]:
-</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;incorrect_password&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic"># Check if the password is correct</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> password <span style="color:#ff7b72;font-weight:bold">!=</span> users[username][<span style="color:#a5d6ff">0</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> redirect(url_for(<span style="color:#a5d6ff">&#39;login&#39;</span>, reason<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#39;incorrect_password&#39;</span>))
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    public_key, private_key <span style="color:#fe8019">=</span> generate_key(username)
+</span></span><span style="display:flex;"><span>    public_key, private_key <span style="color:#ff7b72;font-weight:bold">=</span> generate_key(username)
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    public_key_users[username] <span style="color:#fe8019">=</span> public_key
+</span></span><span style="display:flex;"><span>    public_key_users[username] <span style="color:#ff7b72;font-weight:bold">=</span> public_key
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    signature <span style="color:#fe8019">=</span> generate_signature(<span style="color:#fabd2f">str</span>({username : [users[username][<span style="color:#d3869b">1</span>]]}), private_key)
+</span></span><span style="display:flex;"><span>    signature <span style="color:#ff7b72;font-weight:bold">=</span> generate_signature(str({username : [users[username][<span style="color:#a5d6ff">1</span>]]}), private_key)
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;news&#39;</span>, token<span style="color:#fe8019">=</span>signature, message<span style="color:#fe8019">=</span>base64<span style="color:#fe8019">.</span>b64encode(<span style="color:#fabd2f">str</span>({username : [users[username][<span style="color:#d3869b">1</span>]]})<span style="color:#fe8019">.</span>encode())<span style="color:#fe8019">.</span>decode()))
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> redirect(url_for(<span style="color:#a5d6ff">&#39;news&#39;</span>, token<span style="color:#ff7b72;font-weight:bold">=</span>signature, message<span style="color:#ff7b72;font-weight:bold">=</span>base64<span style="color:#ff7b72;font-weight:bold">.</span>b64encode(str({username : [users[username][<span style="color:#a5d6ff">1</span>]]})<span style="color:#ff7b72;font-weight:bold">.</span>encode())<span style="color:#ff7b72;font-weight:bold">.</span>decode()))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/news&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;GET&#39;</span>])
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">news</span>():
-</span></span><span style="display:flex;"><span>    signature <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>args<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;token&#39;</span>)
-</span></span><span style="display:flex;"><span>    message <span style="color:#fe8019">=</span> base64<span style="color:#fe8019">.</span>b64decode(request<span style="color:#fe8019">.</span>args<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;message&#39;</span>))<span style="color:#fe8019">.</span>decode()
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">@app.route</span>(<span style="color:#a5d6ff">&#39;/news&#39;</span>, methods<span style="color:#ff7b72;font-weight:bold">=</span>[<span style="color:#a5d6ff">&#39;GET&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">news</span>():
+</span></span><span style="display:flex;"><span>    signature <span style="color:#ff7b72;font-weight:bold">=</span> request<span style="color:#ff7b72;font-weight:bold">.</span>args<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#a5d6ff">&#39;token&#39;</span>)
+</span></span><span style="display:flex;"><span>    message <span style="color:#ff7b72;font-weight:bold">=</span> base64<span style="color:#ff7b72;font-weight:bold">.</span>b64decode(request<span style="color:#ff7b72;font-weight:bold">.</span>args<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#a5d6ff">&#39;message&#39;</span>))<span style="color:#ff7b72;font-weight:bold">.</span>decode()
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    message <span style="color:#fe8019">=</span> json<span style="color:#fe8019">.</span>loads(message<span style="color:#fe8019">.</span>replace(<span style="color:#b8bb26">&#34;&#39;&#34;</span>, <span style="color:#b8bb26">&#39;&#34;&#39;</span>)<span style="color:#fe8019">.</span>replace(<span style="color:#b8bb26">&#34;False&#34;</span>, <span style="color:#b8bb26">&#34;false&#34;</span>)<span style="color:#fe8019">.</span>replace(<span style="color:#b8bb26">&#34;True&#34;</span>, <span style="color:#b8bb26">&#34;true&#34;</span>))
+</span></span><span style="display:flex;"><span>    message <span style="color:#ff7b72;font-weight:bold">=</span> json<span style="color:#ff7b72;font-weight:bold">.</span>loads(message<span style="color:#ff7b72;font-weight:bold">.</span>replace(<span style="color:#a5d6ff">&#34;&#39;&#34;</span>, <span style="color:#a5d6ff">&#39;&#34;&#39;</span>)<span style="color:#ff7b72;font-weight:bold">.</span>replace(<span style="color:#a5d6ff">&#34;False&#34;</span>, <span style="color:#a5d6ff">&#34;false&#34;</span>)<span style="color:#ff7b72;font-weight:bold">.</span>replace(<span style="color:#a5d6ff">&#34;True&#34;</span>, <span style="color:#a5d6ff">&#34;true&#34;</span>))
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    username <span style="color:#fe8019">=</span> <span style="color:#fabd2f">list</span>(message<span style="color:#fe8019">.</span>keys())[<span style="color:#d3869b">0</span>]
-</span></span><span style="display:flex;"><span>    subscribe <span style="color:#fe8019">=</span> <span style="color:#fabd2f">list</span>(message<span style="color:#fe8019">.</span>values())[<span style="color:#d3869b">0</span>][<span style="color:#d3869b">0</span>]
+</span></span><span style="display:flex;"><span>    username <span style="color:#ff7b72;font-weight:bold">=</span> list(message<span style="color:#ff7b72;font-weight:bold">.</span>keys())[<span style="color:#a5d6ff">0</span>]
+</span></span><span style="display:flex;"><span>    subscribe <span style="color:#ff7b72;font-weight:bold">=</span> list(message<span style="color:#ff7b72;font-weight:bold">.</span>values())[<span style="color:#a5d6ff">0</span>][<span style="color:#a5d6ff">0</span>]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> signature:
-</span></span><span style="display:flex;"><span>        is_sign <span style="color:#fe8019">=</span> verify_signature(<span style="color:#fabd2f">str</span>(message), public_key_users[username], signature)
-</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> is_sign:
-</span></span><span style="display:flex;"><span>            <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;news.html&#39;</span>, username<span style="color:#fe8019">=</span>username, subscribe<span style="color:#fe8019">=</span>subscribe)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> signature:
+</span></span><span style="display:flex;"><span>        is_sign <span style="color:#ff7b72;font-weight:bold">=</span> verify_signature(str(message), public_key_users[username], signature)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> is_sign:
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> render_template(<span style="color:#a5d6ff">&#39;news.html&#39;</span>, username<span style="color:#ff7b72;font-weight:bold">=</span>username, subscribe<span style="color:#ff7b72;font-weight:bold">=</span>subscribe)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;unauthorized&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> redirect(url_for(<span style="color:#a5d6ff">&#39;login&#39;</span>, reason<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#39;unauthorized&#39;</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/login&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;GET&#39;</span>])
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">show_login</span>():
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Extract the reason from the query parameters</span>
-</span></span><span style="display:flex;"><span>    reason <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>args<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;reason&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">@app.route</span>(<span style="color:#a5d6ff">&#39;/login&#39;</span>, methods<span style="color:#ff7b72;font-weight:bold">=</span>[<span style="color:#a5d6ff">&#39;GET&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">show_login</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic"># Extract the reason from the query parameters</span>
+</span></span><span style="display:flex;"><span>    reason <span style="color:#ff7b72;font-weight:bold">=</span> request<span style="color:#ff7b72;font-weight:bold">.</span>args<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#a5d6ff">&#39;reason&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Display a pop-up message based on the reason</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> reason <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;unknown_user&#39;</span>:
-</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Unknown user. Please check your credentials.&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">elif</span> reason <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;incorrect_password&#39;</span>:
-</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Incorrect password. Please try again.&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">elif</span> reason <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;unauthorized&#39;</span>:
-</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Unauthorized access. Please log in.&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">else</span>:
-</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#fe8019">=</span> <span style="color:#fe8019">None</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic"># Display a pop-up message based on the reason</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> reason <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">&#39;unknown_user&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#34;Unknown user. Please check your credentials.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">elif</span> reason <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">&#39;incorrect_password&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#34;Incorrect password. Please try again.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">elif</span> reason <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">&#39;unauthorized&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#34;Unauthorized access. Please log in.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">else</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#79c0ff">None</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;login.html&#39;</span>, pop_up_message<span style="color:#fe8019">=</span>pop_up_message)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> render_template(<span style="color:#a5d6ff">&#39;login.html&#39;</span>, pop_up_message<span style="color:#ff7b72;font-weight:bold">=</span>pop_up_message)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b8bb26">&#39;/create_user&#39;</span>, methods<span style="color:#fe8019">=</span>[<span style="color:#b8bb26">&#39;POST&#39;</span>])
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">create_user</span>():
-</span></span><span style="display:flex;"><span>    new_username <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;new_username&#39;</span>)
-</span></span><span style="display:flex;"><span>    new_password <span style="color:#fe8019">=</span> request<span style="color:#fe8019">.</span>form<span style="color:#fe8019">.</span>get(<span style="color:#b8bb26">&#39;new_password&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#d2a8ff;font-weight:bold">@app.route</span>(<span style="color:#a5d6ff">&#39;/create_user&#39;</span>, methods<span style="color:#ff7b72;font-weight:bold">=</span>[<span style="color:#a5d6ff">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">create_user</span>():
+</span></span><span style="display:flex;"><span>    new_username <span style="color:#ff7b72;font-weight:bold">=</span> request<span style="color:#ff7b72;font-weight:bold">.</span>form<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#a5d6ff">&#39;new_username&#39;</span>)
+</span></span><span style="display:flex;"><span>    new_password <span style="color:#ff7b72;font-weight:bold">=</span> request<span style="color:#ff7b72;font-weight:bold">.</span>form<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#a5d6ff">&#39;new_password&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Check if the username already exists</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">if</span> new_username <span style="color:#fe8019">in</span> users:
-</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> redirect(url_for(<span style="color:#b8bb26">&#39;login&#39;</span>, reason<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;username_exists&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic"># Check if the username already exists</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> new_username <span style="color:#ff7b72;font-weight:bold">in</span> users:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> redirect(url_for(<span style="color:#a5d6ff">&#39;login&#39;</span>, reason<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#39;username_exists&#39;</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Add the new user to the dictionary</span>
-</span></span><span style="display:flex;"><span>    users[new_username] <span style="color:#fe8019">=</span> [new_password, <span style="color:#fe8019">False</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic"># Add the new user to the dictionary</span>
+</span></span><span style="display:flex;"><span>    users[new_username] <span style="color:#ff7b72;font-weight:bold">=</span> [new_password, <span style="color:#79c0ff">False</span>]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic"># Display a pop-up message</span>
-</span></span><span style="display:flex;"><span>    pop_up_message <span style="color:#fe8019">=</span> <span style="color:#b8bb26">&#34;Thanks for registering! The admin will soon activate your profile if you have subscribed.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic"># Display a pop-up message</span>
+</span></span><span style="display:flex;"><span>    pop_up_message <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#34;Thanks for registering! The admin will soon activate your profile if you have subscribed.&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> render_template(<span style="color:#b8bb26">&#39;login.html&#39;</span>, pop_up_message<span style="color:#fe8019">=</span>pop_up_message)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> render_template(<span style="color:#a5d6ff">&#39;login.html&#39;</span>, pop_up_message<span style="color:#ff7b72;font-weight:bold">=</span>pop_up_message)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">generate_key</span>(username):
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">generate_key</span>(username):
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>	length <span style="color:#fe8019">=</span> <span style="color:#fe8019">lambda</span> x : <span style="color:#fabd2f">len</span>(<span style="color:#fabd2f">bin</span>(x)[<span style="color:#d3869b">2</span>:])
+</span></span><span style="display:flex;"><span>	length <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> x : len(bin(x)[<span style="color:#a5d6ff">2</span>:])
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	s <span style="color:#fe8019">=</span> bytes_to_long(username<span style="color:#fe8019">.</span>encode())
+</span></span><span style="display:flex;"><span>	s <span style="color:#ff7b72;font-weight:bold">=</span> bytes_to_long(username<span style="color:#ff7b72;font-weight:bold">.</span>encode())
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	random<span style="color:#fe8019">.</span>seed(s)
+</span></span><span style="display:flex;"><span>	random<span style="color:#ff7b72;font-weight:bold">.</span>seed(s)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	e <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x1001</span>
-</span></span><span style="display:flex;"><span>	phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>	e <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0x1001</span>
+</span></span><span style="display:flex;"><span>	phi <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">while</span> math<span style="color:#fe8019">.</span>gcd(phi,e) <span style="color:#fe8019">!=</span> <span style="color:#d3869b">1</span>:
-</span></span><span style="display:flex;"><span>		n <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
-</span></span><span style="display:flex;"><span>		factors <span style="color:#fe8019">=</span> []
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">while</span> math<span style="color:#ff7b72;font-weight:bold">.</span>gcd(phi,e) <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#a5d6ff">1</span>:
+</span></span><span style="display:flex;"><span>		n <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>		factors <span style="color:#ff7b72;font-weight:bold">=</span> []
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">while</span> length(n) <span style="color:#fe8019">&lt;</span> <span style="color:#d3869b">2048</span>:
-</span></span><span style="display:flex;"><span>			temp_n <span style="color:#fe8019">=</span> random<span style="color:#fe8019">.</span>getrandbits(<span style="color:#d3869b">48</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#fe8019">if</span> isPrime(temp_n):
-</span></span><span style="display:flex;"><span>				n <span style="color:#fe8019">*=</span> temp_n
-</span></span><span style="display:flex;"><span>				factors<span style="color:#fe8019">.</span>append(temp_n)
-</span></span><span style="display:flex;"><span>		phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">for</span> f <span style="color:#fe8019">in</span> factors:
-</span></span><span style="display:flex;"><span>			phi <span style="color:#fe8019">*=</span> (f <span style="color:#fe8019">-</span> <span style="color:#d3869b">1</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">while</span> length(n) <span style="color:#ff7b72;font-weight:bold">&lt;</span> <span style="color:#a5d6ff">2048</span>:
+</span></span><span style="display:flex;"><span>			temp_n <span style="color:#ff7b72;font-weight:bold">=</span> random<span style="color:#ff7b72;font-weight:bold">.</span>getrandbits(<span style="color:#a5d6ff">48</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> isPrime(temp_n):
+</span></span><span style="display:flex;"><span>				n <span style="color:#ff7b72;font-weight:bold">*=</span> temp_n
+</span></span><span style="display:flex;"><span>				factors<span style="color:#ff7b72;font-weight:bold">.</span>append(temp_n)
+</span></span><span style="display:flex;"><span>		phi <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">for</span> f <span style="color:#ff7b72;font-weight:bold">in</span> factors:
+</span></span><span style="display:flex;"><span>			phi <span style="color:#ff7b72;font-weight:bold">*=</span> (f <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	d <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(e, <span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>, phi)
+</span></span><span style="display:flex;"><span>	d <span style="color:#ff7b72;font-weight:bold">=</span> pow(e, <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>, phi)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">return</span> (n,e), (n,d)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> (n,e), (n,d)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># A simple dictionary to store user credentials and subscription status</span>
-</span></span><span style="display:flex;"><span>users <span style="color:#fe8019">=</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#b8bb26">&#39;GCC&#39;</span>: [<span style="color:#b8bb26">&#39;securePassword&#39;</span>, <span style="color:#fe8019">False</span>]
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># A simple dictionary to store user credentials and subscription status</span>
+</span></span><span style="display:flex;"><span>users <span style="color:#ff7b72;font-weight:bold">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#39;GCC&#39;</span>: [<span style="color:#a5d6ff">&#39;securePassword&#39;</span>, <span style="color:#79c0ff">False</span>]
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>public_key_users <span style="color:#fe8019">=</span> {}
+</span></span><span style="display:flex;"><span>public_key_users <span style="color:#ff7b72;font-weight:bold">=</span> {}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">if</span> __name__ <span style="color:#fe8019">==</span> <span style="color:#b8bb26">&#39;__main__&#39;</span>:
-</span></span><span style="display:flex;"><span>    app<span style="color:#fe8019">.</span>run(debug<span style="color:#fe8019">=</span><span style="color:#fe8019">False</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">if</span> __name__ <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    app<span style="color:#ff7b72;font-weight:bold">.</span>run(debug<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#79c0ff">False</span>)
 </span></span></code></pre></div><p>There is a kind of handmade database to manage users.</p>
 <p>The DB got the users, its password, a boolean (True or False) for describing the admin role and the public key of the users.</p>
-<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>users <span style="color:#fe8019">=</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#b8bb26">&#39;GCC&#39;</span>: [<span style="color:#b8bb26">&#39;securePassword&#39;</span>, <span style="color:#fe8019">False</span>]
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>users <span style="color:#ff7b72;font-weight:bold">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#39;GCC&#39;</span>: [<span style="color:#a5d6ff">&#39;securePassword&#39;</span>, <span style="color:#79c0ff">False</span>]
 </span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>public_key_users <span style="color:#fe8019">=</span> {}
+</span></span><span style="display:flex;"><span>public_key_users <span style="color:#ff7b72;font-weight:bold">=</span> {}
 </span></span></code></pre></div><p>When creating an user, it is appended to the dict of users :</p>
 <p><code>users[new_username] = [new_password, False]</code></p>
 <p>So when creating an &ldquo;test1&rdquo; account with &ldquo;password&rdquo; as password :</p>
@@ -236,33 +236,33 @@ users[&ldquo;test1&rdquo;][1] = False</p>
 <p>public_key_users[test] = <code>its public key</code></p>
 <p>The public and private keys are generated with the random module and a seed based on the username. So knowing the username we can recover the public key and ce private key.</p>
 <p>We can just reuse the challenge <code>generate_key</code> function for that :</p>
-<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">generate_key</span>(username):
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">generate_key</span>(username):
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>	length <span style="color:#fe8019">=</span> <span style="color:#fe8019">lambda</span> x : <span style="color:#fabd2f">len</span>(<span style="color:#fabd2f">bin</span>(x)[<span style="color:#d3869b">2</span>:])
+</span></span><span style="display:flex;"><span>	length <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> x : len(bin(x)[<span style="color:#a5d6ff">2</span>:])
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	s <span style="color:#fe8019">=</span> bytes_to_long(username<span style="color:#fe8019">.</span>encode())
+</span></span><span style="display:flex;"><span>	s <span style="color:#ff7b72;font-weight:bold">=</span> bytes_to_long(username<span style="color:#ff7b72;font-weight:bold">.</span>encode())
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	random<span style="color:#fe8019">.</span>seed(s)
+</span></span><span style="display:flex;"><span>	random<span style="color:#ff7b72;font-weight:bold">.</span>seed(s)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	e <span style="color:#fe8019">=</span> <span style="color:#d3869b">0x1001</span>
-</span></span><span style="display:flex;"><span>	phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>	e <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0x1001</span>
+</span></span><span style="display:flex;"><span>	phi <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">while</span> math<span style="color:#fe8019">.</span>gcd(phi,e) <span style="color:#fe8019">!=</span> <span style="color:#d3869b">1</span>:
-</span></span><span style="display:flex;"><span>		n <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
-</span></span><span style="display:flex;"><span>		factors <span style="color:#fe8019">=</span> []
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">while</span> math<span style="color:#ff7b72;font-weight:bold">.</span>gcd(phi,e) <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#a5d6ff">1</span>:
+</span></span><span style="display:flex;"><span>		n <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>		factors <span style="color:#ff7b72;font-weight:bold">=</span> []
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">while</span> length(n) <span style="color:#fe8019">&lt;</span> <span style="color:#d3869b">2048</span>:
-</span></span><span style="display:flex;"><span>			temp_n <span style="color:#fe8019">=</span> random<span style="color:#fe8019">.</span>getrandbits(<span style="color:#d3869b">48</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#fe8019">if</span> isPrime(temp_n):
-</span></span><span style="display:flex;"><span>				n <span style="color:#fe8019">*=</span> temp_n
-</span></span><span style="display:flex;"><span>				factors<span style="color:#fe8019">.</span>append(temp_n)
-</span></span><span style="display:flex;"><span>		phi <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#fe8019">for</span> f <span style="color:#fe8019">in</span> factors:
-</span></span><span style="display:flex;"><span>			phi <span style="color:#fe8019">*=</span> (f <span style="color:#fe8019">-</span> <span style="color:#d3869b">1</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">while</span> length(n) <span style="color:#ff7b72;font-weight:bold">&lt;</span> <span style="color:#a5d6ff">2048</span>:
+</span></span><span style="display:flex;"><span>			temp_n <span style="color:#ff7b72;font-weight:bold">=</span> random<span style="color:#ff7b72;font-weight:bold">.</span>getrandbits(<span style="color:#a5d6ff">48</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> isPrime(temp_n):
+</span></span><span style="display:flex;"><span>				n <span style="color:#ff7b72;font-weight:bold">*=</span> temp_n
+</span></span><span style="display:flex;"><span>				factors<span style="color:#ff7b72;font-weight:bold">.</span>append(temp_n)
+</span></span><span style="display:flex;"><span>		phi <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">for</span> f <span style="color:#ff7b72;font-weight:bold">in</span> factors:
+</span></span><span style="display:flex;"><span>			phi <span style="color:#ff7b72;font-weight:bold">*=</span> (f <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	d <span style="color:#fe8019">=</span> <span style="color:#fabd2f">pow</span>(e, <span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>, phi)
+</span></span><span style="display:flex;"><span>	d <span style="color:#ff7b72;font-weight:bold">=</span> pow(e, <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>, phi)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#fe8019">return</span> (n,e), (n,d)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> (n,e), (n,d)
 </span></span></code></pre></div><h1 id="solving">Solving</h1>
 <p>Now we know how to recover the private key, the steps for solving are :</p>
 <ul>

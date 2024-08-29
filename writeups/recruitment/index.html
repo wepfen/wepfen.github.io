@@ -74,38 +74,38 @@ I used a VM with debian to solve this but is possible on any linux distro (maybe
 <h2 id="reading-the-smart-contract">Reading the smart contract</h2>
 <p>We can apply by interacting with the function <code>application(uint16 input1, string memory input2)</code> by supplying two parameters.</p>
 <p>Reading the contract <code>Recruitment.sol</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">function</span> <span style="color:#fabd2f">application</span>(<span style="color:#fabd2f">uint16</span> input1, <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> input2) <span style="color:#fe8019">public</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// In order to be eligible, you must match the following set of skills:
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#928374;font-style:italic">// - Hacker
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#928374;font-style:italic">// - Stealth Specialist
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#928374;font-style:italic">// - Engineer
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#928374;font-style:italic">// - Demolition Specialist
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// Let&#39;s start!
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#928374;font-style:italic">// Some preliminary checks: we do not hire unlucky people.
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fabd2f">require</span>(<span style="color:#fabd2f">block</span>.<span style="color:#fabd2f">timestamp</span> <span style="color:#fe8019">%</span> <span style="color:#d3869b">2</span> <span style="color:#fe8019">==</span> <span style="color:#d3869b">0</span>, <span style="color:#b8bb26">&#34;Natural selection people say..&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">application</span>(<span style="color:#ff7b72">uint16</span> input1, <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> input2) <span style="color:#ff7b72">public</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// In order to be eligible, you must match the following set of skills:
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#8b949e;font-style:italic">// - Hacker
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#8b949e;font-style:italic">// - Stealth Specialist
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#8b949e;font-style:italic">// - Engineer
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#8b949e;font-style:italic">// - Demolition Specialist
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Let&#39;s start!
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#8b949e;font-style:italic">// Some preliminary checks: we do not hire unlucky people.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(block.timestamp <span style="color:#ff7b72;font-weight:bold">%</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">0</span>, <span style="color:#a5d6ff">&#34;Natural selection people say..&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// CAPTCHA (Completely Automated Public Turing test to tell Computers and Humans Apart)
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fabd2f">require</span>(<span style="color:#fabd2f">tx</span>.<span style="color:#fabd2f">origin</span> <span style="color:#fe8019">==</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#b8bb26">&#34;Are you even human?&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// CAPTCHA (Completely Automated Public Turing test to tell Computers and Humans Apart)
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(tx.origin <span style="color:#ff7b72;font-weight:bold">==</span> msg.sender, <span style="color:#a5d6ff">&#34;Are you even human?&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// Now let&#39;s start for real.
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#928374;font-style:italic">// 1. Are you an hacker?
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>           <span style="color:#fabd2f">require</span>(input1 <span style="color:#fe8019">==</span> <span style="color:#d3869b">1337</span>, <span style="color:#b8bb26">&#34;You lack hacking skills.&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// yeah you definitely are.
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// 2. Are you stealthy?
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fabd2f">require</span>(<span style="color:#fabd2f">block</span>.<span style="color:#fabd2f">number</span> <span style="color:#fe8019">&lt;</span> <span style="color:#d3869b">20</span>, <span style="color:#b8bb26">&#34;You lack stealth skills.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Now let&#39;s start for real.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#8b949e;font-style:italic">// 1. Are you an hacker?
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>           require(input1 <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">1337</span>, <span style="color:#a5d6ff">&#34;You lack hacking skills.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// yeah you definitely are.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 2. Are you stealthy?
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(block.number <span style="color:#ff7b72;font-weight:bold">&lt;</span> <span style="color:#a5d6ff">20</span>, <span style="color:#a5d6ff">&#34;You lack stealth skills.&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// 3. Are you an engineer?
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fabd2f">require</span>(<span style="color:#fabd2f">gasleft</span>() <span style="color:#fe8019">&lt;=</span> <span style="color:#d3869b">50000</span>, <span style="color:#b8bb26">&#34;You lack engineering skills.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 3. Are you an engineer?
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(gasleft() <span style="color:#ff7b72;font-weight:bold">&lt;=</span> <span style="color:#a5d6ff">50000</span>, <span style="color:#a5d6ff">&#34;You lack engineering skills.&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// 4. Are you a demolition specialist?
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fabd2f">require</span>(<span style="color:#fabd2f">keccak256</span>(<span style="color:#fabd2f">abi</span>.<span style="color:#fabd2f">encodePacked</span>(input2)) <span style="color:#fe8019">==</span> <span style="color:#fabd2f">keccak256</span>(<span style="color:#fabd2f">abi</span>.<span style="color:#fabd2f">encodePacked</span>(<span style="color:#b8bb26">&#34;BOOM&#34;</span>)), <span style="color:#b8bb26">&#34;You lack demolition skills&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 4. Are you a demolition specialist?
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(keccak256(abi.encodePacked(input2)) <span style="color:#ff7b72;font-weight:bold">==</span> keccak256(abi.encodePacked(<span style="color:#a5d6ff">&#34;BOOM&#34;</span>)), <span style="color:#a5d6ff">&#34;You lack demolition skills&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// Congratulations! Welcome to the crew.
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        crew[<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>] <span style="color:#fe8019">=</span> <span style="color:#fe8019">true</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#928374;font-style:italic">// here is your reward :)
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>        <span style="color:#fe8019">payable</span>(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>).<span style="color:#fabd2f">transfer</span>(<span style="color:#d3869b">1</span> <span style="color:#fe8019">wei</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Congratulations! Welcome to the crew.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        crew[msg.sender] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#79c0ff">true</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// here is your reward :)
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">payable</span>(msg.sender).transfer(<span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">wei</span>);
 </span></span><span style="display:flex;"><span>        }
 </span></span></code></pre></div><p>We understand that to get recruited we need to:</p>
 <ul>

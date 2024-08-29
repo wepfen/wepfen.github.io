@@ -63,86 +63,86 @@ Source files In the post-apocalyptic wasteland, the remnants of human and machin
 <h1 id="recon">Recon</h1>
 <h2 id="code-reading">Code reading</h2>
 <p>NotADemocraticElection.sol</p>
-<div class="highlight"><pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#fe8019">pragma solidity</span> <span style="color:#d3869b">0</span>.<span style="color:#d3869b">8</span>.<span style="color:#d3869b">25</span>;
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">25</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#fe8019">contract</span> NotADemocraticElection {
-</span></span><span style="display:flex;"><span>    <span style="color:#928374;font-style:italic">// ****************************************************
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>    <span style="color:#928374;font-style:italic">// ******* NOTE: THIS NOT A DEMOCRATIC ELECTION *******
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>    <span style="color:#928374;font-style:italic">// ****************************************************
-</span></span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">uint256</span> <span style="color:#fe8019">constant</span> TARGET_VOTES <span style="color:#fe8019">=</span> <span style="color:#d3869b">1000</span>e18;
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">NotADemocraticElection</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">// ****************************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    <span style="color:#8b949e;font-style:italic">// ******* NOTE: THIS NOT A DEMOCRATIC ELECTION *******
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    <span style="color:#8b949e;font-style:italic">// ****************************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">uint256</span> <span style="color:#ff7b72">constant</span> TARGET_VOTES <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1000</span>e18;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">struct</span> Party {
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">string</span>  fullname;
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> totalvotes;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">struct</span> <span style="color:#f0883e;font-weight:bold">Party</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">string</span>  fullname;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> totalvotes;
 </span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">struct</span> Voter {
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> weight;
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> addr;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">struct</span> <span style="color:#f0883e;font-weight:bold">Voter</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> weight;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> addr;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">bytes3</span> _id <span style="color:#fe8019">=&gt;</span> Party) <span style="color:#fe8019">public</span> parties;
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">bytes</span> _sig <span style="color:#fe8019">=&gt;</span> Voter) <span style="color:#fe8019">public</span> voters;
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">string</span> _name <span style="color:#fe8019">=&gt;</span> <span style="color:#fe8019">mapping</span>(<span style="color:#fabd2f">string</span> _surname <span style="color:#fe8019">=&gt;</span> <span style="color:#fabd2f">address</span> _addr)) <span style="color:#fe8019">public</span> uniqueVoters;
-</span></span><span style="display:flex;"><span>    <span style="color:#fabd2f">bytes3</span> <span style="color:#fe8019">public</span> winner;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">mapping</span>(<span style="color:#ff7b72">bytes3</span> _id <span style="color:#ff7b72;font-weight:bold">=&gt;</span> Party) <span style="color:#ff7b72">public</span> parties;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">mapping</span>(<span style="color:#ff7b72">bytes</span> _sig <span style="color:#ff7b72;font-weight:bold">=&gt;</span> Voter) <span style="color:#ff7b72">public</span> voters;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">mapping</span>(<span style="color:#ff7b72">string</span> _name <span style="color:#ff7b72;font-weight:bold">=&gt;</span> <span style="color:#ff7b72">mapping</span>(<span style="color:#ff7b72">string</span> _surname <span style="color:#ff7b72;font-weight:bold">=&gt;</span> <span style="color:#ff7b72">address</span> _addr)) <span style="color:#ff7b72">public</span> uniqueVoters;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">bytes3</span> <span style="color:#ff7b72">public</span> winner;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> Voted(
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> _voter,
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes3</span>  _party
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span> <span style="color:#f0883e;font-weight:bold">Voted</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> _voter,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes3</span>  _party
 </span></span><span style="display:flex;"><span>    );
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> VoterDeposited(
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">address</span> _voter,
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> _weight
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span> <span style="color:#f0883e;font-weight:bold">VoterDeposited</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> _voter,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> _weight
 </span></span><span style="display:flex;"><span>    );
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">event</span> ElectionWinner(
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes3</span> _party
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span> <span style="color:#f0883e;font-weight:bold">ElectionWinner</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes3</span> _party
 </span></span><span style="display:flex;"><span>    );
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">constructor</span>(
-</span></span><span style="display:flex;"><span>       <span style="color:#fabd2f">bytes3</span> _partyAsymbol , <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _partyAfullname,
-</span></span><span style="display:flex;"><span>       <span style="color:#fabd2f">bytes3</span> _partyBsymbol , <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _partyBfullname
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>(
+</span></span><span style="display:flex;"><span>       <span style="color:#ff7b72">bytes3</span> _partyAsymbol , <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _partyAfullname,
+</span></span><span style="display:flex;"><span>       <span style="color:#ff7b72">bytes3</span> _partyBsymbol , <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _partyBfullname
 </span></span><span style="display:flex;"><span>    ) {
-</span></span><span style="display:flex;"><span>        parties[_partyAsymbol].fullname <span style="color:#fe8019">=</span> _partyAfullname;
-</span></span><span style="display:flex;"><span>        parties[_partyBsymbol].fullname <span style="color:#fe8019">=</span> _partyBfullname;
+</span></span><span style="display:flex;"><span>        parties[_partyAsymbol].fullname <span style="color:#ff7b72;font-weight:bold">=</span> _partyAfullname;
+</span></span><span style="display:flex;"><span>        parties[_partyBsymbol].fullname <span style="color:#ff7b72;font-weight:bold">=</span> _partyBfullname;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">getVotesCount</span>(<span style="color:#fabd2f">bytes3</span> _party) <span style="color:#fe8019">public</span> <span style="color:#fe8019">view</span> <span style="color:#fe8019">returns</span> (<span style="color:#fabd2f">uint256</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> parties[_party].totalvotes;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">getVotesCount</span>(<span style="color:#ff7b72">bytes3</span> _party) <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">view</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">uint256</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> parties[_party].totalvotes;
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">getVoterSig</span>(<span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _name, <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _surname) <span style="color:#fe8019">public</span> <span style="color:#fe8019">pure</span> <span style="color:#fe8019">returns</span> (<span style="color:#fabd2f">bytes</span> <span style="color:#fe8019">memory</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">return</span> <span style="color:#fabd2f">abi</span>.<span style="color:#fabd2f">encodePacked</span>(_name, _surname);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">getVoterSig</span>(<span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _name, <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _surname) <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">pure</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bytes</span> <span style="color:#ff7b72">memory</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> abi.encodePacked(_name, _surname);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">checkWinner</span>(<span style="color:#fabd2f">bytes3</span> _party) <span style="color:#fe8019">public</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#fe8019">if</span> (parties[_party].totalvotes <span style="color:#fe8019">&gt;=</span> TARGET_VOTES) {
-</span></span><span style="display:flex;"><span>            winner <span style="color:#fe8019">=</span> _party; 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">checkWinner</span>(<span style="color:#ff7b72">bytes3</span> _party) <span style="color:#ff7b72">public</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> (parties[_party].totalvotes <span style="color:#ff7b72;font-weight:bold">&gt;=</span> TARGET_VOTES) {
+</span></span><span style="display:flex;"><span>            winner <span style="color:#ff7b72;font-weight:bold">=</span> _party; 
 </span></span><span style="display:flex;"><span>            emit ElectionWinner(_party);
 </span></span><span style="display:flex;"><span>        }
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">depositVoteCollateral</span>(<span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _name, <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _surname) <span style="color:#fe8019">external</span> <span style="color:#fe8019">payable</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(uniqueVoters[_name][_surname] <span style="color:#fe8019">==</span> <span style="color:#fabd2f">address</span>(<span style="color:#d3869b">0</span>), <span style="color:#b8bb26">&#34;Already deposited&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">depositVoteCollateral</span>(<span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _name, <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _surname) <span style="color:#ff7b72">external</span> <span style="color:#ff7b72">payable</span> {
+</span></span><span style="display:flex;"><span>        require(uniqueVoters[_name][_surname] <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>), <span style="color:#a5d6ff">&#34;Already deposited&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes</span> <span style="color:#fe8019">memory</span> voterSig <span style="color:#fe8019">=</span> getVoterSig(_name, _surname);
-</span></span><span style="display:flex;"><span>        voters[voterSig].weight <span style="color:#fe8019">+=</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">value</span>;
-</span></span><span style="display:flex;"><span>        uniqueVoters[_name][_surname] <span style="color:#fe8019">=</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes</span> <span style="color:#ff7b72">memory</span> voterSig <span style="color:#ff7b72;font-weight:bold">=</span> getVoterSig(_name, _surname);
+</span></span><span style="display:flex;"><span>        voters[voterSig].weight <span style="color:#ff7b72;font-weight:bold">+=</span> msg.value;
+</span></span><span style="display:flex;"><span>        uniqueVoters[_name][_surname] <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        emit VoterDeposited(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">value</span>);
+</span></span><span style="display:flex;"><span>        emit VoterDeposited(msg.sender, msg.value);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">function</span> <span style="color:#fabd2f">vote</span>(
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes3</span> _party,
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _name,
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">string</span> <span style="color:#fe8019">memory</span> _surname
-</span></span><span style="display:flex;"><span>    ) <span style="color:#fe8019">public</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">require</span>(uniqueVoters[_name][_surname] <span style="color:#fe8019">==</span> <span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, <span style="color:#b8bb26">&#34;You cannot vote on behalf of others.&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">vote</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes3</span> _party,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _name,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">memory</span> _surname
+</span></span><span style="display:flex;"><span>    ) <span style="color:#ff7b72">public</span> {
+</span></span><span style="display:flex;"><span>        require(uniqueVoters[_name][_surname] <span style="color:#ff7b72;font-weight:bold">==</span> msg.sender, <span style="color:#a5d6ff">&#34;You cannot vote on behalf of others.&#34;</span>);
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">bytes</span> <span style="color:#fe8019">memory</span> voterSig <span style="color:#fe8019">=</span> getVoterSig(_name, _surname);
-</span></span><span style="display:flex;"><span>        <span style="color:#fabd2f">uint256</span> voterWeight <span style="color:#fe8019">=</span> voters[voterSig].weight <span style="color:#fe8019">==</span> <span style="color:#d3869b">0</span> <span style="color:#fe8019">?</span> <span style="color:#d3869b">1</span> <span style="color:#fe8019">:</span> voters[voterSig].weight;
-</span></span><span style="display:flex;"><span>        parties[_party].totalvotes <span style="color:#fe8019">+=</span> <span style="color:#d3869b">1</span> <span style="color:#fe8019">*</span> voterWeight;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes</span> <span style="color:#ff7b72">memory</span> voterSig <span style="color:#ff7b72;font-weight:bold">=</span> getVoterSig(_name, _surname);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> voterWeight <span style="color:#ff7b72;font-weight:bold">=</span> voters[voterSig].weight <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">0</span> <span style="color:#ff7b72;font-weight:bold">?</span> <span style="color:#a5d6ff">1</span> <span style="color:#ff7b72;font-weight:bold">:</span> voters[voterSig].weight;
+</span></span><span style="display:flex;"><span>        parties[_party].totalvotes <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span> <span style="color:#ff7b72;font-weight:bold">*</span> voterWeight;
 </span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        emit Voted(<span style="color:#fabd2f">msg</span>.<span style="color:#fabd2f">sender</span>, _party);
+</span></span><span style="display:flex;"><span>        emit Voted(msg.sender, _party);
 </span></span><span style="display:flex;"><span>        checkWinner(_party);
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
