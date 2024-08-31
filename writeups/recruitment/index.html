@@ -43,12 +43,19 @@ Recon This challenge was my first blockchain challenge solved in CTF (except in 
         <aside >
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#reading-the-smart-contract">Reading the smart contract</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#getting-familiar-with-the-instance">Getting familiar with the instance</a></li>
-    <li><a href="#getting-recruited">Getting recruited</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#reading-the-smart-contract">Reading the smart contract</a></li>
+      </ul>
+    </li>
+    <li><a href="#solve">Solve</a>
+      <ul>
+        <li><a href="#getting-familiar-with-the-instance">Getting familiar with the instance</a></li>
+        <li><a href="#getting-recruited">Getting recruited</a></li>
+      </ul>
+    </li>
+    <li><a href="#ressources">Ressources</a></li>
   </ul>
 </nav>
         </aside>
@@ -157,7 +164,7 @@ ATTACKER=0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
 <p>To fill hacker and demolition skills we need to call the contract wit values: <code>1337</code> and <code>&quot;BOOM&quot;</code>.</p>
 </li>
 <li>
-<p>To fill the engineer skills we can set &ndash;gas-limit close to 50000 but above of it. I had got some trouble wtih this part and thanks to HTB support i found that my gas limit was to low (50000). So i send with &ndash;gas-value = 60000.</p>
+<p>To fill the engineer skills we can set &ndash;gas-limit close to 50000 but above of it. I had got some trouble wtih this part and thanks to HTB support i found that my gas limit was too low (50000). So i send with &ndash;gas-value = 60000.</p>
 </li>
 </ul>
 <p>Here is the final command:</p>

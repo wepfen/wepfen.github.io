@@ -44,18 +44,26 @@ Recon TL;DR So for solving i just have to :">
         <aside >
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#tldr">TL;DR</a></li>
-    <li><a href="#code">Code</a></li>
-    <li><a href="#interacting-with-the-instance">Interacting with the instance</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#casting-spells">Casting spells</a>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
       <ul>
-        <li><a href="#environment-variables">environment variables</a></li>
-        <li><a href="#foundrytoml">foundry.toml</a></li>
+        <li><a href="#tldr">TL;DR</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#interacting-with-the-instance">Interacting with the instance</a></li>
       </ul>
     </li>
+    <li><a href="#solve">Solve</a>
+      <ul>
+        <li><a href="#casting-spells">Casting spells</a>
+          <ul>
+            <li><a href="#environment-variables">environment variables</a></li>
+            <li><a href="#foundrytoml">foundry.toml</a></li>
+          </ul>
+        </li>
+        <li><a href="#getting-the-flag">Getting the flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#ressources">Ressources</a></li>
   </ul>
 </nav>
         </aside>
@@ -179,8 +187,8 @@ Setup contract  :  0x6224fF48Af65663fB8b10CF830ECAC6F75B674f6
 </code></pre><p>So now i got my address, my private key and the target address.</p>
 <h1 id="solve">Solve</h1>
 <h2 id="casting-spells">Casting spells</h2>
-<p>We will use foundry to solve and it&rsquo;s <strong>EXTREMELY</strong> useful <strong>cast</strong> command. Here is the doc: <a href="https://book.getfoundry.sh/reference/cli/cast.html">https://book.getfoundry.sh/reference/cli/cast.html</a>.</p>
-<p>With cast we can do everything we need: publishing a transaction, calling functions of contract WITHOUT publishing a transaction, doing data conversions, getting informations of blocs, getting transaction informations or even <strong>getting the bytecode of a contract</strong>.</p>
+<p>We will use foundry to solve and its <strong>EXTREMELY</strong> useful <strong>cast</strong> command. Here is the doc: <a href="https://book.getfoundry.sh/reference/cli/cast.html">https://book.getfoundry.sh/reference/cli/cast.html</a>.</p>
+<p>With cast we can do (almost) everything we need: publishing a transaction, calling functions of contract WITHOUT publishing a transaction, doing data conversions, getting informations of blocks, getting transaction informations or even <strong>getting the bytecode of a contract</strong>.</p>
 <p>Let&rsquo;s setup our envrionement:</p>
 <p>With foundry installed installed ( i use a debian VM for the challenges ), we will set up environment variable to make everything prettier and easier.</p>
 <h3 id="environment-variables">environment variables</h3>
@@ -200,6 +208,7 @@ ATTACKER=0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
 
 sepolia = &#34;http://94.237.61.244:38424&#34;
 </code></pre><p>Now we are ready to exploit.</p>
+<h2 id="getting-the-flag">Getting the flag</h2>
 <ol>
 <li>Let&rsquo;s get first the bytecode of the target contract with the <code>cast code</code> function:</li>
 </ol>
@@ -218,7 +227,7 @@ sepolia = &#34;http://94.237.61.244:38424&#34;
 <p>Copy the vault password in the json: <code>WeLoveNukaCola!!MoD-2024</code></p>
 </li>
 <li>
-<p>Interact with the <code>emercgency</code> command in the contract with the recovered password</p>
+<p>Interact with the <code>emergency</code> command in the contract with the recovered password</p>
 </li>
 </ol>
 <p><code>cast send $TARGET -r $RPC_URL -f $ATTACKER --private-key $PRIVATE_KEY  &quot;emergency(string)&quot; 'WeLoveNukaCola!!MoD-2024'</code></p>

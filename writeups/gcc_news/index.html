@@ -7,7 +7,7 @@
 Team : Phreaks2600
 Source files
 We&rsquo;ve launched a brand new website with lots of articles about CTF world. Can you access it as a subscriber?
-Introduction We need to connect ourself as an admin abusing of a weak cryptographic signing method to access to the news.
+Introduction We need to connect ourself as an admin abusing of a weak cryptographic signing method using a known seed to access to the subscriber restricted news page.
 Recon Interacting with the website Accessing to the webpage at its address, we can either login or see the news.">  
 
   <title>
@@ -43,8 +43,14 @@ Recon Interacting with the website Accessing to the webpage at its address, we c
         <aside >
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#interacting-with-the-website">Interacting with the website</a></li>
-    <li><a href="#reading-the-code">Reading the code</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#interacting-with-the-website">Interacting with the website</a></li>
+        <li><a href="#reading-the-code">Reading the code</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a></li>
   </ul>
 </nav>
         </aside>
@@ -63,7 +69,7 @@ Recon Interacting with the website Accessing to the webpage at its address, we c
 <p>We&rsquo;ve launched a brand new website with lots of articles about CTF world. Can you access it as a subscriber?</p>
 </blockquote>
 <h1 id="introduction">Introduction</h1>
-<p>We need to connect ourself as an admin abusing of a weak cryptographic signing method to access to the news.</p>
+<p>We need to connect ourself as an admin abusing of a weak cryptographic signing method using a known seed to access to the subscriber restricted news page.</p>
 <h1 id="recon">Recon</h1>
 <h2 id="interacting-with-the-website">Interacting with the website</h2>
 <p>Accessing to the webpage at its address, we can either login or see the news.</p>
