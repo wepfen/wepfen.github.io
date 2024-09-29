@@ -3,28 +3,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <meta name="description" content="
-Difficulty : Guessy - i didn&rsquo;t solved it so i&rsquo;m rude &gt;:(
-
-
-Team : Phreaks 2600
-
-
-source files
-
-
-Are you feeling down? Here is a list of exciting words for you, hope you&rsquo;ll feel better after this. (probably not)
-
-TL;DR
-
-we got a file ctr.txt which is a list of ciphertexts encrypted with the same key as the oracle we deal with
-we can send a plaintext to an oracle we send it back to us using AES CTR, so the counter will increase for the next plaintext but it resets if you reset the connexion
-send 16 null bytes and get the encrypted key that is used to get the plaintext or the ciphertext
-bruteforce the oracle until you can recover the ciphertext by xoring the encrypted key with a chipghertext from ctr.txt and not down the counter number (i.e: if we requested the oracle 50 times, note down 50)
-repeat till we got all the number and print their ascii values
-
-Introduction
-We need to decrypt a list ciphertext abusing of a AES-CTR nonce reuse oracle">  
+   <meta name="description" content="DefCamp quals 2024 ctr challenge writeup">  
 
   <title>
     
@@ -74,7 +53,8 @@ We need to decrypt a list ciphertext abusing of a AES-CTR nonce reuse oracle">
         </aside>
     
 
-    <blockquote>
+    <p>DefCamp quals 2024 ctr challenge writeup</p>
+<blockquote>
 <p>Difficulty : Guessy - i didn&rsquo;t solved it so i&rsquo;m rude &gt;:(</p>
 </blockquote>
 <blockquote>
@@ -291,7 +271,6 @@ I managed to vontinue bruteforcing and i get another one : <code>ExhilaratingExh
 <p>Now i understand why there were&rsquo;nt any source codes&hellip;</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>Please chall makers, respect our mental health and limit the guessing.</p>
-
 </article>
 
             </div>
