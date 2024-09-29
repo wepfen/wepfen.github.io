@@ -87,13 +87,12 @@
 <p>But when i open an other connexion with the server, i get the sames ciphretexts meaning the oracle reuse the same nonce.</p>
 <p>The key change at every encryption, but not the nonce. Knowing it is AES CTR as challenge name tells, we can understand why it changes.</p>
 <p>Here is an illustration:</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/CTR_encryption_2.svg/512px-CTR_encryption_2.svg.png" alt="AES CTR mode encryption"></p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/CTR_decryption_2.svg/512px-CTR_decryption_2.svg.png" alt="AES CTR mode decryption"></p>
+<p><img src="https://packt-type-cloud.s3.amazonaws.com/uploads/sites/2432/2018/05/a2d4636c-1043-4c4f-a344-fc83e5d728ba.png" alt="AES CTR mode encryption"></p>
 <p>So the keystream_n is the result of the encryption of a counter prepended by a nonce : <code>keystream_n = E(nonce+n)</code> where E() is AES encryption</p>
 <blockquote>
 <p>Note : Sometimes the nonce is reused or there is no nonce at all</p>
 </blockquote>
-<p>Then to get the ciphertext, we XOR the keystream with the ciphertext: <code>ciphertext = plaintext XOR keystream_n</code></p>
+<p>Then to get the plaintext, we XOR the keystream with the ciphertext: <code>plaintext = ciphertext XOR keystream_n</code></p>
 <blockquote>
 <p>Note : The keystream_n is the same for encryption and decryption</p>
 </blockquote>
