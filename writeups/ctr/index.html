@@ -75,7 +75,7 @@
 <li>repeat till we got all the number and print their ascii values</li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>We need to decrypt a list ciphertext abusing of a AES-CTR nonce reuse oracle</p>
+<p>We need to decrypt a list of ciphertexts abusing of a AES-CTR nonce reuse oracle</p>
 <h1 id="recon">Recon</h1>
 <h2 id="interacting-with-the-server">Interacting with the server</h2>
 <p>First of all, there weren&rsquo;t any source code &gt;:(</p>
@@ -83,8 +83,9 @@
 <p>next i can connect with <code>nc  IP PORT</code></p>
 <p>i receive this message : <code>Give me no more than 16 bs</code></p>
 <p>Which means &lsquo;send me 16 bytes or less&rsquo; (i don&rsquo;t know why the author use &lsquo;bs&rsquo; but it&rsquo;s kind of confusing)</p>
-<p>Then i send &lsquo;a&rsquo; and receive <code>02308264a4b8dc1a27520cbae8854516</code>. Then i resend &lsquo;a&rsquo; and get <code>cc528ba18b1c9089064d80148680e30e</code>.</p>
-<p>But when i open an other connexion with the server, i get the sames ciphretexts meaning the oracle reuse the same nonce.</p>
+<p>Then i send &lsquo;a&rsquo; and receive <code>02308264a4b8dc1a27520cbae8854516</code>.
+Then i resend &lsquo;a&rsquo; and get <code>cc528ba18b1c9089064d80148680e30e</code>.</p>
+<p>But when i open an other connexion with the server, i get the sames ciphertexts meaning the oracle reuse the same nonce.</p>
 <p>The key change at every encryption, but not the nonce. Knowing it is AES CTR as challenge name tells, we can understand why it changes.</p>
 <p>Here is an illustration:</p>
 <p><img src="https://packt-type-cloud.s3.amazonaws.com/uploads/sites/2432/2018/05/a2d4636c-1043-4c4f-a344-fc83e5d728ba.png" alt="AES CTR mode encryption"></p>
@@ -121,7 +122,7 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>print(xor(keystream, ciphertext)
 </span></span></code></pre></div><p>Spoiler, all we got is garbage.
-So my first reaction is &lsquo;what if first keystream is not for the first ciphertext but it is completely random?&rsquo;</p>
+So my first reaction is &lsquo;what if the first keystream is not for the first ciphertext but it is completely random?&rsquo;</p>
 <p>Then, the GOAT (but also my <a href="https://blog.lightender.fr/">teammate</a>) guessed that he can recover a plaintext by bruteforcing the oracle until he got a valid plaintext.</p>
 <p>So i implement this and i get my first plaintext : <code>ThrillingThrilli</code> at counter 67</p>
 <p>code :</p>
@@ -267,7 +268,7 @@ I managed to vontinue bruteforcing and i get another one : <code>ExhilaratingExh
 </span></span><span style="display:flex;"><span><span style="color:#ff7b72">if</span> __name__ <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">&#39;__main__&#39;</span>:
 </span></span><span style="display:flex;"><span>    decrypt_words()
 </span></span></code></pre></div><p>flag: <code>CTF{d6bd1954527310f3f831baa46582f553a9e780d8fa747637d25da1281c24edaf}</code></p>
-<p>Now i understand why there were&rsquo;nt any source codes&hellip;</p>
+<p>Now i understand why there weren&rsquo;t any source codes&hellip;</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>Please chall makers, respect our mental health and limit the guessing.</p>
 </article>
