@@ -185,7 +185,7 @@
 <p>A finite field is defined: <code>F = FiniteField(2**256 - 189)</code> also noted $ \mathbb{Z}/n\mathbb{Z} $  with $ n = 2^{256} -189 $. This is a notion of <a href="https://en.wikipedia.org/wiki/Modular_arithmetic">modular arithmetic</a> which implies that all the numbers we work with are modulo <code>n</code>. There&rsquo;s a <a href="https://cryptohack.org/courses/modular/ma0/">cryptohack</a> module that covers these notions.</p>
 </li>
 <li>
-<p>Next, we initialize a <code>polynomial</code> object in the finite field <code>F</code>: <code>R = PolynomialRing(F, &quot;x&quot;)</code>. It is polynom with one variable <code>x</code>, so we call it a <code>univariate polynomial</code>.</p>
+<p>Next, we initialize a <code>polynomial</code> object in the finite field <code>F</code>: <code>R = PolynomialRing(F, &quot;x&quot;)</code>. It is polynomial with one variable <code>x</code>, so we call it a <code>univariate polynomial</code>.</p>
 </li>
 <li>
 <p>A <code>H</code> function that only hashes given bytes and the <code>C</code> function slices a string into 4-byte chunks, hash each of them with <code>H</code> and add them to a list.</p>
@@ -208,11 +208,11 @@
 <br> 
 $$ P(X) = a_{n}X^{n} + a_{n-1}X^{n-1} + ... \ + a_{2}X^{2} + a_{1}X^{1} + a_{0} $$
 <br>
-<p>Basically, what we saw in high school was a polynomial:</p>
+<p>Basically, the quadratic equation we saw in high school was a polynomial:</p>
 <br>
 $$ ax^{2} + bx +c $$
 <br>
-<p>It&rsquo;s called a polynomial of <strong>second degree</strong>, because the degree of a polynomial is the largest integer <code>i</code> such that $ a_{i} \neq 0 $.</p>
+<p>It&rsquo;s called a <strong>second degree</strong> polynomial equation, because the degree of a polynomial is the largest integer <code>i</code> such that $ a_{i} \neq 0 $.</p>
 <p>And the coefficients are the values <code>a</code> of the polynomial P.</p>
 <ul>
 <li>There are <code>n</code> random numbers <code>x</code> generated, their <code>y</code> image is calculated through the polynomial and the [x,y] pair is added to the <code>points</code> list.
@@ -525,6 +525,7 @@ Except that the first element of the list will be converted to a coefficient wit
 <li><a href="https://en.wikipedia.org/wiki/Modular_arithmetic">https://en.wikipedia.org/wiki/Modular_arithmetic</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing">https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing</a></li>
 <li><a href="https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_ring.html">https://doc.sagemath.org/html/en/reference/polynomial_rings/sage/rings/polynomial/polynomial_ring.html</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Quadratic_equation">https://en.wikipedia.org/wiki/Quadratic_equation</a></li>
 </ul>
 </article>
 
