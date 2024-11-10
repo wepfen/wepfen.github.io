@@ -151,8 +151,8 @@
 $$ B^{a} \equiv (p-1)^{a} \equiv (-1)^{a} \equiv -1 \ OR \ 1 \mod p $$<p>(it depends of the parity of $a$)</p>
 <br>
 With client_public_key = 1:
-$$ B^{a} \equiv (p+1)^{a} \equiv 1^{a} \equiv 1 \mod p $$<p>For the challeng I used client_public_key = p-1 because i didn&rsquo;t think to just use $p+1$.</p>
-<p>The vulneribility is that the server doesn&rsquo;t check the public key i send to him.</p>
+$$ B^{a} \equiv (p+1)^{a} \equiv 1^{a} \equiv 1 \mod p $$<p>For the challeng I used client_public_key = p-1 because i didn&rsquo;t think to just use $1$.</p>
+<p>The vulnerability is that the server doesn&rsquo;t check the public key i send to him.</p>
 <h2 id="exploiting">Exploiting</h2>
 <p>Now we got the key (-1 or 1),  we can just use the same functions as the server to encrypt our communication (the communication is AES CBC encrypted, and then encoded with base64).</p>
 <ul>
@@ -161,7 +161,9 @@ $$ B^{a} \equiv (p+1)^{a} \equiv 1^{a} \equiv 1 \mod p $$<p>For the challeng I u
 <li>contact <code>/api/dashboard with</code> with a JSON with the data encrypted in AES</li>
 <li>Get the flag</li>
 </ul>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<details>
+  <summary style="color: #F99417; cursor: pointer">solve_hybrid_unifier.py</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
@@ -333,7 +335,10 @@ $$ B^{a} \equiv (p+1)^{a} \equiv 1^{a} \equiv 1 \mod p $$<p>For the challeng I u
 </span></span><span style="display:flex;"><span>    print(<span style="color:#79c0ff">f</span><span style="color:#a5d6ff">&#34;FLAG : </span><span style="color:#a5d6ff">{</span>flag<span style="color:#a5d6ff">}</span><span style="color:#a5d6ff">&#34;</span>)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>flag : <code>HTB{good_job_in_alpha_testing_our_protocol___take_this_flag_as_a_gift_04c9f4b66afa55c164aa347e25d18148</code></p>
+</div>
+</details>
+
+<p>flag : <code>HTB{good_job_in_alpha_testing_our_protocol___take_this_flag_as_a_gift_04c9f4b66afa55c164aa347e25d18148</code></p>
 <h1 id="conclusion">Conclusion</h1>
 <p>It&rsquo;s a nice way to understand diffie-hellman key exchange and how the choice of the key can be messed up.</p>
 <p>Well there is another solve which was to do a classic Diffie-Hellman key exchange but my dumb ahh didn&rsquo;t think about it first.</p>
