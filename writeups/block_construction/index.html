@@ -3,20 +3,19 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <meta name="description" content="
+  <meta name="description" content="
 Difficulty : Easy to medium
-
 
 Team : Crampting
 
-
 Source files
-
 
 &ldquo;Sir, sir! This is a construction site.&rdquo; You look up at what you thought was a building
 being constructed, but you realize it is a construction bot. &ldquo;Sir please move aside.
 I had to have these blocks in order since last week, but some newbie construction bot shuffled them.&rdquo;
 &ldquo;I can move aside, &quot; you tell the bot, &ldquo;but I might be able to help you out.&rdquo;">  
+  <meta property="og:description" content="braeker CTF 2024 - cryptography " />
+  <meta property="og:image" content="https://wepfen.github.io/" />
 
   <title>
     
@@ -29,7 +28,7 @@ I had to have these blocks in order since last week, but some newbie constructio
   
   
   
-  <link rel="stylesheet" href="/css/main.267bcd8fdb34617fbef8ed9c133c344ce353eb74a1d9fb1049156ab46277b6720dae04c91a70c6657927b756a8d7db10466e6a789c3919a8a894e7333fdfbc77.css" integrity="sha512-JnvNj9s0YX&#43;&#43;&#43;O2cEzw0TONT63Sh2fsQSRVqtGJ3tnINrgTJGnDGZXknt1ao19sQRm5qeJw5GaiolOczP9&#43;8dw==" />
+  <link rel="stylesheet" href="/css/main.4383c9a9fef9c691bf251ef6911270170922f3ca49fa37b7cfb8e9e4ca5071324135852848c3484ffa8fd4aeec60397bc3ca792092781f5f2dff9bc6fcd4e221.css" integrity="sha512-Q4PJqf75xpG/JR72kRJwFwki88pJ&#43;je3z7jp5MpQcTJBNYUoSMNIT/qP1K7sYDl7w8p5IJJ4H18t/5vG/NTiIQ==" />
   
 </head>
 
@@ -72,20 +71,16 @@ I had to have these blocks in order since last week, but some newbie constructio
     
 
     <blockquote>
-<p>Difficulty : Easy to medium</p>
-</blockquote>
+<p>Difficulty : Easy to medium</p></blockquote>
 <blockquote>
-<p>Team : Crampting</p>
-</blockquote>
+<p>Team : Crampting</p></blockquote>
 <blockquote>
-<p><a href="https://github.com/spipm/BraekerCTF_2024_public/tree/main/challenges/crypto-hashcracking/block-construction">Source files</a></p>
-</blockquote>
+<p><a href="https://github.com/spipm/BraekerCTF_2024_public/tree/main/challenges/crypto-hashcracking/block-construction">Source files</a></p></blockquote>
 <blockquote>
 <p>&ldquo;Sir, sir! This is a construction site.&rdquo; You look up at what you thought was a building
 being constructed, but you realize it is a construction bot. &ldquo;Sir please move aside.
 I had to have these blocks in order since last week, but some newbie construction bot shuffled them.&rdquo;
-&ldquo;I can move aside, &quot; you tell the bot, &ldquo;but I might be able to help you out.&rdquo;</p>
-</blockquote>
+&ldquo;I can move aside, &quot; you tell the bot, &ldquo;but I might be able to help you out.&rdquo;</p></blockquote>
 <h2 id="source-code">Source code</h2>
 <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -160,8 +155,7 @@ However, in this challenge, strings of 32 characters are encrypted. Meaning that
 <p>For the challenge we have each character of the flag concatenated with every chars of <code>rand_printable</code>.</p>
 <p>Exemple for first knwon char &lsquo;b&rsquo;: Encrypt(&lsquo;b&rsquo; + 31 * &lsquo;M&rsquo;) , then encrypt(&lsquo;b&rsquo; + 31 * &lsquo;8&rsquo;) and so on for all 100 characters of <code>rand_printable</code>.</p>
 <blockquote>
-<p>I chose &lsquo;8&rsquo; and &lsquo;M&rsquo; randomly because <code>rand_printable</code> also is.</p>
-</blockquote>
+<p>I chose &lsquo;8&rsquo; and &lsquo;M&rsquo; randomly because <code>rand_printable</code> also is.</p></blockquote>
 <p>So there will be a moment where our first character &lsquo;b&rsquo; will be concatened with 31 * &lsquo;b&rsquo; from rand_printable and as we said earlier, then the two halves of the 32 chars (64 chars in hex) of th 32 chars encrypted will be the same. It is how we know which character of the flag is actually encrypted.</p>
 <p>To get the flag, knowing all flag characters are encrypted 100 times into 64 hex blocs:</p>
 <ul>
@@ -328,8 +322,7 @@ However, in this challenge, strings of 32 characters are encrypted. Meaning that
 </li>
 </ul>
 <blockquote>
-<p>Flag: <code>brck{EZP3n9u1nZ}</code></p>
-</blockquote>
+<p>Flag: <code>brck{EZP3n9u1nZ}</code></p></blockquote>
 
 </article>
 

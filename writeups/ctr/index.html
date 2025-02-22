@@ -3,7 +3,9 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <meta name="description" content="DefCamp quals 2024 ctr challenge writeup">  
+  <meta name="description" content="DefCamp quals 2024 ctr challenge writeup">  
+  <meta property="og:description" content="DefCamp quals 2024 ctr challenge writeup" />
+  <meta property="og:image" content="https://wepfen.github.io/" />
 
   <title>
     
@@ -16,7 +18,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.267bcd8fdb34617fbef8ed9c133c344ce353eb74a1d9fb1049156ab46277b6720dae04c91a70c6657927b756a8d7db10466e6a789c3919a8a894e7333fdfbc77.css" integrity="sha512-JnvNj9s0YX&#43;&#43;&#43;O2cEzw0TONT63Sh2fsQSRVqtGJ3tnINrgTJGnDGZXknt1ao19sQRm5qeJw5GaiolOczP9&#43;8dw==" />
+  <link rel="stylesheet" href="/css/main.4383c9a9fef9c691bf251ef6911270170922f3ca49fa37b7cfb8e9e4ca5071324135852848c3484ffa8fd4aeec60397bc3ca792092781f5f2dff9bc6fcd4e221.css" integrity="sha512-Q4PJqf75xpG/JR72kRJwFwki88pJ&#43;je3z7jp5MpQcTJBNYUoSMNIT/qP1K7sYDl7w8p5IJJ4H18t/5vG/NTiIQ==" />
   
 </head>
 
@@ -56,17 +58,13 @@
 
     <p>DefCamp quals 2024 ctr challenge writeup</p>
 <blockquote>
-<p>Difficulty : Guessy - i didn&rsquo;t solved it so i&rsquo;m rude &gt;:(</p>
-</blockquote>
+<p>Difficulty : Guessy - i didn&rsquo;t solved it so i&rsquo;m rude &gt;:(</p></blockquote>
 <blockquote>
-<p>Team : Phreaks 2600</p>
-</blockquote>
+<p>Team : Phreaks 2600</p></blockquote>
 <blockquote>
-<p><a href="https://raw.githubusercontent.com/wepfen/writeups/refs/heads/main/defcampCTF/2024/ctr/ctr.txt">source files</a></p>
-</blockquote>
+<p><a href="https://raw.githubusercontent.com/wepfen/writeups/refs/heads/main/defcampCTF/2024/ctr/ctr.txt">source files</a></p></blockquote>
 <blockquote>
-<p>Are you feeling down? Here is a list of exciting words for you, hope you&rsquo;ll feel better after this. (probably not)</p>
-</blockquote>
+<p>Are you feeling down? Here is a list of exciting words for you, hope you&rsquo;ll feel better after this. (probably not)</p></blockquote>
 <h1 id="tldr">TL;DR</h1>
 <ul>
 <li>we got a file <code>ctr.txt</code> which is a list of ciphertexts encrypted with the same key as the oracle we deal with</li>
@@ -92,12 +90,10 @@ Then i resend &lsquo;a&rsquo; and get <code>cc528ba18b1c9089064d80148680e30e</co
 <p><img src="https://packt-type-cloud.s3.amazonaws.com/uploads/sites/2432/2018/05/a2d4636c-1043-4c4f-a344-fc83e5d728ba.png" alt="AES CTR mode encryption"></p>
 <p>So the keystream_n is the result of the encryption of a counter prepended by a nonce : <code>keystream_n = E(nonce+n)</code> where E() is AES encryption</p>
 <blockquote>
-<p>Note : Sometimes the nonce is reused or there is no nonce at all</p>
-</blockquote>
+<p>Note : Sometimes the nonce is reused or there is no nonce at all</p></blockquote>
 <p>Then to get the plaintext, we XOR the keystream with the ciphertext: <code>plaintext = ciphertext XOR keystream_n</code></p>
 <blockquote>
-<p>Note : The keystream_n is the same for encryption and decryption</p>
-</blockquote>
+<p>Note : The keystream_n is the same for encryption and decryption</p></blockquote>
 <p>So to get the keystream :</p>
 <ul>
 <li>send 16 null bytes (easier with python)</li>

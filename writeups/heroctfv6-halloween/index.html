@@ -3,8 +3,11 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <meta name="description" content="
+  <meta name="description" content="
 My solve from a noob point a view for the halloween challenge at heroCTF v6.">  
+  <meta property="og:description" content="
+My solve from a noob point a view for the halloween challenge at heroCTF v6." />
+  <meta property="og:image" content="https://wepfen.github.io/" />
 
   <title>
     
@@ -17,7 +20,7 @@ My solve from a noob point a view for the halloween challenge at heroCTF v6.">
   
   
   
-  <link rel="stylesheet" href="/css/main.267bcd8fdb34617fbef8ed9c133c344ce353eb74a1d9fb1049156ab46277b6720dae04c91a70c6657927b756a8d7db10466e6a789c3919a8a894e7333fdfbc77.css" integrity="sha512-JnvNj9s0YX&#43;&#43;&#43;O2cEzw0TONT63Sh2fsQSRVqtGJ3tnINrgTJGnDGZXknt1ao19sQRm5qeJw5GaiolOczP9&#43;8dw==" />
+  <link rel="stylesheet" href="/css/main.4383c9a9fef9c691bf251ef6911270170922f3ca49fa37b7cfb8e9e4ca5071324135852848c3484ffa8fd4aeec60397bc3ca792092781f5f2dff9bc6fcd4e221.css" integrity="sha512-Q4PJqf75xpG/JR72kRJwFwki88pJ&#43;je3z7jp5MpQcTJBNYUoSMNIT/qP1K7sYDl7w8p5IJJ4H18t/5vG/NTiIQ==" />
   
 </head>
 
@@ -86,20 +89,15 @@ My solve from a noob point a view for the halloween challenge at heroCTF v6.">
     <br>
 My solve from a noob point a view for the halloween challenge at heroCTF v6.
 <blockquote>
-<p>Difficulty : Hard</p>
-</blockquote>
+<p>Difficulty : Hard</p></blockquote>
 <blockquote>
-<p>Team : Langskip</p>
-</blockquote>
+<p>Team : Langskip</p></blockquote>
 <blockquote>
-<p><a href="https://github.com/HeroCTF/HeroCTF_v6/tree/main/Crypto/Halloween/halloween">Source files</a></p>
-</blockquote>
+<p><a href="https://github.com/HeroCTF/HeroCTF_v6/tree/main/Crypto/Halloween/halloween">Source files</a></p></blockquote>
 <blockquote>
-<p>Boo! Do you believe in ghost ? I sure don&rsquo;t</p>
-</blockquote>
+<p>Boo! Do you believe in ghost ? I sure don&rsquo;t</p></blockquote>
 <blockquote>
-<p>Author : alol</p>
-</blockquote>
+<p>Author : alol</p></blockquote>
 <br>
 <h1 id="tldr">TL;DR</h1>
 <p>The GOST cipher used for the challenge is badly implemented.</p>
@@ -252,8 +250,7 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/CTR_encryption_2.svg" style="filter: invert(70%) sepia(100%) saturate(700%) " alt="CTR encryption mode"/>
 <blockquote>
 <p>The CTR mode is a <a href="https://en.wikipedia.org/wiki/Stream_cipher">stream cipher</a> which means that the cipher can be xoried with the plaintext and therefore the plaintext size is equal to the cipher size.
-If we know the plaintext, we can xor it with the ciphertext to recover the keystream, and if we know the keystream, we can xor it with the ciphertext to recover the plaintext.</p>
-</blockquote>
+If we know the plaintext, we can xor it with the ciphertext to recover the keystream, and if we know the keystream, we can xor it with the ciphertext to recover the plaintext.</p></blockquote>
 <p>Then, the <code>counter()</code> method only returns the counter and the method <code>_inc_ctr()</code> increments the counter.</p>
 <p>At class initialization, <code>gostcrypto.gostcipher.new(&quot;kuznechik&quot;, key, gostcrypto.gostcipher.MODE_CTR, init_vect=iv)</code> in the challenge amounts to executing the <code>__init__()</code> method, which takes the algo, key and IV as parameters:</p>
 <ul>
