@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Mafia at the End of the Block part 1 &amp; 2 from PwnMe CTF 2025">  
+  <meta property="og:description" content="Mafia at the End of the Block part 1 &amp; 2 from PwnMe CTF 2025" />
+  <meta property="og:image" content="https://wepfen.github.io/images/memes/jehovah-foundry.png" />
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <title>
+    
+      PwnMe CTF quals 2025 - Mafia at the End of the Block Full [Blockchain/Misc]
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.4383c9a9fef9c691bf251ef6911270170922f3ca49fa37b7cfb8e9e4ca5071324135852848c3484ffa8fd4aeec60397bc3ca792092781f5f2dff9bc6fcd4e221.css" integrity="sha512-Q4PJqf75xpG/JR72kRJwFwki88pJ&#43;je3z7jp5MpQcTJBNYUoSMNIT/qP1K7sYDl7w8p5IJJ4H18t/5vG/NTiIQ==" />
+  
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">../</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-03-03 12:03:31 &#43;0100 CET">
+            2025-03-03
+        </time>
+    </p>
+
+    <h1>PwnMe CTF quals 2025 - Mafia at the End of the Block Full [Blockchain/Misc]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#part-1">Part 1</a>
+      <ul>
+        <li><a href="#tldr">TL;DR</a></li>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#solving">Solving</a>
+          <ul>
+            <li><a href="#retrieve-informations-from-the-pcap">Retrieve informations from the PCAP</a></li>
+            <li><a href="#read-the-flag-on-sepolia-was-not-the-intended-solution-but-game-is-game">Read the flag on Sepolia (was not the intended solution but game is game)</a></li>
+            <li><a href="#open-the-conversation-and-get-the-abi-of-the-contract-and-the-flag">Open the conversation and get the ABI of the contract and the flag</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#part-2">Part 2</a>
+      <ul>
+        <li><a href="#tldr-1">Tl;DR</a></li>
+        <li><a href="#introdcution">Introdcution</a></li>
+        <li><a href="#solving-1">Solving</a>
+          <ul>
+            <li><a href="#walking-through-the-webpage">Walking through the webpage</a></li>
+            <li><a href="#the-smart-contracts">The smart contracts</a></li>
+            <li><a href="#exploit">Exploit</a></li>
+            <li><a href="#other-solves">Other solves</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p>Mafia at the End of the Block part 1 &amp; 2 from PwnMe CTF 2025</p>
+<h1 id="part-1">Part 1</h1>
+<blockquote>
+<p>Difficulty : Easy</p></blockquote>
+<blockquote>
+<p><a href="https://github.com/Phreaks-2600/pwnme-2025-quals/tree/main/misc/mafia_at_the_end_of_the_block_1">Source files</a></p></blockquote>
+<blockquote>
+<p>Description : You&rsquo;re an agent, your unit recently intercepted a mob discussion about an event that&rsquo;s going to take place on August 8, 2024. You already know the location, though. A password for the event was mentioned. Your job is to find it and return it so that an agent can go to the scene and collect evidence.</p></blockquote>
+<blockquote>
+<p>Author : wepfen &amp; tzer</p></blockquote>
+<h2 id="tldr">TL;DR</h2>
+<ul>
+<li>Read the PCAP file with wireshark and notice the IRC protocol</li>
+<li>Find a link in the conversation and also contract addresses</li>
+<li>From now you can search for the contract on etherscan or open the link, get the abi and interact with the smart contract to get the flag.</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>So for the first part of the challenge, we have a network capture in attachment and that&rsquo;s all.
+We are supposed to retrieve essential informations as an URL and a smart contract address.
+Then retrieve the &ldquo;password&rdquo; on the smart contract.</p>
+<h2 id="solving">Solving</h2>
+<h3 id="retrieve-informations-from-the-pcap">Retrieve informations from the PCAP</h3>
+<p>First, I ended up messing up my network capture and it ended up having to much packet than it was supposed to be.
+Anyway, looking in <strong>statistics -&gt; protocol hierarchy</strong>, we find that there is one interesting protocol which is <strong>Internet Relay Chat</strong> (or IRC)</p>
+<p>we can filter with &ldquo;irc&rdquo; and read the conversation by <strong>right clicking -&gt; follow -&gt; TCP</strong></p>
+<p><img src="../../images/writeups/mafia/irc-flow.png" alt="IRC conversation"></p>
+<p>We can get two informations from this :</p>
+<ul>
+<li>a link : <a href="https://shorturl.at/2O8nI">https://shorturl.at/2O8nI</a></li>
+<li>an address : 0xCAB0b02864288a9cFbbd3d004570FEdE2faad8F8</li>
+</ul>
+<p>If we continue to read the other IRC conversation, we get another contract which is wrong :</p>
+<ul>
+<li><code>0x69E881DB5160cc5543b544603b04908cac649D38</code></li>
+<li>And a rick roll in base64 : <code>aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1Fa2ZEbXpwcndydw==</code> -&gt; <a href="https://www.youtube.com/watch?v=EkfDmzprwrw">https://www.youtube.com/watch?v=EkfDmzprwrw</a>.</li>
+</ul>
+<blockquote>
+<p>For this last contract address I just forgot to remove it so my bad.</p></blockquote>
+<h3 id="read-the-flag-on-sepolia-was-not-the-intended-solution-but-game-is-game">Read the flag on Sepolia (was not the intended solution but game is game)</h3>
+<p>We can search for the contract address on <a href="https://sepolia.etherscan.io/">etherscan</a></p>
+<p>Inspecting the <a href="https://sepolia.etherscan.io/tx/0x2a1133ebd2476d670b2b1668f7db32774e02533b8ca9f2e1a98a9a67b9dd9165">first transaction</a>,  we can directly read the input data as UTF-8 and get the flag. <code>PWNME{1ls_0nt_t0vt_Sh4ke_dz8a4q6}</code></p>
+<blockquote>
+<p>The flag is readable here because, while setting up the contract for the challenge, we sent a transaction to the function <code>set_secret(string)</code> and put the flag as argument. So it&rsquo;s readable in plaintext on the blockchain.</p></blockquote>
+<h3 id="open-the-conversation-and-get-the-abi-of-the-contract-and-the-flag">Open the conversation and get the ABI of the contract and the flag</h3>
+<p>From the shortlink <a href="https://shorturl.at/2O8nI">https://shorturl.at/2O8nI</a>, we get redirected to <a href="https://www.swisstransfer.com/d/a4947af6-05c6-4011-958e-fd6b604587d1">https://www.swisstransfer.com/d/a4947af6-05c6-4011-958e-fd6b604587d1</a>.
+It&rsquo;s an archived telegram conversation.</p>
+<blockquote>
+<p>We chose to archive it and not make it a live telegram group chat for the players who don&rsquo;t want to join a telegram or create an account</p></blockquote>
+<p>We can open the html page from the archive and there is another conversation.</p>
+<p>They are talking about the &ldquo;ABI&rdquo; and &ldquo;interacting with the smart contract&rdquo;. Also here&rsquo;is the abi :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">DarknetMafia.abi</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>[
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;inputs&#34;</span>: [
+</span></span><span style="display:flex;"><span>			{
+</span></span><span style="display:flex;"><span>				<span style="color:#7ee787">&#34;internalType&#34;</span>: <span style="color:#a5d6ff">&#34;string&#34;</span>,
+</span></span><span style="display:flex;"><span>				<span style="color:#7ee787">&#34;name&#34;</span>: <span style="color:#a5d6ff">&#34;_secret&#34;</span>,
+</span></span><span style="display:flex;"><span>				<span style="color:#7ee787">&#34;type&#34;</span>: <span style="color:#a5d6ff">&#34;string&#34;</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		],
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;name&#34;</span>: <span style="color:#a5d6ff">&#34;set_secret&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;outputs&#34;</span>: [],
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;stateMutability&#34;</span>: <span style="color:#a5d6ff">&#34;nonpayable&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;type&#34;</span>: <span style="color:#a5d6ff">&#34;function&#34;</span>
+</span></span><span style="display:flex;"><span>	},
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;inputs&#34;</span>: [],
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;stateMutability&#34;</span>: <span style="color:#a5d6ff">&#34;nonpayable&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;type&#34;</span>: <span style="color:#a5d6ff">&#34;constructor&#34;</span>
+</span></span><span style="display:flex;"><span>	},
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;inputs&#34;</span>: [],
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;name&#34;</span>: <span style="color:#a5d6ff">&#34;ask_secret&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;outputs&#34;</span>: [
+</span></span><span style="display:flex;"><span>			{
+</span></span><span style="display:flex;"><span>				<span style="color:#7ee787">&#34;internalType&#34;</span>: <span style="color:#a5d6ff">&#34;string&#34;</span>,
+</span></span><span style="display:flex;"><span>				<span style="color:#7ee787">&#34;name&#34;</span>: <span style="color:#a5d6ff">&#34;&#34;</span>,
+</span></span><span style="display:flex;"><span>				<span style="color:#7ee787">&#34;type&#34;</span>: <span style="color:#a5d6ff">&#34;string&#34;</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		],
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;stateMutability&#34;</span>: <span style="color:#a5d6ff">&#34;view&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#7ee787">&#34;type&#34;</span>: <span style="color:#a5d6ff">&#34;function&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<blockquote>
+<p>The ABI(Application Binary Interface) is the representation of a contract in JSON. It defines the function, variables, visibility, parameter and all public informations we need to know how to interact with a contract. It gives a nicer representation of a smart contract and makes it easier to use with programming languages. More : <a href="https://docs.soliditylang.org/en/latest/abi-spec.html">https://docs.soliditylang.org/en/latest/abi-spec.html</a></p></blockquote>
+<p>On the ABI we learn about <code>ask_secret</code> function so we understand we just have to call it using cat from <a href="https://book.getfoundry.sh/">foundry</a> :</p>
+<p><code>cast call 0xCAB0b02864288a9cFbbd3d004570FEdE2faad8F8 -r https://gateway.tenderly.co/public/sepolia &quot;ask_secret()(string)&quot;</code></p>
+<p><code>&quot;PWNME{1ls_0nt_t0vt_Sh4ke_dz8a4q6}&quot;</code></p>
+<p>lil foundry advertising if you don&rsquo;t mind</p>
+<p><img src="../../images/memes/jehovah-foundry.png" alt="jehovah foundry-rs"></p>
+<h1 id="part-2">Part 2</h1>
+<blockquote>
+<p>Difficulty : Medium</p></blockquote>
+<blockquote>
+<p><a href="https://github.com/Phreaks-2600/pwnme-2025-quals/tree/main/misc/mafia_at_the_end_of_the_bloc_second_part">Source files</a></p></blockquote>
+<blockquote>
+<p>Description : You&rsquo;re in the final step before catching them lacking. Prove yourself by winning at the casino and access the VIP room ! But remember, the house always win.</p></blockquote>
+<blockquote>
+<p>Author : wepfen &amp; tzer</p></blockquote>
+<h2 id="tldr-1">Tl;DR</h2>
+<ul>
+<li>The player can try to spin the wheel for 0.1 ether but will end up to lose everytime</li>
+<li>By reading the smart contract one can understand that the random number generator is predictable</li>
+<li>So we have to read the contract storage, recover the state, and compute the next state. Spin the wheel with the correct value and get the flag in the vip.html page.</li>
+</ul>
+<h2 id="introdcution">Introdcution</h2>
+<p>We can deploy a private blockchain which will give us an URL for the whell which is the same for the RPC, a private key and the address of the smart contract running the wheel.
+Players must predict the spin next values to solve solve the challenge.</p>
+<p>The wheel interact with the <code>CasinoPWNME</code> smart contract by call the function <code>playCasino()</code> with &ldquo;0&rdquo; in argument. Which is doomed to always lose.</p>
+<h2 id="solving-1">Solving</h2>
+<h3 id="walking-through-the-webpage">Walking through the webpage</h3>
+<p>Looking through the website of the wheel we can see that we can spin the wheel for 0.1 ether and also connect a wallet.</p>
+<p><img src="../../images/writeups/mafia/royal-casino.jpg" alt="royal casino"></p>
+<p>Trying to spin the wheel will ask us to connect to MetaMask but we don&rsquo;t need to &ldquo;really&rdquo; spin the wheel to solve so we will not cover this part of MetaMask tomfoolery.
+Also, it&rsquo;s here as a rabbit hole to waste the time of players 😈.</p>
+<p>Reading the source code of the page we can retrieve informations such as the contract address, the ABI and the rpc.
+There is even the code that send the transaction to spin the wheel :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span> <span style="color:#ff7b72">const</span> tx <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">await</span> contract.methods.playCasino(<span style="color:#a5d6ff">0</span>).send({ <span style="color:#8b949e;font-style:italic">// You&#39;re choosing to spin 0 everytime ? That&#39;s nice from you &lt;3
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    from<span style="color:#ff7b72;font-weight:bold">:</span> sender,
+</span></span><span style="display:flex;"><span>    value<span style="color:#ff7b72;font-weight:bold">:</span> web3.utils.toWei(<span style="color:#a5d6ff">&#34;0.1&#34;</span>, <span style="color:#a5d6ff">&#34;ether&#34;</span>),
+</span></span><span style="display:flex;"><span>    gas<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">300000</span>,
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Meaning that we can only lose by spinning on the web interface.</p>
+<h3 id="the-smart-contracts">The smart contracts</h3>
+<p>We have got two solidity files : Setup.sol and Casino.sol.</p>
+<p>Setup.sol is  only to deploy the casino smart contract :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Setup.sol</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#ff7b72;font-weight:bold">^</span><span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">26</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> {CasinoPWNME} <span style="color:#ff7b72">from</span> <span style="color:#a5d6ff">&#34;./Casino.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">Setup</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    CasinoPWNME <span style="color:#ff7b72">public</span> casino;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>() {
+</span></span><span style="display:flex;"><span>        casino <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">new</span> CasinoPWNME();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">isSolved</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">view</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> casino.checkWin();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>And Casino.sol holds the interesting part.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Casino.sol</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#ff7b72;font-weight:bold">^</span><span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">26</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">CasinoPWNME</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">bool</span> <span style="color:#ff7b72">public</span> isWinner;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">uint256</span> <span style="color:#ff7b72">public</span> multiplier <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">14130161972673258133</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">uint256</span> <span style="color:#ff7b72">public</span> increment <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">11367173177704995300</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">uint256</span> <span style="color:#ff7b72">public</span> modulus <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">4701930664760306055</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">uint</span> <span style="color:#ff7b72">private</span> state;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">constructor</span> (){
+</span></span><span style="display:flex;"><span>    state <span style="color:#ff7b72;font-weight:bold">=</span> block.prevrandao <span style="color:#ff7b72;font-weight:bold">%</span> modulus;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">checkWin</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">view</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> isWinner;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">playCasino</span>(<span style="color:#ff7b72">uint</span> number) <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">payable</span>  {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    require(msg.value <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span>, <span style="color:#a5d6ff">&#34;My brother in christ, it&#39;s pay to lose not free to play !&#34;</span>);
+</span></span><span style="display:flex;"><span>    PRNG();
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> (number <span style="color:#ff7b72;font-weight:bold">==</span> state){
+</span></span><span style="display:flex;"><span>      isWinner <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#79c0ff">true</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff7b72">else</span> {
+</span></span><span style="display:flex;"><span>      isWinner <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#79c0ff">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">PRNG</span>() <span style="color:#ff7b72">private</span>{
+</span></span><span style="display:flex;"><span>    state <span style="color:#ff7b72;font-weight:bold">=</span> (multiplier <span style="color:#ff7b72;font-weight:bold">*</span> state <span style="color:#ff7b72;font-weight:bold">+</span> increment) <span style="color:#ff7b72;font-weight:bold">%</span> modulus;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Remebering the javascript code where <code>playCasino()</code> is called.
+Reading the function in the contract, inside this function a random number is generated by calling <code>PRNG()</code> :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>  <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">PRNG</span>() <span style="color:#ff7b72">private</span>{
+</span></span><span style="display:flex;"><span>    state <span style="color:#ff7b72;font-weight:bold">=</span> (multiplier <span style="color:#ff7b72;font-weight:bold">*</span> state <span style="color:#ff7b72;font-weight:bold">+</span> increment) <span style="color:#ff7b72;font-weight:bold">%</span> modulus;
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It computes a number using a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">LCG</a> with known parameters (multiplier, increment and modulus are public) :</p>
+<pre tabindex="0"><code>uint256 public multiplier = 14130161972673258133;
+uint256 public increment = 11367173177704995300;
+uint256 public modulus = 4701930664760306055;
+</code></pre><p>Finally if the number passed to <code>playCasino</code> is equal to the computed state, the gambler win and <code>isWinner</code> is set to <code>true</code>.</p>
+<p>So we understand we need to predict the next state.</p>
+<h3 id="exploit">Exploit</h3>
+<p>As we already know the LCG parameter, we need to get the state so we can compute the next one.
+Luckily, even if a variable in a smart contract is private, we can recover it by reading the sotrage directly.</p>
+<p>With foundry we can display the storage of a contract and then request the values :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>forge inspect contracts/Casino.sol:CasinoPWNME storage --pretty
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>| Name       | Type    | Slot | Offset | Bytes | Contract                         |
+</span></span><span style="display:flex;"><span>|------------|---------|------|--------|-------|----------------------------------|
+</span></span><span style="display:flex;"><span>| isWinner   | bool    | <span style="color:#a5d6ff">0</span>    | <span style="color:#a5d6ff">0</span>      | <span style="color:#a5d6ff">1</span>     | contracts/Casino.sol:CasinoPWNME |
+</span></span><span style="display:flex;"><span>| multiplier | uint256 | <span style="color:#a5d6ff">1</span>    | <span style="color:#a5d6ff">0</span>      | <span style="color:#a5d6ff">32</span>    | contracts/Casino.sol:CasinoPWNME |
+</span></span><span style="display:flex;"><span>| increment  | uint256 | <span style="color:#a5d6ff">2</span>    | <span style="color:#a5d6ff">0</span>      | <span style="color:#a5d6ff">32</span>    | contracts/Casino.sol:CasinoPWNME |
+</span></span><span style="display:flex;"><span>| modulus    | uint256 | <span style="color:#a5d6ff">3</span>    | <span style="color:#a5d6ff">0</span>      | <span style="color:#a5d6ff">32</span>    | contracts/Casino.sol:CasinoPWNME |
+</span></span><span style="display:flex;"><span>| state      | uint256 | <span style="color:#a5d6ff">4</span>    | <span style="color:#a5d6ff">0</span>      | <span style="color:#a5d6ff">32</span>    | contracts/Casino.sol:CasinoPWNME |
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then we can recover the state : <code>cast to-base $(cast storage $TARGET -r $RPC &quot;4&quot;) dec</code></p>
+<p>Compute the next state : <code>(state * multiplier + increment) % modulus</code></p>
+<p>And play the casino with the correct value : <code>cast send $TARGET -r $RPC &quot;playCasino(uint)&quot; &lt;state&gt; --private-key $PRIVATE_KEY --value 0.1ether</code></p>
+<p>We can check if we won by calling the <code>isSolved()</code> function from the Setup contract : <code>cast call -r $RPC $SETUP_ADDRESS &quot;isSolved()(bool)&quot;</code> which is supposed to return <code>true</code>.</p>
+<p>Then we can go to <code>http://127.0.0.1:10019/88ce96d2-8f9e-4b07-a1b6-19a3f36ab18e/vip.html</code> to get the flag :</p>
+<p><code>PWNME{th3_H0us3_41way5_w1n_bu7_sh0uld_be_4fr41d_0f_7h3_ul7im4te_g4m8l3r!}</code>.</p>
+<p>Here&rsquo;s a python script to solve the challenge :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">solve.py</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">62
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">pathlib</span> <span style="color:#ff7b72">import</span> Path
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">web3</span> <span style="color:#ff7b72">import</span> Web3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">requests</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">re</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">json</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">#### remplacer ces valeurs</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>UUID<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;38817e56-b243-4214-bb18-74eb8b7ec553&#34;</span>
+</span></span><span style="display:flex;"><span>Casino<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;http://127.0.0.1:10019/38817e56-b243-4214-bb18-74eb8b7ec553/&#34;</span>
+</span></span><span style="display:flex;"><span>RPC<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;http://127.0.0.1:10019/38817e56-b243-4214-bb18-74eb8b7ec553&#34;</span>
+</span></span><span style="display:flex;"><span>PRIVATE_KEY<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0x649c553e358feda256109088de2a787bc4364b61a2fdbd33a88cba7ca66cd06a&#34;</span>
+</span></span><span style="display:flex;"><span>PLAYER<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0x304815C4693eDdE61C6dD6Ad3F5f1Bb36651D8Fc&#34;</span>
+</span></span><span style="display:flex;"><span>SETUP<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0x5FC41a49B84084b4499F7838Bbbc912E1862153E&#34;</span>
+</span></span><span style="display:flex;"><span>TARGET<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0x9D862f4C58875fd69Ce94eFe1A978251DCa81DeE&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">####</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># get the abi with `forge inspect Casino.sol:CasinoPWNME abi`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>casino_abi <span style="color:#ff7b72;font-weight:bold">=</span> json<span style="color:#ff7b72;font-weight:bold">.</span>loads(Path(<span style="color:#a5d6ff">&#34;./casino_abi.json&#34;</span>)<span style="color:#ff7b72;font-weight:bold">.</span>read_text())
+</span></span><span style="display:flex;"><span>setup_abi <span style="color:#ff7b72;font-weight:bold">=</span> json<span style="color:#ff7b72;font-weight:bold">.</span>loads(Path(<span style="color:#a5d6ff">&#34;./setup_abi.json&#34;</span>)<span style="color:#ff7b72;font-weight:bold">.</span>read_text())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>web3 <span style="color:#ff7b72;font-weight:bold">=</span> Web3(Web3<span style="color:#ff7b72;font-weight:bold">.</span>HTTPProvider(RPC))
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">if</span> <span style="color:#ff7b72;font-weight:bold">not</span> web3<span style="color:#ff7b72;font-weight:bold">.</span>is_connected():
+</span></span><span style="display:flex;"><span>    print(<span style="color:#a5d6ff">&#34;Erreur de connexion à Ethereum&#34;</span>)
+</span></span><span style="display:flex;"><span>    exit()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>setup_contract <span style="color:#ff7b72;font-weight:bold">=</span> web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>contract(address<span style="color:#ff7b72;font-weight:bold">=</span>SETUP, abi<span style="color:#ff7b72;font-weight:bold">=</span>setup_abi)
+</span></span><span style="display:flex;"><span>casino_address <span style="color:#ff7b72;font-weight:bold">=</span> TARGET
+</span></span><span style="display:flex;"><span>casino_contract <span style="color:#ff7b72;font-weight:bold">=</span> web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>contract(address<span style="color:#ff7b72;font-weight:bold">=</span>casino_address, abi<span style="color:#ff7b72;font-weight:bold">=</span>casino_abi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># get parmaeters</span>
+</span></span><span style="display:flex;"><span>multiplier <span style="color:#ff7b72;font-weight:bold">=</span> int<span style="color:#ff7b72;font-weight:bold">.</span>from_bytes(web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>get_storage_at(casino_address, <span style="color:#a5d6ff">1</span>))
+</span></span><span style="display:flex;"><span>increment <span style="color:#ff7b72;font-weight:bold">=</span> int<span style="color:#ff7b72;font-weight:bold">.</span>from_bytes(web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>get_storage_at(casino_address, <span style="color:#a5d6ff">2</span>))
+</span></span><span style="display:flex;"><span>modulus <span style="color:#ff7b72;font-weight:bold">=</span> int<span style="color:#ff7b72;font-weight:bold">.</span>from_bytes(web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>get_storage_at(casino_address, <span style="color:#a5d6ff">3</span>))
+</span></span><span style="display:flex;"><span>state <span style="color:#ff7b72;font-weight:bold">=</span> int<span style="color:#ff7b72;font-weight:bold">.</span>from_bytes(web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>get_storage_at(casino_address, <span style="color:#a5d6ff">4</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># compute next state</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>next_state <span style="color:#ff7b72;font-weight:bold">=</span> (multiplier <span style="color:#ff7b72;font-weight:bold">*</span> state <span style="color:#ff7b72;font-weight:bold">+</span> increment ) <span style="color:#ff7b72;font-weight:bold">%</span> modulus
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># play casino</span>
+</span></span><span style="display:flex;"><span>transaction <span style="color:#ff7b72;font-weight:bold">=</span> casino_contract<span style="color:#ff7b72;font-weight:bold">.</span>functions<span style="color:#ff7b72;font-weight:bold">.</span>playCasino(next_state)<span style="color:#ff7b72;font-weight:bold">.</span>build_transaction({
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#39;from&#39;</span>: PLAYER,
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#39;gas&#39;</span>: <span style="color:#a5d6ff">300000</span>,  <span style="color:#8b949e;font-style:italic"># Set gas limit (adjust if needed),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#39;nonce&#39;</span>: web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>get_transaction_count(PLAYER),
+</span></span><span style="display:flex;"><span>    <span style="color:#a5d6ff">&#39;value&#39;</span>: web3<span style="color:#ff7b72;font-weight:bold">.</span>to_wei(<span style="color:#a5d6ff">0.1</span>, <span style="color:#a5d6ff">&#39;ether&#39;</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>signed_transaction <span style="color:#ff7b72;font-weight:bold">=</span> web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>account<span style="color:#ff7b72;font-weight:bold">.</span>sign_transaction(transaction, PRIVATE_KEY)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Send the transaction</span>
+</span></span><span style="display:flex;"><span>tx_hash <span style="color:#ff7b72;font-weight:bold">=</span> web3<span style="color:#ff7b72;font-weight:bold">.</span>eth<span style="color:#ff7b72;font-weight:bold">.</span>send_raw_transaction(signed_transaction<span style="color:#ff7b72;font-weight:bold">.</span>raw_transaction)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#ff7b72;font-weight:bold">=</span> requests<span style="color:#ff7b72;font-weight:bold">.</span>get(<span style="color:#79c0ff">f</span><span style="color:#a5d6ff">&#34;</span><span style="color:#a5d6ff">{</span>Casino<span style="color:#a5d6ff">}</span><span style="color:#a5d6ff">/vip.html&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(re<span style="color:#ff7b72;font-weight:bold">.</span>findall(<span style="color:#79c0ff">r</span><span style="color:#a5d6ff">&#34;PWNME{.*}&#34;</span>, flag<span style="color:#ff7b72;font-weight:bold">.</span>text))
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<h3 id="other-solves">Other solves</h3>
+<p>There were other way to script it like this one from nikost i didn&rsquo;t know. You can interact directly with the RPC by sending formatted json data which is less painful I think:</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">solve_nikost.py</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">requests</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>RPC <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#39;https://mafia2.phreaks.fr/be7d1112-0301-4763-b528-8f73c278ab04&#39;</span>
+</span></span><span style="display:flex;"><span>CASINO_CONTRACT <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#39;0x9b4262e5575E07845e31479828F4470c38fA0C0d&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>multiplier <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">14130161972673258133</span>
+</span></span><span style="display:flex;"><span>increment <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">11367173177704995300</span>
+</span></span><span style="display:flex;"><span>modulus <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">4701930664760306055</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Retrieve contract internal public values, for reference</span>
+</span></span><span style="display:flex;"><span>r <span style="color:#ff7b72;font-weight:bold">=</span> requests<span style="color:#ff7b72;font-weight:bold">.</span>post(RPC, headers<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#39;Content-Type&#39;</span>: <span style="color:#a5d6ff">&#39;application/json&#39;</span>}, json<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#34;method&#34;</span>:<span style="color:#a5d6ff">&#34;eth_getStorageAt&#34;</span>,<span style="color:#a5d6ff">&#34;params&#34;</span>:[CASINO_CONTRACT, hex(<span style="color:#a5d6ff">1</span>), <span style="color:#a5d6ff">&#34;latest&#34;</span>],<span style="color:#a5d6ff">&#34;id&#34;</span>:<span style="color:#a5d6ff">1</span>,<span style="color:#a5d6ff">&#34;jsonrpc&#34;</span>:<span style="color:#a5d6ff">&#34;2.0&#34;</span>})
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">assert</span> int(r<span style="color:#ff7b72;font-weight:bold">.</span>json()[<span style="color:#a5d6ff">&#39;result&#39;</span>], <span style="color:#a5d6ff">16</span>) <span style="color:#ff7b72;font-weight:bold">==</span> multiplier
+</span></span><span style="display:flex;"><span>r <span style="color:#ff7b72;font-weight:bold">=</span> requests<span style="color:#ff7b72;font-weight:bold">.</span>post(RPC, headers<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#39;Content-Type&#39;</span>: <span style="color:#a5d6ff">&#39;application/json&#39;</span>}, json<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#34;method&#34;</span>:<span style="color:#a5d6ff">&#34;eth_getStorageAt&#34;</span>,<span style="color:#a5d6ff">&#34;params&#34;</span>:[CASINO_CONTRACT, hex(<span style="color:#a5d6ff">2</span>), <span style="color:#a5d6ff">&#34;latest&#34;</span>],<span style="color:#a5d6ff">&#34;id&#34;</span>:<span style="color:#a5d6ff">1</span>,<span style="color:#a5d6ff">&#34;jsonrpc&#34;</span>:<span style="color:#a5d6ff">&#34;2.0&#34;</span>})
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">assert</span> int(r<span style="color:#ff7b72;font-weight:bold">.</span>json()[<span style="color:#a5d6ff">&#39;result&#39;</span>], <span style="color:#a5d6ff">16</span>) <span style="color:#ff7b72;font-weight:bold">==</span> increment
+</span></span><span style="display:flex;"><span>r <span style="color:#ff7b72;font-weight:bold">=</span> requests<span style="color:#ff7b72;font-weight:bold">.</span>post(RPC, headers<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#39;Content-Type&#39;</span>: <span style="color:#a5d6ff">&#39;application/json&#39;</span>}, json<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#34;method&#34;</span>:<span style="color:#a5d6ff">&#34;eth_getStorageAt&#34;</span>,<span style="color:#a5d6ff">&#34;params&#34;</span>:[CASINO_CONTRACT, hex(<span style="color:#a5d6ff">3</span>), <span style="color:#a5d6ff">&#34;latest&#34;</span>],<span style="color:#a5d6ff">&#34;id&#34;</span>:<span style="color:#a5d6ff">1</span>,<span style="color:#a5d6ff">&#34;jsonrpc&#34;</span>:<span style="color:#a5d6ff">&#34;2.0&#34;</span>})
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">assert</span> int(r<span style="color:#ff7b72;font-weight:bold">.</span>json()[<span style="color:#a5d6ff">&#39;result&#39;</span>], <span style="color:#a5d6ff">16</span>) <span style="color:#ff7b72;font-weight:bold">==</span> modulus
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Retrieve the contract internal state, even if it is private</span>
+</span></span><span style="display:flex;"><span>r <span style="color:#ff7b72;font-weight:bold">=</span> requests<span style="color:#ff7b72;font-weight:bold">.</span>post(RPC, headers<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#39;Content-Type&#39;</span>: <span style="color:#a5d6ff">&#39;application/json&#39;</span>}, json<span style="color:#ff7b72;font-weight:bold">=</span>{<span style="color:#a5d6ff">&#34;method&#34;</span>:<span style="color:#a5d6ff">&#34;eth_getStorageAt&#34;</span>,<span style="color:#a5d6ff">&#34;params&#34;</span>:[CASINO_CONTRACT, hex(<span style="color:#a5d6ff">4</span>), <span style="color:#a5d6ff">&#34;latest&#34;</span>],<span style="color:#a5d6ff">&#34;id&#34;</span>:<span style="color:#a5d6ff">1</span>,<span style="color:#a5d6ff">&#34;jsonrpc&#34;</span>:<span style="color:#a5d6ff">&#34;2.0&#34;</span>})
+</span></span><span style="display:flex;"><span>state <span style="color:#ff7b72;font-weight:bold">=</span> int(r<span style="color:#ff7b72;font-weight:bold">.</span>json()[<span style="color:#a5d6ff">&#39;result&#39;</span>], <span style="color:#a5d6ff">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Predict the next state</span>
+</span></span><span style="display:flex;"><span>next_state <span style="color:#ff7b72;font-weight:bold">=</span> (multiplier <span style="color:#ff7b72;font-weight:bold">*</span> state <span style="color:#ff7b72;font-weight:bold">+</span> increment) <span style="color:#ff7b72;font-weight:bold">%</span> modulus
+</span></span><span style="display:flex;"><span>print(next_state)
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Or even from <a href="https://x.com/0x22sh">22sh</a> to put the shell commands in a bash script :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">solve-22sh.bash</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span><span style="color:#79c0ff">CASINO_ADDRESS</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0xa13cf13ab19c0D418481360bE2667A8574435019&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">PRIVATE_KEY</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0xa1a036976751622cc1a4037cf81c70bd5bf1c7d00b970679999cc8eb5819a395&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">RPC_URL</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;https://mafia2.phreaks.fr/40ad4c81-b2a2-46c2-9c94-8da278f3ed5d&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">MULTIPLIER</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;14130161972673258133&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">INCREMENT</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;11367173177704995300&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">MODULUS</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;4701930664760306055&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Step 1: Read the current state from storage slot 4</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">CURRENT_STATE</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#ff7b72">$(</span>cast storage --rpc-url <span style="color:#79c0ff">$RPC_URL</span> <span style="color:#79c0ff">$CASINO_ADDRESS</span> 4<span style="color:#ff7b72">)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#a5d6ff">&#34;Current state (hex): </span><span style="color:#79c0ff">$CURRENT_STATE</span><span style="color:#a5d6ff">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">CURRENT_STATE_DEC</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#ff7b72">$(</span>cast --to-dec <span style="color:#79c0ff">$CURRENT_STATE</span><span style="color:#ff7b72">)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#a5d6ff">&#34;Current state (dec): </span><span style="color:#79c0ff">$CURRENT_STATE_DEC</span><span style="color:#a5d6ff">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Step 2: Calculate the next state</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">NEXT_STATE</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#ff7b72">$(</span>python3 -c <span style="color:#a5d6ff">&#34;print((</span><span style="color:#79c0ff">$MULTIPLIER</span><span style="color:#a5d6ff"> * </span><span style="color:#79c0ff">$CURRENT_STATE_DEC</span><span style="color:#a5d6ff"> + </span><span style="color:#79c0ff">$INCREMENT</span><span style="color:#a5d6ff">) % </span><span style="color:#79c0ff">$MODULUS</span><span style="color:#a5d6ff">)&#34;</span><span style="color:#ff7b72">)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#a5d6ff">&#34;Predicted next state: </span><span style="color:#79c0ff">$NEXT_STATE</span><span style="color:#a5d6ff">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">NEXT_STATE_HEX</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#ff7b72">$(</span>python3 -c <span style="color:#a5d6ff">&#34;print(hex(</span><span style="color:#79c0ff">$NEXT_STATE</span><span style="color:#a5d6ff">))&#34;</span><span style="color:#ff7b72">)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#a5d6ff">&#34;Next state (hex): </span><span style="color:#79c0ff">$NEXT_STATE_HEX</span><span style="color:#a5d6ff">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># Step 3: Send the transaction to playCasino with the predicted state</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">TX_HASH</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#ff7b72">$(</span>cast send --rpc-url <span style="color:#79c0ff">$RPC_URL</span> --private-key <span style="color:#79c0ff">$PRIVATE_KEY</span> <span style="color:#79c0ff">$CASINO_ADDRESS</span> <span style="color:#a5d6ff">&#34;playCasino(uint256)&#34;</span> <span style="color:#79c0ff">$NEXT_STATE</span> --value 0.1ether<span style="color:#ff7b72">)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#a5d6ff">&#34;Transaction sent: </span><span style="color:#79c0ff">$TX_HASH</span><span style="color:#a5d6ff">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#79c0ff">IS_WINNER</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#ff7b72">$(</span>cast call --rpc-url <span style="color:#79c0ff">$RPC_URL</span> <span style="color:#79c0ff">$CASINO_ADDRESS</span> <span style="color:#a5d6ff">&#34;checkWin()(bool)&#34;</span><span style="color:#ff7b72">)</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#a5d6ff">&#34;</span><span style="color:#79c0ff">$IS_WINNER</span><span style="color:#a5d6ff">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+</article>
+
+            </div>
+        </main>
+    </body>
+</html>
