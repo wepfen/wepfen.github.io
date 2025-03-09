@@ -80,7 +80,7 @@
 <blockquote>
 <p>Difficulty : Easy</p></blockquote>
 <blockquote>
-<p><a href="https://github.com/Phreaks-2600/pwnme-2025-quals/tree/main/misc/mafia_at_the_end_of_the_block_1">Source files</a></p></blockquote>
+<p><a href="https://github.com/Phreaks-2600/PwnMeCTF-2025-quals/blob/main/Misc/Mafia_at_the_end_of_the_block_1/attachments/mafia_at_the_end_of_the_block_1.zip">Source files</a></p></blockquote>
 <blockquote>
 <p>Description : You&rsquo;re an agent, your unit recently intercepted a mob discussion about an event that&rsquo;s going to take place on August 8, 2024. You already know the location, though. A password for the event was mentioned. Your job is to find it and return it so that an agent can go to the scene and collect evidence.</p></blockquote>
 <blockquote>
@@ -100,7 +100,7 @@ Then retrieve the &ldquo;password&rdquo; on the smart contract.</p>
 <p>First, I ended up messing up my network capture and it ended up having to much packet than it was supposed to be.
 Anyway, looking in <strong>statistics -&gt; protocol hierarchy</strong>, we find that there is one interesting protocol which is <strong>Internet Relay Chat</strong> (or IRC)</p>
 <p>we can filter with &ldquo;irc&rdquo; and read the conversation by <strong>right clicking -&gt; follow -&gt; TCP</strong></p>
-<p><img src="../../images/writeups/mafia/irc-flow.png" alt="IRC conversation"></p>
+<p><img src="../../images/writeups/pwnme/irc-flow.png" alt="IRC conversation"></p>
 <p>We can get two informations from this :</p>
 <ul>
 <li>a link : <a href="https://shorturl.at/2O8nI">https://shorturl.at/2O8nI</a></li>
@@ -213,7 +213,7 @@ It&rsquo;s an archived telegram conversation.</p>
 <blockquote>
 <p>Difficulty : Medium</p></blockquote>
 <blockquote>
-<p><a href="https://github.com/Phreaks-2600/pwnme-2025-quals/tree/main/misc/mafia_at_the_end_of_the_bloc_second_part">Source files</a></p></blockquote>
+<p><a href="https://github.com/Phreaks-2600/PwnMeCTF-2025-quals/blob/main/Misc/Mafia_at_the_end_of_the_block_2/attachments/mafia_at_the_end_of_the_block_2.zip">Source files</a></p></blockquote>
 <blockquote>
 <p>Description : You&rsquo;re in the final step before catching them lacking. Prove yourself by winning at the casino and access the VIP room ! But remember, the house always win.</p></blockquote>
 <blockquote>
@@ -231,7 +231,7 @@ Players must predict the spin next values to solve solve the challenge.</p>
 <h2 id="solving-1">Solving</h2>
 <h3 id="walking-through-the-webpage">Walking through the webpage</h3>
 <p>Looking through the website of the wheel we can see that we can spin the wheel for 0.1 ether and also connect a wallet.</p>
-<p><img src="../../images/writeups/mafia/royal-casino.jpg" alt="royal casino"></p>
+<p><img src="../../images/writeups/pwnme/royal-casino.jpg" alt="royal casino"></p>
 <p>Trying to spin the wheel will ask us to connect to MetaMask but we don&rsquo;t need to &ldquo;really&rdquo; spin the wheel to solve so we will not cover this part of MetaMask tomfoolery.
 Also, it&rsquo;s here as a rabbit hole to waste the time of players 😈.</p>
 <p>Reading the source code of the page we can retrieve informations such as the contract address, the ABI and the rpc.
