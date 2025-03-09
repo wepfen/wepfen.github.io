@@ -960,7 +960,7 @@ It adds padding at the end of it by substracting the length of the metadata with
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>Well, I badly messed up my code resulting in using the password hash as the key and having at the same time, the password hash in the metadata. Thanks to <a href="https://x.com/nikloskoda">nikloskoda</a> who noticed that.</p></blockquote>
+<p>Well, I badly messed up my code resulting in using the password hash as the key and having at the same time, the password hash in the metadata. Thanks to <a href="https://www.root-me.org/dolipr4necrypt0">dolipr4necrypt0</a> who noticed that.</p></blockquote>
 <p>It was supposed to hashes the password 100 times in a row taking the 16 first bytes each times , and store the result in <code>self.key</code>.
 But i messed up, and actually it just hash the password one time.</p>
 <p>It should have been that :</p>
@@ -2050,6 +2050,7 @@ Else, the user and the key defined at the start of the instance will be used.</p
 </div>
 </details>
 
+<p>Flag : <code>PWNME{zEd_15_3z}</code></p>
 <h1 id="conclusion">Conclusion</h1>
 <p>With these challenges and the <a href="https://wepfen.github.io/writeups/mafia-at-the-end-of-the-block-full/">blockchains ones</a>, it was my first time creating challenges.</p>
 <p>I learnt a lot during the design stage but made some mistakes resulting in unintended solves.</p>
