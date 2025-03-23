@@ -213,17 +213,20 @@ ATTACKER=0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
 <p>To prove we are not unlucky, just run the transaction couple of times until it work. If it doesn&rsquo;t, the transaction will just revert.</p>
 </li>
 <li>
-<p>To pass the captcha, we need to have tx.origin == msg.sender. To be short, <code>msg.sender</code> is the address of the &ldquo;account&rdquo; running the transaction, where the ether will be taken for gas transaction  for instance. And <code>tx.origin</code> is the address of the contract which has interacted with the destination contract.</p>
+<p>To pass the captcha, we need to have tx.origin == msg.sender. To be short, <code>msg.sender</code> is the address of the the address running the call (exemple a call to a function). And <code>tx.origin</code> is the address executing the transaction.</p>
 <ul>
-<li>If it is a smart contract, tx.origin == address of the smart contract.</li>
-<li>If it is a person, tx.origin == msg.sender, address of the account publishing the transaction.</li>
+<li>If we call a function directy from a smart contract, tx.origin == msg.sender.</li>
+<li>If we call a function from a smart A contract which call a contract from a smart contract B, msg.sender == smart contract A and tx.origin == our account address.</li>
 </ul>
 </li>
+</ul>
+<p><img src="https://blockchain-academy.hs-mittweida.de/wp-content/uploads/2021/09/msg_sender_tx_origin-768x207.jpg" alt="blockchain academy - tx.origin and msg.sender"></p>
+<ul>
 <li>
-<p>To fill hacker and demolition skills we need to call the contract wit values: <code>1337</code> and <code>&quot;BOOM&quot;</code>.</p>
+<p>To fill hacker and demolition skills we need to call the contract with values: <code>1337</code> and <code>&quot;BOOM&quot;</code>.</p>
 </li>
 <li>
-<p>To fill the engineer skills we can set &ndash;gas-limit close to 50000 but above of it. I had got some trouble wtih this part and thanks to HTB support i found that my gas limit was too low (50000). So i send with &ndash;gas-value = 60000.</p>
+<p>To fill the engineer skills we can set <code>--gas-limit</code> close to 50000 but above of it. I had got some trouble wtih this part and thanks to HTB support i found that my gas limit was too low (50000). So i send with <code>--gas-value = 60000</code>.</p>
 </li>
 </ul>
 <p>Here is the final command:</p>
