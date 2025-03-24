@@ -20,8 +20,9 @@ Team : Phreaks2600
 
 In the post-apocalyptic wasteland, the remnants of human and machine factions vie for control over the last vestiges of civilization. The Automata Liberation Front (ALF) and the Cyborgs Independence Movement (CIM) are the two primary parties seeking to establish dominance. In this harsh and desolate world, democracy has taken a backseat, and power is conveyed by wealth. Will you be able to bring back some Democracy in this hopeless land?" />
   <meta property="og:image" content="https://wepfen.github.io/" />
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://wepfen.github.io/writeups/notademocraticelection/">
+  <meta property="og:title" content="HTB Business CTF 2024 - NotADemocraticElection [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
   
   <title>
     
@@ -34,7 +35,7 @@ In the post-apocalyptic wasteland, the remnants of human and machine factions vi
   
   
   
-  <link rel="stylesheet" href="/css/main.4383c9a9fef9c691bf251ef6911270170922f3ca49fa37b7cfb8e9e4ca5071324135852848c3484ffa8fd4aeec60397bc3ca792092781f5f2dff9bc6fcd4e221.css" integrity="sha512-Q4PJqf75xpG/JR72kRJwFwki88pJ&#43;je3z7jp5MpQcTJBNYUoSMNIT/qP1K7sYDl7w8p5IJJ4H18t/5vG/NTiIQ==" />
+  <link rel="stylesheet" href="/css/main.205f9f3ad87a74eb5dc23b302f9a95ec36876c082113d8819afec5479b9e2baa727d47a52a38317b88175e85226b9aed906694914fe3f00a040d909d751bef32.css" integrity="sha512-IF&#43;fOth6dOtdwjswL5qV7DaHbAghE9iBmv7FR5ueK6pyfUelKjgxe4gXXoUia5rtkGaUkU/j8AoEDZCddRvvMg==" />
   
 </head>
 
@@ -262,7 +263,7 @@ In the post-apocalyptic wasteland, the remnants of human and machine factions vi
 <li>There&rsquo;s a verification process based on the address that REGISTERED the person and the address that CARRIED out the vote.</li>
 <li>If the address is verified, the code will take the voter&rsquo;s first and last name signature by doing: abiEncodePacked(first name, last name)</li>
 <li>This function is vulnerable because if I register a person called &ldquo;Sato shiNakamoto&rdquo;, his signature will be the same as that of &ldquo;Satoshi Nakamoto&rdquo; (everything is concatenated).</li>
-<li>Documentation mentioning [flaw](the <a href="https://docs.soliditylang.org/en/latest/abi-spec.html)">https://docs.soliditylang.org/en/latest/abi-spec.html)</a>.</li>
+<li>Documentation mentioning <a href="https://docs.soliditylang.org/en/latest/abi-spec.html">the flaw</a>.</li>
 <li>Then all I have to do is vote with the fraudulent voter I&rsquo;ve just created.</li>
 </ul>
 <h1 id="solve">Solve</h1>
