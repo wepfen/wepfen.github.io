@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+
+  
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Mystical angel writeup, BreizhCTF 2025.">  
+
+
+  
+  <meta property="og:type" content="website">
   <meta property="og:description" content="Mystical angel writeup, BreizhCTF 2025." />
   <meta property="og:image" content="https://wepfen.github.io//images/memes/ricardo-mystical-angel.png" />
   <meta property="og:url" content="https://wepfen.github.io/writeups/breizh-2025-mystical-angel/">
   <meta property="og:title" content="BreizhCTF 2025 - Mystical Angel [blockchain]">
   <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/breizh-2025-mystical-angel/">
+  <meta name="twitter:title" content="BreizhCTF 2025 - Mystical Angel [blockchain]">
+  <meta name="twitter:description" content="Mystical angel writeup, BreizhCTF 2025.">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/memes/ricardo-mystical-angel.png">
   
   <title>
     
@@ -352,7 +366,7 @@
 </div>
 </div><p><img src="../../images/memes/receive-function-money.gif" alt="receive"></p>
 <h1 id="solving">Solving</h1>
-<p>Now that&rsquo;s the receive function is ready, we can write a contract to actually which will get the blessings and make call to it with <a href="https://book.getfoundry.sh/reference/cast/">cast</a></p>
+<p>Now that&rsquo;s the receive function is ready, we can write a contract to which will get the blessings through a <code>GetBlessed()</code> function and make call to it with <a href="https://book.getfoundry.sh/reference/cast/">cast</a></p>
 <details>
   <summary style="color: #F99417; cursor: pointer">Solve.sol</summary>
   <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
