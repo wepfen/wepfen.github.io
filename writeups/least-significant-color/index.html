@@ -35,7 +35,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.1f27233733031507207e6a39a02085082101315bafb8ff38c7ebc0cd1bdb04f3f6fcdf6e9ce73dc20c6c293905950a1465fe4788dfac3d0616e3ea5cc3e2a8cd.css" integrity="sha512-HycjNzMDFQcgfmo5oCCFCCEBMVuvuP84x&#43;vAzRvbBPP2/N9unOc9wgxsKTkFlQoUZf5HiN&#43;sPQYW4&#43;pcw&#43;KozQ==" />
+  <link rel="stylesheet" href="/css/main.205f9f3ad87a74eb5dc23b302f9a95ec36876c082113d8819afec5479b9e2baa727d47a52a38317b88175e85226b9aed906694914fe3f00a040d909d751bef32.css" integrity="sha512-IF&#43;fOth6dOtdwjswL5qV7DaHbAghE9iBmv7FR5ueK6pyfUelKjgxe4gXXoUia5rtkGaUkU/j8AoEDZCddRvvMg==" />
   
 </head>
 
@@ -107,54 +107,54 @@ So we can get multiple bytes and get edit the LSB of each so if we concatenate t
 <p>As the description tell us, i will xor the red value of a tuple with it&rsquo;s green one and iterate this for 30 character = 30 bytes = 30*8 LSB = 240 pixels = 240 tuples.</p>
 <h3 id="script">Script</h3>
 <p>I will use a python script with the PIL module for image processing found after some research.</p>
-<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">22
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#bc74c4">from</span> PIL <span style="color:#bc74c4">import</span> Image
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#8fbcbb">PIL</span> <span style="color:#81a1c1;font-weight:bold">import</span> Image
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>flag <span style="color:#bc74c4">=</span> Image<span style="color:#bc74c4">.</span>open<span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#39;encoded.png&#39;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#81a1c1">=</span> Image<span style="color:#81a1c1">.</span>open<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;encoded.png&#39;</span><span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>lsb <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">[]</span>
+</span></span><span style="display:flex;"><span>lsb <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[]</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>b <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>b <span style="color:#81a1c1">=</span> <span style="color:#a3be8c">&#34;&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pixels <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">list</span><span style="color:#56b6c2">(</span>flag<span style="color:#bc74c4">.</span>getdata<span style="color:#56b6c2">())</span>
+</span></span><span style="display:flex;"><span>pixels <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">list</span><span style="color:#eceff4">(</span>flag<span style="color:#81a1c1">.</span>getdata<span style="color:#eceff4">())</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> c<span style="color:#56b6c2">,</span>p <span style="color:#bc74c4">in</span> <span style="color:#7fbaf5">enumerate</span><span style="color:#56b6c2">(</span>pixels<span style="color:#56b6c2">):</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">for</span> c<span style="color:#eceff4">,</span>p <span style="color:#81a1c1;font-weight:bold">in</span> <span style="color:#81a1c1">enumerate</span><span style="color:#eceff4">(</span>pixels<span style="color:#eceff4">):</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    b<span style="color:#bc74c4">+=</span><span style="color:#7fbaf5">bin</span><span style="color:#56b6c2">(</span>p<span style="color:#56b6c2">[</span><span style="color:#56b6c2">1</span><span style="color:#56b6c2">]</span><span style="color:#bc74c4">^</span>p<span style="color:#56b6c2">[</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">])[</span><span style="color:#bc74c4">-</span><span style="color:#56b6c2">1</span><span style="color:#56b6c2">]</span>
+</span></span><span style="display:flex;"><span>    b<span style="color:#81a1c1">+=</span><span style="color:#81a1c1">bin</span><span style="color:#eceff4">(</span>p<span style="color:#eceff4">[</span><span style="color:#b48ead">1</span><span style="color:#eceff4">]</span><span style="color:#81a1c1">^</span>p<span style="color:#eceff4">[</span><span style="color:#b48ead">0</span><span style="color:#eceff4">])[</span><span style="color:#81a1c1">-</span><span style="color:#b48ead">1</span><span style="color:#eceff4">]</span>
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">if</span> <span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>b<span style="color:#56b6c2">)</span> <span style="color:#bc74c4">==</span> <span style="color:#56b6c2">8</span><span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>        lsb<span style="color:#bc74c4">.</span>append<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>b<span style="color:#56b6c2">,</span> <span style="color:#56b6c2">2</span><span style="color:#56b6c2">))</span>
-</span></span><span style="display:flex;"><span>        b<span style="color:#bc74c4">=</span><span style="color:#82cc6a">&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">if</span> c <span style="color:#bc74c4">==</span> <span style="color:#56b6c2">240</span><span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#81a1c1">len</span><span style="color:#eceff4">(</span>b<span style="color:#eceff4">)</span> <span style="color:#81a1c1">==</span> <span style="color:#b48ead">8</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        lsb<span style="color:#81a1c1">.</span>append<span style="color:#eceff4">(</span><span style="color:#81a1c1">int</span><span style="color:#eceff4">(</span>b<span style="color:#eceff4">,</span> <span style="color:#b48ead">2</span><span style="color:#eceff4">))</span>
+</span></span><span style="display:flex;"><span>        b<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">if</span> c <span style="color:#81a1c1">==</span> <span style="color:#b48ead">240</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1;font-weight:bold">break</span>
 </span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> char <span style="color:#bc74c4">in</span> <span style="color:#56b6c2">(</span>lsb<span style="color:#56b6c2">):</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">chr</span><span style="color:#56b6c2">(</span>char<span style="color:#56b6c2">),</span> end<span style="color:#bc74c4">=</span><span style="color:#82cc6a">&#34;&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">for</span> char <span style="color:#81a1c1;font-weight:bold">in</span> <span style="color:#eceff4">(</span>lsb<span style="color:#eceff4">):</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">chr</span><span style="color:#eceff4">(</span>char<span style="color:#eceff4">),</span> end<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span><span style="color:#eceff4">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol>

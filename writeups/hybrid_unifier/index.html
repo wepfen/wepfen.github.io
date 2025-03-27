@@ -35,7 +35,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.1f27233733031507207e6a39a02085082101315bafb8ff38c7ebc0cd1bdb04f3f6fcdf6e9ce73dc20c6c293905950a1465fe4788dfac3d0616e3ea5cc3e2a8cd.css" integrity="sha512-HycjNzMDFQcgfmo5oCCFCCEBMVuvuP84x&#43;vAzRvbBPP2/N9unOc9wgxsKTkFlQoUZf5HiN&#43;sPQYW4&#43;pcw&#43;KozQ==" />
+  <link rel="stylesheet" href="/css/main.205f9f3ad87a74eb5dc23b302f9a95ec36876c082113d8819afec5479b9e2baa727d47a52a38317b88175e85226b9aed906694914fe3f00a040d909d751bef32.css" integrity="sha512-IF&#43;fOth6dOtdwjswL5qV7DaHbAghE9iBmv7FR5ueK6pyfUelKjgxe4gXXoUia5rtkGaUkU/j8AoEDZCddRvvMg==" />
   
 </head>
 
@@ -133,16 +133,16 @@
 <p>sending a post request to <code>/request-session-parameters</code> give us the generator $g$ and the prime number $p$ :</p>
 <p><code>POST /api/request-session-parameters HTTP/1.1</code> gives <code>{&quot;g&quot;:&quot;0x2&quot;,&quot;p&quot;:&quot;0xf4ac926dddb699f4cb03c005a9f6f89c7505ab5282a3557d2aaf41e822372edd69c2a9d4906a943340bfd87fc08f9743&quot;} </code></p>
 <p>Then we can init a session with <code>/api/init-session</code> in JSON by sending our public key, here is the challenge source code part:</p>
-<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#7fbaf5">def</span> <span style="color:#57c7ff">establish_session_key</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">self</span><span style="color:#56b6c2">,</span> client_public_key<span style="color:#56b6c2">):</span>
-</span></span><span style="display:flex;"><span>	key <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">pow</span><span style="color:#56b6c2">(</span>client_public_key<span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">self</span><span style="color:#bc74c4">.</span>a<span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">self</span><span style="color:#bc74c4">.</span>p<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#7fbaf5">self</span><span style="color:#bc74c4">.</span>session_key <span style="color:#bc74c4">=</span> sha256<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">str</span><span style="color:#56b6c2">(</span>key<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>encode<span style="color:#56b6c2">())</span><span style="color:#bc74c4">.</span>digest<span style="color:#56b6c2">()</span>
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">def</span> <span style="color:#88c0d0">establish_session_key</span><span style="color:#eceff4">(</span>self<span style="color:#eceff4">,</span> client_public_key<span style="color:#eceff4">):</span>
+</span></span><span style="display:flex;"><span>	key <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">pow</span><span style="color:#eceff4">(</span>client_public_key<span style="color:#eceff4">,</span> self<span style="color:#81a1c1">.</span>a<span style="color:#eceff4">,</span> self<span style="color:#81a1c1">.</span>p<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>	self<span style="color:#81a1c1">.</span>session_key <span style="color:#81a1c1">=</span> sha256<span style="color:#eceff4">(</span><span style="color:#81a1c1">str</span><span style="color:#eceff4">(</span>key<span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>encode<span style="color:#eceff4">())</span><span style="color:#81a1c1">.</span>digest<span style="color:#eceff4">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The key is generated with : $ B^{a} \mod \ p $</p>
@@ -176,176 +176,176 @@ $$ B^{a} \equiv (p+1)^{a} \equiv 1^{a} \equiv 1 \mod p $$<p>For the challeng I u
 </ul>
 <details>
   <summary style="color: #F99417; cursor: pointer">solve_hybrid_unifier.py</summary>
-  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">69
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">70
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">71
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">73
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">74
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">75
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">76
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">77
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">78
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">79
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">80
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">81
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">82
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">83
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">83
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#bc74c4">from</span> base64 <span style="color:#bc74c4">import</span> b64encode <span style="color:#7fbaf5">as</span> be<span style="color:#56b6c2">,</span> b64decode <span style="color:#7fbaf5">as</span> bd
-</span></span><span style="display:flex;"><span><span style="color:#bc74c4">from</span> Crypto.Cipher <span style="color:#bc74c4">import</span> AES
-</span></span><span style="display:flex;"><span><span style="color:#bc74c4">from</span> Crypto.Util.Padding <span style="color:#bc74c4">import</span> pad<span style="color:#56b6c2">,</span> unpad
-</span></span><span style="display:flex;"><span><span style="color:#bc74c4">from</span> Crypto.Util.number <span style="color:#bc74c4">import</span> getPrime<span style="color:#56b6c2">,</span> long_to_bytes <span style="color:#7fbaf5">as</span> l2b
-</span></span><span style="display:flex;"><span><span style="color:#bc74c4">from</span> hashlib <span style="color:#bc74c4">import</span> sha256
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#8fbcbb">base64</span> <span style="color:#81a1c1;font-weight:bold">import</span> b64encode <span style="color:#81a1c1;font-weight:bold">as</span> be<span style="color:#eceff4">,</span> b64decode <span style="color:#81a1c1;font-weight:bold">as</span> bd
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#8fbcbb">Crypto.Cipher</span> <span style="color:#81a1c1;font-weight:bold">import</span> AES
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#8fbcbb">Crypto.Util.Padding</span> <span style="color:#81a1c1;font-weight:bold">import</span> pad<span style="color:#eceff4">,</span> unpad
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#8fbcbb">Crypto.Util.number</span> <span style="color:#81a1c1;font-weight:bold">import</span> getPrime<span style="color:#eceff4">,</span> long_to_bytes <span style="color:#81a1c1;font-weight:bold">as</span> l2b
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">from</span> <span style="color:#8fbcbb">hashlib</span> <span style="color:#81a1c1;font-weight:bold">import</span> sha256
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> requests
-</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> json
-</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">requests</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">json</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">os</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">def</span> <span style="color:#57c7ff">try_decrypt</span><span style="color:#56b6c2">(</span>key<span style="color:#56b6c2">,</span> challenge<span style="color:#56b6c2">):</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">def</span> <span style="color:#88c0d0">try_decrypt</span><span style="color:#eceff4">(</span>key<span style="color:#eceff4">,</span> challenge<span style="color:#eceff4">):</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    challenge <span style="color:#bc74c4">=</span> bd<span style="color:#56b6c2">(</span>challenge<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    iv <span style="color:#bc74c4">=</span> challenge<span style="color:#56b6c2">[:</span><span style="color:#56b6c2">16</span><span style="color:#56b6c2">]</span>
-</span></span><span style="display:flex;"><span>    challenge <span style="color:#bc74c4">=</span> challenge<span style="color:#56b6c2">[</span><span style="color:#56b6c2">16</span><span style="color:#56b6c2">:]</span>
-</span></span><span style="display:flex;"><span>    cipher  <span style="color:#bc74c4">=</span> AES<span style="color:#bc74c4">.</span>new<span style="color:#56b6c2">(</span>key<span style="color:#56b6c2">,</span> AES<span style="color:#bc74c4">.</span>MODE_CBC<span style="color:#56b6c2">,</span> iv<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    decrypted <span style="color:#bc74c4">=</span> unpad<span style="color:#56b6c2">(</span>cipher<span style="color:#bc74c4">.</span>decrypt<span style="color:#56b6c2">(</span>challenge<span style="color:#56b6c2">),</span><span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    challenge <span style="color:#81a1c1">=</span> bd<span style="color:#eceff4">(</span>challenge<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    iv <span style="color:#81a1c1">=</span> challenge<span style="color:#eceff4">[:</span><span style="color:#b48ead">16</span><span style="color:#eceff4">]</span>
+</span></span><span style="display:flex;"><span>    challenge <span style="color:#81a1c1">=</span> challenge<span style="color:#eceff4">[</span><span style="color:#b48ead">16</span><span style="color:#eceff4">:]</span>
+</span></span><span style="display:flex;"><span>    cipher  <span style="color:#81a1c1">=</span> AES<span style="color:#81a1c1">.</span>new<span style="color:#eceff4">(</span>key<span style="color:#eceff4">,</span> AES<span style="color:#81a1c1">.</span>MODE_CBC<span style="color:#eceff4">,</span> iv<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    decrypted <span style="color:#81a1c1">=</span> unpad<span style="color:#eceff4">(</span>cipher<span style="color:#81a1c1">.</span>decrypt<span style="color:#eceff4">(</span>challenge<span style="color:#eceff4">),</span><span style="color:#b48ead">16</span><span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">return</span> sha256<span style="color:#56b6c2">(</span>decrypted<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>hexdigest<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">return</span> sha256<span style="color:#eceff4">(</span>decrypted<span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>hexdigest<span style="color:#eceff4">()</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">def</span> <span style="color:#57c7ff">decrypt_packet</span><span style="color:#56b6c2">(</span>key<span style="color:#56b6c2">,</span> packet<span style="color:#56b6c2">):</span>
-</span></span><span style="display:flex;"><span>    decoded_packet <span style="color:#bc74c4">=</span> bd<span style="color:#56b6c2">(</span>packet<span style="color:#bc74c4">.</span>encode<span style="color:#56b6c2">())</span>
-</span></span><span style="display:flex;"><span>    iv <span style="color:#bc74c4">=</span> decoded_packet<span style="color:#56b6c2">[:</span><span style="color:#56b6c2">16</span><span style="color:#56b6c2">]</span>
-</span></span><span style="display:flex;"><span>    encrypted_packet <span style="color:#bc74c4">=</span> decoded_packet<span style="color:#56b6c2">[</span><span style="color:#56b6c2">16</span><span style="color:#56b6c2">:]</span>
-</span></span><span style="display:flex;"><span>    cipher <span style="color:#bc74c4">=</span> AES<span style="color:#bc74c4">.</span>new<span style="color:#56b6c2">(</span>key<span style="color:#56b6c2">,</span> AES<span style="color:#bc74c4">.</span>MODE_CBC<span style="color:#56b6c2">,</span> iv<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    decrypted_packet <span style="color:#bc74c4">=</span> unpad<span style="color:#56b6c2">(</span>cipher<span style="color:#bc74c4">.</span>decrypt<span style="color:#56b6c2">(</span>encrypted_packet<span style="color:#56b6c2">),</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    packet_data <span style="color:#bc74c4">=</span> decrypted_packet<span style="color:#bc74c4">.</span>decode<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">def</span> <span style="color:#88c0d0">decrypt_packet</span><span style="color:#eceff4">(</span>key<span style="color:#eceff4">,</span> packet<span style="color:#eceff4">):</span>
+</span></span><span style="display:flex;"><span>    decoded_packet <span style="color:#81a1c1">=</span> bd<span style="color:#eceff4">(</span>packet<span style="color:#81a1c1">.</span>encode<span style="color:#eceff4">())</span>
+</span></span><span style="display:flex;"><span>    iv <span style="color:#81a1c1">=</span> decoded_packet<span style="color:#eceff4">[:</span><span style="color:#b48ead">16</span><span style="color:#eceff4">]</span>
+</span></span><span style="display:flex;"><span>    encrypted_packet <span style="color:#81a1c1">=</span> decoded_packet<span style="color:#eceff4">[</span><span style="color:#b48ead">16</span><span style="color:#eceff4">:]</span>
+</span></span><span style="display:flex;"><span>    cipher <span style="color:#81a1c1">=</span> AES<span style="color:#81a1c1">.</span>new<span style="color:#eceff4">(</span>key<span style="color:#eceff4">,</span> AES<span style="color:#81a1c1">.</span>MODE_CBC<span style="color:#eceff4">,</span> iv<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    decrypted_packet <span style="color:#81a1c1">=</span> unpad<span style="color:#eceff4">(</span>cipher<span style="color:#81a1c1">.</span>decrypt<span style="color:#eceff4">(</span>encrypted_packet<span style="color:#eceff4">),</span> <span style="color:#b48ead">16</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    packet_data <span style="color:#81a1c1">=</span> decrypted_packet<span style="color:#81a1c1">.</span>decode<span style="color:#eceff4">()</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">return</span> packet_data
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">return</span> packet_data
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">if</span> __name__ <span style="color:#bc74c4">==</span> <span style="color:#82cc6a">&#34;__main__&#34;</span><span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>    url <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">&#34;http://94.237.55.180:50582&#34;</span>
-</span></span><span style="display:flex;"><span>    r <span style="color:#bc74c4">=</span> requests<span style="color:#bc74c4">.</span>post<span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#39;</span><span style="color:#82cc6a">{</span>url<span style="color:#82cc6a">}</span><span style="color:#82cc6a">/api/request-session-parameters&#39;</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    data <span style="color:#bc74c4">=</span> json<span style="color:#bc74c4">.</span>loads<span style="color:#56b6c2">(</span>r<span style="color:#bc74c4">.</span>content<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#34;Parameters : </span><span style="color:#82cc6a">{</span>data<span style="color:#82cc6a">}</span><span style="color:#82cc6a">&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">if</span> __name__ <span style="color:#81a1c1">==</span> <span style="color:#a3be8c">&#34;__main__&#34;</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#81a1c1">=</span> <span style="color:#a3be8c">&#34;http://94.237.55.180:50582&#34;</span>
+</span></span><span style="display:flex;"><span>    r <span style="color:#81a1c1">=</span> requests<span style="color:#81a1c1">.</span>post<span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#39;</span><span style="color:#a3be8c">{</span>url<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/api/request-session-parameters&#39;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#81a1c1">=</span> json<span style="color:#81a1c1">.</span>loads<span style="color:#eceff4">(</span>r<span style="color:#81a1c1">.</span>content<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#34;Parameters : </span><span style="color:#a3be8c">{</span>data<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    g <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>data<span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#34;g&#34;</span><span style="color:#56b6c2">],</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    p <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>data<span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#34;p&#34;</span><span style="color:#56b6c2">],</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    g <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">int</span><span style="color:#eceff4">(</span>data<span style="color:#eceff4">[</span><span style="color:#a3be8c">&#34;g&#34;</span><span style="color:#eceff4">],</span> <span style="color:#b48ead">16</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    p <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">int</span><span style="color:#eceff4">(</span>data<span style="color:#eceff4">[</span><span style="color:#a3be8c">&#34;p&#34;</span><span style="color:#eceff4">],</span> <span style="color:#b48ead">16</span><span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    my_pubkey <span style="color:#bc74c4">=</span> p<span style="color:#bc74c4">-</span><span style="color:#56b6c2">1</span>
+</span></span><span style="display:flex;"><span>    my_pubkey <span style="color:#81a1c1">=</span> p<span style="color:#81a1c1">-</span><span style="color:#b48ead">1</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#3e4460"># init session</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#616e87;font-style:italic"># init session</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    r <span style="color:#bc74c4">=</span> requests<span style="color:#bc74c4">.</span>post<span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#39;</span><span style="color:#82cc6a">{</span>url<span style="color:#82cc6a">}</span><span style="color:#82cc6a">/api/init-session&#39;</span><span style="color:#56b6c2">,</span> json <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">{</span><span style="color:#82cc6a">&#39;client_public_key&#39;</span><span style="color:#56b6c2">:</span>my_pubkey<span style="color:#56b6c2">})</span>
-</span></span><span style="display:flex;"><span>    data <span style="color:#bc74c4">=</span> json<span style="color:#bc74c4">.</span>loads<span style="color:#56b6c2">(</span>r<span style="color:#bc74c4">.</span>content<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#34;Session initialization : </span><span style="color:#82cc6a">{</span>data<span style="color:#82cc6a">}</span><span style="color:#82cc6a">&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    r <span style="color:#81a1c1">=</span> requests<span style="color:#81a1c1">.</span>post<span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#39;</span><span style="color:#a3be8c">{</span>url<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/api/init-session&#39;</span><span style="color:#eceff4">,</span> json <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span><span style="color:#a3be8c">&#39;client_public_key&#39;</span><span style="color:#eceff4">:</span>my_pubkey<span style="color:#eceff4">})</span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#81a1c1">=</span> json<span style="color:#81a1c1">.</span>loads<span style="color:#eceff4">(</span>r<span style="color:#81a1c1">.</span>content<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#34;Session initialization : </span><span style="color:#a3be8c">{</span>data<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    server_pubkey <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>data<span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#34;server_public_key&#34;</span><span style="color:#56b6c2">],</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    server_pubkey <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">int</span><span style="color:#eceff4">(</span>data<span style="color:#eceff4">[</span><span style="color:#a3be8c">&#34;server_public_key&#34;</span><span style="color:#eceff4">],</span> <span style="color:#b48ead">16</span><span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    key_1 <span style="color:#bc74c4">=</span> sha256<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">str</span><span style="color:#56b6c2">(</span>p<span style="color:#bc74c4">-</span><span style="color:#56b6c2">1</span><span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>encode<span style="color:#56b6c2">())</span><span style="color:#bc74c4">.</span>digest<span style="color:#56b6c2">()</span>
-</span></span><span style="display:flex;"><span>    key_2 <span style="color:#bc74c4">=</span> sha256<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">str</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">1</span><span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>encode<span style="color:#56b6c2">())</span><span style="color:#bc74c4">.</span>digest<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>    key_1 <span style="color:#81a1c1">=</span> sha256<span style="color:#eceff4">(</span><span style="color:#81a1c1">str</span><span style="color:#eceff4">(</span>p<span style="color:#81a1c1">-</span><span style="color:#b48ead">1</span><span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>encode<span style="color:#eceff4">())</span><span style="color:#81a1c1">.</span>digest<span style="color:#eceff4">()</span>
+</span></span><span style="display:flex;"><span>    key_2 <span style="color:#81a1c1">=</span> sha256<span style="color:#eceff4">(</span><span style="color:#81a1c1">str</span><span style="color:#eceff4">(</span><span style="color:#b48ead">1</span><span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>encode<span style="color:#eceff4">())</span><span style="color:#81a1c1">.</span>digest<span style="color:#eceff4">()</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#3e4460">#get challenge</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#616e87;font-style:italic">#get challenge</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    r <span style="color:#bc74c4">=</span> requests<span style="color:#bc74c4">.</span>post<span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#39;</span><span style="color:#82cc6a">{</span>url<span style="color:#82cc6a">}</span><span style="color:#82cc6a">/api/request-challenge&#39;</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    data <span style="color:#bc74c4">=</span> json<span style="color:#bc74c4">.</span>loads<span style="color:#56b6c2">(</span>r<span style="color:#bc74c4">.</span>content<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#34;Challenge : </span><span style="color:#82cc6a">{</span>data<span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#39;encrypted_challenge&#39;</span><span style="color:#56b6c2">]</span><span style="color:#82cc6a">}</span><span style="color:#82cc6a">&#34;</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    challenge <span style="color:#bc74c4">=</span> data<span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#39;encrypted_challenge&#39;</span><span style="color:#56b6c2">]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">try</span> <span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>        challenge_hash <span style="color:#bc74c4">=</span> try_decrypt<span style="color:#56b6c2">(</span>key_1<span style="color:#56b6c2">,</span> challenge<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>        valid_key <span style="color:#bc74c4">=</span> key_1
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">except</span> <span style="color:#56b6c2">:</span>
-</span></span><span style="display:flex;"><span>        challenge_hash <span style="color:#bc74c4">=</span> try_decrypt<span style="color:#56b6c2">(</span>key_2<span style="color:#56b6c2">,</span> challenge<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>        valid_key <span style="color:#bc74c4">=</span> key_2
+</span></span><span style="display:flex;"><span>    r <span style="color:#81a1c1">=</span> requests<span style="color:#81a1c1">.</span>post<span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#39;</span><span style="color:#a3be8c">{</span>url<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/api/request-challenge&#39;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#81a1c1">=</span> json<span style="color:#81a1c1">.</span>loads<span style="color:#eceff4">(</span>r<span style="color:#81a1c1">.</span>content<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#34;Challenge : </span><span style="color:#a3be8c">{</span>data<span style="color:#eceff4">[</span><span style="color:#a3be8c">&#39;encrypted_challenge&#39;</span><span style="color:#eceff4">]</span><span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    challenge <span style="color:#81a1c1">=</span> data<span style="color:#eceff4">[</span><span style="color:#a3be8c">&#39;encrypted_challenge&#39;</span><span style="color:#eceff4">]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">try</span> <span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        challenge_hash <span style="color:#81a1c1">=</span> try_decrypt<span style="color:#eceff4">(</span>key_1<span style="color:#eceff4">,</span> challenge<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>        valid_key <span style="color:#81a1c1">=</span> key_1
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">except</span> <span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        challenge_hash <span style="color:#81a1c1">=</span> try_decrypt<span style="color:#eceff4">(</span>key_2<span style="color:#eceff4">,</span> challenge<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>        valid_key <span style="color:#81a1c1">=</span> key_2
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#34;valid key : </span><span style="color:#82cc6a">{</span>valid_key<span style="color:#82cc6a">}</span><span style="color:#82cc6a">&#34;</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#34;challenge hash found : </span><span style="color:#82cc6a">{</span>challenge_hash<span style="color:#82cc6a">}</span><span style="color:#82cc6a">&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#34;valid key : </span><span style="color:#a3be8c">{</span>valid_key<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#34;challenge hash found : </span><span style="color:#a3be8c">{</span>challenge_hash<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#3e4460"># send challenge response</span>
-</span></span><span style="display:flex;"><span>    packet <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">b</span><span style="color:#82cc6a">&#39;flag&#39;</span>
-</span></span><span style="display:flex;"><span>    iv <span style="color:#bc74c4">=</span> os<span style="color:#bc74c4">.</span>urandom<span style="color:#56b6c2">(</span><span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    cipher  <span style="color:#bc74c4">=</span> AES<span style="color:#bc74c4">.</span>new<span style="color:#56b6c2">(</span>valid_key<span style="color:#56b6c2">,</span> AES<span style="color:#bc74c4">.</span>MODE_CBC<span style="color:#56b6c2">,</span> iv<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    encrypted_packet <span style="color:#bc74c4">=</span> cipher<span style="color:#bc74c4">.</span>encrypt<span style="color:#56b6c2">(</span>pad<span style="color:#56b6c2">(</span>packet<span style="color:#56b6c2">,</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">))</span>
-</span></span><span style="display:flex;"><span>    encrypted_packet <span style="color:#bc74c4">=</span> be<span style="color:#56b6c2">(</span>iv<span style="color:#bc74c4">+</span>encrypted_packet<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#616e87;font-style:italic"># send challenge response</span>
+</span></span><span style="display:flex;"><span>    packet <span style="color:#81a1c1">=</span> <span style="color:#a3be8c">b</span><span style="color:#a3be8c">&#39;flag&#39;</span>
+</span></span><span style="display:flex;"><span>    iv <span style="color:#81a1c1">=</span> os<span style="color:#81a1c1">.</span>urandom<span style="color:#eceff4">(</span><span style="color:#b48ead">16</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    cipher  <span style="color:#81a1c1">=</span> AES<span style="color:#81a1c1">.</span>new<span style="color:#eceff4">(</span>valid_key<span style="color:#eceff4">,</span> AES<span style="color:#81a1c1">.</span>MODE_CBC<span style="color:#eceff4">,</span> iv<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    encrypted_packet <span style="color:#81a1c1">=</span> cipher<span style="color:#81a1c1">.</span>encrypt<span style="color:#eceff4">(</span>pad<span style="color:#eceff4">(</span>packet<span style="color:#eceff4">,</span> <span style="color:#b48ead">16</span><span style="color:#eceff4">))</span>
+</span></span><span style="display:flex;"><span>    encrypted_packet <span style="color:#81a1c1">=</span> be<span style="color:#eceff4">(</span>iv<span style="color:#81a1c1">+</span>encrypted_packet<span style="color:#eceff4">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    r <span style="color:#bc74c4">=</span> requests<span style="color:#bc74c4">.</span>post<span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#39;</span><span style="color:#82cc6a">{</span>url<span style="color:#82cc6a">}</span><span style="color:#82cc6a">/api/dashboard&#39;</span><span style="color:#56b6c2">,</span> json <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">{</span><span style="color:#82cc6a">&#39;challenge&#39;</span><span style="color:#56b6c2">:</span> challenge_hash<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#39;packet_data&#39;</span><span style="color:#56b6c2">:</span> encrypted_packet<span style="color:#56b6c2">})</span>
+</span></span><span style="display:flex;"><span>    r <span style="color:#81a1c1">=</span> requests<span style="color:#81a1c1">.</span>post<span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#39;</span><span style="color:#a3be8c">{</span>url<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/api/dashboard&#39;</span><span style="color:#eceff4">,</span> json <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span><span style="color:#a3be8c">&#39;challenge&#39;</span><span style="color:#eceff4">:</span> challenge_hash<span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;packet_data&#39;</span><span style="color:#eceff4">:</span> encrypted_packet<span style="color:#eceff4">})</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    data <span style="color:#bc74c4">=</span> json<span style="color:#bc74c4">.</span>loads<span style="color:#56b6c2">(</span>r<span style="color:#bc74c4">.</span>content<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    encrypted_flag <span style="color:#bc74c4">=</span> data<span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#39;packet_data&#39;</span><span style="color:#56b6c2">]</span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#81a1c1">=</span> json<span style="color:#81a1c1">.</span>loads<span style="color:#eceff4">(</span>r<span style="color:#81a1c1">.</span>content<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    encrypted_flag <span style="color:#81a1c1">=</span> data<span style="color:#eceff4">[</span><span style="color:#a3be8c">&#39;packet_data&#39;</span><span style="color:#eceff4">]</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    flag <span style="color:#bc74c4">=</span> decrypt_packet<span style="color:#56b6c2">(</span>valid_key<span style="color:#56b6c2">,</span> encrypted_flag<span style="color:#56b6c2">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#34;FLAG : </span><span style="color:#82cc6a">{</span>flag<span style="color:#82cc6a">}</span><span style="color:#82cc6a">&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    flag <span style="color:#81a1c1">=</span> decrypt_packet<span style="color:#eceff4">(</span>valid_key<span style="color:#eceff4">,</span> encrypted_flag<span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">f</span><span style="color:#a3be8c">&#34;FLAG : </span><span style="color:#a3be8c">{</span>flag<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#eceff4">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>

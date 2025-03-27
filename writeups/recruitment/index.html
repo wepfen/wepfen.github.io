@@ -35,7 +35,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.1f27233733031507207e6a39a02085082101315bafb8ff38c7ebc0cd1bdb04f3f6fcdf6e9ce73dc20c6c293905950a1465fe4788dfac3d0616e3ea5cc3e2a8cd.css" integrity="sha512-HycjNzMDFQcgfmo5oCCFCCEBMVuvuP84x&#43;vAzRvbBPP2/N9unOc9wgxsKTkFlQoUZf5HiN&#43;sPQYW4&#43;pcw&#43;KozQ==" />
+  <link rel="stylesheet" href="/css/main.205f9f3ad87a74eb5dc23b302f9a95ec36876c082113d8819afec5479b9e2baa727d47a52a38317b88175e85226b9aed906694914fe3f00a040d909d751bef32.css" integrity="sha512-IF&#43;fOth6dOtdwjswL5qV7DaHbAghE9iBmv7FR5ueK6pyfUelKjgxe4gXXoUia5rtkGaUkU/j8AoEDZCddRvvMg==" />
   
 </head>
 
@@ -92,76 +92,76 @@ I used a VM with debian to solve this but is possible on any linux distro (maybe
 <h2 id="reading-the-smart-contract">Reading the smart contract</h2>
 <p>We can apply by interacting with the function <code>application(uint16 input1, string memory input2)</code> by supplying two parameters.</p>
 <p>Reading the contract <code>Recruitment.sol</code>:</p>
-<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">33
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">application</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">uint16</span> input1<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">string</span> <span style="color:#7fbaf5">memory</span> input2<span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">public</span> <span style="color:#56b6c2">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// In order to be eligible, you must match the following set of skills:
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#3e4460">// - Hacker
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#3e4460">// - Stealth Specialist
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#3e4460">// - Engineer
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#3e4460">// - Demolition Specialist
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// Let&#39;s start!
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#3e4460">// Some preliminary checks: we do not hire unlucky people.
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">block</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">timestamp</span> <span style="color:#bc74c4">%</span> <span style="color:#56b6c2">2</span> <span style="color:#bc74c4">==</span> <span style="color:#56b6c2">0</span><span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;Natural selection people say..&#34;</span><span style="color:#56b6c2">);</span>
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">function</span> <span style="color:#88c0d0">application</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">uint16</span> input1<span style="color:#eceff4">,</span> <span style="color:#81a1c1">string</span> <span style="color:#81a1c1;font-weight:bold">memory</span> input2<span style="color:#eceff4">)</span> <span style="color:#81a1c1;font-weight:bold">public</span> <span style="color:#eceff4">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// In order to be eligible, you must match the following set of skills:
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#616e87;font-style:italic">// - Hacker
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#616e87;font-style:italic">// - Stealth Specialist
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#616e87;font-style:italic">// - Engineer
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#616e87;font-style:italic">// - Demolition Specialist
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// Let&#39;s start!
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#616e87;font-style:italic">// Some preliminary checks: we do not hire unlucky people.
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#81a1c1">require</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">block</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">timestamp</span> <span style="color:#81a1c1">%</span> <span style="color:#b48ead">2</span> <span style="color:#81a1c1">==</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;Natural selection people say..&#34;</span><span style="color:#eceff4">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// CAPTCHA (Completely Automated Public Turing test to tell Computers and Humans Apart)
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">tx</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">origin</span> <span style="color:#bc74c4">==</span> <span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;Are you even human?&#34;</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// CAPTCHA (Completely Automated Public Turing test to tell Computers and Humans Apart)
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#81a1c1">require</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">tx</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">origin</span> <span style="color:#81a1c1">==</span> <span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;Are you even human?&#34;</span><span style="color:#eceff4">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// Now let&#39;s start for real.
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#3e4460">// 1. Are you an hacker?
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>           <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>input1 <span style="color:#bc74c4">==</span> <span style="color:#56b6c2">1337</span><span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;You lack hacking skills.&#34;</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// yeah you definitely are.
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// 2. Are you stealthy?
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">block</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">number</span> <span style="color:#bc74c4">&lt;</span> <span style="color:#56b6c2">20</span><span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;You lack stealth skills.&#34;</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// Now let&#39;s start for real.
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#616e87;font-style:italic">// 1. Are you an hacker?
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>           <span style="color:#81a1c1">require</span><span style="color:#eceff4">(</span>input1 <span style="color:#81a1c1">==</span> <span style="color:#b48ead">1337</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;You lack hacking skills.&#34;</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// yeah you definitely are.
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// 2. Are you stealthy?
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#81a1c1">require</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">block</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">number</span> <span style="color:#81a1c1">&lt;</span> <span style="color:#b48ead">20</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;You lack stealth skills.&#34;</span><span style="color:#eceff4">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// 3. Are you an engineer?
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">gasleft</span><span style="color:#56b6c2">()</span> <span style="color:#bc74c4">&lt;=</span> <span style="color:#56b6c2">50000</span><span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;You lack engineering skills.&#34;</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// 3. Are you an engineer?
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#81a1c1">require</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">gasleft</span><span style="color:#eceff4">()</span> <span style="color:#81a1c1">&lt;=</span> <span style="color:#b48ead">50000</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#34;You lack engineering skills.&#34;</span><span style="color:#eceff4">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// 4. Are you a demolition specialist?
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">keccak256</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">abi</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">encodePacked</span><span style="color:#56b6c2">(</span>input2<span style="color:#56b6c2">))</span> <span style="color:#bc74c4">==</span> <span style="color:#7fbaf5">keccak256</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">abi</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">encodePacked</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;BOOM&#34;</span><span style="color:#56b6c2">)),</span> <span style="color:#82cc6a">&#34;You lack demolition skills&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// 4. Are you a demolition specialist?
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#81a1c1">require</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">keccak256</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">abi</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">encodePacked</span><span style="color:#eceff4">(</span>input2<span style="color:#eceff4">))</span> <span style="color:#81a1c1">==</span> <span style="color:#81a1c1">keccak256</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">abi</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">encodePacked</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;BOOM&#34;</span><span style="color:#eceff4">)),</span> <span style="color:#a3be8c">&#34;You lack demolition skills&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// Congratulations! Welcome to the crew.
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        crew<span style="color:#56b6c2">[</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">=</span> <span style="color:#cf5967;background-color:#43454f">true</span><span style="color:#56b6c2">;</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// here is your reward :)
-</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">payable</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">).</span><span style="color:#7fbaf5">transfer</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">1</span> <span style="color:#cf5967;background-color:#43454f">wei</span><span style="color:#56b6c2">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// Congratulations! Welcome to the crew.
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        crew<span style="color:#eceff4">[</span><span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">]</span> <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">true</span><span style="color:#eceff4">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#616e87;font-style:italic">// here is your reward :)
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span>        <span style="color:#81a1c1;font-weight:bold">payable</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">).</span><span style="color:#81a1c1">transfer</span><span style="color:#eceff4">(</span><span style="color:#b48ead">1</span> <span style="color:#81a1c1;font-weight:bold">wei</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#eceff4">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>We understand that to get recruited we need to:</p>
