@@ -125,72 +125,72 @@
 <h2 id="reading-the-challenge-source-code">Reading the challenge source code</h2>
 <details>
   <summary style="color: #F99417; cursor: pointer">chall.sage</summary>
-  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">#!/usr/bin/sage</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">hashlib</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">re</span>
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#3e4460;font-style:italic">#!/usr/bin/sage</span>
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> re
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">with</span> open(<span style="color:#a5d6ff">&#34;flag.txt&#34;</span>, <span style="color:#a5d6ff">&#34;rb&#34;</span>) <span style="color:#ff7b72">as</span> f:
-</span></span><span style="display:flex;"><span>    FLAG <span style="color:#ff7b72;font-weight:bold">=</span> f<span style="color:#ff7b72;font-weight:bold">.</span>read()
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">assert</span> re<span style="color:#ff7b72;font-weight:bold">.</span><span style="color:#ff7b72">match</span>(<span style="color:#79c0ff">rb</span><span style="color:#a5d6ff">&#34;Hero{[0-9a-zA-Z_]</span><span style="color:#a5d6ff">{90}</span><span style="color:#a5d6ff">}&#34;</span>, FLAG)
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">with</span> <span style="color:#7fbaf5">open</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;flag.txt&#34;</span><span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;rb&#34;</span><span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">as</span> f<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    FLAG <span style="color:#bc74c4">=</span> f<span style="color:#bc74c4">.</span>read<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">assert</span> re<span style="color:#bc74c4">.</span><span style="color:#7fbaf5">match</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">rb</span><span style="color:#82cc6a">&#34;Hero{[0-9a-zA-Z_]</span><span style="color:#82cc6a">{90}</span><span style="color:#82cc6a">}&#34;</span><span style="color:#56b6c2">,</span> FLAG<span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>F <span style="color:#ff7b72;font-weight:bold">=</span> FiniteField(<span style="color:#a5d6ff">2</span><span style="color:#ff7b72;font-weight:bold">**</span><span style="color:#a5d6ff">256</span> <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">189</span>)
-</span></span><span style="display:flex;"><span>R <span style="color:#ff7b72;font-weight:bold">=</span> PolynomialRing(F, <span style="color:#a5d6ff">&#34;x&#34;</span>)
-</span></span><span style="display:flex;"><span>H <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> n: int(hashlib<span style="color:#ff7b72;font-weight:bold">.</span>sha256(n)<span style="color:#ff7b72;font-weight:bold">.</span>hexdigest(), <span style="color:#a5d6ff">16</span>)
-</span></span><span style="display:flex;"><span>C <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> x: [H(x[i : i <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">4</span>]) <span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">in</span> range(<span style="color:#a5d6ff">0</span>, len(FLAG), <span style="color:#a5d6ff">4</span>)]
+</span></span><span style="display:flex;"><span>F <span style="color:#bc74c4">=</span> FiniteField<span style="color:#56b6c2">(</span><span style="color:#56b6c2">2</span><span style="color:#bc74c4">**</span><span style="color:#56b6c2">256</span> <span style="color:#bc74c4">-</span> <span style="color:#56b6c2">189</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>R <span style="color:#bc74c4">=</span> PolynomialRing<span style="color:#56b6c2">(</span>F<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;x&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>H <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">lambda</span> n<span style="color:#56b6c2">:</span> <span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>hashlib<span style="color:#bc74c4">.</span>sha256<span style="color:#56b6c2">(</span>n<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>hexdigest<span style="color:#56b6c2">(),</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>C <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">lambda</span> x<span style="color:#56b6c2">:</span> <span style="color:#56b6c2">[</span>H<span style="color:#56b6c2">(</span>x<span style="color:#56b6c2">[</span>i <span style="color:#56b6c2">:</span> i <span style="color:#bc74c4">+</span> <span style="color:#56b6c2">4</span><span style="color:#56b6c2">])</span> <span style="color:#7fbaf5">for</span> i <span style="color:#bc74c4">in</span> <span style="color:#7fbaf5">range</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>FLAG<span style="color:#56b6c2">),</span> <span style="color:#56b6c2">4</span><span style="color:#56b6c2">)]</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>f <span style="color:#ff7b72;font-weight:bold">=</span> R(C(FLAG))
+</span></span><span style="display:flex;"><span>f <span style="color:#bc74c4">=</span> R<span style="color:#56b6c2">(</span>C<span style="color:#56b6c2">(</span>FLAG<span style="color:#56b6c2">))</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>points <span style="color:#ff7b72;font-weight:bold">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> _ <span style="color:#ff7b72;font-weight:bold">in</span> range(f<span style="color:#ff7b72;font-weight:bold">.</span>degree()):
-</span></span><span style="display:flex;"><span>    r <span style="color:#ff7b72;font-weight:bold">=</span> F<span style="color:#ff7b72;font-weight:bold">.</span>random_element()
-</span></span><span style="display:flex;"><span>    points<span style="color:#ff7b72;font-weight:bold">.</span>append([r, f(r)])
-</span></span><span style="display:flex;"><span>print(points)
+</span></span><span style="display:flex;"><span>points <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">[]</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> _ <span style="color:#bc74c4">in</span> <span style="color:#7fbaf5">range</span><span style="color:#56b6c2">(</span>f<span style="color:#bc74c4">.</span>degree<span style="color:#56b6c2">()):</span>
+</span></span><span style="display:flex;"><span>    r <span style="color:#bc74c4">=</span> F<span style="color:#bc74c4">.</span>random_element<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>    points<span style="color:#bc74c4">.</span>append<span style="color:#56b6c2">([</span>r<span style="color:#56b6c2">,</span> f<span style="color:#56b6c2">(</span>r<span style="color:#56b6c2">)])</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span>points<span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>flag <span style="color:#ff7b72;font-weight:bold">=</span> input(<span style="color:#a5d6ff">&#34;&gt;&#34;</span>)<span style="color:#ff7b72;font-weight:bold">.</span>encode()<span style="color:#ff7b72;font-weight:bold">.</span>ljust(len(FLAG))
+</span></span><span style="display:flex;"><span>flag <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">input</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;&gt;&#34;</span><span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>encode<span style="color:#56b6c2">()</span><span style="color:#bc74c4">.</span>ljust<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>FLAG<span style="color:#56b6c2">))</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>g <span style="color:#ff7b72;font-weight:bold">=</span> R(C(flag))
+</span></span><span style="display:flex;"><span>g <span style="color:#bc74c4">=</span> R<span style="color:#56b6c2">(</span>C<span style="color:#56b6c2">(</span>flag<span style="color:#56b6c2">))</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> p <span style="color:#ff7b72;font-weight:bold">in</span> points:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> g(p[<span style="color:#a5d6ff">0</span>]) <span style="color:#ff7b72;font-weight:bold">!=</span> p[<span style="color:#a5d6ff">1</span>]:
-</span></span><span style="display:flex;"><span>        print(<span style="color:#a5d6ff">&#34;Wrong flag!&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">break</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">else</span>:
-</span></span><span style="display:flex;"><span>    print(<span style="color:#a5d6ff">&#34;Congrats!&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> p <span style="color:#bc74c4">in</span> points<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">if</span> g<span style="color:#56b6c2">(</span>p<span style="color:#56b6c2">[</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">])</span> <span style="color:#bc74c4">!=</span> p<span style="color:#56b6c2">[</span><span style="color:#56b6c2">1</span><span style="color:#56b6c2">]:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;Wrong flag!&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">break</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">else</span><span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;Congrats!&#34;</span><span style="color:#56b6c2">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -210,14 +210,14 @@
 <p>A <code>H</code> function that only hashes given bytes and the <code>C</code> function slices a string into 4-byte chunks, hash each of them with <code>H</code> and add them to a list.</p>
 </li>
 </ul>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>H <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> n: int(hashlib<span style="color:#ff7b72;font-weight:bold">.</span>sha256(n)<span style="color:#ff7b72;font-weight:bold">.</span>hexdigest(), <span style="color:#a5d6ff">16</span>)
-</span></span><span style="display:flex;"><span>C <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> x: [H(x[i : i <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">4</span>]) <span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">in</span> range(<span style="color:#a5d6ff">0</span>, len(FLAG), <span style="color:#a5d6ff">4</span>)]
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>H <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">lambda</span> n<span style="color:#56b6c2">:</span> <span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>hashlib<span style="color:#bc74c4">.</span>sha256<span style="color:#56b6c2">(</span>n<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>hexdigest<span style="color:#56b6c2">(),</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>C <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">lambda</span> x<span style="color:#56b6c2">:</span> <span style="color:#56b6c2">[</span>H<span style="color:#56b6c2">(</span>x<span style="color:#56b6c2">[</span>i <span style="color:#56b6c2">:</span> i <span style="color:#bc74c4">+</span> <span style="color:#56b6c2">4</span><span style="color:#56b6c2">])</span> <span style="color:#7fbaf5">for</span> i <span style="color:#bc74c4">in</span> <span style="color:#7fbaf5">range</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>FLAG<span style="color:#56b6c2">),</span> <span style="color:#56b6c2">4</span><span style="color:#56b6c2">)]</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -237,45 +237,45 @@ $$ ax^{2} + bx +c $$
 <li>There are <code>n</code> random numbers <code>x</code> generated, their <code>y</code> image is calculated through the polynomial and the [x,y] pair is added to the <code>points</code> list.
 And this list of points is sent to us.</li>
 </ul>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>points <span style="color:#ff7b72;font-weight:bold">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> _ <span style="color:#ff7b72;font-weight:bold">in</span> range(f<span style="color:#ff7b72;font-weight:bold">.</span>degree()):
-</span></span><span style="display:flex;"><span>    r <span style="color:#ff7b72;font-weight:bold">=</span> F<span style="color:#ff7b72;font-weight:bold">.</span>random_element()
-</span></span><span style="display:flex;"><span>    points<span style="color:#ff7b72;font-weight:bold">.</span>append([r, f(r)])
-</span></span><span style="display:flex;"><span>print(points)
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>points <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">[]</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> _ <span style="color:#bc74c4">in</span> <span style="color:#7fbaf5">range</span><span style="color:#56b6c2">(</span>f<span style="color:#bc74c4">.</span>degree<span style="color:#56b6c2">()):</span>
+</span></span><span style="display:flex;"><span>    r <span style="color:#bc74c4">=</span> F<span style="color:#bc74c4">.</span>random_element<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>    points<span style="color:#bc74c4">.</span>append<span style="color:#56b6c2">([</span>r<span style="color:#56b6c2">,</span> f<span style="color:#56b6c2">(</span>r<span style="color:#56b6c2">)])</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span>points<span style="color:#56b6c2">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>Then a user input is requested, and a polynomial will be generated as it was with the <code>FLAG</code> and the results obtained with our input will be compared with the results obtained with the polynomial generated with the <code>FLAG</code>.</li>
 </ul>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">8
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>g <span style="color:#ff7b72;font-weight:bold">=</span> R(C(flag))
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>g <span style="color:#bc74c4">=</span> R<span style="color:#56b6c2">(</span>C<span style="color:#56b6c2">(</span>flag<span style="color:#56b6c2">))</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> p <span style="color:#ff7b72;font-weight:bold">in</span> points:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> g(p[<span style="color:#a5d6ff">0</span>]) <span style="color:#ff7b72;font-weight:bold">!=</span> p[<span style="color:#a5d6ff">1</span>]:
-</span></span><span style="display:flex;"><span>        print(<span style="color:#a5d6ff">&#34;Wrong flag!&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">break</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">else</span>:
-</span></span><span style="display:flex;"><span>    print(<span style="color:#a5d6ff">&#34;Congrats!&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> p <span style="color:#bc74c4">in</span> points<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">if</span> g<span style="color:#56b6c2">(</span>p<span style="color:#56b6c2">[</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">])</span> <span style="color:#bc74c4">!=</span> p<span style="color:#56b6c2">[</span><span style="color:#56b6c2">1</span><span style="color:#56b6c2">]:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;Wrong flag!&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">break</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">else</span><span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;Congrats!&#34;</span><span style="color:#56b6c2">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The FLAG will not be displayed at the end of our user input, so we should be able to find the flag on our side.</p>
@@ -290,46 +290,46 @@ And this list of points is sent to us.</li>
 $$ l_{i}(X) = \prod_{j=0,j\neq i}^{n} \frac{X - x_{j}}{x_{i} - x_{j}} \ ... \ \frac{X - x_{0}}{x_{i} - x_{0}} \frac{X - x_{1}}{x_{i} - x_{1}} \ ... \ \frac{X - x_{n}}{x_{i} - x_{n}}  $$<p>The server sends us 23 points and we can try to reconstruct the polynomial with them:</p>
 <details>
   <summary style="color: #F99417; cursor: pointer">trying to recover the polynomial</summary>
-  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">pwn</span> <span style="color:#ff7b72">import</span> remote
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#bc74c4">from</span> pwn <span style="color:#bc74c4">import</span> remote
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>host <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#39;crypto.heroctf.fr&#39;</span>
-</span></span><span style="display:flex;"><span>port <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">9000</span>
+</span></span><span style="display:flex;"><span>host <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">&#39;crypto.heroctf.fr&#39;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">9000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>conn <span style="color:#ff7b72;font-weight:bold">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>conn <span style="color:#bc74c4">=</span> remote<span style="color:#56b6c2">(</span>host<span style="color:#56b6c2">,</span> port<span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>data <span style="color:#ff7b72;font-weight:bold">=</span> conn<span style="color:#ff7b72;font-weight:bold">.</span>recvuntilS(<span style="color:#a5d6ff">&#39;&gt;&#39;</span>)<span style="color:#ff7b72;font-weight:bold">.</span>decode()
-</span></span><span style="display:flex;"><span>given_points <span style="color:#ff7b72;font-weight:bold">=</span> eval(data<span style="color:#ff7b72;font-weight:bold">.</span>split(<span style="color:#a5d6ff">&#39;</span><span style="color:#79c0ff">\n</span><span style="color:#a5d6ff">&#39;</span>)[<span style="color:#a5d6ff">0</span>])
+</span></span><span style="display:flex;"><span>data <span style="color:#bc74c4">=</span> conn<span style="color:#bc74c4">.</span>recvuntilS<span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#39;&gt;&#39;</span><span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>decode<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>given_points <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">eval</span><span style="color:#56b6c2">(</span>data<span style="color:#bc74c4">.</span>split<span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#39;</span><span style="color:#56b6c2">\n</span><span style="color:#82cc6a">&#39;</span><span style="color:#56b6c2">)[</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">])</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>F <span style="color:#ff7b72;font-weight:bold">=</span> FiniteField(<span style="color:#a5d6ff">2</span><span style="color:#ff7b72;font-weight:bold">**</span><span style="color:#a5d6ff">256</span> <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">189</span>)
-</span></span><span style="display:flex;"><span>R <span style="color:#ff7b72;font-weight:bold">=</span> PolynomialRing(F, <span style="color:#a5d6ff">&#34;x&#34;</span>)
+</span></span><span style="display:flex;"><span>F <span style="color:#bc74c4">=</span> FiniteField<span style="color:#56b6c2">(</span><span style="color:#56b6c2">2</span><span style="color:#bc74c4">**</span><span style="color:#56b6c2">256</span> <span style="color:#bc74c4">-</span> <span style="color:#56b6c2">189</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>R <span style="color:#bc74c4">=</span> PolynomialRing<span style="color:#56b6c2">(</span>F<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;x&#34;</span><span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>interp <span style="color:#ff7b72;font-weight:bold">=</span> R<span style="color:#ff7b72;font-weight:bold">.</span>lagrange_polynomial(given_points)
-</span></span><span style="display:flex;"><span>coefs <span style="color:#ff7b72;font-weight:bold">=</span> interp<span style="color:#ff7b72;font-weight:bold">.</span>coefficients()
+</span></span><span style="display:flex;"><span>interp <span style="color:#bc74c4">=</span> R<span style="color:#bc74c4">.</span>lagrange_polynomial<span style="color:#56b6c2">(</span>given_points<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>coefs <span style="color:#bc74c4">=</span> interp<span style="color:#bc74c4">.</span>coefficients<span style="color:#56b6c2">()</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(coefs)
-</span></span><span style="display:flex;"><span>print(interp)
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span>coefs<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span>interp<span style="color:#56b6c2">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -343,24 +343,24 @@ Except that the first element of the list will be converted to a coefficient wit
 <p>For example, with a list of points: <code>[7, 4 ,3]</code> we&rsquo;ll have this polynomial: $ 3X^{2} + 4X^{1} + 7 $. And so, calculating the polynomial for x = 0 is like <code>3*0 + 4*0 + 7 = 7</code>.</p>
 <p>It turns out that the first coefficient is generated with the first four characters of the flag : <code>Hero</code> and will represent the variable $ a_{0} $. So calculating $ f(0) $ gives $ a_{0} $.</p>
 <p>So we computes a0 :</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">7
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">sage.all</span> <span style="color:#ff7b72">import</span> <span style="color:#ff7b72;font-weight:bold">*</span>
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#bc74c4">from</span> sage.all <span style="color:#bc74c4">import</span> <span style="color:#bc74c4">*</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>F <span style="color:#ff7b72;font-weight:bold">=</span> FiniteField(<span style="color:#a5d6ff">2</span><span style="color:#ff7b72;font-weight:bold">**</span><span style="color:#a5d6ff">256</span> <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">189</span>)
-</span></span><span style="display:flex;"><span>R <span style="color:#ff7b72;font-weight:bold">=</span> PolynomialRing(F, <span style="color:#a5d6ff">&#34;x&#34;</span>)
-</span></span><span style="display:flex;"><span>H <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> n: int(hashlib<span style="color:#ff7b72;font-weight:bold">.</span>sha256(n)<span style="color:#ff7b72;font-weight:bold">.</span>hexdigest(), <span style="color:#a5d6ff">16</span>)
+</span></span><span style="display:flex;"><span>F <span style="color:#bc74c4">=</span> FiniteField<span style="color:#56b6c2">(</span><span style="color:#56b6c2">2</span><span style="color:#bc74c4">**</span><span style="color:#56b6c2">256</span> <span style="color:#bc74c4">-</span> <span style="color:#56b6c2">189</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>R <span style="color:#bc74c4">=</span> PolynomialRing<span style="color:#56b6c2">(</span>F<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;x&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>H <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">lambda</span> n<span style="color:#56b6c2">:</span> <span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>hashlib<span style="color:#bc74c4">.</span>sha256<span style="color:#56b6c2">(</span>n<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>hexdigest<span style="color:#56b6c2">(),</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>known_coefficient <span style="color:#ff7b72;font-weight:bold">=</span> H(<span style="color:#a5d6ff">&#39;Hero&#39;</span>) <span style="color:#8b949e;font-style:italic">#51862623363251592162508517414206794722184767070638202339849823866691337237984</span>
+</span></span><span style="display:flex;"><span>known_coefficient <span style="color:#bc74c4">=</span> H<span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#39;Hero&#39;</span><span style="color:#56b6c2">)</span> <span style="color:#3e4460">#51862623363251592162508517414206794722184767070638202339849823866691337237984</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>We can then add this point to the point list <code>given_points.append([0, known_coefficient])</code>.</p>
@@ -375,56 +375,56 @@ Except that the first element of the list will be converted to a coefficient wit
 <p>We&rsquo;ll generate a dictionary of matches <code>value in int:plaintext</code> and see if it matches any of the integers in our list of coefficients:</p>
 <details>
   <summary style="color: #F99417; cursor: pointer">building the rainbow table</summary>
-  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>charset <span style="color:#ff7b72;font-weight:bold">=</span> bytes(string<span style="color:#ff7b72;font-weight:bold">.</span>ascii_letters <span style="color:#ff7b72;font-weight:bold">+</span> string<span style="color:#ff7b72;font-weight:bold">.</span>digits <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">&#39;_</span><span style="color:#a5d6ff">{}</span><span style="color:#a5d6ff">&#39;</span>)
-</span></span><span style="display:flex;"><span>candidate_list <span style="color:#ff7b72;font-weight:bold">=</span> list(itertools<span style="color:#ff7b72;font-weight:bold">.</span>product(charset, repeat<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">4</span>))
-</span></span><span style="display:flex;"><span>candidate_list <span style="color:#ff7b72;font-weight:bold">=</span> [<span style="color:#a5d6ff">&#34;&#34;</span><span style="color:#ff7b72;font-weight:bold">.</span>join(v)<span style="color:#ff7b72;font-weight:bold">.</span>encode() <span style="color:#ff7b72">for</span> v <span style="color:#ff7b72;font-weight:bold">in</span> candidate_list]
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>charset <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">bytes</span><span style="color:#56b6c2">(</span>string<span style="color:#bc74c4">.</span>ascii_letters <span style="color:#bc74c4">+</span> string<span style="color:#bc74c4">.</span>digits <span style="color:#bc74c4">+</span> <span style="color:#82cc6a">&#39;_</span><span style="color:#82cc6a">{}</span><span style="color:#82cc6a">&#39;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>candidate_list <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">list</span><span style="color:#56b6c2">(</span>itertools<span style="color:#bc74c4">.</span>product<span style="color:#56b6c2">(</span>charset<span style="color:#56b6c2">,</span> repeat<span style="color:#bc74c4">=</span><span style="color:#56b6c2">4</span><span style="color:#56b6c2">))</span>
+</span></span><span style="display:flex;"><span>candidate_list <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#34;&#34;</span><span style="color:#bc74c4">.</span>join<span style="color:#56b6c2">(</span>v<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>encode<span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">for</span> v <span style="color:#bc74c4">in</span> candidate_list<span style="color:#56b6c2">]</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>rainbow_table <span style="color:#ff7b72;font-weight:bold">=</span> {}
+</span></span><span style="display:flex;"><span>rainbow_table <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">{}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#79c0ff">f</span><span style="color:#a5d6ff">&#39;Building the rainbow table with </span><span style="color:#a5d6ff">{</span>len(candidate_list} entries <span style="color:#f85149">!</span><span style="color:#a5d6ff">&#39;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#39;Building the rainbow table with </span><span style="color:#82cc6a">{</span><span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>candidate_list<span style="color:#56b6c2">}</span> entries <span style="color:#cf5967">!</span><span style="color:#82cc6a">&#39;)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> candidate <span style="color:#ff7b72;font-weight:bold">in</span> candidate_list:
-</span></span><span style="display:flex;"><span>    int_hash <span style="color:#ff7b72;font-weight:bold">=</span> H(candidate)
-</span></span><span style="display:flex;"><span>    rainbow_table[int_hash] <span style="color:#ff7b72;font-weight:bold">=</span> candidate
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> candidate <span style="color:#bc74c4">in</span> candidate_list<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    int_hash <span style="color:#bc74c4">=</span> H<span style="color:#56b6c2">(</span>candidate<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    rainbow_table<span style="color:#56b6c2">[</span>int_hash<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">=</span> candidate
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"># it tooks 15 seconds to build the table</span>
+</span></span><span style="display:flex;"><span><span style="color:#3e4460"># it tooks 15 seconds to build the table</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">assert</span> rainbow_table[H(<span style="color:#79c0ff">b</span><span style="color:#a5d6ff">&#39;test&#39;</span>)] <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#79c0ff">b</span><span style="color:#a5d6ff">&#39;test&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">assert</span> rainbow_table<span style="color:#56b6c2">[</span>H<span style="color:#56b6c2">(</span><span style="color:#82cc6a">b</span><span style="color:#82cc6a">&#39;test&#39;</span><span style="color:#56b6c2">)]</span> <span style="color:#bc74c4">==</span> <span style="color:#82cc6a">b</span><span style="color:#82cc6a">&#39;test&#39;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>flag_parts <span style="color:#ff7b72;font-weight:bold">=</span> [<span style="color:#a5d6ff">0</span>] <span style="color:#ff7b72;font-weight:bold">*</span> len(flag_coefficients)
+</span></span><span style="display:flex;"><span>flag_parts <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">[</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">*</span> <span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>flag_coefficients<span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#a5d6ff">&#34;Looking up values in the rainbow table&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;Looking up values in the rainbow table&#34;</span><span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> coef <span style="color:#ff7b72;font-weight:bold">in</span> rainbow_table:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> coef <span style="color:#ff7b72;font-weight:bold">in</span> flag_coefficients:
-</span></span><span style="display:flex;"><span>        flag_parts[flag_coefficients<span style="color:#ff7b72;font-weight:bold">.</span>index(H(<span style="color:#79c0ff">b</span><span style="color:#a5d6ff">&#39;Hero&#39;</span>))] <span style="color:#ff7b72;font-weight:bold">=</span> rainbow_table[coef]
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> coef <span style="color:#bc74c4">in</span> rainbow_table<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">if</span> coef <span style="color:#bc74c4">in</span> flag_coefficients<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>        flag_parts<span style="color:#56b6c2">[</span>flag_coefficients<span style="color:#bc74c4">.</span>index<span style="color:#56b6c2">(</span>H<span style="color:#56b6c2">(</span><span style="color:#82cc6a">b</span><span style="color:#82cc6a">&#39;Hero&#39;</span><span style="color:#56b6c2">))]</span> <span style="color:#bc74c4">=</span> rainbow_table<span style="color:#56b6c2">[</span>coef<span style="color:#56b6c2">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -433,114 +433,114 @@ Except that the first element of the list will be converted to a coefficient wit
 <h3 id="solve-final">Solve final</h3>
 <details>
   <summary style="color: #F99417; cursor: pointer">solve_interpolation.py</summary>
-  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">52
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">hashlib</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">re</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">string</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">requests</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#ff7b72">itertools</span>
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#bc74c4">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> re
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> string
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> itertools
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">pwn</span> <span style="color:#ff7b72">import</span> remote, context
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">from</span> <span style="color:#ff7b72">sage.all</span> <span style="color:#ff7b72">import</span> <span style="color:#ff7b72;font-weight:bold">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">from</span> pwn <span style="color:#bc74c4">import</span> remote<span style="color:#56b6c2">,</span> context
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">from</span> sage.all <span style="color:#bc74c4">import</span> <span style="color:#bc74c4">*</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>host <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#39;crypto.heroctf.fr&#39;</span>
-</span></span><span style="display:flex;"><span>port <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">9000</span>
+</span></span><span style="display:flex;"><span>host <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">&#39;crypto.heroctf.fr&#39;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">9000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>conn <span style="color:#ff7b72;font-weight:bold">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>conn <span style="color:#bc74c4">=</span> remote<span style="color:#56b6c2">(</span>host<span style="color:#56b6c2">,</span> port<span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>data <span style="color:#ff7b72;font-weight:bold">=</span> conn<span style="color:#ff7b72;font-weight:bold">.</span>recvuntilS(<span style="color:#a5d6ff">&#39;&gt;&#39;</span>)<span style="color:#ff7b72;font-weight:bold">.</span>decode()
-</span></span><span style="display:flex;"><span>given_points <span style="color:#ff7b72;font-weight:bold">=</span> eval(data<span style="color:#ff7b72;font-weight:bold">.</span>split(<span style="color:#a5d6ff">&#39;</span><span style="color:#79c0ff">\n</span><span style="color:#a5d6ff">&#39;</span>)[<span style="color:#a5d6ff">0</span>])
+</span></span><span style="display:flex;"><span>data <span style="color:#bc74c4">=</span> conn<span style="color:#bc74c4">.</span>recvuntilS<span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#39;&gt;&#39;</span><span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>decode<span style="color:#56b6c2">()</span>
+</span></span><span style="display:flex;"><span>given_points <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">eval</span><span style="color:#56b6c2">(</span>data<span style="color:#bc74c4">.</span>split<span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#39;</span><span style="color:#56b6c2">\n</span><span style="color:#82cc6a">&#39;</span><span style="color:#56b6c2">)[</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">])</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>F <span style="color:#ff7b72;font-weight:bold">=</span> FiniteField(<span style="color:#a5d6ff">2</span><span style="color:#ff7b72;font-weight:bold">**</span><span style="color:#a5d6ff">256</span> <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">189</span>)
-</span></span><span style="display:flex;"><span>R <span style="color:#ff7b72;font-weight:bold">=</span> PolynomialRing(F, <span style="color:#a5d6ff">&#34;x&#34;</span>)
-</span></span><span style="display:flex;"><span>H <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">lambda</span> n: int(hashlib<span style="color:#ff7b72;font-weight:bold">.</span>sha256(n)<span style="color:#ff7b72;font-weight:bold">.</span>hexdigest(), <span style="color:#a5d6ff">16</span>)
+</span></span><span style="display:flex;"><span>F <span style="color:#bc74c4">=</span> FiniteField<span style="color:#56b6c2">(</span><span style="color:#56b6c2">2</span><span style="color:#bc74c4">**</span><span style="color:#56b6c2">256</span> <span style="color:#bc74c4">-</span> <span style="color:#56b6c2">189</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>R <span style="color:#bc74c4">=</span> PolynomialRing<span style="color:#56b6c2">(</span>F<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;x&#34;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>H <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">lambda</span> n<span style="color:#56b6c2">:</span> <span style="color:#7fbaf5">int</span><span style="color:#56b6c2">(</span>hashlib<span style="color:#bc74c4">.</span>sha256<span style="color:#56b6c2">(</span>n<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>hexdigest<span style="color:#56b6c2">(),</span> <span style="color:#56b6c2">16</span><span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>known_coefficient <span style="color:#ff7b72;font-weight:bold">=</span> H(<span style="color:#a5d6ff">&#39;Hero&#39;</span>) <span style="color:#8b949e;font-style:italic"># 51862623363251592162508517414206794722184767070638202339849823866691337237984</span>
-</span></span><span style="display:flex;"><span>given_points<span style="color:#ff7b72;font-weight:bold">.</span>append([<span style="color:#a5d6ff">0</span>, known_coefficient])
+</span></span><span style="display:flex;"><span>known_coefficient <span style="color:#bc74c4">=</span> H<span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#39;Hero&#39;</span><span style="color:#56b6c2">)</span> <span style="color:#3e4460"># 51862623363251592162508517414206794722184767070638202339849823866691337237984</span>
+</span></span><span style="display:flex;"><span>given_points<span style="color:#bc74c4">.</span>append<span style="color:#56b6c2">([</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">,</span> known_coefficient<span style="color:#56b6c2">])</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>interp <span style="color:#ff7b72;font-weight:bold">=</span> R<span style="color:#ff7b72;font-weight:bold">.</span>lagrange_polynomial(given_points)
-</span></span><span style="display:flex;"><span>flag_coefficients <span style="color:#ff7b72;font-weight:bold">=</span> interp<span style="color:#ff7b72;font-weight:bold">.</span>coefficients()
+</span></span><span style="display:flex;"><span>interp <span style="color:#bc74c4">=</span> R<span style="color:#bc74c4">.</span>lagrange_polynomial<span style="color:#56b6c2">(</span>given_points<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>flag_coefficients <span style="color:#bc74c4">=</span> interp<span style="color:#bc74c4">.</span>coefficients<span style="color:#56b6c2">()</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>charset <span style="color:#ff7b72;font-weight:bold">=</span> bytes(string<span style="color:#ff7b72;font-weight:bold">.</span>ascii_letters <span style="color:#ff7b72;font-weight:bold">+</span> string<span style="color:#ff7b72;font-weight:bold">.</span>digits <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">&#39;_</span><span style="color:#a5d6ff">{}</span><span style="color:#a5d6ff">&#39;</span>)
-</span></span><span style="display:flex;"><span>candidate_list <span style="color:#ff7b72;font-weight:bold">=</span> list(itertools<span style="color:#ff7b72;font-weight:bold">.</span>product(charset, repeat<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">4</span>))
-</span></span><span style="display:flex;"><span>candidate_list <span style="color:#ff7b72;font-weight:bold">=</span> [<span style="color:#a5d6ff">&#34;&#34;</span><span style="color:#ff7b72;font-weight:bold">.</span>join(v)<span style="color:#ff7b72;font-weight:bold">.</span>encode() <span style="color:#ff7b72">for</span> v <span style="color:#ff7b72;font-weight:bold">in</span> candidate_list]
+</span></span><span style="display:flex;"><span>charset <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">bytes</span><span style="color:#56b6c2">(</span>string<span style="color:#bc74c4">.</span>ascii_letters <span style="color:#bc74c4">+</span> string<span style="color:#bc74c4">.</span>digits <span style="color:#bc74c4">+</span> <span style="color:#82cc6a">&#39;_</span><span style="color:#82cc6a">{}</span><span style="color:#82cc6a">&#39;</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>candidate_list <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">list</span><span style="color:#56b6c2">(</span>itertools<span style="color:#bc74c4">.</span>product<span style="color:#56b6c2">(</span>charset<span style="color:#56b6c2">,</span> repeat<span style="color:#bc74c4">=</span><span style="color:#56b6c2">4</span><span style="color:#56b6c2">))</span>
+</span></span><span style="display:flex;"><span>candidate_list <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">[</span><span style="color:#82cc6a">&#34;&#34;</span><span style="color:#bc74c4">.</span>join<span style="color:#56b6c2">(</span>v<span style="color:#56b6c2">)</span><span style="color:#bc74c4">.</span>encode<span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">for</span> v <span style="color:#bc74c4">in</span> candidate_list<span style="color:#56b6c2">]</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>rainbow_table <span style="color:#ff7b72;font-weight:bold">=</span> {}
+</span></span><span style="display:flex;"><span>rainbow_table <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">{}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#79c0ff">f</span><span style="color:#a5d6ff">&#39;Building the rainbow table with </span><span style="color:#a5d6ff">{</span>len(candidate_list} entries <span style="color:#f85149">!</span><span style="color:#a5d6ff">&#39;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">f</span><span style="color:#82cc6a">&#39;Building the rainbow table with </span><span style="color:#82cc6a">{</span><span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>candidate_list<span style="color:#56b6c2">}</span> entries <span style="color:#cf5967">!</span><span style="color:#82cc6a">&#39;)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> candidate <span style="color:#ff7b72;font-weight:bold">in</span> candidate_list:
-</span></span><span style="display:flex;"><span>    int_hash <span style="color:#ff7b72;font-weight:bold">=</span> H(candidate)
-</span></span><span style="display:flex;"><span>    rainbow_table[int_hash] <span style="color:#ff7b72;font-weight:bold">=</span> candidate
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> candidate <span style="color:#bc74c4">in</span> candidate_list<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    int_hash <span style="color:#bc74c4">=</span> H<span style="color:#56b6c2">(</span>candidate<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    rainbow_table<span style="color:#56b6c2">[</span>int_hash<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">=</span> candidate
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">assert</span> rainbow_table[H(<span style="color:#79c0ff">b</span><span style="color:#a5d6ff">&#39;test&#39;</span>)] <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#79c0ff">b</span><span style="color:#a5d6ff">&#39;test&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">assert</span> rainbow_table<span style="color:#56b6c2">[</span>H<span style="color:#56b6c2">(</span><span style="color:#82cc6a">b</span><span style="color:#82cc6a">&#39;test&#39;</span><span style="color:#56b6c2">)]</span> <span style="color:#bc74c4">==</span> <span style="color:#82cc6a">b</span><span style="color:#82cc6a">&#39;test&#39;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>flag_parts <span style="color:#ff7b72;font-weight:bold">=</span> [<span style="color:#a5d6ff">0</span>] <span style="color:#ff7b72;font-weight:bold">*</span> len(flag_coefficients)
+</span></span><span style="display:flex;"><span>flag_parts <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">[</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">*</span> <span style="color:#7fbaf5">len</span><span style="color:#56b6c2">(</span>flag_coefficients<span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#a5d6ff">&#34;Looking up values in the rainbow table&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;Looking up values in the rainbow table&#34;</span><span style="color:#56b6c2">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">for</span> coef <span style="color:#ff7b72;font-weight:bold">in</span> rainbow_table:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">if</span> coef <span style="color:#ff7b72;font-weight:bold">in</span> flag_coefficients:
-</span></span><span style="display:flex;"><span>        flag_parts[flag_coefficients<span style="color:#ff7b72;font-weight:bold">.</span>index(H(<span style="color:#79c0ff">b</span><span style="color:#a5d6ff">&#39;Hero&#39;</span>))] <span style="color:#ff7b72;font-weight:bold">=</span> rainbow_table[coef]
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">for</span> coef <span style="color:#bc74c4">in</span> rainbow_table<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">if</span> coef <span style="color:#bc74c4">in</span> flag_coefficients<span style="color:#56b6c2">:</span>
+</span></span><span style="display:flex;"><span>        flag_parts<span style="color:#56b6c2">[</span>flag_coefficients<span style="color:#bc74c4">.</span>index<span style="color:#56b6c2">(</span>H<span style="color:#56b6c2">(</span><span style="color:#82cc6a">b</span><span style="color:#82cc6a">&#39;Hero&#39;</span><span style="color:#56b6c2">))]</span> <span style="color:#bc74c4">=</span> rainbow_table<span style="color:#56b6c2">[</span>coef<span style="color:#56b6c2">]</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>flag <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#34;&#34;</span><span style="color:#ff7b72;font-weight:bold">.</span>join(flag_parts)
-</span></span><span style="display:flex;"><span>print(<span style="color:#a5d6ff">&#34;Flag : </span><span style="color:#a5d6ff">{flag}</span><span style="color:#a5d6ff">&#34;</span>)
+</span></span><span style="display:flex;"><span>flag <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">&#34;&#34;</span><span style="color:#bc74c4">.</span>join<span style="color:#56b6c2">(</span>flag_parts<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">print</span><span style="color:#56b6c2">(</span><span style="color:#82cc6a">&#34;Flag : </span><span style="color:#82cc6a">{flag}</span><span style="color:#82cc6a">&#34;</span><span style="color:#56b6c2">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>

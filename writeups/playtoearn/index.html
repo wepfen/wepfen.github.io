@@ -94,33 +94,33 @@
 <p>We got three contracts <code>ArcadeMachine.sol</code>, <code>Coin.sol</code> and <code>Setup.sol</code></p>
 <p>The main contract is <code>Coin.sol</code> which have the ether to steal.</p>
 <p>To solve the challenge we need to have 13.37 or more ether on our balance and be registered, in <code>Setup</code> contract :</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">isSolved</span>() <span style="color:#ff7b72">external</span> <span style="color:#ff7b72">view</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> player <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>) <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> player.balance <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">13</span>.<span style="color:#a5d6ff">37</span> <span style="color:#79c0ff">ether</span>;
-</span></span><span style="display:flex;"><span>    }
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">isSolved</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">external</span> <span style="color:#7fbaf5">view</span> <span style="color:#7fbaf5">returns</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">bool</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">return</span> player <span style="color:#bc74c4">!=</span> <span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">)</span> <span style="color:#bc74c4">&amp;&amp;</span> player<span style="color:#56b6c2">.</span><span style="color:#7fbaf5">balance</span> <span style="color:#bc74c4">&gt;=</span> <span style="color:#56b6c2">13</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">37</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>To register we have to interact with <code>Setup</code> contract by calling the function <code>Register</code>.</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">register</span>() <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        require(player <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>));
-</span></span><span style="display:flex;"><span>        player <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender;
-</span></span><span style="display:flex;"><span>        coin.transfer(msg.sender, <span style="color:#a5d6ff">1337</span>);    <span style="color:#8b949e;font-style:italic">// free coins for new players :)
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    }
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">register</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>player <span style="color:#bc74c4">==</span> <span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">));</span>
+</span></span><span style="display:flex;"><span>        player <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        coin<span style="color:#56b6c2">.</span><span style="color:#7fbaf5">transfer</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> <span style="color:#56b6c2">1337</span><span style="color:#56b6c2">);</span>    <span style="color:#3e4460">// free coins for new players :)
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>    <span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>For almost every blockchain interaction in this challenge, I used <a href="https://book.getfoundry.sh">foundry</a> toolkit.</p>
@@ -129,101 +129,101 @@
 <code>ncat --ssl play-to-earn.chals.sekai.team 1337</code>.</p>
 <p>And it will give us the setup address, my address, my private key, and URL and a personnal UUID for identifiying myself and get the flag.</p>
 <p>And we can get <strong>Coin</strong> and <strong>ArcadeMachine</strong> contracts addresses by using cast on Setup contract as they are public and defined in the latter:</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">8
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">Setup</span> {
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">contract</span> <span style="color:#ecbe7b">Setup</span> <span style="color:#56b6c2">{</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    Coin <span style="color:#ff7b72">public</span> coin;
-</span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#ff7b72">public</span> arcadeMachine;
+</span></span><span style="display:flex;"><span>    Coin <span style="color:#7fbaf5">public</span> coin<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#7fbaf5">public</span> arcadeMachine<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">address</span> player;
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">address</span> player<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>	...
+</span></span><span style="display:flex;"><span>	<span style="color:#56b6c2">...</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>For Coin : <code>cast call -r $RPC $SETUP &quot;coin()&quot;</code></p>
 <p>For ArcadeMachine : <code>cast call -r $RPC $SETUP &quot;arcadeMachine()&quot;</code></p>
 <p>I set up an environment variable via a file <code>.env</code> file to go faster and hardcoded a way to get <code>Coin</code> and <code>ArcadeMachine</code> address automatically each time I source the <code>.env</code> file with <code>source .env</code>.</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#79c0ff">MY_UUID</span><span style="color:#ff7b72;font-weight:bold">=</span>05d37b3f-db11-4398-a036-fe2de2532bdd
-</span></span><span style="display:flex;"><span><span style="color:#79c0ff">RPC</span><span style="color:#ff7b72;font-weight:bold">=</span>https://play-to-earn.chals.sekai.team/05d37b3f-db11-4398-a036-fe2de2532bdd
-</span></span><span style="display:flex;"><span><span style="color:#79c0ff">PKEY</span><span style="color:#ff7b72;font-weight:bold">=</span>0x9f9ab104ea0ea88cbfea172e21ef9ad3c779039b16d0403ea4b69714b68570fc
-</span></span><span style="display:flex;"><span><span style="color:#79c0ff">ADDRESS</span><span style="color:#ff7b72;font-weight:bold">=</span>0x7689DDAcC618C9FABca377B7630E5C5546726139
-</span></span><span style="display:flex;"><span><span style="color:#79c0ff">SETUP</span><span style="color:#ff7b72;font-weight:bold">=</span>0x85f5C75dd2A6e4F6e046F74921aDf2FD25496F05
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#bc74c4;font-style:italic">MY_UUID</span><span style="color:#bc74c4">=</span>05d37b3f-db11-4398-a036-fe2de2532bdd
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4;font-style:italic">RPC</span><span style="color:#bc74c4">=</span>https://play-to-earn.chals.sekai.team/05d37b3f-db11-4398-a036-fe2de2532bdd
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4;font-style:italic">PKEY</span><span style="color:#bc74c4">=</span>0x9f9ab104ea0ea88cbfea172e21ef9ad3c779039b16d0403ea4b69714b68570fc
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4;font-style:italic">ADDRESS</span><span style="color:#bc74c4">=</span>0x7689DDAcC618C9FABca377B7630E5C5546726139
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4;font-style:italic">SETUP</span><span style="color:#bc74c4">=</span>0x85f5C75dd2A6e4F6e046F74921aDf2FD25496F05
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#79c0ff">ARCADEMACHINE</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0x</span><span style="color:#ff7b72">$(</span>cast call <span style="color:#79c0ff">$SETUP</span> -r <span style="color:#79c0ff">$RPC</span> <span style="color:#a5d6ff">&#34;arcadeMachine()&#34;</span> | tail -c 41<span style="color:#ff7b72">)</span><span style="color:#a5d6ff">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#79c0ff">COIN</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#34;0x</span><span style="color:#ff7b72">$(</span>cast call <span style="color:#79c0ff">$SETUP</span> -r <span style="color:#79c0ff">$RPC</span> <span style="color:#a5d6ff">&#34;coin()&#34;</span> | tail -c 41<span style="color:#ff7b72">)</span><span style="color:#a5d6ff">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4;font-style:italic">ARCADEMACHINE</span><span style="color:#bc74c4">=</span><span style="color:#82cc6a">&#34;0x</span><span style="color:#7fbaf5">$(</span>cast call <span style="color:#bc74c4;font-style:italic">$SETUP</span> -r <span style="color:#bc74c4;font-style:italic">$RPC</span> <span style="color:#82cc6a">&#34;arcadeMachine()&#34;</span> <span style="color:#56b6c2">|</span> tail -c 41<span style="color:#7fbaf5">)</span><span style="color:#82cc6a">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4;font-style:italic">COIN</span><span style="color:#bc74c4">=</span><span style="color:#82cc6a">&#34;0x</span><span style="color:#7fbaf5">$(</span>cast call <span style="color:#bc74c4;font-style:italic">$SETUP</span> -r <span style="color:#bc74c4;font-style:italic">$RPC</span> <span style="color:#82cc6a">&#34;coin()&#34;</span> <span style="color:#56b6c2">|</span> tail -c 41<span style="color:#7fbaf5">)</span><span style="color:#82cc6a">&#34;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>alias <span style="color:#79c0ff">check_wallet</span><span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">&#39;cast balance $ADDRESS -r $RPC&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">alias</span> <span style="color:#bc74c4;font-style:italic">check_wallet</span><span style="color:#bc74c4">=</span><span style="color:#82cc6a">&#39;cast balance $ADDRESS -r $RPC&#39;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>check_wallet</code> is to quickly check if the instance is still up because we only got 30 minutes per instance.</p>
 <h2 id="recon">Recon</h2>
 <details>
   <summary style="color: #F99417; cursor: pointer">ArcadeMachine.sol</summary>
-  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">25</span>;
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">pragma solidity</span> <span style="color:#56b6c2">0</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">8</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">25</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> { Coin } <span style="color:#ff7b72">from</span> <span style="color:#a5d6ff">&#34;./Coin.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> <span style="color:#56b6c2">{</span> Coin <span style="color:#56b6c2">}</span> <span style="color:#7fbaf5">from</span> <span style="color:#82cc6a">&#34;./Coin.sol&#34;</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">ArcadeMachine</span> {
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">contract</span> <span style="color:#ecbe7b">ArcadeMachine</span> <span style="color:#56b6c2">{</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    Coin coin;
+</span></span><span style="display:flex;"><span>    Coin coin<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>(Coin _coin) {
-</span></span><span style="display:flex;"><span>        coin <span style="color:#ff7b72;font-weight:bold">=</span> _coin;
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">constructor</span><span style="color:#56b6c2">(</span>Coin _coin<span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        coin <span style="color:#bc74c4">=</span> _coin<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">play</span>(<span style="color:#ff7b72">uint256</span> times) <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// burn the coins
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(coin.transferFrom(msg.sender, <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>), <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span> <span style="color:#ff7b72;font-weight:bold">*</span> times));
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Have fun XD
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    }
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">play</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">uint256</span> times<span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// burn the coins
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>coin<span style="color:#56b6c2">.</span>transferFrom<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">),</span> <span style="color:#56b6c2">1</span> <span style="color:#cf5967;background-color:#43454f">ether</span> <span style="color:#bc74c4">*</span> times<span style="color:#56b6c2">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// Have fun XD
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>    <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -231,212 +231,212 @@
 
 <details>
   <summary style="color: #F99417; cursor: pointer">Coin.sol</summary>
-  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">  9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 59
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 60
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 61
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 62
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 63
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 64
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 65
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 66
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 67
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 68
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 69
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 70
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 71
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 72
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 73
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 74
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 75
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 76
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 77
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 78
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 79
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 80
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 81
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 82
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 83
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 84
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 85
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 86
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 87
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 88
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 89
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 90
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 91
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 92
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 93
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 94
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 95
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 96
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 97
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 98
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 99
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">100
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">101
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">25</span>;
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">pragma solidity</span> <span style="color:#56b6c2">0</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">8</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">25</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#a5d6ff">&#34;@openzeppelin/contracts/access/Ownable.sol&#34;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#a5d6ff">&#34;@openzeppelin/contracts/utils/cryptography/EIP712.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> <span style="color:#82cc6a">&#34;@openzeppelin/contracts/access/Ownable.sol&#34;</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> <span style="color:#82cc6a">&#34;@openzeppelin/contracts/utils/cryptography/EIP712.sol&#34;</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">Coin</span> <span style="color:#ff7b72">is</span> Ownable, EIP712 {
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">constant</span> name     <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#34;COIN&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">string</span> <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">constant</span> symbol   <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">&#34;COIN&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">uint8</span>  <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">constant</span> decimals <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">18</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">bytes32</span> <span style="color:#ff7b72">constant</span> PERMIT_TYPEHASH <span style="color:#ff7b72;font-weight:bold">=</span> keccak256(
-</span></span><span style="display:flex;"><span>        <span style="color:#a5d6ff">&#34;Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)&#34;</span>
-</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">contract</span> <span style="color:#ecbe7b">Coin</span> <span style="color:#7fbaf5">is</span> Ownable<span style="color:#56b6c2">,</span> EIP712 <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">string</span> <span style="color:#7fbaf5">public</span> <span style="color:#7fbaf5">constant</span> <span style="color:#7fbaf5">name</span>     <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">&#34;COIN&#34;</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">string</span> <span style="color:#7fbaf5">public</span> <span style="color:#7fbaf5">constant</span> symbol   <span style="color:#bc74c4">=</span> <span style="color:#82cc6a">&#34;COIN&#34;</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">uint8</span>  <span style="color:#7fbaf5">public</span> <span style="color:#7fbaf5">constant</span> decimals <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">18</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">bytes32</span> <span style="color:#7fbaf5">constant</span> PERMIT_TYPEHASH <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">keccak256</span><span style="color:#56b6c2">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#82cc6a">&#34;Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span>  <span style="color:#f0883e;font-weight:bold">Approval</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> src, <span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> guy, <span style="color:#ff7b72">uint</span> wad);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span>  <span style="color:#f0883e;font-weight:bold">Transfer</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> src, <span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> dst, <span style="color:#ff7b72">uint</span> wad);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span>  <span style="color:#f0883e;font-weight:bold">Deposit</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> dst, <span style="color:#ff7b72">uint</span> wad);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span>  <span style="color:#f0883e;font-weight:bold">Withdrawal</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> src, <span style="color:#ff7b72">uint</span> wad);
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">event</span>  <span style="color:#f0883e;font-weight:bold">PrivilegedWithdrawal</span>(<span style="color:#ff7b72">address</span> <span style="color:#ff7b72">indexed</span> src, <span style="color:#ff7b72">uint</span> wad);
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">event</span>  <span style="color:#ecbe7b">Approval</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">indexed</span> src<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">indexed</span> guy<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">event</span>  <span style="color:#ecbe7b">Transfer</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">indexed</span> src<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">indexed</span> dst<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">event</span>  <span style="color:#ecbe7b">Deposit</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">indexed</span> dst<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">event</span>  <span style="color:#ecbe7b">Withdrawal</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">indexed</span> src<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">event</span>  <span style="color:#ecbe7b">PrivilegedWithdrawal</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">indexed</span> src<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">mapping</span> (<span style="color:#ff7b72">address</span> <span style="color:#ff7b72;font-weight:bold">=&gt;</span> <span style="color:#ff7b72">uint</span>)                       <span style="color:#ff7b72">public</span>  nonces;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">mapping</span> (<span style="color:#ff7b72">address</span> <span style="color:#ff7b72;font-weight:bold">=&gt;</span> <span style="color:#ff7b72">uint</span>)                       <span style="color:#ff7b72">public</span>  balanceOf;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">mapping</span> (<span style="color:#ff7b72">address</span> <span style="color:#ff7b72;font-weight:bold">=&gt;</span> <span style="color:#ff7b72">mapping</span> (<span style="color:#ff7b72">address</span> <span style="color:#ff7b72;font-weight:bold">=&gt;</span> <span style="color:#ff7b72">uint</span>))  <span style="color:#ff7b72">public</span>  allowance;
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">mapping</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#bc74c4">=&gt;</span> <span style="color:#57c7ff;font-weight:bold">uint</span><span style="color:#56b6c2">)</span>                       <span style="color:#7fbaf5">public</span>  nonces<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">mapping</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#bc74c4">=&gt;</span> <span style="color:#57c7ff;font-weight:bold">uint</span><span style="color:#56b6c2">)</span>                       <span style="color:#7fbaf5">public</span>  balanceOf<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">mapping</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#bc74c4">=&gt;</span> <span style="color:#7fbaf5">mapping</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#bc74c4">=&gt;</span> <span style="color:#57c7ff;font-weight:bold">uint</span><span style="color:#56b6c2">))</span>  <span style="color:#7fbaf5">public</span>  allowance<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>() Ownable(msg.sender) EIP712(name, <span style="color:#a5d6ff">&#34;1&#34;</span>) {}
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">constructor</span><span style="color:#56b6c2">()</span> Ownable<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">)</span> EIP712<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">name</span><span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;1&#34;</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    fallback() <span style="color:#ff7b72">external</span> <span style="color:#ff7b72">payable</span> {
-</span></span><span style="display:flex;"><span>        deposit();
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    fallback<span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">external</span> <span style="color:#7fbaf5">payable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        deposit<span style="color:#56b6c2">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">deposit</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">payable</span> {
-</span></span><span style="display:flex;"><span>        balanceOf[msg.sender] <span style="color:#ff7b72;font-weight:bold">+=</span> msg.value;
-</span></span><span style="display:flex;"><span>        emit Deposit(msg.sender, msg.value);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">deposit</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">public</span> <span style="color:#7fbaf5">payable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">+=</span> <span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">value</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        emit Deposit<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">value</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">withdraw</span>(<span style="color:#ff7b72">uint</span> wad) <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        require(balanceOf[msg.sender] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> wad);
-</span></span><span style="display:flex;"><span>        balanceOf[msg.sender] <span style="color:#ff7b72;font-weight:bold">-=</span> wad;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">payable</span>(msg.sender).transfer(wad);
-</span></span><span style="display:flex;"><span>        emit Withdrawal(msg.sender, wad);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">withdraw</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>balanceOf<span style="color:#56b6c2">[</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">&gt;=</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">-=</span> wad<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">payable</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">).</span><span style="color:#7fbaf5">transfer</span><span style="color:#56b6c2">(</span>wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        emit Withdrawal<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">privilegedWithdraw</span>() onlyOwner <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint</span> wad <span style="color:#ff7b72;font-weight:bold">=</span> balanceOf[<span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>)];
-</span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>)] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">payable</span>(msg.sender).transfer(wad);
-</span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal(msg.sender, wad);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">privilegedWithdraw</span><span style="color:#56b6c2">()</span> onlyOwner <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint</span> wad <span style="color:#bc74c4">=</span> balanceOf<span style="color:#56b6c2">[</span><span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">)];</span>
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span><span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">)]</span> <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">0</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">payable</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">).</span><span style="color:#7fbaf5">transfer</span><span style="color:#56b6c2">(</span>wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">totalSupply</span>() <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">view</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">uint</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> <span style="color:#ff7b72">address</span>(this).balance;
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">totalSupply</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">public</span> <span style="color:#7fbaf5">view</span> <span style="color:#7fbaf5">returns</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">uint</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">return</span> <span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">this</span><span style="color:#56b6c2">).</span><span style="color:#7fbaf5">balance</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">approve</span>(<span style="color:#ff7b72">address</span> guy, <span style="color:#ff7b72">uint</span> wad) <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>) {
-</span></span><span style="display:flex;"><span>        allowance[msg.sender][guy] <span style="color:#ff7b72;font-weight:bold">=</span> wad;
-</span></span><span style="display:flex;"><span>        emit Approval(msg.sender, guy, wad);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> <span style="color:#79c0ff">true</span>;
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">approve</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> guy<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">public</span> <span style="color:#7fbaf5">returns</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">bool</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        allowance<span style="color:#56b6c2">[</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">][</span>guy<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">=</span> wad<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        emit Approval<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> guy<span style="color:#56b6c2">,</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">return</span> <span style="color:#cf5967;background-color:#43454f">true</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">permit</span>(
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> owner,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> spender,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> value,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> deadline,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint8</span> v,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> r,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> s
-</span></span><span style="display:flex;"><span>    ) <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        require(block.timestamp <span style="color:#ff7b72;font-weight:bold">&lt;=</span> deadline, <span style="color:#a5d6ff">&#34;signature expired&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> structHash <span style="color:#ff7b72;font-weight:bold">=</span> keccak256(
-</span></span><span style="display:flex;"><span>            abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]<span style="color:#ff7b72;font-weight:bold">++</span>, deadline)
-</span></span><span style="display:flex;"><span>        );
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> h <span style="color:#ff7b72;font-weight:bold">=</span> _hashTypedDataV4(structHash);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> signer <span style="color:#ff7b72;font-weight:bold">=</span> ecrecover(h, v, r, s);
-</span></span><span style="display:flex;"><span>        require(signer <span style="color:#ff7b72;font-weight:bold">==</span> owner, <span style="color:#a5d6ff">&#34;invalid signer&#34;</span>);
-</span></span><span style="display:flex;"><span>        allowance[owner][spender] <span style="color:#ff7b72;font-weight:bold">=</span> value;
-</span></span><span style="display:flex;"><span>        emit Approval(owner, spender, value);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">permit</span><span style="color:#56b6c2">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">address</span> owner<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">address</span> spender<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint256</span> <span style="color:#7fbaf5">value</span><span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint256</span> deadline<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint8</span> v<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> r<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> s
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">block</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">timestamp</span> <span style="color:#bc74c4">&lt;=</span> deadline<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;signature expired&#34;</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> structHash <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">keccak256</span><span style="color:#56b6c2">(</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7fbaf5">abi</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">encode</span><span style="color:#56b6c2">(</span>PERMIT_TYPEHASH<span style="color:#56b6c2">,</span> owner<span style="color:#56b6c2">,</span> spender<span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">value</span><span style="color:#56b6c2">,</span> nonces<span style="color:#56b6c2">[</span>owner<span style="color:#56b6c2">]</span><span style="color:#bc74c4">++</span><span style="color:#56b6c2">,</span> deadline<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> h <span style="color:#bc74c4">=</span> _hashTypedDataV4<span style="color:#56b6c2">(</span>structHash<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">address</span> signer <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">ecrecover</span><span style="color:#56b6c2">(</span>h<span style="color:#56b6c2">,</span> v<span style="color:#56b6c2">,</span> r<span style="color:#56b6c2">,</span> s<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>signer <span style="color:#bc74c4">==</span> owner<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;invalid signer&#34;</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        allowance<span style="color:#56b6c2">[</span>owner<span style="color:#56b6c2">][</span>spender<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">value</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        emit Approval<span style="color:#56b6c2">(</span>owner<span style="color:#56b6c2">,</span> spender<span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">value</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">transfer</span>(<span style="color:#ff7b72">address</span> dst, <span style="color:#ff7b72">uint</span> wad) <span style="color:#ff7b72">public</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> transferFrom(msg.sender, dst, wad);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">transfer</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> dst<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">public</span> <span style="color:#7fbaf5">returns</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">bool</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">return</span> transferFrom<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> dst<span style="color:#56b6c2">,</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">transferFrom</span>(<span style="color:#ff7b72">address</span> src, <span style="color:#ff7b72">address</span> dst, <span style="color:#ff7b72">uint</span> wad)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">public</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        require(balanceOf[src] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">transferFrom</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> src<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">address</span> dst<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">public</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">returns</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">bool</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>balanceOf<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">&gt;=</span> wad<span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> (src <span style="color:#ff7b72;font-weight:bold">!=</span> msg.sender <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> allowance[src][msg.sender] <span style="color:#ff7b72;font-weight:bold">!=</span> type(<span style="color:#f0883e;font-weight:bold">uint256</span>).max) {
-</span></span><span style="display:flex;"><span>            require(allowance[src][msg.sender] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> wad);
-</span></span><span style="display:flex;"><span>            allowance[src][msg.sender] <span style="color:#ff7b72;font-weight:bold">-=</span> wad;
-</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">if</span> <span style="color:#56b6c2">(</span>src <span style="color:#bc74c4">!=</span> <span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span> <span style="color:#bc74c4">&amp;&amp;</span> allowance<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">][</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">!=</span> <span style="color:#7fbaf5">type</span><span style="color:#56b6c2">(</span><span style="color:#ecbe7b">uint256</span><span style="color:#56b6c2">).</span><span style="color:#7fbaf5">max</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>allowance<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">][</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">&gt;=</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>            allowance<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">][</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">-=</span> wad<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        balanceOf[src] <span style="color:#ff7b72;font-weight:bold">-=</span> wad;
-</span></span><span style="display:flex;"><span>        balanceOf[dst] <span style="color:#ff7b72;font-weight:bold">+=</span> wad;
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">-=</span> wad<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span>dst<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">+=</span> wad<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        emit Transfer(src, dst, wad);
+</span></span><span style="display:flex;"><span>        emit Transfer<span style="color:#56b6c2">(</span>src<span style="color:#56b6c2">,</span> dst<span style="color:#56b6c2">,</span> wad<span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> <span style="color:#79c0ff">true</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">return</span> <span style="color:#cf5967;background-color:#43454f">true</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -444,76 +444,76 @@
 
 <details>
   <summary style="color: #F99417; cursor: pointer">Setup.sol</summary>
-  <div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">33
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">25</span>;
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">pragma solidity</span> <span style="color:#56b6c2">0</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">8</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">25</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> { Coin } <span style="color:#ff7b72">from</span> <span style="color:#a5d6ff">&#34;./Coin.sol&#34;</span>;
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> { ArcadeMachine } <span style="color:#ff7b72">from</span> <span style="color:#a5d6ff">&#34;./ArcadeMachine.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> <span style="color:#56b6c2">{</span> Coin <span style="color:#56b6c2">}</span> <span style="color:#7fbaf5">from</span> <span style="color:#82cc6a">&#34;./Coin.sol&#34;</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#bc74c4">import</span> <span style="color:#56b6c2">{</span> ArcadeMachine <span style="color:#56b6c2">}</span> <span style="color:#7fbaf5">from</span> <span style="color:#82cc6a">&#34;./ArcadeMachine.sol&#34;</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">Setup</span> {
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">contract</span> <span style="color:#ecbe7b">Setup</span> <span style="color:#56b6c2">{</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    Coin <span style="color:#ff7b72">public</span> coin;
-</span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#ff7b72">public</span> arcadeMachine;
+</span></span><span style="display:flex;"><span>    Coin <span style="color:#7fbaf5">public</span> coin<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#7fbaf5">public</span> arcadeMachine<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">address</span> player;
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">address</span> player<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>() <span style="color:#ff7b72">payable</span> {
-</span></span><span style="display:flex;"><span>        coin <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">new</span> Coin();
-</span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">new</span> ArcadeMachine(coin);
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">constructor</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">payable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        coin <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">new</span> Coin<span style="color:#56b6c2">();</span>
+</span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">new</span> ArcadeMachine<span style="color:#56b6c2">(</span>coin<span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Assume that many people have played before you ;)
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(msg.value <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">20</span> <span style="color:#79c0ff">ether</span>);
-</span></span><span style="display:flex;"><span>        coin.deposit{value<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">20</span> <span style="color:#79c0ff">ether</span>}();
-</span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#ff7b72">address</span>(arcadeMachine), <span style="color:#a5d6ff">19</span> <span style="color:#79c0ff">ether</span>);
-</span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#a5d6ff">19</span>);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// Assume that many people have played before you ;)
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">value</span> <span style="color:#bc74c4">==</span> <span style="color:#56b6c2">20</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        coin<span style="color:#56b6c2">.</span>deposit<span style="color:#56b6c2">{</span><span style="color:#7fbaf5">value</span><span style="color:#bc74c4">:</span> <span style="color:#56b6c2">20</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">}();</span>
+</span></span><span style="display:flex;"><span>        coin<span style="color:#56b6c2">.</span>approve<span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span>arcadeMachine<span style="color:#56b6c2">),</span> <span style="color:#56b6c2">19</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        arcadeMachine<span style="color:#56b6c2">.</span>play<span style="color:#56b6c2">(</span><span style="color:#56b6c2">19</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">register</span>() <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        require(player <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>));
-</span></span><span style="display:flex;"><span>        player <span style="color:#ff7b72;font-weight:bold">=</span> msg.sender;
-</span></span><span style="display:flex;"><span>        coin.transfer(msg.sender, <span style="color:#a5d6ff">1337</span>);    <span style="color:#8b949e;font-style:italic">// free coins for new players :)
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">register</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>player <span style="color:#bc74c4">==</span> <span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">));</span>
+</span></span><span style="display:flex;"><span>        player <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        coin<span style="color:#56b6c2">.</span><span style="color:#7fbaf5">transfer</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> <span style="color:#56b6c2">1337</span><span style="color:#56b6c2">);</span>    <span style="color:#3e4460">// free coins for new players :)
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">isSolved</span>() <span style="color:#ff7b72">external</span> <span style="color:#ff7b72">view</span> <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> player <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>) <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> player.balance <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">13</span>.<span style="color:#a5d6ff">37</span> <span style="color:#79c0ff">ether</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">isSolved</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">external</span> <span style="color:#7fbaf5">view</span> <span style="color:#7fbaf5">returns</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">bool</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">return</span> player <span style="color:#bc74c4">!=</span> <span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">)</span> <span style="color:#bc74c4">&amp;&amp;</span> player<span style="color:#56b6c2">.</span><span style="color:#7fbaf5">balance</span> <span style="color:#bc74c4">&gt;=</span> <span style="color:#56b6c2">13</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">37</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>
@@ -522,64 +522,64 @@
 <p>I can register by interacting with setup contract : <code>cast send -r $RPC --private-key $PKEY $SETUP &quot;register()&quot;</code> which grant me 1337 coins.</p>
 <p>Using <code>withdraw()</code> from Coin contract I can convert those coins to ether.</p>
 <p>Also the challenge name <code>Play to earn</code> stand for the ability to play the arcade machine using the function <code>play(uint256)</code>. <code>uint256</code> is the type of the argument taken by the function <strong>play()</strong>.</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">play</span>(<span style="color:#ff7b72">uint256</span> times) <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// burn the coins
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(coin.transferFrom(msg.sender, <span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>), <span style="color:#a5d6ff">1</span> <span style="color:#79c0ff">ether</span> <span style="color:#ff7b72;font-weight:bold">*</span> times));
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Have fun XD
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    }
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">play</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">uint256</span> times<span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// burn the coins
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>coin<span style="color:#56b6c2">.</span>transferFrom<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">),</span> <span style="color:#56b6c2">1</span> <span style="color:#cf5967;background-color:#43454f">ether</span> <span style="color:#bc74c4">*</span> times<span style="color:#56b6c2">));</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// Have fun XD
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>    <span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>It calls transferFrom(src, dst) so it transfer something from sender to address(0) (which is an address with only zero, so it corresponds to no one, its just here like a void, keeping all our gambled coins &hellip;) : <code>0x0000000000000000000000000000000000000000</code>)</p>
 <p>Let&rsquo;s look at <code>transferFrom()</code>:</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">transferFrom</span>(<span style="color:#ff7b72">address</span> src, <span style="color:#ff7b72">address</span> dst, <span style="color:#ff7b72">uint</span> wad)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">public</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">returns</span> (<span style="color:#ff7b72">bool</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        require(balanceOf[src] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> wad);
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">transferFrom</span><span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span> src<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">address</span> dst<span style="color:#56b6c2">,</span> <span style="color:#57c7ff;font-weight:bold">uint</span> wad<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">public</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">returns</span> <span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">bool</span><span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>balanceOf<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">&gt;=</span> wad<span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> (src <span style="color:#ff7b72;font-weight:bold">!=</span> msg.sender <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> allowance[src][msg.sender] <span style="color:#ff7b72;font-weight:bold">!=</span> type(<span style="color:#f0883e;font-weight:bold">uint256</span>).max) {
-</span></span><span style="display:flex;"><span>            require(allowance[src][msg.sender] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> wad);
-</span></span><span style="display:flex;"><span>            allowance[src][msg.sender] <span style="color:#ff7b72;font-weight:bold">-=</span> wad;
-</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">if</span> <span style="color:#56b6c2">(</span>src <span style="color:#bc74c4">!=</span> <span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span> <span style="color:#bc74c4">&amp;&amp;</span> allowance<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">][</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">!=</span> <span style="color:#7fbaf5">type</span><span style="color:#56b6c2">(</span><span style="color:#ecbe7b">uint256</span><span style="color:#56b6c2">).</span><span style="color:#7fbaf5">max</span><span style="color:#56b6c2">)</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>allowance<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">][</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">&gt;=</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>            allowance<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">][</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">]</span> <span style="color:#bc74c4">-=</span> wad<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        balanceOf[src] <span style="color:#ff7b72;font-weight:bold">-=</span> wad;
-</span></span><span style="display:flex;"><span>        balanceOf[dst] <span style="color:#ff7b72;font-weight:bold">+=</span> wad;
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span>src<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">-=</span> wad<span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span>dst<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">+=</span> wad<span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        emit Transfer(src, dst, wad);
+</span></span><span style="display:flex;"><span>        emit Transfer<span style="color:#56b6c2">(</span>src<span style="color:#56b6c2">,</span> dst<span style="color:#56b6c2">,</span> wad<span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> <span style="color:#79c0ff">true</span>;
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">return</span> <span style="color:#cf5967;background-color:#43454f">true</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>If <code>dst != src</code> and <code>allowance[src][sender]</code> (interpreted as the allowance of the sender on src allowance list) != 115792089237316195423570985008687907853269984665640564039457584007913129639936 (these conditions are skipped in this challenge if you transfer coin from yur account to another account)</p>
@@ -588,93 +588,93 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 <p>So it transfers coin from <code>src</code> account to <code>dst</code> account (and if src != msg.sender, substract the value to transfer from msg.sender allowance on allowance[src][msg.sender] so we can&rsquo;t transfer an infinite amount) and then substract the transferred amount from <code>src</code> coin balance and increase <code>dst</code> balance.</p>
 <p>Then, <code>play(uint256 times)</code> function transfer 1 ether == 10**18 * times to msg.sender coin balance to address(0) coin balance. So you&rsquo;re coin balance needs to have at least 10^18 coins.</p>
 <p>From the challenge scenario, <code>play(19)</code> is used at setup that&rsquo;s why there is a comment saying people played before us.</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>    <span style="color:#ff7b72">constructor</span>() <span style="color:#ff7b72">payable</span> {
-</span></span><span style="display:flex;"><span>        coin <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">new</span> Coin();
-</span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">new</span> ArcadeMachine(coin);
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>    <span style="color:#7fbaf5">constructor</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">payable</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        coin <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">new</span> Coin<span style="color:#56b6c2">();</span>
+</span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">new</span> ArcadeMachine<span style="color:#56b6c2">(</span>coin<span style="color:#56b6c2">);</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// Assume that many people have played before you ;)
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        require(msg.value <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">20</span> <span style="color:#79c0ff">ether</span>);
-</span></span><span style="display:flex;"><span>        coin.deposit{value<span style="color:#ff7b72;font-weight:bold">:</span> <span style="color:#a5d6ff">20</span> <span style="color:#79c0ff">ether</span>}();
-</span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#ff7b72">address</span>(arcadeMachine), <span style="color:#a5d6ff">19</span> <span style="color:#79c0ff">ether</span>);
-</span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#a5d6ff">19</span>);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>        <span style="color:#3e4460">// Assume that many people have played before you ;)
+</span></span></span><span style="display:flex;"><span><span style="color:#3e4460"></span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">value</span> <span style="color:#bc74c4">==</span> <span style="color:#56b6c2">20</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        coin<span style="color:#56b6c2">.</span>deposit<span style="color:#56b6c2">{</span><span style="color:#7fbaf5">value</span><span style="color:#bc74c4">:</span> <span style="color:#56b6c2">20</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">}();</span>
+</span></span><span style="display:flex;"><span>        coin<span style="color:#56b6c2">.</span>approve<span style="color:#56b6c2">(</span><span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span>arcadeMachine<span style="color:#56b6c2">),</span> <span style="color:#56b6c2">19</span> <span style="color:#cf5967;background-color:#43454f">ether</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        arcadeMachine<span style="color:#56b6c2">.</span>play<span style="color:#56b6c2">(</span><span style="color:#56b6c2">19</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>So, address(0) got a balance of 19 * 10**18 coins, which will makes 19 ether if they are withdrawn.</p>
 <p>To get these we need to find a way to transfer coins from address(0) balance to our balance using <code>transferFrom()</code>, for that we need to have an allowance amount superior or equal to the value we want to transfer and then withdraw them.</p>
 <p>To make short, we have two interesting functions, <code>privilegeWithdraw</code> and <code>permit</code>.</p>
 <p>The first one transfer address(0) coin to msg.sender but we need to be the owner of the contract so it sucks.</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">6
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">privilegedWithdraw</span>() onlyOwner <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint</span> wad <span style="color:#ff7b72;font-weight:bold">=</span> balanceOf[<span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>)];
-</span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#ff7b72">address</span>(<span style="color:#a5d6ff">0</span>)] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">payable</span>(msg.sender).transfer(wad);
-</span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal(msg.sender, wad);
-</span></span><span style="display:flex;"><span>    }
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">privilegedWithdraw</span><span style="color:#56b6c2">()</span> onlyOwner <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint</span> wad <span style="color:#bc74c4">=</span> balanceOf<span style="color:#56b6c2">[</span><span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">)];</span>
+</span></span><span style="display:flex;"><span>        balanceOf<span style="color:#56b6c2">[</span><span style="color:#57c7ff;font-weight:bold">address</span><span style="color:#56b6c2">(</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">)]</span> <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">0</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">payable</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">).</span><span style="color:#7fbaf5">transfer</span><span style="color:#56b6c2">(</span>wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal<span style="color:#56b6c2">(</span><span style="color:#7fbaf5">msg</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">sender</span><span style="color:#56b6c2">,</span> wad<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The second one allow us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm that <code>spender</code> is the <code>owner</code> (specified in the function, not the contract owner) by verifiying a signature with ecdsa.</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">permit</span>(
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> owner,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> spender,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> value,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint256</span> deadline,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">uint8</span> v,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> r,
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> s
-</span></span><span style="display:flex;"><span>    ) <span style="color:#ff7b72">external</span> {
-</span></span><span style="display:flex;"><span>        require(block.timestamp <span style="color:#ff7b72;font-weight:bold">&lt;=</span> deadline, <span style="color:#a5d6ff">&#34;signature expired&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> structHash <span style="color:#ff7b72;font-weight:bold">=</span> keccak256(
-</span></span><span style="display:flex;"><span>            abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner]<span style="color:#ff7b72;font-weight:bold">++</span>, deadline)
-</span></span><span style="display:flex;"><span>        );
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">bytes32</span> h <span style="color:#ff7b72;font-weight:bold">=</span> _hashTypedDataV4(structHash);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">address</span> signer <span style="color:#ff7b72;font-weight:bold">=</span> ecrecover(h, v, r, s);
-</span></span><span style="display:flex;"><span>        require(signer <span style="color:#ff7b72;font-weight:bold">==</span> owner, <span style="color:#a5d6ff">&#34;invalid signer&#34;</span>);
-</span></span><span style="display:flex;"><span>        allowance[owner][spender] <span style="color:#ff7b72;font-weight:bold">=</span> value;
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">permit</span><span style="color:#56b6c2">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">address</span> owner<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">address</span> spender<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint256</span> <span style="color:#7fbaf5">value</span><span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint256</span> deadline<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">uint8</span> v<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> r<span style="color:#56b6c2">,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> s
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">)</span> <span style="color:#7fbaf5">external</span> <span style="color:#56b6c2">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span><span style="color:#7fbaf5">block</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">timestamp</span> <span style="color:#bc74c4">&lt;=</span> deadline<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;signature expired&#34;</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> structHash <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">keccak256</span><span style="color:#56b6c2">(</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7fbaf5">abi</span><span style="color:#56b6c2">.</span><span style="color:#7fbaf5">encode</span><span style="color:#56b6c2">(</span>PERMIT_TYPEHASH<span style="color:#56b6c2">,</span> owner<span style="color:#56b6c2">,</span> spender<span style="color:#56b6c2">,</span> <span style="color:#7fbaf5">value</span><span style="color:#56b6c2">,</span> nonces<span style="color:#56b6c2">[</span>owner<span style="color:#56b6c2">]</span><span style="color:#bc74c4">++</span><span style="color:#56b6c2">,</span> deadline<span style="color:#56b6c2">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">bytes32</span> h <span style="color:#bc74c4">=</span> _hashTypedDataV4<span style="color:#56b6c2">(</span>structHash<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#57c7ff;font-weight:bold">address</span> signer <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">ecrecover</span><span style="color:#56b6c2">(</span>h<span style="color:#56b6c2">,</span> v<span style="color:#56b6c2">,</span> r<span style="color:#56b6c2">,</span> s<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7fbaf5">require</span><span style="color:#56b6c2">(</span>signer <span style="color:#bc74c4">==</span> owner<span style="color:#56b6c2">,</span> <span style="color:#82cc6a">&#34;invalid signer&#34;</span><span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>        allowance<span style="color:#56b6c2">[</span>owner<span style="color:#56b6c2">][</span>spender<span style="color:#56b6c2">]</span> <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">value</span><span style="color:#56b6c2">;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>So we need to have <code>signer == owner</code> meaning : <code>ecrecover(h,v,r,s) == 0x0000000000000000000000000000000000000000</code></p>
@@ -682,46 +682,46 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 <p>Here the vulnerability is that we can choose the v, r and s parameter in order to get a null signature.</p>
 <p>Testing <code>ecrecover()</code> locally i found that with any <code>h</code> if <code>v = r = s = 0</code> , then <code>ecrecover(h,v,r,s) == 0 == address(0)</code></p>
 <p>With this test contract :</p>
-<div class="highlight"><div style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#737679">18
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#ff7b72">pragma solidity</span> <span style="color:#ff7b72;font-weight:bold">^</span><span style="color:#a5d6ff">0</span>.<span style="color:#a5d6ff">8</span>.<span style="color:#a5d6ff">25</span>;
+<pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7fbaf5">pragma solidity</span> <span style="color:#bc74c4">^</span><span style="color:#56b6c2">0</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">8</span><span style="color:#56b6c2">.</span><span style="color:#56b6c2">25</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">contract</span> <span style="color:#f0883e;font-weight:bold">Testsignatures</span> {
+</span></span><span style="display:flex;"><span><span style="color:#7fbaf5">contract</span> <span style="color:#ecbe7b">Testsignatures</span> <span style="color:#56b6c2">{</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">bytes32</span> <span style="color:#ff7b72">public</span> hash <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0x24c36029f1c6a76aeef30e9ab8c3eeacb5609cc1ee2962e660ce2313c5696c4a</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">uint8</span> <span style="color:#ff7b72">public</span> v <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">bytes32</span> <span style="color:#ff7b72">public</span> r <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0x0000000000000000000000000000000000000000000000000000000000000000</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">bytes32</span> <span style="color:#ff7b72">public</span> s <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0x0000000000000000000000000000000000000000000000000000000000000000</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">bytes32</span> <span style="color:#7fbaf5">public</span> hash <span style="color:#bc74c4">=</span> <span style="color:#57c7ff">0x24c36029f1c6a76aeef30e9ab8c3eeacb5609cc1ee2962e660ce2313c5696c4a</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">uint8</span> <span style="color:#7fbaf5">public</span> v <span style="color:#bc74c4">=</span> <span style="color:#56b6c2">0</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">bytes32</span> <span style="color:#7fbaf5">public</span> r <span style="color:#bc74c4">=</span> <span style="color:#57c7ff">0x0000000000000000000000000000000000000000000000000000000000000000</span><span style="color:#56b6c2">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">bytes32</span> <span style="color:#7fbaf5">public</span> s <span style="color:#bc74c4">=</span> <span style="color:#57c7ff">0x0000000000000000000000000000000000000000000000000000000000000000</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">address</span> <span style="color:#ff7b72">public</span> signer <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0x55EB72D6588c64E202AA006b4Ea380275E9A4B25</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#57c7ff;font-weight:bold">address</span> <span style="color:#7fbaf5">public</span> signer <span style="color:#bc74c4">=</span> <span style="color:#57c7ff">0x55EB72D6588c64E202AA006b4Ea380275E9A4B25</span><span style="color:#56b6c2">;</span>
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">function</span> <span style="color:#d2a8ff;font-weight:bold">sign</span>() <span style="color:#ff7b72">public</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#7fbaf5">function</span> <span style="color:#57c7ff">sign</span><span style="color:#56b6c2">()</span> <span style="color:#7fbaf5">public</span> <span style="color:#56b6c2">{</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        signer <span style="color:#ff7b72;font-weight:bold">=</span> ecrecover(hash, v, r, s);
-</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>        signer <span style="color:#bc74c4">=</span> <span style="color:#7fbaf5">ecrecover</span><span style="color:#56b6c2">(</span>hash<span style="color:#56b6c2">,</span> v<span style="color:#56b6c2">,</span> r<span style="color:#56b6c2">,</span> s<span style="color:#56b6c2">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#56b6c2">}</span>
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#56b6c2">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h1 id="solving">Solving</h1>
