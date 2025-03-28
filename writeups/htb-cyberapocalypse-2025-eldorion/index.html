@@ -16,22 +16,22 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
   
   <meta property="og:type" content="website">
   <meta property="og:description" content="Eldorion writeup from HTB Cyber Apocalypse CTF 2025" />
-  <meta property="og:image" content="https://wepfen.github.io/images/avatar.png" />
+  <meta property="og:image" content="https://wepfen.github.io/images/writeups/htb-cyber-apocalypse/eldorion-in-a-nutshell.png" />
   <meta property="og:url" content="https://wepfen.github.io/writeups/htb-cyberapocalypse-2025-eldorion/">
-  <meta property="og:title" content="HTB Cyber Apocalypse CTF 2025 Eldorion [blockchain]">
+  <meta property="og:title" content="HTB Cyber Apocalypse CTF 2025 - Eldorion [blockchain]">
   <meta property="og:site_name" content="wepfen.github.io">
 
   
   <meta name="twitter:card" content="summary_large_image">
   <meta property="twitter:domain" content="wepfen.github.io">
   <meta property="twitter:url" content="https://wepfen.github.io/writeups/htb-cyberapocalypse-2025-eldorion/">
-  <meta name="twitter:title" content="HTB Cyber Apocalypse CTF 2025 Eldorion [blockchain]">
+  <meta name="twitter:title" content="HTB Cyber Apocalypse CTF 2025 - Eldorion [blockchain]">
   <meta name="twitter:description" content="Eldorion writeup from HTB Cyber Apocalypse CTF 2025">
-  <meta name="twitter:image" content="https://wepfen.github.io/images/avatar.png">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/writeups/htb-cyber-apocalypse/eldorion-in-a-nutshell.png">
   
   <title>
     
-      HTB Cyber Apocalypse CTF 2025 Eldorion [blockchain]
+      HTB Cyber Apocalypse CTF 2025 - Eldorion [blockchain]
     
   </title>
 
@@ -57,7 +57,7 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
         </time>
     </p>
 
-    <h1>HTB Cyber Apocalypse CTF 2025 Eldorion [blockchain]</h1>
+    <h1>HTB Cyber Apocalypse CTF 2025 - Eldorion [blockchain]</h1>
 
     
         <aside >
@@ -94,14 +94,14 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
 <h1 id="tldr">TL;DR</h1>
 <ul>
 <li>
-<p>write a contract that will trigger the <code>attack()</code> multiple time in one block.</p>
+<p>write a contract that will trigger <code>attack()</code> multiple time in one block.</p>
 </li>
 <li>
 <p>get the flag</p>
 </li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>For this challenge we have one main contract to study. Through this contract we can attack to reduc its health to 0.</p>
+<p>For this challenge we have one main contract to study. Through this contract, we can carry out <code>attacks</code> to reduce its health to 0.</p>
 <h1 id="recon">Recon</h1>
 <h2 id="smart-contracts">Smart Contracts</h2>
 <p>Here are the smart contracts :</p>
@@ -274,7 +274,7 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
 </span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>It checks if the health is 0, logic.</p>
+</div><p>It checks if the health is equal to 0.</p>
 <p>And <strong>coincidence</strong>, there&rsquo;s an attack function above.</p>
 <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -300,13 +300,13 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
 </span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>We count submit a quantity of samage to inflict. But there are two condition :</p>
+</div><p>We can submit a quantity of damage to inflict. But there are two conditions :</p>
 <ul>
 <li>One attack can&rsquo;t inflict damages above 100.</li>
-<li>The damage inflicted quand be greather than the remaining health.</li>
+<li>The damage inflicted can&rsquo;t be greater than the remaining health.</li>
 </ul>
-<p>If satisfied, the health is substracted by the damage inflicted.</p>
-<p>But I didn&rsquo;t mentionned, is that a modifier is applied to the function, <code>eternalResilience</code>.</p>
+<p>If satisfied, the health is subtracted by the damage inflicted.</p>
+<p>But what I didn&rsquo;t mentionned, is that a modifier is applied to the function, <code>eternalResilience</code>.</p>
 <p>A modifier allow us to, modify the execution of a function :</p>
 <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -329,26 +329,26 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>It checks if the current block timestamp is greater than <code>lastAttackTimestamp</code>, if yes, the health is set back to <code>MAX_HEALTH</code> (300), and <code>lastAttackTimestamp</code> set to the current block timestamp.</p>
-<p>and the underscore <code>_;</code>, states to continue the flow of the function that called this modifier.</p>
+<p>The underscore <code>_;</code>, states to continue the flow of the function that called this modifier.</p>
 <blockquote>
-<p>So what we can deduce is that each time we attack, the health is put back to the max if the block timestamp is greater than the last attack timestamp.</p></blockquote>
+<p>So what we can deduce is that each time we attack, the health is put back to the max if the current block timestamp is greater than the last attack timestamp.</p></blockquote>
 <p>And that&rsquo;s pretty all.</p>
 <h1 id="solving">Solving</h1>
 <p>So to solve, we know we have to put the health to zero.</p>
 <p><strong>BUT,</strong></p>
 <p>We can&rsquo;t inflict more than 100 damage, and every attacks, if the block timestamp change, the health return to the max health.</p>
-<p>To solve we need to understand a concept which are <strong>transactions</strong> and <strong>blocks</strong>.</p>
+<p>To solve we need to have in mind two concepts which are <strong>transactions</strong> and <strong>blocks</strong>.</p>
 <p>From the <a href="https://ethereum.org/en/developers/docs/transactions/">ethereum documentation</a> about transactions :</p>
 <blockquote>
 <p>Transactions are cryptographically signed instructions from accounts. An account will initiate a transaction to update the state of the Ethereum network. The simplest transaction is transferring ETH from one account to another.</p></blockquote>
-<p>And a transaction can also be a call to a function, like <code>attack()</code>.</p>
-<p>And for thz <a href="https://ethereum.org/en/developers/docs/blocks/">blocks</a> :</p>
+<p>A transaction can also be a call to a function, like <code>attack()</code>.</p>
+<p>And for the <a href="https://ethereum.org/en/developers/docs/blocks/">blocks</a> :</p>
 <blockquote>
 <p>Blocks are batches of transactions with a hash of the previous block in the chain.</p></blockquote>
-<p>Also each a block have other <a href="https://docs.soliditylang.org/en/latest/cheatsheet.html#block-and-transaction-properties">properties</a> :</p>
+<p>Also each block have other <a href="https://docs.soliditylang.org/en/latest/cheatsheet.html#block-and-transaction-properties">properties</a> :</p>
 <ul>
 <li>block number</li>
-<li>blcok timestamp</li>
+<li>block timestamp</li>
 <li>block hash</li>
 <li>&hellip;</li>
 </ul>
@@ -403,7 +403,7 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
 </span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>We can deploy the contract with forge from foundry-rs :</p>
+</div><p>We can deploy the contract with forge from <a href="https://book.getfoundry.sh/">foundry-rs</a> :</p>
 <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
