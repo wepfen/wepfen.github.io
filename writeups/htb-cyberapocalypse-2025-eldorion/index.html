@@ -40,7 +40,7 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
   
   
   
-  <link rel="stylesheet" href="/css/main.205f9f3ad87a74eb5dc23b302f9a95ec36876c082113d8819afec5479b9e2baa727d47a52a38317b88175e85226b9aed906694914fe3f00a040d909d751bef32.css" integrity="sha512-IF&#43;fOth6dOtdwjswL5qV7DaHbAghE9iBmv7FR5ueK6pyfUelKjgxe4gXXoUia5rtkGaUkU/j8AoEDZCddRvvMg==" />
+  <link rel="stylesheet" href="/css/main.83b1116909ac7aa174d822991dc4db48716aac538f34d933ff9cecebdb73eab554d0fb1d1ba80353b9fe2b2303f800f2294e0cbb0d8ad059a4fc6f40e787ac24.css" integrity="sha512-g7ERaQmseqF02CKZHcTbSHFqrFOPNNkz/5zs69tz6rVU0PsdG6gDU7n&#43;KyMD&#43;ADyKU4Muw2K0Fmk/G9A54esJA==" />
   
 </head>
 
@@ -90,11 +90,13 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
 <blockquote>
 <p>Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve found yourself trapped in this mysterious digital domain, and the only way to escape is by overcoming the trials laid before you. But your journey has barely begun, and already an overwhelming obstacle stands in your path. Before you can even reach the nearest city, seeking allies and information, you must face Eldorion, a colossal beast with terrifying regenerative powers. This creature, known for its &ldquo;&ldquo;eternal resilience&rdquo;&rdquo; guards the only passage forward. It&rsquo;s clear: you must defeat Eldorion to continue your quest.&rdquo;</p></blockquote>
 <blockquote>
+<p>Author : <a href="https://github.com/perrythepwner/">PerryThePwner</a></p></blockquote>
+<blockquote>
 <p>Topics : timestamp, transactions</p></blockquote>
 <h1 id="tldr">TL;DR</h1>
 <ul>
 <li>
-<p>write a contract that will trigger <code>attack()</code> multiple time in one block.</p>
+<p>write a contract that will trigger <code>attack()</code> multiple time in one function.</p>
 </li>
 <li>
 <p>get the flag</p>
@@ -421,18 +423,12 @@ Description : &ldquo;Welcome to the realms of Eldoria, adventurer. You’ve foun
 <pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>cast <span style="color:#81a1c1">send</span> <span style="color:#81a1c1">-</span>r <span style="color:#bf616a">$</span>RPC <span style="color:#b48ead">0x12472c70fF0a3cA2f26AB14E3820778C9601b232</span> <span style="color:#81a1c1">--</span><span style="color:#81a1c1;font-weight:bold">private</span><span style="color:#81a1c1">-</span>key <span style="color:#bf616a">$</span>PKEY <span style="color:#a3be8c">&#34;attack()&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><code>HTB{w0w_tr1pl3_hit_c0mbo_ggs_y0u_defe4ted_Eld0r10n}</code>.</p>
+</div><p><code>HTB{w0w_tr1pl3_hit_c0mbo_ggs_y0u_d...}</code>.</p>
 <h1 id="references">References</h1>
 <ul>
-<li>
-<p><a href="https://ethereum.org/en/developers/docs/transactions/">https://ethereum.org/en/developers/docs/transactions/</a></p>
-</li>
-<li>
-<p><a href="https://docs.soliditylang.org/en/latest/cheatsheet.html#block-and-transaction-properties">https://docs.soliditylang.org/en/latest/cheatsheet.html#block-and-transaction-properties</a></p>
-</li>
-<li>
-<p><a href="https://ethereum.org/en/developers/docs/blocks/">https://ethereum.org/en/developers/docs/blocks/</a></p>
-</li>
+<li><a href="https://ethereum.org/en/developers/docs/transactions/">https://ethereum.org/en/developers/docs/transactions/</a></li>
+<li><a href="https://docs.soliditylang.org/en/latest/cheatsheet.html#block-and-transaction-properties">https://docs.soliditylang.org/en/latest/cheatsheet.html#block-and-transaction-properties</a></li>
+<li><a href="https://ethereum.org/en/developers/docs/blocks/">https://ethereum.org/en/developers/docs/blocks/</a></li>
 </ul>
 
 </article>
