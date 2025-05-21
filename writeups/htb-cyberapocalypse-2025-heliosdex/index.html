@@ -138,7 +138,7 @@ Description : You stand victorious, panting, over the fallen form of Eldorion. T
 <h1 id="tldr">TL;DR</h1>
 <ul>
 <li>
-<p>When converting ethers to  MalakarEssence (MAL) or HeliosLuminaShards (HLS) token, it is rounded up to the next integer, even if we convert 0.000000000000000001 ether it gives, it is rounded up to 1 ETHER</p>
+<p>When converting ethers to  MalakarEssence (MAL) or HeliosLuminaShards (HLS) token, it is rounded up to the next integer, even if we convert 0.000000000000000001 ether , it is rounded up to 1 ETHER</p>
 </li>
 <li>
 <p>Repeat the operation until we have enough token to withdraw.</p>
@@ -815,8 +815,14 @@ So we can guess we have to steal ethers.</p>
 <p>Then, the fees are computed with the following :</p>
 $$ fee = \frac {(grossELD * feeBps)}{10000} $$<p>with <code>feeBps = 25</code> (defined in <code>HeliosDEX</code> contract) :</p>
 $$ fee = \frac {(grossELD * 25)}{10000} $$<p>We can also rewrite it like that :</p>
-$$ fee = grossELD * \frac{25}{10000}  $$$$ \ $$$$ fee = grossELD * 0.25 \%  $$<p>And we subtract the grossELD by these fees to get the net value of token we get :</p>
-$$ netELD = grossELD - fee $$$$ netELD = grossELD - grossELD * 0.25 \% $$<p>Meaning we lost 0.25% of the value we send in fees which is not so much.</p>
+$$ fee = grossELD * \frac{25}{10000}  $$<p>
+</p>
+$$ \ $$<p>
+</p>
+$$ fee = grossELD * 0.25 \%  $$<p>And we subtract the grossELD by these fees to get the net value of token we get :</p>
+$$ netELD = grossELD - fee $$<p>
+</p>
+$$ netELD = grossELD - grossELD * 0.25 \% $$<p>Meaning we lost 0.25% of the value we send in fees which is not so much.</p>
 <p>After these formalities, the contract checks if there are enough token to give us in the total supply, if yes, it subtract the quantity of tokens wanted from the total supply.</p>
 <p>And finally, the <code>netELD</code> tokens amount is transferred to our balance on <code>balanceOf[address]</code>.</p>
 <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">

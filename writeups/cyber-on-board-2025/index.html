@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Introduction
+Du 14 au 15 mai 2025 avec la fine équipe nous avons eu l&rsquo;occasion de représenter l&rsquo;ecole 2600 en tant que Phreaks 2600 au premier CTF du cyber on board, une convention dédiée à la sécuritée des systèmes embarqués.
+Le challenge avait été réalisé par neverhack et comportait deux circuits imprimés reliés entre eux. Il représentait le système d&rsquo;un drone et exposait des valeurs comme l&rsquo;altitude sur un petit écran. Il y a aussi d&rsquo;autres composants comme un qui servait à envoyer des données sur les bus CAN, et une EEPROM qui communiquait en I²C.">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Introduction
+Du 14 au 15 mai 2025 avec la fine équipe nous avons eu l&rsquo;occasion de représenter l&rsquo;ecole 2600 en tant que Phreaks 2600 au premier CTF du cyber on board, une convention dédiée à la sécuritée des systèmes embarqués.
+Le challenge avait été réalisé par neverhack et comportait deux circuits imprimés reliés entre eux. Il représentait le système d&rsquo;un drone et exposait des valeurs comme l&rsquo;altitude sur un petit écran. Il y a aussi d&rsquo;autres composants comme un qui servait à envoyer des données sur les bus CAN, et une EEPROM qui communiquait en I²C." />
+  <meta property="og:image" content="https://wepfen.github.io/images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/cyber-on-board-2025/">
+  <meta property="og:title" content="Cyber on Board 2025 writeups [IoT/hardware] 🇫🇷">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/cyber-on-board-2025/">
+  <meta name="twitter:title" content="Cyber on Board 2025 writeups [IoT/hardware] 🇫🇷">
+  <meta name="twitter:description" content="Introduction
+Du 14 au 15 mai 2025 avec la fine équipe nous avons eu l&rsquo;occasion de représenter l&rsquo;ecole 2600 en tant que Phreaks 2600 au premier CTF du cyber on board, une convention dédiée à la sécuritée des systèmes embarqués.
+Le challenge avait été réalisé par neverhack et comportait deux circuits imprimés reliés entre eux. Il représentait le système d&rsquo;un drone et exposait des valeurs comme l&rsquo;altitude sur un petit écran. Il y a aussi d&rsquo;autres composants comme un qui servait à envoyer des données sur les bus CAN, et une EEPROM qui communiquait en I²C.">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/avatar.png">
+  
+  <title>
+    
+      Cyber on Board 2025 writeups [IoT/hardware] 🇫🇷
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.83b1116909ac7aa174d822991dc4db48716aac538f34d933ff9cecebdb73eab554d0fb1d1ba80353b9fe2b2303f800f2294e0cbb0d8ad059a4fc6f40e787ac24.css" integrity="sha512-g7ERaQmseqF02CKZHcTbSHFqrFOPNNkz/5zs69tz6rVU0PsdG6gDU7n&#43;KyMD&#43;ADyKU4Muw2K0Fmk/G9A54esJA==" />
+  
+</head>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},     
+        {left: '$', right: '$', display: false},  	  
+      ],
+      throwOnError : false
+    });
+  });
+</script>
+
+
+
+    
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-05-18 01:53:27 &#43;0200 CEST">
+            2025-05-18
+        </time>
+    </p>
+
+    <h1>Cyber on Board 2025 writeups [IoT/hardware] 🇫🇷</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#challenges">Challenges</a>
+      <ul>
+        <li><a href="#serial-killer-exposed">Serial Killer exposed</a></li>
+        <li><a href="#dumpsters">Dumpsters</a></li>
+        <li><a href="#can-u-replay-it">CAN u replay it</a></li>
+        <li><a href="#can-u-sniff-it">CAN u sniff it</a></li>
+        <li><a href="#la-fine-équipe">La fine équipe</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <h1 id="introduction">Introduction</h1>
+<p>Du 14 au 15 mai 2025 avec la <a href="#la-fine-%C3%A9quipe">fine équipe</a> nous avons eu l&rsquo;occasion de représenter l&rsquo;<a href="https://2600.eu">ecole 2600</a> en tant que <a href="https://www.phreaks2600.fr/">Phreaks 2600</a> au premier CTF du <a href="https://www.cyberonboard.org/">cyber on board</a>, une convention dédiée à la sécuritée des systèmes embarqués.</p>
+<p>Le challenge avait été réalisé par <a href="https://neverhack.com/fr">neverhack</a> et comportait deux circuits imprimés reliés entre eux. Il représentait le système d&rsquo;un drone et exposait des valeurs comme l&rsquo;altitude sur un petit écran. Il y a aussi d&rsquo;autres composants comme un qui servait à envoyer des données sur les bus CAN, et une EEPROM qui communiquait en I²C.</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/1bc6d7554a19bbbb40c306df30906fb9e2b8408d/writeups/cob/2025/IMG_20250518_024304.jpg" alt="photo de la board"></p>
+<p>Parmi le matériel fournit on avait :</p>
+<ul>
+<li><a href="https://www.amazon.fr/Analyzer-Device-Digital-Pocket-Channel/dp/B08CDTPNSZ?source=ps-sl-shoppingads-lpcontext&amp;ref_=fplfs&amp;psc=1&amp;smid=A21312XZUBAZON&amp;gQT=1">analyseur logique</a></li>
+<li><a href="https://www.amazon.fr/TECNOIOT-CH341A-Programmer-Software-Adapter/dp/B07RKXSMKH">flash rom programmer</a></li>
+<li><a href="https://www.amazon.fr/Switian-Aiguille-Analyseur-Couleurs-Remplacement/dp/B0DBTMDS6K">Crochets de test reliés avec des cables dupont</a></li>
+<li>Deux cables USB vers mini-USB</li>
+<li><a href="https://www.amazon.fr/extraction-r%C3%A9paration-Extracteur-Encapsulation-Extraction/dp/B08D6MXB9L">Crochets pour extraction de rom</a></li>
+</ul>
+<p>Après un début difficle on a fini par se classer 5/13.</p>
+<h1 id="challenges">Challenges</h1>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/fec715b72b17156304ef03b89801deaf251b8c10/writeups/cob/2025/challs.png" alt="Liste des challenges"></p>
+<h2 id="serial-killer-exposed">Serial Killer exposed</h2>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/a4d9b1af5f28735e43032f4d8d0b9fa07731e1a9/writeups/cob/2025/serial-exposed.png" alt="serial killer exposed"></p>
+<p>Pour ce challenge, le titre nous indique la voie à suivre avec le &ldquo;Serial&rdquo;. Une communication série est la voie de communication la plus présente en hardware. C&rsquo;est lorsque deux appareils communiquent directement en étant connecté avec un cable par exemple. USB est un protocole de communication série.</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/27f9cf9268c5d104e4edf0a6752601f77a7aa84e/writeups/cob/2025/cob-mini-usb.png" alt="mini usb"></p>
+<p>En se branchant en USB on peut directement se connecter à un des composants (teensy). Maintenant pour surveiller ce qu&rsquo;il se passe, on peut utiliser un outil qui va directement lire ce que la teensy nous envoie avec des outils comme <a href="https://man.archlinux.org/man/minicom.1.en">minicom</a> ou <a href="https://wiki.archlinux.org/title/GNU_Screen">screen</a>.</p>
+<p>En connectant le cable, en redémarrant le circuit électronique et en lançant rapidement <code>screen /dev/ttyACM0</code>, on voit apparaitre des messages d&rsquo;initialisation du circuit.
+Puis ensuite en appuyant sur n&rsquo;importe qu&rsquo;elle touche on voit <code>Unknown command</code> s&rsquo;afficher. Donc en faisant un script pour pouvoir entrer plus de caractères, on arrive à faire afficher un menu avec la commande <code>help</code>. Voici le script:</p>
+<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">serial</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">time</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">random</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># Open the serial connection</span>
+</span></span><span style="display:flex;"><span>ser <span style="color:#81a1c1">=</span> serial<span style="color:#81a1c1">.</span>Serial<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;/dev/ttyACM0&#39;</span><span style="color:#eceff4">,</span> baudrate<span style="color:#81a1c1">=</span><span style="color:#b48ead">115200</span><span style="color:#eceff4">,</span> timeout<span style="color:#81a1c1">=</span><span style="color:#b48ead">1</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">2</span><span style="color:#eceff4">)</span>  <span style="color:#616e87;font-style:italic"># Let device initialize</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ser<span style="color:#81a1c1">.</span>write<span style="color:#eceff4">(</span><span style="color:#a3be8c">b</span><span style="color:#a3be8c">&#39;help&#39;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">0.2</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>read<span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>in_waiting<span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>decode<span style="color:#eceff4">(</span>errors<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;replace&#39;</span><span style="color:#eceff4">))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Puis les commandes dispos étaient :</p>
+<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Available commands: help, reset_screen, gyro_reset, gyro_stop_update, gyro_resume_update, craft_can_message, flag, secret
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>En envoyant <code>flag</code> on récupère : <code>COB{FEnw3mfUFlopd_0c=MuWi_2T70C4wUeiE2o3-tHE}</code>.</p>
+<h2 id="dumpsters">Dumpsters</h2>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/a4d9b1af5f28735e43032f4d8d0b9fa07731e1a9/writeups/cob/2025/DUMPSTERS.png" alt="dumpsters"></p>
+<p>Avec le nom &ldquo;dumpsters&rdquo; ca n&rsquo;a fait qu&rsquo;un tour, on a compris qu&rsquo;il fallait dump un firmware.
+Parmi tous les composants, un seul correspondait à une ROM qui pouvait contenir un firmware :</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/0b452a50394a1c878ea84be995eca30020fefbf7/writeups/cob/2025/eeprom.jpg" alt="eeprom"></p>
+<p>La référence dessus est 24LC512 I/P RVD 2019.
+Après une courte recherche on tombe sur une datahseet du fabricant MICROCHIP : <a href="https://www.alldatasheet.fr/datasheet-pdf/download/348628/MICROCHIP/24LC512.html">https://www.alldatasheet.fr/datasheet-pdf/download/348628/MICROCHIP/24LC512.html</a>.</p>
+<p>Il s&rsquo;agirait donc d&rsquo;une EEPROM (Electrically Erasable Programmable Read-Only Memory), pour faire court, une puce qui sert de stockage persistant. Le protocole utilisé par la puce est I²C.</p>
+<p>A partir de ce moment on a tenté de ce brancher à la puce avec des cables pour extraire le firmware avec <code>flashrom</code> et le programmeur flash CH341A mais ca passait pas. Après un long moment de galère, on nous a indiqué que les puces n&rsquo;étaient pas soudées donc on pouvait les retirer et on a tenté avec un autre outil <a href="https://github.com/bigbigmdm/IMSProg">IMSProg</a> et c&rsquo;est passé.</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/f1a2b0058e07fce8e77b13a56ab0000c80747bc8/writeups/cob/2025/imsrpog.png" alt="imsprog"></p>
+<p>Toutes les infos étaient sur la datasheet, et en cherchant &ldquo;COB{&rdquo; dans la donnée extraite, on trouve le flag
+<code>COB{U:gtxv4HPEruC2rg1Fxl7TfSiQmJmI_=FXKw:QAH}</code>.</p>
+<h2 id="can-u-replay-it">CAN u replay it</h2>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/27f9cf9268c5d104e4edf0a6752601f77a7aa84e/writeups/cob/2025/can-u-replay-it.png" alt="can u replay it"></p>
+<p>L&rsquo;objectif du challenge est de faire en sorte que les valeurs affichées sur l&rsquo;écran soient toutes à 0 pendant 10 secondes.</p>
+<p>Dans son comportement normal, l&rsquo;écran diffuse des informations mises à jour tout les demi secondes comme par exemple l&rsquo;altitude du drone qui varie quand on souleve la board :</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/cb0f634c5cf891c343fee971875162d8d60d1481/writeups/cob/2025/ecran-drone.png" alt="ecran drone"></p>
+<p>Ces valeurs sont transmises, par différents éléments, il y a la carte <code>teensy</code> ainsi qu&rsquo;un module <code>MCP2515</code> couplé au module <code>MCP2551</code> qui permettent d&rsquo;en envoyer. Mais la carte <code>teensy</code> est directement reliée au <code>MCP2515</code> donc on suppose qu&rsquo;elle est là car on peut la programmer (voir le challenge <a href="#serial-killer-exposed">serial killer exposed</a>).</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/d70d78d00221bdab71c8c4cfb55fdc960825b8d5/writeups/cob/2025/composants-emetteur-canbus.jpg" alt="composants"></p>
+<p>Maintenant l&rsquo;objectif était de savoir quelles valeurs rejouer pour pouvoir tout mettre à zéro.</p>
+<p>Pour commencer on a du observer les paquets envoyés durant le comportement normal du drone..</p>
+<p>En connectant un crochet de test sur <strong>CANH</strong>, un sur <strong>CANL</strong> et sur <strong>GND</strong>, on a pu observer des données transiter sur l&rsquo;analyseur logique (saleae logic 2).</p>
+<p>Mais aucune donnée n&rsquo;était compréhensible. (J&rsquo;ai pas de captures d&rsquo;écran malheureusement.)</p>
+<p>Ce qu&rsquo;il se passe était que notre outil était réglé sur le mauvais baudrate (ou bitrate). C&rsquo;est-à-dire la fréquence de bits reçu par secondes. Le circuit est programmé à en envoyer sur une certaine fréquence mais si nous de notre coté on en utilise une différente, les données seront illisibles car on reçoit les données à une fréquence différente que celle effective.</p>
+<p>Pour trouver le bon baudrate il y a deux choix :</p>
+<ul>
+<li>la méthode naïve : on tatonne jusqu&rsquo;à trouver le bon baudrate</li>
+<li>la méthode datasheet : on utilise le baudrate par défaut définie dans la datasheet</li>
+<li>la méthode smart : on prend l&rsquo;impulsion avec la période <code>T</code> la plus faible dans la capture, et de faire le calcul : $\frac{1}{T}$. Dans notre cas, sur l&rsquo;analyseur logique on a T = 8 microsecodes = 0.000008 secondes. Donc $\frac{1}{T} = 125000$ Hz. Et ainsi on a notre baudrate.</li>
+</ul>
+<p>Maintenant qu&rsquo;on a notre baudrate les données sont lisibles et on voit que le meme type de paquets CAN sont envoyés en boucle.</p>
+<p>Il fallait garder les valeurs qui ne bougent pas dans les paquets et mettre des zéros pour celles qui varient.
+Sauf que, le drone continue à avoir ses valeurs qui se mettent à jour donc ça nous empechait de tout mettre à zéro. Il y avait une commande intéressante durant le challenge <a href="#serial-killer-exposed">serial killer exposed</a> qui était <code>gyro_stop_update</code>. En faisant ça, il n&rsquo;y a plus rien qui s&rsquo;envoie sauf nous paquets à nous, on peut ainsi envoyer plein des paquets avec zéro comme valeur en boucle :</p>
+<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">serial</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">time</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">random</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#8fbcbb">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ser <span style="color:#81a1c1">=</span> serial<span style="color:#81a1c1">.</span>Serial<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;/dev/ttyACM0&#39;</span><span style="color:#eceff4">,</span> baudrate<span style="color:#81a1c1">=</span><span style="color:#b48ead">115200</span><span style="color:#eceff4">,</span> timeout<span style="color:#81a1c1">=</span><span style="color:#b48ead">1</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">2</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FUNC <span style="color:#81a1c1">=</span> <span style="color:#eceff4">[</span><span style="color:#a3be8c">&#39;help&#39;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;reset_screen&#39;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;gyro_reset&#39;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;gyro_stop_update&#39;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;gyro_resume_update&#39;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;craft_can_message&#39;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;flag&#39;</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;secret&#39;</span><span style="color:#eceff4">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ser<span style="color:#81a1c1">.</span>write<span style="color:#eceff4">(</span><span style="color:#a3be8c">b</span><span style="color:#a3be8c">&#39;gyro_stop_update&#39;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">1</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">for</span> i <span style="color:#81a1c1;font-weight:bold">in</span> <span style="color:#81a1c1">range</span><span style="color:#eceff4">(</span><span style="color:#b48ead">0</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">100</span><span style="color:#eceff4">):</span>
+</span></span><span style="display:flex;"><span>    ser<span style="color:#81a1c1">.</span>write<span style="color:#eceff4">(</span><span style="color:#a3be8c">b</span><span style="color:#a3be8c">&#39;craft_can_message&#39;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">0.2</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>read<span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>in_waiting<span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>decode<span style="color:#eceff4">(</span>errors<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;replace&#39;</span><span style="color:#eceff4">))</span>
+</span></span><span style="display:flex;"><span>    ser<span style="color:#81a1c1">.</span>write<span style="color:#eceff4">(</span><span style="color:#a3be8c">b</span><span style="color:#a3be8c">&#39;</span><span style="color:#ebcb8b">\x51</span><span style="color:#a3be8c">&#39;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">0.2</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>read<span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>in_waiting<span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>decode<span style="color:#eceff4">(</span>errors<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;replace&#39;</span><span style="color:#eceff4">))</span>
+</span></span><span style="display:flex;"><span>    ser<span style="color:#81a1c1">.</span>write<span style="color:#eceff4">(</span><span style="color:#81a1c1">&lt;</span>data<span style="color:#81a1c1">-</span>to<span style="color:#81a1c1">-</span>send<span style="color:#81a1c1">&gt;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">0.2</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>read<span style="color:#eceff4">(</span>ser<span style="color:#81a1c1">.</span>in_waiting<span style="color:#eceff4">)</span><span style="color:#81a1c1">.</span>decode<span style="color:#eceff4">(</span>errors<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;replace&#39;</span><span style="color:#eceff4">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">print</span><span style="color:#eceff4">(</span><span style="color:#a3be8c">&#34;sleeping 0.5 sec...&#34;</span><span style="color:#eceff4">)</span>
+</span></span><span style="display:flex;"><span>    time<span style="color:#81a1c1">.</span>sleep<span style="color:#eceff4">(</span><span style="color:#b48ead">0.5</span><span style="color:#eceff4">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Et on récupère le flag :</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/17485bd99a2d672bfebef6b8c1fe31887dd73431/writeups/cob/2025/can-u-replay-flag.gif" alt="flag can u replay"></p>
+<p><code>COB{uAGm9f2:mAEEzPIX7L3T}</code></p>
+<h2 id="can-u-sniff-it">CAN u sniff it</h2>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/fc4f4adb9e6d4bf534be91816472df18cb94a23c/writeups/cob/2025/can-u-sniff-it.png" alt="can u sniff it"></p>
+<p>Pour ce challenge là on devait intéragir avec une commande secrète. Et la seule ocmmande secrete qu&rsquo;on avait était la commande <code>secret</code> du challenge <a href="#serial-killer-exposed">serial killer exposed</a>.</p>
+<p>En activant la commande on nous demande un mot de passe et ensuite ce-dernier est vérifié.</p>
+<p>En regardant sur l&rsquo;analyseur logique ce qu&rsquo;il se passe au niveau du CAN bus, on voit d&rsquo;avantage de choses:</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/73a8153ec6184465beda064617848560bf3f388f/writeups/cob/2025/logic2-sniff1.png" alt="logic 2 sniff"></p>
+<p>On reçoit toujours trois paquets, un remplit de <code>0xff</code>, et deux autres avec des caractères ascii imprimables.</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/73a8153ec6184465beda064617848560bf3f388f/writeups/cob/2025/sniff-mdp.png" alt="mot de passe"></p>
+<p>En tâtonnant on comprend qu&rsquo;il faut concaténer les 5 derniers caractères : <strong>rvNdRm86YW</strong>. Et en renvoyant ça on obtient le flag.</p>
+<h2 id="la-fine-équipe">La fine équipe</h2>
+<ul>
+<li><a href="https://github.com/itsoktocryy">itsoktocryy</a></li>
+<li><a href="https://github.com/johnfr15">john</a></li>
+<li><a href="https://github.com/Eun0us">Eun0us</a></li>
+</ul>
+
+</article>
+
+            </div>
+        </main>
+    </body>
+</html>
