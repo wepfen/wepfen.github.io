@@ -91,8 +91,11 @@ Le challenge avait été réalisé par neverhack et comportait deux circuits imp
         <li><a href="#serial-killer-exposed">Serial Killer exposed</a></li>
         <li><a href="#dumpsters">Dumpsters</a></li>
         <li><a href="#can-u-replay-it">CAN u replay it</a></li>
-        <li><a href="#can-u-sniff-it">CAN u sniff it</a></li>
-        <li><a href="#la-fine-équipe">La fine équipe</a></li>
+        <li><a href="#can-u-sniff-it">CAN u sniff it</a>
+          <ul>
+            <li><a href="#la-fine-équipe">La fine équipe</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -265,7 +268,7 @@ Sauf que, le drone continue à avoir ses valeurs qui se mettent à jour donc ça
 <p>On reçoit toujours trois paquets, un remplit de <code>0xff</code>, et deux autres avec des caractères ascii imprimables.</p>
 <p><img src="https://rawcdn.githack.com/wepfen/cdn/73a8153ec6184465beda064617848560bf3f388f/writeups/cob/2025/sniff-mdp.png" alt="mot de passe"></p>
 <p>En tâtonnant on comprend qu&rsquo;il faut concaténer les 5 derniers caractères : <strong>rvNdRm86YW</strong>. Et en renvoyant ça on obtient le flag.</p>
-<h2 id="la-fine-équipe">La fine équipe</h2>
+<h3 id="la-fine-équipe">La fine équipe</h3>
 <ul>
 <li><a href="https://github.com/itsoktocryy">itsoktocryy</a></li>
 <li><a href="https://github.com/johnfr15">john</a></li>
