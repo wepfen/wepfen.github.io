@@ -31,7 +31,9 @@
   </title>
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/images/oia-uia.gif" />
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
   
   
   
@@ -232,8 +234,8 @@ And <code>C</code> further in the code is defined in <code>index.js</code> and i
 </span></span><span style="display:flex;"><span><span style="color:#eceff4">}).</span>call<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">);</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>So I understand that our target game source code is compressed or altered in someway. The fact is, for this game the Phaser template used is for React JS.
-However there are still hardcoded value so it slightly changes the difficulty.</p>
+</div><p>So I understand that our target game source code is compressed or altered in someway. The fact is, for this game the Phaser template used is for React JS, that&rsquo;s why the code is different.</p>
+<p>However there are still hardcoded value so it slightly changes the difficulty.</p>
 <p>Now, we need to know where is the actual code handling the ennemies we attack, our score and stuff ?
 Well reading the <a href="https://docs.phaser.io/phaser/getting-started/making-your-first-phaser-game">documentation</a> for making a Pḧaser game, we learn about essential functions :</p>
 <ul>
@@ -299,7 +301,7 @@ And we can find a nice reference under the class <code>ve</code> which call the 
 </div><hr>
 <h1 id="finding-where-the-code-really-is">Finding where the code REALLY is</h1>
 <p>Now we know that, how can we edit those variables and have a big score ?
-Usually, we could directly edit the variable on the console, and edit the properties inside the <code>ve</code> class instance, but first we need to find these instance.</p>
+Usually, we could directly edit the variable on the console, and edit the properties inside the <code>ve</code> class instance, but first we need to find this instance.</p>
 <p>Fast forward, I found further in the code that <code>ve</code> alongside other classes were put in another variable <code>ke</code> :</p>
 <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -355,7 +357,7 @@ It&rsquo;s weird because the game is actually here, I can play it.</p>
 This <a href="https://www.youtube.com/watch?v=gBHHSDJQNME">guy</a> got the same case.</p>
 <p>So we need to use the debugger to add a breakpoint inside the function where <code>n</code> is defined, create a reference to it and we should be able to do our modifications.</p>
 <p>In the debugger we can open <code>index.js</code> which is a one liner but we can format it by clicking on <code>{}</code> on bottom left corner.</p>
-<p>Now we can breakpoint on any line not greyed out. I chose to break at line <code>14715</code> because it occurs after the definition of <code>n.current</code> and because the other line <code>14706</code> just never stop the execution.</p>
+<p>Now we can breakpoint on any line not grayed out. I chose to break at line <code>14715</code> because it occurs after the definition of <code>n.current</code> and because the other line <code>14706</code> just never stop the execution.</p>
 <p><img src="/images/posts/fresh/breakpoint-game-context.png" alt="breakpoint debugger"></p>
 <p>Now when refreshing the page I got a white overlay over the web page and in the console I can find <code>n.current</code>.</p>
 <p>We can set a reference to it :</p>
@@ -396,7 +398,7 @@ This <a href="https://www.youtube.com/watch?v=gBHHSDJQNME">guy</a> got the same 
 <p>At the end of the game the score is correctly set :</p>
 <img alt="finishing game" src="/images/posts/fresh/big-score.png" style="max-width: 30%">
 <h2 id="god-mode-almost">God mode (almost)</h2>
-<p>For this cheat I aimed to keep the lifepoint, but not take any damage and still get point. Because, the default behaviour in the game and ennemy attack me is to lose HP and not get any point.</p>
+<p>For this cheat I aimed to keep the same the life points, but not take any damage and still get point. Because, the default behaviour in the game when ennemy attack me, is to lose HP and not get any point.</p>
 <p>First I started by investigating the function responsible for taking damage and killing ennemy. I saw <code>setupCollision</code> to be a good candidate and I was right.</p>
 <details>
   <summary style="color: #F99417; cursor: pointer">setupCollisions</summary>
