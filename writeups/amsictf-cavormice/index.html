@@ -96,7 +96,7 @@ Voici un quoi ressemble le jeu :</p>
 <p><img src="https://rawcdn.githack.com/wepfen/cdn/09e5ee774ecab572f950a45dfbf7cd10f4fef484/writeups/AMSI/cavormice/cavormice-main-menu.png" alt="main menu"></p>
 <h1 id="prise-en-main">Prise en main</h1>
 <p>Pour émuler le jeu j&rsquo;ai utilisé <code>mgba-qt</code> qui peut émuler des jeu gameboy et gameboy advance et intégre une fonction pour voir la mémoire et chercher des valeurs à l&rsquo;intérieur.</p>
-<p>Je me baladais mais je trouvais rien de spécial, j&rsquo;ai remarqué que la salle du haut était toujours la meme peut importe à quel point on se baladait avec la souris, même si on descendait.</p>
+<p>Je me baladais mais je trouvais rien de spécial, j&rsquo;ai remarqué que la salle du haut était toujours la meme peut importe à quel point on se baladait avec la souris, même si on descendait puis on remontait, la salle est toujours là..</p>
 <p><img src="https://rawcdn.githack.com/wepfen/cdn/09e5ee774ecab572f950a45dfbf7cd10f4fef484/writeups/AMSI/cavormice/promenade-de-souris.gif" alt="promenade de souris"></p>
 <p>Et au bout d&rsquo;un moment après avoir assez joué, on finit par perdre, et notre souris rebrousse chemin sans un sou.</p>
 <p><img src="https://rawcdn.githack.com/wepfen/cdn/09e5ee774ecab572f950a45dfbf7cd10f4fef484/writeups/AMSI/cavormice/souris-demunie.png" alt="pauvre souris"></p>
@@ -114,11 +114,17 @@ Voici un quoi ressemble le jeu :</p>
 <p>Maintenant l&rsquo;objectif est de savoir quelles sont les conditions de victoire.</p>
 <hr>
 <h1 id="décompilation-du-jeu">Décompilation du jeu</h1>
-<p>Vu que je ne sais lire une ROM Gameboy de tête, j&rsquo;ai cherché si c&rsquo;était faisable sur Ghidra et effectivement il y a une extension pour ça : <a href="https://github.com/Gekkio/GhidraBoy">https://github.com/Gekkio/GhidraBoy</a>.</p>
+<p>Vu que je ne sais pas lire une ROM Gameboy de tête, j&rsquo;ai cherché si c&rsquo;était faisable sur Ghidra et effectivement il y a une extension pour ça : <a href="https://github.com/Gekkio/GhidraBoy">https://github.com/Gekkio/GhidraBoy</a>.</p>
 <p>Il y a le même nombre d&rsquo;octet qui sont lus (0xFFFF, 65535) et à des endroits on retrouve du code.</p>
 <p>En regardant à l&rsquo;adresse <strong>0xC808</strong>, celle où les déplacements sont stockés on voit qu&rsquo;un espace de 32 octets est réservée. <br>
-Et qu&rsquo;il y a 3 cross références vers cette addresse dont une est plutôt intéressante :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+Et qu&rsquo;il y a 3 références croisées vers cette addresse:</p>
+<p>image cross references</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/ec46701de647a936bb425b9fc2a4406088e590db/writeups/AMSI/cavormice/cross-ref-c808.png" alt="références croisées"></p>
+<p>dont une est plutôt intéressante :</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/ec46701de647a936bb425b9fc2a4406088e590db/writeups/AMSI/cavormice/fun_0729.png" alt="fun_0729"></p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">FUN_0729</summary>
+  <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
@@ -168,9 +174,12 @@ Et qu&rsquo;il y a 3 cross références vers cette addresse dont une est plutôt
 </span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>On voit que la valeur à l&rsquo;indice <code>cVar1</code> de <code>DAT_c808</code> est xorée avec l&rsquo;a valeur à l&rsquo;indice <code>cVar1+1</code> de <code>DAT_c808</code> puis comparée à la valeur à l&rsquo;indice <code>iVar2</code> de <code>&amp;DAT_c828</code>.</p>
+</div>
+</details>
+
+<p>On voit que la valeur à l&rsquo;indice <code>cVar1</code> de <code>DAT_c808</code> est xorée avec l&rsquo;a valeur à l&rsquo;indice <code>cVar1+1</code> de <code>DAT_c808</code> puis comparée à la valeur à l&rsquo;indice <code>iVar2</code> de <code>&amp;DAT_c828</code>.</p>
 <p>Si la valeur est différente, la fonction s&rsquo;arrête grâce à un <code>return 0</code>, sinon la boucle continue et <code>cVar1</code> et <code>iVar2</code> sont incrémentés.</p>
-<p>On comprend qu&rsquo;il faut éviter que la fonction s&rsquo;arrête prématurément, mais aussi nos déplacements sont pris par paires, xorés et comparés avec une valeur à l&rsquo;adresse <strong>0xC828</strong>.</p>
+<p>On comprend qu&rsquo;il faut éviter que la fonction s&rsquo;arrête prématurément, mais aussi que nos déplacements sont pris par paires, xorés et comparés avec une valeur à l&rsquo;adresse <strong>0xC828</strong>.</p>
 <p>Par ailleurs, cette valeur n&rsquo;est pas écrite en dur dans Ghidra mais on a l&rsquo;espace d&rsquo;adressage et il est sur 16 octets. Si on veut la valeur cependant il faudra émuler le jeu.</p>
 <p>La valeur est la suivante : <code>191908160700191108161119001E0711</code></p>
 <h1 id="recomposition-du-bon-chemin">Recomposition du bon chemin</h1>
@@ -185,7 +194,7 @@ Et qu&rsquo;il y a 3 cross références vers cette addresse dont une est plutôt
 <li>11</li>
 <li>1e</li>
 </ul>
-<p>On va donc commencer par générer une tables qui fait correspondre les paires de direction avec le résultat xore qu&rsquo;elle donne.</p>
+<p>On va donc commencer par générer une tables qui fait correspondre les paires de direction avec le résultat du XOR qu&rsquo;elles donnent.</p>
 <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
@@ -245,15 +254,14 @@ LU 0x19
 LD 0x8
 LR 0x1e
 LL 0x0
-</code></pre><p>On peut recomposer à la main le chemin satisfaisant.<br>
+</code></pre><p>On peut même recomposer à la main le chemin satisfaisant.<br>
 Mais il faut garder à l&rsquo;esprit ces contraintes :</p>
 <ul>
-<li>Le premier mouvement de la partie est toujours <code>U</code></li>
-<li>une fois entrée dans la grotte, tout déplacement vers le haut ne peut donner suite  qu&rsquo;à un déplacement vers le bas (on est bloqué dans la caverne)</li>
+<li>Le premier mouvement de la partie est toujours <code>U</code>, car c&rsquo;est le seul mouvement possible au lancement du jeu.</li>
+<li>une fois entrée dans la grotte, tout déplacement de la souris vers le haut ne peut donner suite qu&rsquo;à un déplacement vers le bas (on est bloqué dans la caverne).</li>
 </ul>
-<p>Par exemple, pour le début on doit avoir <code>19 19</code> donc soit <code>UL</code> soit <code>LU</code>. Etant donné qu&rsquo;au début on va vers le haut pour rentrer dans la grotte, on peut commencer que par <code>U</code>.</p>
-<p>Donc le chemin correct commence par &ldquo;UL&rdquo;. <br>
-Puis on a un deuxième <strong>0x19</strong>. Soit UL soit LU, mais si on choisit <strong>UL</strong>, une fois monté avec <code>U</code>, on sera bloqué dans la grotte et on ne pourra faire qu&rsquo;un mouvement vers le bas pour en sortir. Donc on lieu d&rsquo;avoir <strong>UL</strong> on aurait un  <strong>UD</strong>.</p>
+<p>Par exemple, pour le début on doit avoir <code>19 19</code> donc soit <code>UL</code> soit <code>LU</code>. Etant donné qu&rsquo;au début on va vers le haut pour rentrer dans la grotte, on ne peut commencer que par <code>U</code> donc <code>UL</code>.</p>
+<p>Puis on a un deuxième <strong>0x19</strong>. Soit UL soit LU, mais si on choisit <strong>UL</strong>, une fois monté avec <code>U</code>, on sera bloqué dans la grotte et on ne pourra faire qu&rsquo;un mouvement vers le bas pour en sortir. Donc on lieu d&rsquo;avoir <strong>UL</strong> on aurait un <strong>UD</strong>.</p>
 <p>Donc le bon choix est <strong>LU</strong>. En continuant ainsi on peut commencer à construire notre chemin. <br></p>
 <blockquote>
 <p>Il y a parfois des choix avec plusieurs solutions valides comme <strong>RL</strong> et <strong>LR</strong> donnant lieu à une multitude de chemins menant chacun vers la victoire. Ces chemins étaient tout de même valide pour obtenir le flag après avoir demandé au chall maker.</p></blockquote>
