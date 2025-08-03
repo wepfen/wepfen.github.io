@@ -38,7 +38,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.4a557e2429a00f9f1d38bdb2b1f68a4cd0b1650a6e1947974565d7e35cf8466576320b0046b25937793c6ed3d8ede2cd8acad4e6186fa7bf0b31eb3571337ece.css" integrity="sha512-SlV&#43;JCmgD58dOL2ysfaKTNCxZQpuGUeXRWXX41z4RmV2MgsARrJZN3k8btPY7eLNisrU5hhvp78LMes1cTN&#43;zg==" />
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
 
   
 
@@ -138,70 +138,70 @@ Here&rsquo;s the writeup of the easy one.</p>
 This board need to get a power supply to work, so with the USB to TTL (UART to USB) we had to connect a wire from the <code>5V</code> on it to the <code>5V</code> on the board with jumper wires and plug the <code>GND</code> to any <code>GND</code> on the board and then the screen boot up.</p>
 <p><img src="https://rawcdn.githack.com/wepfen/cdn/8dac5ad25c2247143da65d0926b7380ec390fcf7/writeups/dvctf/2025/screen.jpg" alt="screen"></p>
 <p>On the screen we have got the correct baudrate (9600) to connect so we can directly use it with <code>screen</code> or <code>minicom</code>, tool to interact with serial ports:</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>screen /dev/ttyUSB0 <span style="color:#b48ead">9600</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>screen /dev/ttyUSB0 <span style="color:#d699b6">9600</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And we can press the reset button on the board to get the initialisation screen :</p>
 <h2 id="uart-restricted-shell">UART restricted shell</h2>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">26
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yth��b@<span style="color:#81a1c1">)</span>s!BY��<span style="color:#81a1c1">[</span>    16<span style="color:#81a1c1">][</span>I<span style="color:#81a1c1">][</span>esp32-hal-i2c.c:75<span style="color:#81a1c1">]</span> i2cInit<span style="color:#81a1c1">()</span>: Initialising I2C Master: sda<span style="color:#81a1c1">=</span><span style="color:#b48ead">15</span> scl<span style="color:#81a1c1">=</span><span style="color:#b48ead">4</span> freq<span style="color:#81a1c1">=</span><span style="color:#b48ead">100000</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yth��b@<span style="color:#7a8478">)</span>s!BY��<span style="color:#7a8478">[</span>    16<span style="color:#7a8478">][</span>I<span style="color:#7a8478">][</span>esp32-hal-i2c.c:75<span style="color:#7a8478">]</span> i2cInit<span style="color:#7a8478">()</span>: Initialising I2C Master: sda<span style="color:#7a8478">=</span><span style="color:#d699b6">15</span> scl<span style="color:#7a8478">=</span><span style="color:#d699b6">4</span> freq<span style="color:#7a8478">=</span><span style="color:#d699b6">100000</span>
 </span></span><span style="display:flex;"><span>ESP32 architecture detected
 </span></span><span style="display:flex;"><span>Louvre Museum UART Security Challenge
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">[</span>   242<span style="color:#81a1c1">][</span>W<span style="color:#81a1c1">][</span>Wire.cpp:301<span style="color:#81a1c1">]</span> begin<span style="color:#81a1c1">()</span>: Bus already started in Master Mode.
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>   242<span style="color:#7a8478">][</span>W<span style="color:#7a8478">][</span>Wire.cpp:301<span style="color:#7a8478">]</span> begin<span style="color:#7a8478">()</span>: Bus already started in Master Mode.
 </span></span><span style="display:flex;"><span>*****************************************************
 </span></span><span style="display:flex;"><span>*                                                   *
 </span></span><span style="display:flex;"><span>*             LOUVRE MUSEUM SECURITY                *
 </span></span><span style="display:flex;"><span>*                SYSTEM TERMINAL                    *
 </span></span><span style="display:flex;"><span>*                                                   *
 </span></span><span style="display:flex;"><span>*                                                   *
-</span></span><span style="display:flex;"><span>*                         /<span style="color:#ebcb8b">\ </span>                       *
-</span></span><span style="display:flex;"><span>*                        /  <span style="color:#ebcb8b">\ </span>                      *
-</span></span><span style="display:flex;"><span>*                       /    <span style="color:#ebcb8b">\ </span>                     *
-</span></span><span style="display:flex;"><span>*                      /      <span style="color:#ebcb8b">\ </span>                    *
-</span></span><span style="display:flex;"><span>*                     /        <span style="color:#ebcb8b">\ </span>                   *
-</span></span><span style="display:flex;"><span>*                    /          <span style="color:#ebcb8b">\ </span>                  *
-</span></span><span style="display:flex;"><span>*                   /            <span style="color:#ebcb8b">\ </span>                 *
-</span></span><span style="display:flex;"><span>*                  /______/<span style="color:#ebcb8b">\_</span>_____<span style="color:#ebcb8b">\ </span>                *
+</span></span><span style="display:flex;"><span>*                         /<span style="color:#b2c98f">\ </span>                       *
+</span></span><span style="display:flex;"><span>*                        /  <span style="color:#b2c98f">\ </span>                      *
+</span></span><span style="display:flex;"><span>*                       /    <span style="color:#b2c98f">\ </span>                     *
+</span></span><span style="display:flex;"><span>*                      /      <span style="color:#b2c98f">\ </span>                    *
+</span></span><span style="display:flex;"><span>*                     /        <span style="color:#b2c98f">\ </span>                   *
+</span></span><span style="display:flex;"><span>*                    /          <span style="color:#b2c98f">\ </span>                  *
+</span></span><span style="display:flex;"><span>*                   /            <span style="color:#b2c98f">\ </span>                 *
+</span></span><span style="display:flex;"><span>*                  /______/<span style="color:#b2c98f">\_</span>_____<span style="color:#b2c98f">\ </span>                *
 </span></span><span style="display:flex;"><span>*                                                   *
 </span></span><span style="display:flex;"><span>*               RESTRICTED ACCESS ONLY              *
 </span></span><span style="display:flex;"><span>*                                                   *
 </span></span><span style="display:flex;"><span>*****************************************************
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Please login to <span style="color:#81a1c1;font-weight:bold">continue</span>.
+</span></span><span style="display:flex;"><span>Please login to <span style="color:#e67e80">continue</span>.
 </span></span><span style="display:flex;"><span>Usage: login username:password:hJMQgiul
 </span></span><span style="display:flex;"><span>&gt; login
 </span></span></code></pre></td></tr></table>
@@ -328,20 +328,20 @@ LeonardoDaVinci905@JicniVaDodranoeL
 </code></pre><p>It ended that <code>LeonardoDaVinci743$BicniVaDodranoeL</code> was the correct password with the login <code>leonardo</code>.</p>
 <h2 id="uart-shell-with-admin-features">UART shell with admin features</h2>
 <p>Here are the files :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">5
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-rw------- <span style="color:#b48ead">1</span> leonardo leonardo  <span style="color:#b48ead">220</span> Mar <span style="color:#b48ead">28</span> 09:15 .bash_history
-</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#b48ead">1</span> leonardo leonardo <span style="color:#b48ead">3526</span> Mar <span style="color:#b48ead">28</span> 09:15 .bashrc
-</span></span><span style="display:flex;"><span>drwx------ <span style="color:#b48ead">2</span> leonardo leonardo <span style="color:#b48ead">4096</span> Mar <span style="color:#b48ead">28</span> 09:15 .cache
-</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#b48ead">1</span> leonardo leonardo   <span style="color:#b48ead">56</span> Mar <span style="color:#b48ead">29</span> 12:43 notes.txt
-</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#b48ead">1</span> leonardo leonardo   <span style="color:#b48ead">21</span> Mar <span style="color:#b48ead">28</span> 09:15 security.log -&gt; /var/log/security.log
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-rw------- <span style="color:#d699b6">1</span> leonardo leonardo  <span style="color:#d699b6">220</span> Mar <span style="color:#d699b6">28</span> 09:15 .bash_history
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#d699b6">1</span> leonardo leonardo <span style="color:#d699b6">3526</span> Mar <span style="color:#d699b6">28</span> 09:15 .bashrc
+</span></span><span style="display:flex;"><span>drwx------ <span style="color:#d699b6">2</span> leonardo leonardo <span style="color:#d699b6">4096</span> Mar <span style="color:#d699b6">28</span> 09:15 .cache
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#d699b6">1</span> leonardo leonardo   <span style="color:#d699b6">56</span> Mar <span style="color:#d699b6">29</span> 12:43 notes.txt
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#d699b6">1</span> leonardo leonardo   <span style="color:#d699b6">21</span> Mar <span style="color:#d699b6">28</span> 09:15 security.log -&gt; /var/log/security.log
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And in <code>help</code> we got interesting commands :</p>
@@ -349,41 +349,41 @@ LeonardoDaVinci905@JicniVaDodranoeL
 mqtt --validate &lt;device&gt;
 mqtt --status
 </code></pre><p>In the <code>security.log</code> we learn about an MQTT device.</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">7
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>leonardo@louvre:~# cat security.log
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">===</span> Security Log <span style="color:#81a1c1">===</span>
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">[</span>2025-03-29 08:15:23<span style="color:#81a1c1">]</span> System startup
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">[</span>2025-03-29 10:32:45<span style="color:#81a1c1">]</span> Failed login attempt: username<span style="color:#81a1c1">=</span>admin
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">[</span>2025-03-29 12:45:18<span style="color:#81a1c1">]</span> Backup completed successfully
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">[</span>2025-03-29 14:03:52<span style="color:#81a1c1">]</span> MQTT connection established: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">[</span>2025-03-29 15:30:11<span style="color:#81a1c1">]</span> System check: All sensors operational
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>leonardo@louvre:~# cat security.log
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">===</span> Security Log <span style="color:#7a8478">===</span>
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 08:15:23<span style="color:#7a8478">]</span> System startup
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 10:32:45<span style="color:#7a8478">]</span> Failed login attempt: username<span style="color:#7a8478">=</span>admin
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 12:45:18<span style="color:#7a8478">]</span> Backup completed successfully
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 14:03:52<span style="color:#7a8478">]</span> MQTT connection established: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 15:30:11<span style="color:#7a8478">]</span> System check: All sensors operational
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>We get the MQTT device ID.</p>
 <p>Running <code>mqtt --status</code> we learn that it isn&rsquo;t connect. So I connect it with <code>mqtt --connect</code>
 And then I can use <code>mqtt --connect devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0</code> :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">4
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Attempting to validate with device ID: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Attempting to validate with device ID: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
 </span></span><span style="display:flex;"><span>Device ID matched! Successfully validated!
 </span></span><span style="display:flex;"><span>MQTT validation complete.
-</span></span><span style="display:flex;"><span>FLAG: DVCTF<span style="color:#81a1c1">{</span>L0uvr3_U4rt_Sh3ll_4rt1st<span style="color:#81a1c1">}</span>
+</span></span><span style="display:flex;"><span>FLAG: DVCTF<span style="color:#7a8478">{</span>L0uvr3_U4rt_Sh3ll_4rt1st<span style="color:#7a8478">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div>

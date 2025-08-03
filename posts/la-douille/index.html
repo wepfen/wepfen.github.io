@@ -38,7 +38,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.4a557e2429a00f9f1d38bdb2b1f68a4cd0b1650a6e1947974565d7e35cf8466576320b0046b25937793c6ed3d8ede2cd8acad4e6186fa7bf0b31eb3571337ece.css" integrity="sha512-SlV&#43;JCmgD58dOL2ysfaKTNCxZQpuGUeXRWXX41z4RmV2MgsARrJZN3k8btPY7eLNisrU5hhvp78LMes1cTN&#43;zg==" />
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
 
   
 
@@ -138,20 +138,20 @@
 <p>Also, by opening the console when the page load, we got a log message mentionning Phaser :</p>
 <p><img src="/images/posts/fresh/console_phaser_log.png" alt="Log phaser console"></p>
 <p>By intuition, I thought that <code>index-ByZ33U9g.js</code> (I will refer as &lsquo;index.js&rsquo; from now), is the main part of the game. And by reading it we see that the other JS file is imported :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">5
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">import</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  g as n<span style="color:#eceff4">,</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#e67e80">import</span> {
+</span></span><span style="display:flex;"><span>  g as n,
 </span></span><span style="display:flex;"><span>  r
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>from<span style="color:#a3be8c">&#39;./phaser-DJkhv3Fe.js&#39;</span><span style="color:#eceff4">;</span> 
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>from<span style="color:#b2c98f">&#39;./phaser-DJkhv3Fe.js&#39;</span>; 
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The variable names are made of one letter, reminding me of a compressed or obfuscated JS code.
@@ -159,116 +159,116 @@ There is tooooo many code so my first move was looking for strings in the code. 
 <p>But nothing is specified in the HTML :</p>
 <p><img src="/images/posts/fresh/start-button.png" alt="start button"></p>
 <p>So I immediately look up in <code>index.js</code> for &ldquo;Commencer&rdquo; and got only one result :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>c<span style="color:#eceff4">.</span>jsx<span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#a3be8c">&#39;button&#39;</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    className<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#39;button&#39;</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    onClick<span style="color:#81a1c1">:</span> <span style="color:#eceff4">()</span> <span style="color:#eceff4">=&gt;</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>      n<span style="color:#eceff4">(</span><span style="color:#81a1c1">!</span><span style="color:#b48ead">1</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>dispatchEvent<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">new</span> Event<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;start-game&#39;</span><span style="color:#eceff4">))</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">},</span>
-</span></span><span style="display:flex;"><span>    children<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#39;Commencer&#39;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>c.jsx(
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#39;button&#39;</span>,
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    className<span style="color:#7a8478">:</span> <span style="color:#b2c98f">&#39;button&#39;</span>,
+</span></span><span style="display:flex;"><span>    onClick<span style="color:#7a8478">:</span> () =&gt; {
+</span></span><span style="display:flex;"><span>      n(<span style="color:#7a8478">!</span><span style="color:#d699b6">1</span>),
+</span></span><span style="display:flex;"><span>      <span style="color:#d699b6">window</span>.dispatchEvent(<span style="color:#e67e80">new</span> Event(<span style="color:#b2c98f">&#39;start-game&#39;</span>))
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    children<span style="color:#7a8478">:</span> <span style="color:#b2c98f">&#39;Commencer&#39;</span>
+</span></span><span style="display:flex;"><span>  }
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>So the event <code>'start-game'</code> is started when the button <code>Commencer</code> is pressed.
 By looking again in the code, we find that <code>'start-game'</code> is defined in the class <code>be</code>, which inherit <code>C.Scene</code> class, a PhaserJS class.
 Which run <code>this.handleStartGame</code> :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">class</span> be <span style="color:#81a1c1;font-weight:bold">extends</span> C<span style="color:#eceff4">.</span>Scene <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  constructor<span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">super</span> <span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;MainMenu&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;background&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;logo&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;title&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;logoTween&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;handleStartGame&#39;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">(()</span> <span style="color:#eceff4">=&gt;</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>scene<span style="color:#eceff4">.</span>start<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;Game&#39;</span><span style="color:#eceff4">)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">})),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>addEventListener<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;start-game&#39;</span><span style="color:#eceff4">,</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>handleStartGame<span style="color:#eceff4">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#e67e80">class</span> be <span style="color:#e67e80">extends</span> C.Scene {
+</span></span><span style="display:flex;"><span>  constructor() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">super</span> (<span style="color:#b2c98f">&#39;MainMenu&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;background&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;logo&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;title&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;logoTween&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;handleStartGame&#39;</span>, (() =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">this</span>.scene.start(<span style="color:#b2c98f">&#39;Game&#39;</span>)
+</span></span><span style="display:flex;"><span>    })),
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">window</span>.addEventListener(<span style="color:#b2c98f">&#39;start-game&#39;</span>, <span style="color:#e67e80">this</span>.handleStartGame)
+</span></span><span style="display:flex;"><span>  }
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>This function is defined right above and run : <code>this.scene.start('Game')</code>, where <code>this</code> is the <code>be</code> class.</p>
 <p>However, <code>scene.start</code> is not defined in <code>index.js</code>, so it must be part of <code>phaser.js</code> because <code>be</code> class inherit <code>C.Scene</code>.
 And <code>C</code> further in the code is defined in <code>index.js</code> and is equal to <code>r()</code>, a function exported from PhaserJS supposed to be the game context.</p>
 <p>Here are the exported functions in the <code>phaser.js</code> file :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">4
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">export</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  t as g<span style="color:#eceff4">,</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#e67e80">export</span> {
+</span></span><span style="display:flex;"><span>  t as g,
 </span></span><span style="display:flex;"><span>  s as r
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span>};
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>For example in another Phaser <a href="https://blizzo521.github.io/phaser-hack/">game</a>, Phaser is exported like that :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">typeof</span> exports <span style="color:#81a1c1">!==</span> <span style="color:#a3be8c">&#39;undefined&#39;</span><span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">typeof</span> module <span style="color:#81a1c1">!==</span> <span style="color:#a3be8c">&#39;undefined&#39;</span> <span style="color:#81a1c1">&amp;&amp;</span> module<span style="color:#eceff4">.</span>exports<span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>          exports <span style="color:#81a1c1">=</span> module<span style="color:#eceff4">.</span>exports <span style="color:#81a1c1">=</span> Phaser<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>      exports<span style="color:#eceff4">.</span>Phaser <span style="color:#81a1c1">=</span> Phaser<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">else</span> <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">typeof</span> define <span style="color:#81a1c1">!==</span> <span style="color:#a3be8c">&#39;undefined&#39;</span> <span style="color:#81a1c1">&amp;&amp;</span> define<span style="color:#eceff4">.</span>amd<span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>      define<span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;Phaser&#39;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">function</span><span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span> <span style="color:#81a1c1;font-weight:bold">return</span> root<span style="color:#eceff4">.</span>Phaser <span style="color:#81a1c1">=</span> Phaser<span style="color:#eceff4">;</span> <span style="color:#eceff4">})()</span> <span style="color:#eceff4">);</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">else</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>      root<span style="color:#eceff4">.</span>Phaser <span style="color:#81a1c1">=</span> Phaser<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">if</span> (<span style="color:#e67e80">typeof</span> exports <span style="color:#7a8478">!==</span> <span style="color:#b2c98f">&#39;undefined&#39;</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">if</span> (<span style="color:#e67e80">typeof</span> module <span style="color:#7a8478">!==</span> <span style="color:#b2c98f">&#39;undefined&#39;</span> <span style="color:#7a8478">&amp;&amp;</span> module.exports) {
+</span></span><span style="display:flex;"><span>          exports <span style="color:#7a8478">=</span> module.exports <span style="color:#7a8478">=</span> Phaser;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      exports.Phaser <span style="color:#7a8478">=</span> Phaser;
+</span></span><span style="display:flex;"><span>  } <span style="color:#e67e80">else</span> <span style="color:#e67e80">if</span> (<span style="color:#e67e80">typeof</span> define <span style="color:#7a8478">!==</span> <span style="color:#b2c98f">&#39;undefined&#39;</span> <span style="color:#7a8478">&amp;&amp;</span> define.amd) {
+</span></span><span style="display:flex;"><span>      define(<span style="color:#b2c98f">&#39;Phaser&#39;</span>, (<span style="color:#e67e80">function</span>() { <span style="color:#e67e80">return</span> root.Phaser <span style="color:#7a8478">=</span> Phaser; })() );
+</span></span><span style="display:flex;"><span>  } <span style="color:#e67e80">else</span> {
+</span></span><span style="display:flex;"><span>      root.Phaser <span style="color:#7a8478">=</span> Phaser;
+</span></span><span style="display:flex;"><span>  }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">return</span> Phaser<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">}).</span>call<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> Phaser;
+</span></span><span style="display:flex;"><span>}).call(<span style="color:#e67e80">this</span>);
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>So I understand that our target game source code is compressed or altered in someway. The fact is, for this game the Phaser template used is for React JS, that&rsquo;s why the code is different.</p>
@@ -282,57 +282,57 @@ Well reading the <a href="https://docs.phaser.io/phaser/getting-started/making-y
 </ul>
 <p>Then we can search for those functions in the code.
 And we can find a nice reference under the class <code>ve</code> which call the superclass &lsquo;GAME&rsquo;</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">class</span> ve <span style="color:#81a1c1;font-weight:bold">extends</span> C<span style="color:#eceff4">.</span>Scene <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  constructor<span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">super</span> <span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;Game&#39;</span><span style="color:#eceff4">),</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#e67e80">class</span> ve <span style="color:#e67e80">extends</span> C.Scene {
+</span></span><span style="display:flex;"><span>  constructor() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">super</span> (<span style="color:#b2c98f">&#39;Game&#39;</span>),
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>We can see that some very interesting variables are defined :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">class</span> ve <span style="color:#81a1c1;font-weight:bold">extends</span> C<span style="color:#eceff4">.</span>Scene <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  constructor<span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">super</span> <span style="color:#eceff4">(</span><span style="color:#a3be8c">&#39;Game&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;isPlaying&#39;</span><span style="color:#eceff4">,</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;difficultyLevel&#39;</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">1</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;difficultyTimer&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">...</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;player&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;enemies&#39;</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">[]),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;enemiesGroup&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;lives&#39;</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">10</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">...</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;livesBar&#39;</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;isReady&#39;</span><span style="color:#eceff4">,</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">1</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;ennemesDead&#39;</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>    t<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">,</span> <span style="color:#a3be8c">&#39;score&#39;</span><span style="color:#eceff4">,</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">...</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#e67e80">class</span> ve <span style="color:#e67e80">extends</span> C.Scene {
+</span></span><span style="display:flex;"><span>  constructor() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">super</span> (<span style="color:#b2c98f">&#39;Game&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;isPlaying&#39;</span>, <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;difficultyLevel&#39;</span>, <span style="color:#d699b6">1</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;difficultyTimer&#39;</span>),
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;player&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;enemies&#39;</span>, []),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;enemiesGroup&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;lives&#39;</span>, <span style="color:#d699b6">10</span>),
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;livesBar&#39;</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;isReady&#39;</span>, <span style="color:#7a8478">!</span><span style="color:#d699b6">1</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;ennemesDead&#39;</span>, <span style="color:#d699b6">0</span>),
+</span></span><span style="display:flex;"><span>    t(<span style="color:#e67e80">this</span>, <span style="color:#b2c98f">&#39;score&#39;</span>, <span style="color:#d699b6">0</span>),
+</span></span><span style="display:flex;"><span>...
 </span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
@@ -340,51 +340,51 @@ And we can find a nice reference under the class <code>ve</code> which call the 
 <p>Now we know that, how can we edit those variables and have a big score ?
 Usually, we could directly edit the variable on the console, and edit the properties inside the <code>ve</code> class instance, but first we need to find this instance.</p>
 <p>Fast forward, I found further in the code that <code>ve</code> alongside other classes were put in another variable <code>ke</code> :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">const</span> ke <span style="color:#81a1c1">=</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  type<span style="color:#81a1c1">:</span> C<span style="color:#eceff4">.</span>AUTO<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>  width<span style="color:#81a1c1">:</span> <span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>innerWidth<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>  height<span style="color:#81a1c1">:</span> <span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>innerHeight<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>  parent<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#39;game-container&#39;</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>  backgroundColor<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#39;#000000&#39;</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>  scene<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>
-</span></span><span style="display:flex;"><span>    P<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    we<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    be<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    ve<span style="color:#eceff4">,</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#e67e80">const</span> ke <span style="color:#7a8478">=</span> {
+</span></span><span style="display:flex;"><span>  type<span style="color:#7a8478">:</span> C.AUTO,
+</span></span><span style="display:flex;"><span>  width<span style="color:#7a8478">:</span> <span style="color:#d699b6">window</span>.innerWidth,
+</span></span><span style="display:flex;"><span>  height<span style="color:#7a8478">:</span> <span style="color:#d699b6">window</span>.innerHeight,
+</span></span><span style="display:flex;"><span>  parent<span style="color:#7a8478">:</span> <span style="color:#b2c98f">&#39;game-container&#39;</span>,
+</span></span><span style="display:flex;"><span>  backgroundColor<span style="color:#7a8478">:</span> <span style="color:#b2c98f">&#39;#000000&#39;</span>,
+</span></span><span style="display:flex;"><span>  scene<span style="color:#7a8478">:</span> [
+</span></span><span style="display:flex;"><span>    P,
+</span></span><span style="display:flex;"><span>    we,
+</span></span><span style="display:flex;"><span>    be,
+</span></span><span style="display:flex;"><span>    ve,
 </span></span><span style="display:flex;"><span>    z
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">],</span>
+</span></span><span style="display:flex;"><span>  ],
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And the game start with <code>ke</code> as argument :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">4
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>n<span style="color:#eceff4">.</span>current <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">new</span> C<span style="color:#eceff4">.</span>Game<span style="color:#eceff4">({</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">...</span>ke<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>  parent<span style="color:#81a1c1">:</span> <span style="color:#a3be8c">&#39;game-container&#39;</span>
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">}),</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>n.current <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> C.Game({
+</span></span><span style="display:flex;"><span>  ...ke,
+</span></span><span style="display:flex;"><span>  parent<span style="color:#7a8478">:</span> <span style="color:#b2c98f">&#39;game-container&#39;</span>
+</span></span><span style="display:flex;"><span>}),
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>So, the game context is stored in <code>n.current</code>. However, when I start the game I couldn&rsquo;t find any <code>n</code> variable in the console, it returns <code>undefined</code>.
@@ -398,12 +398,12 @@ This <a href="https://www.youtube.com/watch?v=gBHHSDJQNME">guy</a> got the same 
 <p><img src="/images/posts/fresh/breakpoint-game-context.png" alt="breakpoint debugger"></p>
 <p>Now when refreshing the page I got a white overlay over the web page and in the console I can find <code>n.current</code>.</p>
 <p>We can set a reference to it :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>gameRef <span style="color:#81a1c1">=</span> n<span style="color:#eceff4">.</span>current
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#d699b6">window</span>.gameRef <span style="color:#7a8478">=</span> n.current
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>By searching a bit we can find where the properties are stored, inside <code>window.gameRef.scene.keys.Game</code> :</p>
@@ -414,14 +414,14 @@ This <a href="https://www.youtube.com/watch?v=gBHHSDJQNME">guy</a> got the same 
 <h1 id="cheating-in-the-game">Cheating in the game</h1>
 <h2 id="infinite-lives">Infinite lives</h2>
 <p>We can just set infinite lives by setting <code>lives</code> values :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>gameRef<span style="color:#eceff4">.</span>scene<span style="color:#eceff4">.</span>keys<span style="color:#eceff4">.</span>Game<span style="color:#eceff4">.</span>lives <span style="color:#81a1c1">=</span> <span style="color:#b48ead">9999999999999</span>
-</span></span><span style="display:flex;"><span><span style="color:#b48ead">9999999999999</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#d699b6">window</span>.gameRef.scene.keys.Game.lives <span style="color:#7a8478">=</span> <span style="color:#d699b6">9999999999999</span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">9999999999999</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>No further check is made and the lifebar overflows :</p>
@@ -439,144 +439,144 @@ This <a href="https://www.youtube.com/watch?v=gBHHSDJQNME">guy</a> got the same 
 <p>First I started by investigating the function responsible for taking damage and killing ennemy. I saw <code>setupCollision</code> to be a good candidate and I was right.</p>
 <details>
   <summary style="color: #F99417; cursor: pointer">setupCollisions</summary>
-  <div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">59
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">60
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">61
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">62
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">63
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">64
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">65
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">66
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">67
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">67
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>setupCollisions<span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>physics<span style="color:#eceff4">.</span>add<span style="color:#eceff4">.</span>overlap<span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>instance<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>enemiesGroup<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#eceff4">(</span>e<span style="color:#eceff4">,</span> t<span style="color:#eceff4">)</span> <span style="color:#eceff4">=&gt;</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1">!</span>t<span style="color:#eceff4">.</span>body <span style="color:#81a1c1">||</span> <span style="color:#81a1c1">!</span>t<span style="color:#eceff4">.</span>active<span style="color:#eceff4">)</span> <span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#81a1c1;font-weight:bold">void</span> console<span style="color:#eceff4">.</span>warn<span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#a3be8c">&#39;Collision skipped: Enemy body not initialized or enemy inactive.&#39;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#eceff4">);</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">const</span> n <span style="color:#81a1c1">=</span> t<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>isInBack<span style="color:#eceff4">(</span>n<span style="color:#eceff4">))</span> <span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span> <span style="color:#81a1c1">===</span> t<span style="color:#eceff4">.</span>canDealDamage <span style="color:#81a1c1">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>lives <span style="color:#81a1c1">-=</span> <span style="color:#b48ead">1</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>TakeDamage<span style="color:#eceff4">(),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>time<span style="color:#eceff4">.</span>delayedCall<span style="color:#eceff4">(</span><span style="color:#b48ead">300</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">(()</span> <span style="color:#eceff4">=&gt;</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>updateLivesBar<span style="color:#eceff4">()</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#eceff4">})),</span>
-</span></span><span style="display:flex;"><span>            t<span style="color:#eceff4">.</span>onHitByPlayer<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">,</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>cameras<span style="color:#eceff4">.</span>main<span style="color:#eceff4">.</span>shake<span style="color:#eceff4">(</span><span style="color:#b48ead">200</span><span style="color:#eceff4">)</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>lives <span style="color:#81a1c1">&lt;=</span> <span style="color:#b48ead">0</span> <span style="color:#81a1c1">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>stopGame<span style="color:#eceff4">(),</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">void</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>stopDash<span style="color:#eceff4">();</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>isDashing<span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1">!</span>t<span style="color:#eceff4">.</span>_alreadyKilled<span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>              t<span style="color:#eceff4">.</span>_alreadyKilled <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span><span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">const</span> e <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>time<span style="color:#eceff4">.</span>now<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>                e <span style="color:#81a1c1">-</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>lastKillTime <span style="color:#81a1c1">&lt;=</span> <span style="color:#b48ead">500</span> <span style="color:#81a1c1">?</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>currentCombo <span style="color:#81a1c1">+=</span> <span style="color:#b48ead">1</span> <span style="color:#81a1c1">:</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>currentCombo <span style="color:#81a1c1">=</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>currentCombo <span style="color:#81a1c1">&gt;</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>bestCombo <span style="color:#81a1c1">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>bestCombo <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>currentCombo<span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span> <span style="color:#81a1c1">===</span> t<span style="color:#eceff4">.</span>canDealDamage
-</span></span><span style="display:flex;"><span>              <span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>lastKillTime <span style="color:#81a1c1">=</span> e<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1;font-weight:bold">const</span> n <span style="color:#81a1c1">=</span> <span style="color:#b48ead">1</span> <span style="color:#81a1c1">+</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>currentCombo<span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>score <span style="color:#81a1c1">+=</span> n<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>ennemesDead <span style="color:#81a1c1">+=</span> <span style="color:#b48ead">1</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>showScorePopup<span style="color:#eceff4">(</span>t<span style="color:#eceff4">.</span>x<span style="color:#eceff4">,</span> t<span style="color:#eceff4">.</span>y <span style="color:#81a1c1">-</span> t<span style="color:#eceff4">.</span>height <span style="color:#81a1c1">-</span> <span style="color:#b48ead">250</span><span style="color:#eceff4">,</span> n<span style="color:#eceff4">)</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>comboTimer <span style="color:#81a1c1">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>comboTimer<span style="color:#eceff4">.</span>remove<span style="color:#eceff4">(</span><span style="color:#81a1c1">!</span><span style="color:#b48ead">1</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>comboTimer <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>time<span style="color:#eceff4">.</span>delayedCall<span style="color:#eceff4">(</span><span style="color:#b48ead">500</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">(()</span> <span style="color:#eceff4">=&gt;</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>currentCombo <span style="color:#81a1c1">=</span> <span style="color:#b48ead">0</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#eceff4">})),</span>
-</span></span><span style="display:flex;"><span>              t<span style="color:#eceff4">.</span>onHitByPlayer<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">,</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">1</span><span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>enemies <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>enemies<span style="color:#eceff4">.</span>filter<span style="color:#eceff4">((</span>e <span style="color:#eceff4">=&gt;</span> e <span style="color:#81a1c1">!==</span> t<span style="color:#eceff4">))</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">else</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">1</span> <span style="color:#81a1c1">===</span> <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>isInvincible <span style="color:#81a1c1">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span> <span style="color:#81a1c1">===</span> t<span style="color:#eceff4">.</span>canDealDamage <span style="color:#81a1c1">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>lives <span style="color:#81a1c1">-=</span> <span style="color:#b48ead">1</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>TakeDamage<span style="color:#eceff4">(),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>time<span style="color:#eceff4">.</span>delayedCall<span style="color:#eceff4">(</span><span style="color:#b48ead">300</span><span style="color:#eceff4">,</span> <span style="color:#eceff4">(()</span> <span style="color:#eceff4">=&gt;</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>updateLivesBar<span style="color:#eceff4">()</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#eceff4">})),</span>
-</span></span><span style="display:flex;"><span>            t<span style="color:#eceff4">.</span>onHitByPlayer<span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">,</span> <span style="color:#81a1c1">!</span><span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>isInvincible<span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>cameras<span style="color:#eceff4">.</span>main<span style="color:#eceff4">.</span>shake<span style="color:#eceff4">(</span><span style="color:#b48ead">200</span><span style="color:#eceff4">)</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>lives <span style="color:#81a1c1">&lt;=</span> <span style="color:#b48ead">0</span> <span style="color:#81a1c1">&amp;&amp;</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>stopGame<span style="color:#eceff4">(),</span>
-</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>stopDash<span style="color:#eceff4">()</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#eceff4">),</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1;font-weight:bold">void</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1;font-weight:bold">this</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>setupCollisions() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.physics.add.overlap(
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">this</span>.player.instance,
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">this</span>.enemiesGroup,
+</span></span><span style="display:flex;"><span>      (
+</span></span><span style="display:flex;"><span>        (e, t) =&gt; {
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>t.body <span style="color:#7a8478">||</span> <span style="color:#7a8478">!</span>t.active) <span style="color:#e67e80">return</span> <span style="color:#e67e80">void</span> console.warn(
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#39;Collision skipped: Enemy body not initialized or enemy inactive.&#39;</span>
+</span></span><span style="display:flex;"><span>          );
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">const</span> n <span style="color:#7a8478">=</span> t;
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">if</span> (<span style="color:#e67e80">this</span>.player.isInBack(n)) <span style="color:#e67e80">return</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span> <span style="color:#7a8478">===</span> t.canDealDamage <span style="color:#7a8478">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>          (
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.lives <span style="color:#7a8478">-=</span> <span style="color:#d699b6">1</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.player.TakeDamage(),
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.time.delayedCall(<span style="color:#d699b6">300</span>, (() =&gt; {
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">this</span>.updateLivesBar()
+</span></span><span style="display:flex;"><span>            })),
+</span></span><span style="display:flex;"><span>            t.onHitByPlayer(<span style="color:#e67e80">this</span>.player, <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span>),
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.cameras.main.shake(<span style="color:#d699b6">200</span>)
+</span></span><span style="display:flex;"><span>          ),
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">this</span>.lives <span style="color:#7a8478">&lt;=</span> <span style="color:#d699b6">0</span> <span style="color:#7a8478">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">this</span>.stopGame(),
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">void</span> <span style="color:#e67e80">this</span>.player.stopDash();
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">if</span> (<span style="color:#e67e80">this</span>.player.isDashing) {
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>t._alreadyKilled) {
+</span></span><span style="display:flex;"><span>              t._alreadyKilled <span style="color:#7a8478">=</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">const</span> e <span style="color:#7a8478">=</span> <span style="color:#e67e80">this</span>.time.now;
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">if</span> (
+</span></span><span style="display:flex;"><span>                e <span style="color:#7a8478">-</span> <span style="color:#e67e80">this</span>.lastKillTime <span style="color:#7a8478">&lt;=</span> <span style="color:#d699b6">500</span> <span style="color:#7a8478">?</span> <span style="color:#e67e80">this</span>.currentCombo <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">:</span> <span style="color:#e67e80">this</span>.currentCombo <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">this</span>.currentCombo <span style="color:#7a8478">&gt;</span> <span style="color:#e67e80">this</span>.bestCombo <span style="color:#7a8478">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>                (<span style="color:#e67e80">this</span>.bestCombo <span style="color:#7a8478">=</span> <span style="color:#e67e80">this</span>.currentCombo),
+</span></span><span style="display:flex;"><span>                <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span> <span style="color:#7a8478">===</span> t.canDealDamage
+</span></span><span style="display:flex;"><span>              ) {
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">this</span>.lastKillTime <span style="color:#7a8478">=</span> e;
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">const</span> n <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">+</span> <span style="color:#e67e80">this</span>.currentCombo;
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">this</span>.score <span style="color:#7a8478">+=</span> n,
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">this</span>.ennemesDead <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">this</span>.showScorePopup(t.x, t.y <span style="color:#7a8478">-</span> t.height <span style="color:#7a8478">-</span> <span style="color:#d699b6">250</span>, n)
+</span></span><span style="display:flex;"><span>              }
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">this</span>.comboTimer <span style="color:#7a8478">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">this</span>.comboTimer.remove(<span style="color:#7a8478">!</span><span style="color:#d699b6">1</span>),
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">this</span>.comboTimer <span style="color:#7a8478">=</span> <span style="color:#e67e80">this</span>.time.delayedCall(<span style="color:#d699b6">500</span>, (() =&gt; {
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">this</span>.currentCombo <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>              })),
+</span></span><span style="display:flex;"><span>              t.onHitByPlayer(<span style="color:#e67e80">this</span>.player, <span style="color:#7a8478">!</span><span style="color:#d699b6">1</span>),
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">this</span>.enemies <span style="color:#7a8478">=</span> <span style="color:#e67e80">this</span>.enemies.filter((e =&gt; e <span style="color:#7a8478">!==</span> t))
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>          } <span style="color:#e67e80">else</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">1</span> <span style="color:#7a8478">===</span> <span style="color:#e67e80">this</span>.player.isInvincible <span style="color:#7a8478">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span> <span style="color:#7a8478">===</span> t.canDealDamage <span style="color:#7a8478">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>          (
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.lives <span style="color:#7a8478">-=</span> <span style="color:#d699b6">1</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.player.TakeDamage(),
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.time.delayedCall(<span style="color:#d699b6">300</span>, (() =&gt; {
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">this</span>.updateLivesBar()
+</span></span><span style="display:flex;"><span>            })),
+</span></span><span style="display:flex;"><span>            t.onHitByPlayer(<span style="color:#e67e80">this</span>.player, <span style="color:#7a8478">!</span><span style="color:#e67e80">this</span>.player.isInvincible),
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">this</span>.cameras.main.shake(<span style="color:#d699b6">200</span>)
+</span></span><span style="display:flex;"><span>          ),
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">this</span>.lives <span style="color:#7a8478">&lt;=</span> <span style="color:#d699b6">0</span> <span style="color:#7a8478">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">this</span>.stopGame(),
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">this</span>.player.stopDash()
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      ),
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">void</span> <span style="color:#d699b6">0</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">this</span>
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>  }
 </span></span></code></pre></td></tr></table>
 </div>
 </div></ details >
@@ -591,58 +591,58 @@ This <a href="https://www.youtube.com/watch?v=gBHHSDJQNME">guy</a> got the same 
 </ul>
 <p>Like that, we learn about an invinciblity ability already implemented.
 Looking in the code, we can find those three functions :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>  startDash<span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>isDashing <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>isInvincible <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>startAfterImage<span style="color:#eceff4">()</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>  stopDash<span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>isDashing <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">1</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>stopAfterImage<span style="color:#eceff4">()</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>  stopInvincibility<span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>isInvincible <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">1</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#eceff4">}</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>  startDash() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.isDashing <span style="color:#7a8478">=</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.isInvincible <span style="color:#7a8478">=</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.startAfterImage()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  stopDash() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.isDashing <span style="color:#7a8478">=</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.stopAfterImage()
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  stopInvincibility() {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.isInvincible <span style="color:#7a8478">=</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>  }
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>To keep it shorts, when dashing, <code>isInvincible</code> is set to 1. And in other place in the code, the dash set a timer after which one <code>isInvincible</code> is set back to 0 by calling <code>stopInvincibility()</code>.</p>
 <p>Now let&rsquo;s replace those functions to always keep <code>isInvincible</code> active :</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">8
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>gameRef<span style="color:#eceff4">.</span>scene<span style="color:#eceff4">.</span>keys<span style="color:#eceff4">.</span>Game<span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>stopDash <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">function</span><span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>isDashing <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>stopAfterImage<span style="color:#eceff4">()</span>
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#d699b6">window</span>.gameRef.scene.keys.Game.player.stopDash <span style="color:#7a8478">=</span> <span style="color:#e67e80">function</span>() {
+</span></span><span style="display:flex;"><span>  	<span style="color:#e67e80">this</span>.isDashing <span style="color:#7a8478">=</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">this</span>.stopAfterImage()
+</span></span><span style="display:flex;"><span>};
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">window</span><span style="color:#eceff4">.</span>gameRef<span style="color:#eceff4">.</span>scene<span style="color:#eceff4">.</span>keys<span style="color:#eceff4">.</span>Game<span style="color:#eceff4">.</span>player<span style="color:#eceff4">.</span>stopInvincibility <span style="color:#81a1c1">=</span> <span style="color:#81a1c1;font-weight:bold">function</span> <span style="color:#eceff4">()</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>  	<span style="color:#81a1c1;font-weight:bold">this</span><span style="color:#eceff4">.</span>isInvincible <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">!</span><span style="color:#b48ead">0</span>
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">};</span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">window</span>.gameRef.scene.keys.Game.player.stopInvincibility <span style="color:#7a8478">=</span> <span style="color:#e67e80">function</span> () {
+</span></span><span style="display:flex;"><span>  	<span style="color:#e67e80">this</span>.isInvincible <span style="color:#7a8478">=</span> <span style="color:#7a8478">!</span><span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>};
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And it works, but I can&rsquo;t move and I don&rsquo;t know why (I&rsquo;m too lazy to investigate) :</p>

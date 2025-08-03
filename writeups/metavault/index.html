@@ -38,7 +38,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.4a557e2429a00f9f1d38bdb2b1f68a4cd0b1650a6e1947974565d7e35cf8466576320b0046b25937793c6ed3d8ede2cd8acad4e6186fa7bf0b31eb3571337ece.css" integrity="sha512-SlV&#43;JCmgD58dOL2ysfaKTNCxZQpuGUeXRWXX41z4RmV2MgsARrJZN3k8btPY7eLNisrU5hhvp78LMes1cTN&#43;zg==" />
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
 
   
 
@@ -128,142 +128,142 @@
 </ul>
 <h2 id="code">Code</h2>
 <p>MetaVault.sol</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">59
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">60
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">61
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">62
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">63
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">64
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">65
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">66
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">// SPDX-License-Identifier: MoD-Internal-v1.0
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"></span><span style="color:#81a1c1;font-weight:bold">pragma solidity</span> <span style="color:#b48ead">0</span><span style="color:#eceff4">.</span><span style="color:#b48ead">8</span><span style="color:#eceff4">.</span><span style="color:#b48ead">25</span><span style="color:#eceff4">;</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MoD-Internal-v1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"> * @title MetaVault
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"> * @author Ministry of Defense
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"> * @notice MoD (Ministry of Defense) Smart Contract storing the country&#39;s ETH reserves.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"> */</span>
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">contract</span> <span style="color:#8fbcbb">MetaVault</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#616e87;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @notice Keccak256 hashed secret passphrase to enable emergency mode.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @dev plaintext secret: WeLoveNukaCola!!MoD-2024 
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     */</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">bytes32</span> <span style="color:#81a1c1;font-weight:bold">constant</span> <span style="color:#81a1c1;font-weight:bold">private</span> VAULT_SECRET_K256 <span style="color:#81a1c1">=</span> <span style="color:#b48ead">0x42c10591ced4987005f70d29b498348ecc8ab18dd28c5b93db931375ca826b5e</span><span style="color:#eceff4">;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> * @title MetaVault
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> * @author Ministry of Defense
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> * @notice MoD (Ministry of Defense) Smart Contract storing the country&#39;s ETH reserves.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> MetaVault {
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @notice Keccak256 hashed secret passphrase to enable emergency mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev plaintext secret: WeLoveNukaCola!!MoD-2024 
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">constant</span> <span style="color:#e67e80">private</span> VAULT_SECRET_K256 <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x42c10591ced4987005f70d29b498348ecc8ab18dd28c5b93db931375ca826b5e</span>; 
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">event</span> <span style="color:#8fbcbb">Deposit</span><span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">address</span> <span style="color:#81a1c1;font-weight:bold">indexed</span> _from<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">uint256</span> <span style="color:#81a1c1;font-weight:bold">indexed</span> _value<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">uint256</span> <span style="color:#81a1c1;font-weight:bold">indexed</span> _updatedBalance
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">event</span> <span style="color:#8fbcbb">FailedLoginAttempt</span><span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">address</span> <span style="color:#81a1c1;font-weight:bold">indexed</span> _from<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">string</span>  <span style="color:#81a1c1;font-weight:bold">indexed</span> _attempt<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">bytes32</span> <span style="color:#81a1c1;font-weight:bold">indexed</span> _hashedAttempt
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">);</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">event</span> <span style="color:#8fbcbb">EmergencyMode</span><span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">address</span> <span style="color:#81a1c1;font-weight:bold">indexed</span> _by<span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">address</span> <span style="color:#81a1c1;font-weight:bold">indexed</span> _fundsDestination
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">);</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> Deposit(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _from,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">indexed</span> _value,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">indexed</span> _updatedBalance
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> FailedLoginAttempt(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _from,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span>  <span style="color:#e67e80">indexed</span> _attempt,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">indexed</span> _hashedAttempt
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> EmergencyMode(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _by,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _fundsDestination
+</span></span><span style="display:flex;"><span>    ); 
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#616e87;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @dev Retrieves the current ETH balance of the vault.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @return balance of the vault in wei.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">function</span> <span style="color:#88c0d0">getVaultBalance</span><span style="color:#eceff4">()</span> <span style="color:#81a1c1;font-weight:bold">public</span> <span style="color:#81a1c1;font-weight:bold">view</span> <span style="color:#81a1c1;font-weight:bold">returns</span> <span style="color:#eceff4">(</span><span style="color:#81a1c1">uint256</span><span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1;font-weight:bold">return</span> <span style="color:#81a1c1">address</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">this</span><span style="color:#eceff4">).</span><span style="color:#81a1c1">balance</span><span style="color:#eceff4">;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev Retrieves the current ETH balance of the vault.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @return balance of the vault in wei.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">getVaultBalance</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint256</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>).<span style="color:#d699b6">balance</span>;
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#616e87;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @notice Deposit function to receive ETH deposits.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @dev emits a Deposit event with the depositor, the value deposited and the updated balance after deposit.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">function</span> <span style="color:#88c0d0">deposit</span><span style="color:#eceff4">()</span> <span style="color:#81a1c1;font-weight:bold">public</span> <span style="color:#81a1c1;font-weight:bold">payable</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>        emit Deposit<span style="color:#eceff4">(</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">value</span><span style="color:#eceff4">,</span>
-</span></span><span style="display:flex;"><span>            getVaultBalance<span style="color:#eceff4">()</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#eceff4">);</span>        
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @notice Deposit function to receive ETH deposits.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev emits a Deposit event with the depositor, the value deposited and the updated balance after deposit.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">deposit</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        emit Deposit(
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>,
+</span></span><span style="display:flex;"><span>            getVaultBalance()
+</span></span><span style="display:flex;"><span>        );        
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#616e87;font-style:italic">/**
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @notice Function to fire the emergency mode by selfdestructing the contract and transfering the funds away.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @param _secret The secret passphrase required to activate emergency mode.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     * @dev The secret is shared only to MoD devs.
-</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">     */</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">function</span> <span style="color:#88c0d0">emergency</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">string</span> <span style="color:#81a1c1;font-weight:bold">memory</span> _secret<span style="color:#eceff4">)</span> <span style="color:#81a1c1;font-weight:bold">external</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">bytes32</span> attempt_k256 <span style="color:#81a1c1">=</span> <span style="color:#81a1c1">keccak256</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">bytes</span><span style="color:#eceff4">(</span>_secret<span style="color:#eceff4">));</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#eceff4">(</span>attempt_k256 <span style="color:#81a1c1">==</span> VAULT_SECRET_K256<span style="color:#eceff4">)</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>            emit EmergencyMode<span style="color:#eceff4">(</span><span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">,</span> <span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">);</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1">selfdestruct</span><span style="color:#eceff4">(</span><span style="color:#81a1c1;font-weight:bold">payable</span><span style="color:#eceff4">(</span><span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">));</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#eceff4">}</span> <span style="color:#81a1c1;font-weight:bold">else</span> <span style="color:#eceff4">{</span>
-</span></span><span style="display:flex;"><span>            emit FailedLoginAttempt<span style="color:#eceff4">(</span><span style="color:#81a1c1">msg</span><span style="color:#eceff4">.</span><span style="color:#81a1c1">sender</span><span style="color:#eceff4">,</span> _secret<span style="color:#eceff4">,</span> attempt_k256<span style="color:#eceff4">);</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#eceff4">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @notice Function to fire the emergency mode by selfdestructing the contract and transfering the funds away.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @param _secret The secret passphrase required to activate emergency mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev The secret is shared only to MoD devs.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">emergency</span>(<span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _secret) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> attempt_k256 <span style="color:#7a8478">=</span> <span style="color:#d699b6">keccak256</span>(<span style="color:#dbbc7f">bytes</span>(_secret));
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (attempt_k256 <span style="color:#7a8478">==</span> VAULT_SECRET_K256) {
+</span></span><span style="display:flex;"><span>            emit EmergencyMode(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">selfdestruct</span>(<span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>));
+</span></span><span style="display:flex;"><span>        } <span style="color:#e67e80">else</span> {
+</span></span><span style="display:flex;"><span>            emit FailedLoginAttempt(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, _secret, attempt_k256);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Looking at the source code of <code>MetaVault.sol</code> we can notice</p>
@@ -274,14 +274,14 @@
 <li>And also many comments in the <a href="https://docs.soliditylang.org/en/latest/natspec-format.html">NatSpec</a> format.</li>
 </ul>
 <p>Reading comments, we understand that the password for <code>emergency</code> was stored in plaintext. But the devs affirms that <code>comments are not compiled</code>:</p>
-<div class="highlight"><div style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6c6f74">2
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#81a1c1">*</span> <span style="color:#bf616a">@</span>dev plaintext secret<span style="color:#81a1c1">:</span> <span style="color:#eceff4">[</span>REDACTED<span style="color:#eceff4">]</span>
-</span></span><span style="display:flex;"><span><span style="color:#81a1c1">*</span> <span style="color:#bf616a">@</span>dev The secret will be stripped before open sourcing the <span style="color:#81a1c1">code</span><span style="color:#eceff4">.</span> Comments are not compiled anyway<span style="color:#eceff4">.</span>     
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7a8478">*</span> @dev plaintext secret<span style="color:#7a8478">:</span> [REDACTED]
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">*</span> @dev The secret will be stripped before open sourcing the <span style="color:#d699b6">code</span>. Comments are not compiled anyway.     
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Luckily for us, reading this <a href="https://playground.sourcify.dev/">page</a> (which i find by googling <code>solidity meta-data lookup</code> and reading <a href="https://docs.sourcify.dev/docs/metadata/">https://docs.sourcify.dev/docs/metadata/</a>) we can understand that they actually are. We just have to supply the contract bytecode (the source code but <a href="https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/">translated</a>.</p>
