@@ -84,6 +84,57 @@
     
 
     <p>Here are friends cooking delightful infosec meals.</p>
+<style>
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* desktop: 3 columns */
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+  }
+
+  .gallery a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .gallery figure {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  .gallery img {
+    width: 100%; /* full width of the column */
+    height: auto;
+    transition: transform 0.2s ease;
+  }
+
+  .gallery figcaption {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  /* Tablet: 2 columns */
+  @media (max-width: 900px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Mobile: 1 column, full width */
+  @media (max-width: 600px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery img {
+      width: 100%; /* take all space */
+    }
+  }
+</style>
 <ul>
 <li>vohlt92</li>
 <li><a href="https://leteazer.github.io/">Teazer</a></li>
@@ -94,65 +145,72 @@
 <li><a href="https://blog.noodle.red/">Noodle</a></li>
 <li><a href="https://rayanle.cat/">rayanlecat</a></li>
 <li><a href="https://p2lu.github.io">prince2lu</a></li>
+<li><a href="https://anthr4ce.github.io/">anthrace</a></li>
 </ul>
 <p><br><br></p>
-<p>
+<div class="gallery">
   <a href="#">
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em;">
+    <figure>
         <img src="https://media1.tenor.com/m/koM5sdZC184AAAAd/turning-red-cooking.gif" width="100%">
-        <figcaption>  Vohlt92 : Chief Cook Officer  </figcaption> 
+        <figcaption>  <strong>Vohlt92</strong> : Chief Cook Officer  </figcaption> 
     </figure>
   </a>
   <a href="https://leteazer.github.io/" target=_blank>
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em;">
+    <figure>
         <img src="https://media1.tenor.com/m/RZUDcWwf9fsAAAAd/paparazzi-papa.gif" width="100%">
-        <figcaption>  Teazer : Captain Cook  </figcaption> 
+        <figcaption>  <strong>Teazer</strong> : Captain Cook  </figcaption> 
     </figure>
   </a>
   <a href="https://github.com/MikeHorn-git/" target=_blank>
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em;">
+    <figure>
         <img src="/images/mikehorn.gif" width="100%">
-        <figcaption>  MikeHorn-git : Linux Baker   </figcaption>
+        <figcaption>  <strong>MikeHorn-git</strong> : Linux Baker   </figcaption>
     </figure>
   </a>
   <a href="https://github.com/Eun0us" target=_blank> 
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em;">
+    <figure >
         <img src="https://media1.tenor.com/m/qcKDevbWhqAAAAAd/kirby-kirby-cooked.gif" width="100%">
-        <figcaption>  Eun0us : ESP32 Cooker </figcaption>
+        <figcaption>  <strong>Eun0us</strong> : ESP32 Cooker </figcaption>
     </figure>
   </a>
   <a href="https://fayred.fr" target=_blank> 
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em;">
+    <figure>
         <img src="https://media1.tenor.com/m/kp_pQSnRrHwAAAAd/shokugeki-no-soma-food-wars.gif" width="100%">
-        <figcaption>  fayred : bug bounty cooker </figcaption>
+        <figcaption>  <strong>fayred</strong> : bug bounty cooker </figcaption>
     </figure>
   </a>
   <a href="https://felixbillieres.github.io/" target=_blank> 
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em; font-size: 14px">
+    <figure>
         <img src="https://media1.tenor.com/m/H-se6DcgSGwAAAAd/im-sakamoto-sakamoto.gif" width="100%">
-        <figcaption>  Elliot Belt : Chief Brainrot Officer </figcaption>
+        <figcaption>  <strong>Elliot Belt</strong> : Chief Brainrot Officer </figcaption>
     </figure>
   </a>
   <a href="https://blog.noodle.red/" target=_blank> 
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em; font-size: 14px;">
+    <figure>
         <img src="/images/homer-cooks.gif" width="100%">
-        <figcaption>  Noodle :  Chief Mewing Officer </figcaption>
+        <figcaption>  <strong>Noodle</strong> :  Chief Mewing Officer </figcaption>
 		<br>
     </figure>
   </a>
   <a href="https://www.rayanle.cat/" target=_blank> 
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em; font-size: 14px">
+    <figure>
         <img src="https://media1.tenor.com/m/Jg4OmNVTXWsAAAAd/mihawk-cutting.gif" width="100%">
-        <figcaption>  Rayanlecat :  Chief OSU! and Active Directory Officer</figcaption>
+        <figcaption>  <strong>Rayanlecat</strong> :  Chief OSU! and Active Directory Officer</figcaption>
     </figure>
   </a>
   <a href="https://p2lu.github.io/" target=_blank> 
-    <figure style="display:inline-block; width:30%; margin:12px; padding-bottom: 8em; font-size: 14px">
+    <figure>
         <img src="https://c.tenor.com/_sVpnVd2qdEAAAAd/tenor.gif" width="100%">
-        <figcaption>  prince2lu : 86 and bouldering Chief Cooker</figcaption>
+        <figcaption>  <strong>prince2lu</strong> : 86 and bouldering Chief Cooker</figcaption>
     </figure>
   </a>
-</p>
+  <a href="https://anthr4ce.github.io/" target=_blank> 
+    <figure>
+        <img src="https://c.tenor.com/lJr_T1xokwIAAAAd/tenor.gif" width="100%">
+        <figcaption>  <strong>anthrace</strong> : Literaly a cook </figcaption>
+    </figure>
+  </a>
+</div>
 </article>
 
             </div>
