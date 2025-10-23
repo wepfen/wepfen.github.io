@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/metavault/">
+  <meta property="og:title" content="HTB Business CTF 2024 - MetaVault [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/metavault/">
+  <meta name="twitter:title" content="HTB Business CTF 2024 - MetaVault [blockchain]">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      HTB Business CTF 2024 - MetaVault [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-05-31 20:43:04 &#43;0200 CEST">
+            2024-05-31
+        </time>
+    </p>
+
+    <h1>HTB Business CTF 2024 - MetaVault [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#tldr">TL;DR</a></li>
+        <li><a href="#code">Code</a></li>
+        <li><a href="#interacting-with-the-instance">Interacting with the instance</a></li>
+      </ul>
+    </li>
+    <li><a href="#solve">Solve</a>
+      <ul>
+        <li><a href="#casting-spells">Casting spells</a>
+          <ul>
+            <li><a href="#environment-variables">environment variables</a></li>
+            <li><a href="#foundrytoml">foundry.toml</a></li>
+          </ul>
+        </li>
+        <li><a href="#getting-the-flag">Getting the flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#ressources">Ressources</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : easy</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks2600</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/hackthebox/business-ctf-2024/tree/main/blockchain/MetaVault%20%5BEasy%5D">Source files</a></p>
+</blockquote>
+<blockquote>
+<p>The Ministry of Defense released the open source of &ldquo;MetaVault&rdquo;, the country&rsquo;s Ethereum reserves. It&rsquo;s said that they keeps secrets in a meta-location, so that no one can know them.</p>
+</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>The challenge introduces to the use of meta-data in a solidity contract</p>
+<p>To validate we need to steal all ether of the target contract.</p>
+<h1 id="recon">Recon</h1>
+<h2 id="tldr">TL;DR</h2>
+<p>So for solving i just have to :</p>
+<ul>
+<li>Get the bytecode of the contract</li>
+<li>Paste it to <a href="https://playground.sourcify.dev/">https://playground.sourcify.dev/</a></li>
+<li>Get the plaintext password</li>
+<li>Interact with target and get my ethers</li>
+</ul>
+<h2 id="code">Code</h2>
+<p>MetaVault.sol</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MoD-Internal-v1.0
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> * @title MetaVault
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> * @author Ministry of Defense
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> * @notice MoD (Ministry of Defense) Smart Contract storing the country&#39;s ETH reserves.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> MetaVault {
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @notice Keccak256 hashed secret passphrase to enable emergency mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev plaintext secret: WeLoveNukaCola!!MoD-2024 
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev The secret will be stripped before open sourcing the code. Comments are not compiled anyway.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">constant</span> <span style="color:#e67e80">private</span> VAULT_SECRET_K256 <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x42c10591ced4987005f70d29b498348ecc8ab18dd28c5b93db931375ca826b5e</span>; 
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> Deposit(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _from,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">indexed</span> _value,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">indexed</span> _updatedBalance
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> FailedLoginAttempt(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _from,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span>  <span style="color:#e67e80">indexed</span> _attempt,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">indexed</span> _hashedAttempt
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> EmergencyMode(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _by,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> _fundsDestination
+</span></span><span style="display:flex;"><span>    ); 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev Retrieves the current ETH balance of the vault.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @return balance of the vault in wei.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">getVaultBalance</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint256</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>).<span style="color:#d699b6">balance</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @notice Deposit function to receive ETH deposits.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev emits a Deposit event with the depositor, the value deposited and the updated balance after deposit.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">deposit</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        emit Deposit(
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>,
+</span></span><span style="display:flex;"><span>            getVaultBalance()
+</span></span><span style="display:flex;"><span>        );        
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @notice Function to fire the emergency mode by selfdestructing the contract and transfering the funds away.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @param _secret The secret passphrase required to activate emergency mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     * @dev The secret is shared only to MoD devs.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">emergency</span>(<span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _secret) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> attempt_k256 <span style="color:#7a8478">=</span> <span style="color:#d699b6">keccak256</span>(<span style="color:#dbbc7f">bytes</span>(_secret));
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (attempt_k256 <span style="color:#7a8478">==</span> VAULT_SECRET_K256) {
+</span></span><span style="display:flex;"><span>            emit EmergencyMode(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">selfdestruct</span>(<span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>));
+</span></span><span style="display:flex;"><span>        } <span style="color:#e67e80">else</span> {
+</span></span><span style="display:flex;"><span>            emit FailedLoginAttempt(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, _secret, attempt_k256);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Looking at the source code of <code>MetaVault.sol</code> we can notice</p>
+<ul>
+<li>A function <code>deposit()</code> allowing us to deposit ether on the contract</li>
+<li>A function <code>getVaultBalance()</code> to return balance of the vault in wei</li>
+<li>An intersting function <code>emergency(string memory _secret)</code> which will send all the ether of the vault if we find the correct password.</li>
+<li>And also many comments in the <a href="https://docs.soliditylang.org/en/latest/natspec-format.html">NatSpec</a> format.</li>
+</ul>
+<p>Reading comments, we understand that the password for <code>emergency</code> was stored in plaintext. But the devs affirms that <code>comments are not compiled</code>:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#7a8478">*</span> @dev plaintext secret<span style="color:#7a8478">:</span> [REDACTED]
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">*</span> @dev The secret will be stripped before open sourcing the <span style="color:#d699b6">code</span>. Comments are not compiled anyway.     
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Luckily for us, reading this <a href="https://playground.sourcify.dev/">page</a> (which i find by googling <code>solidity meta-data lookup</code> and reading <a href="https://docs.sourcify.dev/docs/metadata/">https://docs.sourcify.dev/docs/metadata/</a>) we can understand that they actually are. We just have to supply the contract bytecode (the source code but <a href="https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/">translated</a>.</p>
+<h2 id="interacting-with-the-instance">Interacting with the instance</h2>
+<p>Launching the instance i got 3 ips, one for the rpc endpoint, one which is the webpage of MetaSafe (the name of the vault for the scenario) and one IP to manage the instance an get the flag.</p>
+<p>I contact the last IP with nc <code>nc 94.237.61.244 38186</code> and request the information for the challenge:</p>
+<pre tabindex="0"><code>1 - Connection information
+2 - Restart Instance
+3 - Get flag
+action? 1
+
+Private key     :  0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
+Address         :  0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
+Target contract :  0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
+Setup contract  :  0x6224fF48Af65663fB8b10CF830ECAC6F75B674f6
+</code></pre><p>So now i got my address, my private key and the target address.</p>
+<h1 id="solve">Solve</h1>
+<h2 id="casting-spells">Casting spells</h2>
+<p>We will use foundry to solve and its <strong>EXTREMELY</strong> useful <strong>cast</strong> command. Here is the doc: <a href="https://book.getfoundry.sh/reference/cli/cast.html">https://book.getfoundry.sh/reference/cli/cast.html</a>.</p>
+<p>With cast we can do (almost) everything we need: publishing a transaction, calling functions of contract WITHOUT publishing a transaction, doing data conversions, getting informations of blocks, getting transaction informations or even <strong>getting the bytecode of a contract</strong>.</p>
+<p>Let&rsquo;s setup our envrionement:</p>
+<p>With foundry installed installed ( i use a debian VM for the challenges ), we will set up environment variable to make everything prettier and easier.</p>
+<h3 id="environment-variables">environment variables</h3>
+<p>create a <code>.env</code> (or whatever you want to call it) file with this content:</p>
+<pre tabindex="0"><code>PRIVATE_KEY=0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
+RPC_URL=http://94.237.61.244:38424/
+TARGET=0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
+ATTACKER=0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
+</code></pre><p>And then execute : <code>source .env</code> to have all our variable set</p>
+<blockquote>
+<p>Notice that they will be set for the shell where you executed the command only.</p>
+</blockquote>
+<h3 id="foundrytoml">foundry.toml</h3>
+<p>In the challenge files we got a foundry.toml</p>
+<p>We will only append the RPC endpoint url at the end of it:</p>
+<pre tabindex="0"><code>[rpc_endpoints]
+
+sepolia = &#34;http://94.237.61.244:38424&#34;
+</code></pre><p>Now we are ready to exploit.</p>
+<h2 id="getting-the-flag">Getting the flag</h2>
+<ol>
+<li>Let&rsquo;s get first the bytecode of the target contract with the <code>cast code</code> function:</li>
+</ol>
+<p><code>cast code -r $RPC_URL $TARGET</code></p>
+<blockquote>
+<p>We will need to copy the result of it.</p>
+</blockquote>
+<ol start="2">
+<li>Paste the bytecode in <a href="https://playground.sourcify.dev/">https://playground.sourcify.dev/</a></li>
+</ol>
+<blockquote>
+<p>The result will output a json similar to this one <a href="https://ipfs.io/ipfs/QmX9L9Q9QkM3ytQ1Wk3jKAqNDXYhK8RFQHcfq8QXyfffkN">https://ipfs.io/ipfs/QmX9L9Q9QkM3ytQ1Wk3jKAqNDXYhK8RFQHcfq8QXyfffkN</a></p>
+</blockquote>
+<ol start="3">
+<li>
+<p>Copy the vault password in the json: <code>WeLoveNukaCola!!MoD-2024</code></p>
+</li>
+<li>
+<p>Interact with the <code>emergency</code> command in the contract with the recovered password</p>
+</li>
+</ol>
+<p><code>cast send $TARGET -r $RPC_URL -f $ATTACKER --private-key $PRIVATE_KEY  &quot;emergency(string)&quot; 'WeLoveNukaCola!!MoD-2024'</code></p>
+<ol start="5">
+<li>Get the flag by contacting the instace management IP</li>
+</ol>
+<p><code>HTB{wh0_tf_sh4r3s_...}</code></p>
+<h1 id="ressources">Ressources</h1>
+<p><a href="https://book.getfoundry.sh/reference/cast/cast-send">https://book.getfoundry.sh/reference/cast/cast-send</a></p>
+<p><a href="https://docs.soliditylang.org/en/latest/cheatsheet.html">https://docs.soliditylang.org/en/latest/cheatsheet.html</a></p>
+<p><a href="https://docs.soliditylang.org/en/latest/natspec-format.html">https://docs.soliditylang.org/en/latest/natspec-format.html</a></p>
+<p><a href="https://playground.sourcify.dev/">https://playground.sourcify.dev/</a></p>
+<p><a href="https://docs.sourcify.dev/docs/metadata/">https://docs.sourcify.dev/docs/metadata/</a></p>
+<p><a href="https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/">https://blog.chain.link/what-are-abi-and-bytecode-in-solidity/</a></p>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

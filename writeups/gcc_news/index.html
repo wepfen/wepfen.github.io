@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/gcc_news/">
+  <meta property="og:title" content="GCC-CTF 2024 - GCC News [crypto]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/gcc_news/">
+  <meta name="twitter:title" content="GCC-CTF 2024 - GCC News [crypto]">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      GCC-CTF 2024 - GCC News [crypto]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-06-01 07:49:50 &#43;0200 CEST">
+            2024-06-01
+        </time>
+    </p>
+
+    <h1>GCC-CTF 2024 - GCC News [crypto]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#interacting-with-the-website">Interacting with the website</a></li>
+        <li><a href="#reading-the-code">Reading the code</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : easy</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks2600</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/GCC-ENSIBS/GCC-CTF-2024/tree/main/Crypto/GCC_News">Source files</a></p>
+</blockquote>
+<blockquote>
+<p>We&rsquo;ve launched a brand new website with lots of articles about CTF world. Can you access it as a subscriber?</p>
+</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>We need to connect ourself as an admin abusing of a weak cryptographic signing method using a known seed to access to the subscriber restricted news page.</p>
+<h1 id="recon">Recon</h1>
+<h2 id="interacting-with-the-website">Interacting with the website</h2>
+<p>Accessing to the webpage at its address, we can either login or see the news.</p>
+<p>But see the news need us to be logged as admin.</p>
+<p>When creating an account and trying to access news page, the url look like this :</p>
+<p><code>http://worker02.gcc-ctf.com:12087/news?token=51816479678544860789205817956792347222422223739416909533792838824330799892508088600548749347686978414433102103745516643115716031985693240243091851305710126012438456120411885440990451062207733612019150266443358710746141779660513712502912356256730590171496329015143780590064512898839213592087008040314904536688517272644527957355579296550263702755869863019492282564083007158478207437390306619837226534557048260824678363108194422787738684127780383714906987061676046665853308427857868198981215396222656764654866977510612110433711379600274374398826032658632188971438616021846678185052961795893909723564297305415934241385892668460580937&amp;message=eyd0ZXN0MSc6IFtGYWxzZV19</code></p>
+<p>Where the parameter <code>message</code> is base64 encoded &ldquo;{&rsquo;test1&rsquo;: [False]}&rdquo; and the parameter <code>token</code> is the <code>message</code> parameter encrypted with rsa</p>
+<h2 id="reading-the-code">Reading the code</h2>
+<p>Here is the source code</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">123
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">124
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">125
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">126
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">127
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">128
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">129
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">130
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">131
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">132
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">133
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">134
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">135
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">136
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">137
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">138
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">139
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">140
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">141
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">142
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">143
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">144
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">145
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">146
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">147
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">148
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> flask <span style="color:#e67e80">import</span> Flask, render_template, request, redirect, url_for, jsonify
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> base64
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> time
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> Crypto.Util.number <span style="color:#e67e80">import</span> bytes_to_long, isPrime
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>app <span style="color:#7a8478">=</span> Flask(__name__)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">hash_string_sha256</span>(message):
+</span></span><span style="display:flex;"><span>    message_bytes <span style="color:#7a8478">=</span> message<span style="color:#7a8478">.</span>encode(<span style="color:#b2c98f">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    sha256_hash <span style="color:#7a8478">=</span> hashlib<span style="color:#7a8478">.</span>sha256()
+</span></span><span style="display:flex;"><span>    sha256_hash<span style="color:#7a8478">.</span>update(message_bytes)
+</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#7a8478">=</span> sha256_hash<span style="color:#7a8478">.</span>digest()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> <span style="color:#d699b6">int</span><span style="color:#7a8478">.</span>from_bytes(hashed_message, byteorder<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#39;big&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">generate_signature</span>(message, private_key):
+</span></span><span style="display:flex;"><span>    n, d <span style="color:#7a8478">=</span> private_key
+</span></span><span style="display:flex;"><span>    hashed_message <span style="color:#7a8478">=</span> hash_string_sha256(message)
+</span></span><span style="display:flex;"><span>    signature <span style="color:#7a8478">=</span> <span style="color:#d699b6">pow</span>(hashed_message, d, n)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> signature
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">verify_signature</span>(msg, public_key, signature):
+</span></span><span style="display:flex;"><span>    initial_hash <span style="color:#7a8478">=</span> hash_string_sha256(msg)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    n, e <span style="color:#7a8478">=</span> public_key
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    recoved_hash <span style="color:#7a8478">=</span> <span style="color:#d699b6">pow</span>(<span style="color:#d699b6">int</span>(signature),e,n)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> initial_hash <span style="color:#7a8478">==</span> recoved_hash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b2c98f">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">welcome</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> render_template(<span style="color:#b2c98f">&#39;welcome.html&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b2c98f">&#39;/login&#39;</span>, methods<span style="color:#7a8478">=</span>[<span style="color:#b2c98f">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">login</span>():
+</span></span><span style="display:flex;"><span>    username <span style="color:#7a8478">=</span> request<span style="color:#7a8478">.</span>form<span style="color:#7a8478">.</span>get(<span style="color:#b2c98f">&#39;username&#39;</span>)
+</span></span><span style="display:flex;"><span>    password <span style="color:#7a8478">=</span> request<span style="color:#7a8478">.</span>form<span style="color:#7a8478">.</span>get(<span style="color:#b2c98f">&#39;password&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic"># Check if the user exists</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> username <span style="color:#7a8478">not</span> <span style="color:#7a8478">in</span> users:
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> redirect(url_for(<span style="color:#b2c98f">&#39;login&#39;</span>, reason<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#39;unknown_user&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic"># Check if the password is correct</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> password <span style="color:#7a8478">!=</span> users[username][<span style="color:#d699b6">0</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> redirect(url_for(<span style="color:#b2c98f">&#39;login&#39;</span>, reason<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#39;incorrect_password&#39;</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    public_key, private_key <span style="color:#7a8478">=</span> generate_key(username)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    public_key_users[username] <span style="color:#7a8478">=</span> public_key
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    signature <span style="color:#7a8478">=</span> generate_signature(<span style="color:#d699b6">str</span>({username : [users[username][<span style="color:#d699b6">1</span>]]}), private_key)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> redirect(url_for(<span style="color:#b2c98f">&#39;news&#39;</span>, token<span style="color:#7a8478">=</span>signature, message<span style="color:#7a8478">=</span>base64<span style="color:#7a8478">.</span>b64encode(<span style="color:#d699b6">str</span>({username : [users[username][<span style="color:#d699b6">1</span>]]})<span style="color:#7a8478">.</span>encode())<span style="color:#7a8478">.</span>decode()))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b2c98f">&#39;/news&#39;</span>, methods<span style="color:#7a8478">=</span>[<span style="color:#b2c98f">&#39;GET&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">news</span>():
+</span></span><span style="display:flex;"><span>    signature <span style="color:#7a8478">=</span> request<span style="color:#7a8478">.</span>args<span style="color:#7a8478">.</span>get(<span style="color:#b2c98f">&#39;token&#39;</span>)
+</span></span><span style="display:flex;"><span>    message <span style="color:#7a8478">=</span> base64<span style="color:#7a8478">.</span>b64decode(request<span style="color:#7a8478">.</span>args<span style="color:#7a8478">.</span>get(<span style="color:#b2c98f">&#39;message&#39;</span>))<span style="color:#7a8478">.</span>decode()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    message <span style="color:#7a8478">=</span> json<span style="color:#7a8478">.</span>loads(message<span style="color:#7a8478">.</span>replace(<span style="color:#b2c98f">&#34;&#39;&#34;</span>, <span style="color:#b2c98f">&#39;&#34;&#39;</span>)<span style="color:#7a8478">.</span>replace(<span style="color:#b2c98f">&#34;False&#34;</span>, <span style="color:#b2c98f">&#34;false&#34;</span>)<span style="color:#7a8478">.</span>replace(<span style="color:#b2c98f">&#34;True&#34;</span>, <span style="color:#b2c98f">&#34;true&#34;</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    username <span style="color:#7a8478">=</span> <span style="color:#d699b6">list</span>(message<span style="color:#7a8478">.</span>keys())[<span style="color:#d699b6">0</span>]
+</span></span><span style="display:flex;"><span>    subscribe <span style="color:#7a8478">=</span> <span style="color:#d699b6">list</span>(message<span style="color:#7a8478">.</span>values())[<span style="color:#d699b6">0</span>][<span style="color:#d699b6">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> signature:
+</span></span><span style="display:flex;"><span>        is_sign <span style="color:#7a8478">=</span> verify_signature(<span style="color:#d699b6">str</span>(message), public_key_users[username], signature)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> is_sign:
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">return</span> render_template(<span style="color:#b2c98f">&#39;news.html&#39;</span>, username<span style="color:#7a8478">=</span>username, subscribe<span style="color:#7a8478">=</span>subscribe)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> redirect(url_for(<span style="color:#b2c98f">&#39;login&#39;</span>, reason<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#39;unauthorized&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b2c98f">&#39;/login&#39;</span>, methods<span style="color:#7a8478">=</span>[<span style="color:#b2c98f">&#39;GET&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">show_login</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic"># Extract the reason from the query parameters</span>
+</span></span><span style="display:flex;"><span>    reason <span style="color:#7a8478">=</span> request<span style="color:#7a8478">.</span>args<span style="color:#7a8478">.</span>get(<span style="color:#b2c98f">&#39;reason&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic"># Display a pop-up message based on the reason</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> reason <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#39;unknown_user&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;Unknown user. Please check your credentials.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">elif</span> reason <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#39;incorrect_password&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;Incorrect password. Please try again.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">elif</span> reason <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#39;unauthorized&#39;</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;Unauthorized access. Please log in.&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">else</span>:
+</span></span><span style="display:flex;"><span>        pop_up_message <span style="color:#7a8478">=</span> <span style="color:#e67e80">None</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> render_template(<span style="color:#b2c98f">&#39;login.html&#39;</span>, pop_up_message<span style="color:#7a8478">=</span>pop_up_message)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@app.route(<span style="color:#b2c98f">&#39;/create_user&#39;</span>, methods<span style="color:#7a8478">=</span>[<span style="color:#b2c98f">&#39;POST&#39;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">create_user</span>():
+</span></span><span style="display:flex;"><span>    new_username <span style="color:#7a8478">=</span> request<span style="color:#7a8478">.</span>form<span style="color:#7a8478">.</span>get(<span style="color:#b2c98f">&#39;new_username&#39;</span>)
+</span></span><span style="display:flex;"><span>    new_password <span style="color:#7a8478">=</span> request<span style="color:#7a8478">.</span>form<span style="color:#7a8478">.</span>get(<span style="color:#b2c98f">&#39;new_password&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic"># Check if the username already exists</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> new_username <span style="color:#7a8478">in</span> users:
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> redirect(url_for(<span style="color:#b2c98f">&#39;login&#39;</span>, reason<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#39;username_exists&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic"># Add the new user to the dictionary</span>
+</span></span><span style="display:flex;"><span>    users[new_username] <span style="color:#7a8478">=</span> [new_password, <span style="color:#e67e80">False</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic"># Display a pop-up message</span>
+</span></span><span style="display:flex;"><span>    pop_up_message <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;Thanks for registering! The admin will soon activate your profile if you have subscribed.&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> render_template(<span style="color:#b2c98f">&#39;login.html&#39;</span>, pop_up_message<span style="color:#7a8478">=</span>pop_up_message)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">generate_key</span>(username):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	length <span style="color:#7a8478">=</span> <span style="color:#e67e80">lambda</span> x : <span style="color:#d699b6">len</span>(<span style="color:#d699b6">bin</span>(x)[<span style="color:#d699b6">2</span>:])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	s <span style="color:#7a8478">=</span> bytes_to_long(username<span style="color:#7a8478">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	random<span style="color:#7a8478">.</span>seed(s)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	e <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x1001</span>
+</span></span><span style="display:flex;"><span>	phi <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">while</span> math<span style="color:#7a8478">.</span>gcd(phi,e) <span style="color:#7a8478">!=</span> <span style="color:#d699b6">1</span>:
+</span></span><span style="display:flex;"><span>		n <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>		factors <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e67e80">while</span> length(n) <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">2048</span>:
+</span></span><span style="display:flex;"><span>			temp_n <span style="color:#7a8478">=</span> random<span style="color:#7a8478">.</span>getrandbits(<span style="color:#d699b6">48</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#e67e80">if</span> isPrime(temp_n):
+</span></span><span style="display:flex;"><span>				n <span style="color:#7a8478">*=</span> temp_n
+</span></span><span style="display:flex;"><span>				factors<span style="color:#7a8478">.</span>append(temp_n)
+</span></span><span style="display:flex;"><span>		phi <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e67e80">for</span> f <span style="color:#7a8478">in</span> factors:
+</span></span><span style="display:flex;"><span>			phi <span style="color:#7a8478">*=</span> (f <span style="color:#7a8478">-</span> <span style="color:#d699b6">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	d <span style="color:#7a8478">=</span> <span style="color:#d699b6">pow</span>(e, <span style="color:#7a8478">-</span><span style="color:#d699b6">1</span>, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">return</span> (n,e), (n,d)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"># A simple dictionary to store user credentials and subscription status</span>
+</span></span><span style="display:flex;"><span>users <span style="color:#7a8478">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#b2c98f">&#39;GCC&#39;</span>: [<span style="color:#b2c98f">&#39;securePassword&#39;</span>, <span style="color:#e67e80">False</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>public_key_users <span style="color:#7a8478">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">if</span> __name__ <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    app<span style="color:#7a8478">.</span>run(debug<span style="color:#7a8478">=</span><span style="color:#e67e80">False</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>There is a kind of handmade database to manage users.</p>
+<p>The DB got the users, its password, a boolean (True or False) for describing the admin role and the public key of the users.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>users <span style="color:#7a8478">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#b2c98f">&#39;GCC&#39;</span>: [<span style="color:#b2c98f">&#39;securePassword&#39;</span>, <span style="color:#e67e80">False</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>public_key_users <span style="color:#7a8478">=</span> {}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>When creating an user, it is appended to the dict of users :</p>
+<p><code>users[new_username] = [new_password, False]</code></p>
+<p>So when creating an &ldquo;test1&rdquo; account with &ldquo;password&rdquo; as password :</p>
+<p>users[&ldquo;test1&rdquo;][0] = &ldquo;password&rdquo;
+users[&ldquo;test1&rdquo;][1] = False</p>
+<p>And also filling the public key database:</p>
+<p>public_key_users[test] = <code>its public key</code></p>
+<p>The public and private keys are generated with the random module and a seed based on the username. So knowing the username we can recover the public key and ce private key.</p>
+<p>We can just reuse the challenge <code>generate_key</code> function for that :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">generate_key</span>(username):
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	length <span style="color:#7a8478">=</span> <span style="color:#e67e80">lambda</span> x : <span style="color:#d699b6">len</span>(<span style="color:#d699b6">bin</span>(x)[<span style="color:#d699b6">2</span>:])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	s <span style="color:#7a8478">=</span> bytes_to_long(username<span style="color:#7a8478">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	random<span style="color:#7a8478">.</span>seed(s)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	e <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x1001</span>
+</span></span><span style="display:flex;"><span>	phi <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">while</span> math<span style="color:#7a8478">.</span>gcd(phi,e) <span style="color:#7a8478">!=</span> <span style="color:#d699b6">1</span>:
+</span></span><span style="display:flex;"><span>		n <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>		factors <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e67e80">while</span> length(n) <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">2048</span>:
+</span></span><span style="display:flex;"><span>			temp_n <span style="color:#7a8478">=</span> random<span style="color:#7a8478">.</span>getrandbits(<span style="color:#d699b6">48</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#e67e80">if</span> isPrime(temp_n):
+</span></span><span style="display:flex;"><span>				n <span style="color:#7a8478">*=</span> temp_n
+</span></span><span style="display:flex;"><span>				factors<span style="color:#7a8478">.</span>append(temp_n)
+</span></span><span style="display:flex;"><span>		phi <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e67e80">for</span> f <span style="color:#7a8478">in</span> factors:
+</span></span><span style="display:flex;"><span>			phi <span style="color:#7a8478">*=</span> (f <span style="color:#7a8478">-</span> <span style="color:#d699b6">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	d <span style="color:#7a8478">=</span> <span style="color:#d699b6">pow</span>(e, <span style="color:#7a8478">-</span><span style="color:#d699b6">1</span>, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">return</span> (n,e), (n,d)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="solving">Solving</h1>
+<p>Now we know how to recover the private key, the steps for solving are :</p>
+<ul>
+<li>Create an user</li>
+<li>Use the function <code>generate_key</code> to get it&rsquo;s private_key and sign the message : {&rsquo;test1&rsquo;: [True]} which will give us our token.</li>
+<li>Send a GET request with our forged <code>token</code> and <code>message</code></li>
+</ul>
+<p>So for test_1 using generate_key:</p>
+<pre tabindex="0"><code>n = 1457342553157259295407930365261800696748888551794075108779100697531249469132443259759166251334393209534527011340120848417513504763172687425603817169965420203182841446416766927653960650018998669899183487322211178874589822726651093254803792218788609932755617725086287444735520634631250205847736080158111696592654206975607049821230615196941817479903763249457613376371498407355381921851845673217419213581082634290438881135049162320418983797388015232666055696476182329585445835040160266557584246137158655921759590380096558137315519737417711810732976599747165793134280706192438024871206616099076425065259626152010714200822870951819946361
+
+e = 4097
+
+d = 1169929132860778172266790416717795055395425023673769128941398634078612313645586470723460559979322746878492767894986894386607392692140809768119253135545569481619614863351561130269497874373374376730775005845964346721784822629714480091633306912534377109787422319793085109077376760278513449726222323801791791327104545390490456210290681860991997191841252970404345272643125273777571879120765801234951744562986758112686603976623970900646525392530237245486976063443733613254268981773171814398056537380882163353704864394235638123739162367944267985527667019876092910225809715528375163004211021207853239200740123762076468891204439491139858433
+</code></pre><p>I can now sign the message and get my token :</p>
+<pre tabindex="0"><code>1328296459116198513481005775994265654367244256157496762561215663749001313544888752691095431811838915662861275916069253599131094326519037807982403437366383963609593961610229519349629126583667198784483067627762487710405124208069398517977162311635739503788545076940068444011356528681958458727410341989686589824878872706145702838453900839690220411045955898590237403687023436729802836403464839928576644511341708090007448358389413162908097505464282026490604831559303689920713332959415629965026776263798033479321497305831022519726249152589296200270547520256311793654758651445601039583377445016016582341166189227484558460201850695658065
+</code></pre><p>And encode <code>{'test1': [True]}</code> in base64: <code>eyd0ZXN0MSc6IFtUcnVlXX0=</code></p>
+<p>And send this GET request :</p>
+<p><code>http://worker02.gcc-ctf.com:13307/news?token=1328296459116198513481005775994265654367244256157496762561215663749001313544888752691095431811838915662861275916069253599131094326519037807982403437366383963609593961610229519349629126583667198784483067627762487710405124208069398517977162311635739503788545076940068444011356528681958458727410341989686589824878872706145702838453900839690220411045955898590237403687023436729802836403464839928576644511341708090007448358389413162908097505464282026490604831559303689920713332959415629965026776263798033479321497305831022519726249152589296200270547520256311793654758651445601039583377445016016582341166189227484558460201850695658065&amp;message=eyd0ZXN0MSc6IFtUcnVlXX0%3D</code></p>
+<blockquote>
+<p>Flag <code>GCC{f1x3d_533d_d154bl3_r4nd0mn355}</code></p>
+</blockquote>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

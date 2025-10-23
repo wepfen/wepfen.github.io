@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="DefCamp quals 2024 CTR writeup" />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/ctr/">
+  <meta property="og:title" content="DefCamp quals 2024 - CTR [crypto]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/ctr/">
+  <meta name="twitter:title" content="DefCamp quals 2024 - CTR [crypto]">
+  <meta name="twitter:description" content="DefCamp quals 2024 CTR writeup">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      DefCamp quals 2024 - CTR [crypto]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-09-29 15:13:31 &#43;0200 CEST">
+            2024-09-29
+        </time>
+    </p>
+
+    <h1>DefCamp quals 2024 - CTR [crypto]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#interacting-with-the-server">Interacting with the server</a></li>
+        <li><a href="#trying-to-recover-plaintexts-from-the-ctrtxt-file">Trying to recover plaintexts from the ctr.txt file</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p>DefCamp quals 2024 CTR writeup</p>
+<blockquote>
+<p>Difficulty : Guessy - i didn&rsquo;t solved it so i&rsquo;m rude &gt;:(</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks 2600</p>
+</blockquote>
+<blockquote>
+<p><a href="https://raw.githubusercontent.com/wepfen/writeups/refs/heads/main/defcampCTF/2024/ctr/ctr.txt">source files</a></p>
+</blockquote>
+<blockquote>
+<p>Are you feeling down? Here is a list of exciting words for you, hope you&rsquo;ll feel better after this. (probably not)</p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>we got a file <code>ctr.txt</code> which is a list of ciphertexts encrypted with the same key as the oracle we deal with</li>
+<li>we can send a plaintext to an oracle we send it back to us using AES CTR, so the counter will increase for the next plaintext but it resets if you reset the connexion</li>
+<li>send 16 null bytes and get the encrypted key that is used to get the plaintext or the ciphertext</li>
+<li>bruteforce the oracle until you can recover the ciphertext by xoring the encrypted key with a chipghertext from <code>ctr.txt</code> and not down the counter number (i.e: if we requested the oracle 50 times, note down 50)</li>
+<li>repeat till we got all the number and print their ascii values</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>We need to decrypt a list of ciphertexts abusing of a AES-CTR nonce reuse oracle</p>
+<h1 id="recon">Recon</h1>
+<h2 id="interacting-with-the-server">Interacting with the server</h2>
+<p>First of all, there weren&rsquo;t any source code &gt;:(</p>
+<p>On the ctf platform we can start an instance for the challenge an then get an ip and port to interact with.</p>
+<p>next i can connect with <code>nc  IP PORT</code></p>
+<p>i receive this message : <code>Give me no more than 16 bs</code></p>
+<p>Which means &lsquo;send me 16 bytes or less&rsquo; (i don&rsquo;t know why the author use &lsquo;bs&rsquo; but it&rsquo;s kind of confusing)</p>
+<p>Then i send &lsquo;a&rsquo; and receive <code>02308264a4b8dc1a27520cbae8854516</code>.
+Then i resend &lsquo;a&rsquo; and get <code>cc528ba18b1c9089064d80148680e30e</code>.</p>
+<p>But when i open an other connexion with the server, i get the sames ciphertexts meaning the oracle reuse the same nonce.</p>
+<p>The key change at every encryption, but not the nonce. Knowing it is AES CTR as challenge name tells, we can understand why it changes.</p>
+<p>Here is an illustration:</p>
+<p><img src="https://packt-type-cloud.s3.amazonaws.com/uploads/sites/2432/2018/05/a2d4636c-1043-4c4f-a344-fc83e5d728ba.png" alt="AES CTR mode encryption"></p>
+<p>So the keystream_n is the result of the encryption of a counter prepended by a nonce : <code>keystream_n = E(nonce+n)</code> where E() is AES encryption</p>
+<blockquote>
+<p>Note : Sometimes the nonce is reused or there is no nonce at all</p>
+</blockquote>
+<p>Then to get the plaintext, we XOR the keystream with the ciphertext: <code>plaintext = ciphertext XOR keystream_n</code></p>
+<blockquote>
+<p>Note : The keystream_n is the same for encryption and decryption</p>
+</blockquote>
+<p>So to get the keystream :</p>
+<ul>
+<li>send 16 null bytes (easier with python)</li>
+<li>we receive the keystream and that&rsquo;s all, because : <code>ciphertext = keystream XOR b&quot;\x00&quot;*16 = keystream</code> because n XOR 0 = n</li>
+</ul>
+<h2 id="trying-to-recover-plaintexts-from-the-ctrtxt-file">Trying to recover plaintexts from the ctr.txt file</h2>
+<p>A normal (naive) person would think that flag would be in this list of plaintexts&hellip;</p>
+<p><img src="https://cdn.betterttv.net/emote/60419081306b602acc5972c9/3x.webp" alt="clueless"></p>
+<p>The first ciphertext is <code>f24e8c4bb594b2590edc658609608f16</code></p>
+<p>We query the oracle, get the keystream and XOR it with our ciphertext, here is a code snippet:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> pwn <span style="color:#e67e80">import</span> remote, context, xor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>host <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;35.246.159.226&#34;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#7a8478">=</span> <span style="color:#d699b6">30724</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>context<span style="color:#7a8478">.</span>log_level <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#39;CRITICAL&#39;</span>
+</span></span><span style="display:flex;"><span>conn <span style="color:#7a8478">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>conn<span style="color:#7a8478">.</span>recvuntilS(<span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;bs</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#39;</span>)
+</span></span><span style="display:flex;"><span>conn<span style="color:#7a8478">.</span>sendline(plaintext)
+</span></span><span style="display:flex;"><span>keystream <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(conn<span style="color:#7a8478">.</span>recvS()<span style="color:#7a8478">.</span>split()[<span style="color:#d699b6">3</span>])
+</span></span><span style="display:flex;"><span>ciphertext <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(<span style="color:#b2c98f">&#39;f24e8c4bb594b2590edc658609608f16&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(xor(keystream, ciphertext)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Spoiler, all we got is garbage.
+So my first reaction is &lsquo;what if the first keystream is not for the first ciphertext but it is completely random?&rsquo;</p>
+<p>Then, the GOAT (but also my <a href="https://blog.lightender.fr/">teammate</a>) guessed that he can recover a plaintext by bruteforcing the oracle until he got a valid plaintext.</p>
+<p>So i implement this and i get my first plaintext : <code>ThrillingThrilli</code> at counter 67</p>
+<p>code :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>flag <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(<span style="color:#b2c98f">&#34;f24e8c4bb594b2590edc658609608f16&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> i <span style="color:#7a8478">in</span> <span style="color:#d699b6">range</span>(<span style="color:#d699b6">1000</span>):
+</span></span><span style="display:flex;"><span>        conn<span style="color:#7a8478">.</span>recvuntilS(<span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;bs</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#39;</span>)
+</span></span><span style="display:flex;"><span>        conn<span style="color:#7a8478">.</span>sendline(plaintext)
+</span></span><span style="display:flex;"><span>        keystream <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(conn<span style="color:#7a8478">.</span>recvS()<span style="color:#7a8478">.</span>split()[<span style="color:#d699b6">3</span>])
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">print</span>(xor(keystream, flag)<span style="color:#7a8478">.</span>decode())
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">{</span>i<span style="color:#b2c98f">=}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#859289;font-style:italic">#print(f&#34;{keystream.hex()=}&#34;)</span>
+</span></span><span style="display:flex;"><span>            sys<span style="color:#7a8478">.</span>exit(<span style="color:#d699b6">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">continue</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After that i decide to apply it to the whole  <code>ctr.txt</code>.
+I managed to vontinue bruteforcing and i get another one : <code>ExhilaratingExhi</code> at counter 84</p>
+<p>And nothing else &hellip;</p>
+<p>I immediately think &lsquo;what if I just restart the connexion at every plaintext the connexion&rsquo; and it works !</p>
+<p>code snippet :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> pwn <span style="color:#e67e80">import</span> remote, context, xor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>host <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;35.198.191.122&#34;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#7a8478">=</span> <span style="color:#d699b6">31082</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>context<span style="color:#7a8478">.</span>log_level <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#39;CRITICAL&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt_words</span>():
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    conn <span style="color:#7a8478">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    words <span style="color:#7a8478">=</span> <span style="color:#d699b6">open</span>(<span style="color:#b2c98f">&#34;ctr.txt&#34;</span>, <span style="color:#b2c98f">&#39;r&#39;</span>)<span style="color:#7a8478">.</span>read()<span style="color:#7a8478">.</span>split(<span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>    words <span style="color:#7a8478">=</span> [<span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(word) <span style="color:#e67e80">for</span> word <span style="color:#7a8478">in</span> words]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    plaintext <span style="color:#7a8478">=</span> <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\x00</span><span style="color:#b2c98f">&#34;</span><span style="color:#7a8478">*</span><span style="color:#d699b6">16</span>
+</span></span><span style="display:flex;"><span>    recovered <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>    words_offset <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">while</span> <span style="color:#e67e80">True</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        i <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        conn<span style="color:#7a8478">.</span>recvuntilS(<span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;bs</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#39;</span>)
+</span></span><span style="display:flex;"><span>        conn<span style="color:#7a8478">.</span>sendline(plaintext)
+</span></span><span style="display:flex;"><span>        keystream <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(conn<span style="color:#7a8478">.</span>recvS()<span style="color:#7a8478">.</span>split()[<span style="color:#d699b6">3</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">try</span>:
+</span></span><span style="display:flex;"><span>            pt <span style="color:#7a8478">=</span> xor(keystream, words[words_offset])<span style="color:#7a8478">.</span>decode()
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;recovered </span><span style="color:#b2c98f">{</span>pt<span style="color:#b2c98f">}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>            recovered<span style="color:#7a8478">.</span>append(pt)
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">{</span>i<span style="color:#b2c98f">=}</span><span style="color:#b2c98f">, word number </span><span style="color:#b2c98f">{</span>words_offset<span style="color:#b2c98f">}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>            words_offset <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>            conn <span style="color:#7a8478">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">except</span> <span style="color:#e67e80">Exception</span> <span style="color:#e67e80">as</span> e:
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">continue</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> <span style="color:#d699b6">len</span>(words) <span style="color:#7a8478">==</span> words_offset:
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">break</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The counter offsets where increasing until reaching 3000+ but i cluelessly think that it didn&rsquo;t matter. (naive)</p>
+<p><img src="https://cdn.betterttv.net/emote/60419081306b602acc5972c9/3x.webp" alt="clueless"></p>
+<p>I managed to decrypt every words :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>ThrillingThrilli
+</span></span><span style="display:flex;"><span>ExhilaratingExhi
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>JoyousJoyousJoyo
+</span></span><span style="display:flex;"><span>JubilantJubilant
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And then i didn&rsquo;t know what the f to do.</p>
+<p>As the challenge description say there are &rsquo;exciting words&rsquo;, i thought about finding the non exciting word and get it sha256 sum then submit it as a flag&hellip;</p>
+<p>It is where the intense guessing phase started. &gt;:(</p>
+<h1 id="solving">Solving</h1>
+<p>So after the event, i went chatting with people in the discord, then &lsquo;miniaturepif&rsquo; said <code>ctr nonce reuse, and flag was encoded in nonces, one char for each ct</code>.</p>
+<p>I don&rsquo;t how he recovered this though. The nonce is AES encrypted, he can&rsquo;t really recover it and i didn&rsquo;t find something relevant on google.</p>
+<p>Then &lsquo;szkalom&rsquo; said <code>You had to guess that the counters used to encrypt the cipertexts you have are actually ascii codes of the flag chars</code>.</p>
+<p>So i realized that the counter number actually MATTER.</p>
+<p><img src="https://i.imgflip.com/95210h.jpg" alt="cries in skill issue"></p>
+<p>So I fixed my code and got the flag:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> sys
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> pwn <span style="color:#e67e80">import</span> remote, context, xor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>host <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;35.198.191.122&#34;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#7a8478">=</span> <span style="color:#d699b6">31082</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>context<span style="color:#7a8478">.</span>log_level <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#39;CRITICAL&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt_words</span>():
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    conn <span style="color:#7a8478">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    words <span style="color:#7a8478">=</span> <span style="color:#d699b6">open</span>(<span style="color:#b2c98f">&#34;ctr.txt&#34;</span>, <span style="color:#b2c98f">&#39;r&#39;</span>)<span style="color:#7a8478">.</span>read()<span style="color:#7a8478">.</span>split(<span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>    words <span style="color:#7a8478">=</span> [<span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(word) <span style="color:#e67e80">for</span> word <span style="color:#7a8478">in</span> words]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    plaintext <span style="color:#7a8478">=</span> <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\x00</span><span style="color:#b2c98f">&#34;</span><span style="color:#7a8478">*</span><span style="color:#d699b6">16</span>
+</span></span><span style="display:flex;"><span>    recovered <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>    counter_offsets <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">#get to correct counter offset</span>
+</span></span><span style="display:flex;"><span>    i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>    words_offset <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">while</span> <span style="color:#e67e80">True</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        i <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        conn<span style="color:#7a8478">.</span>recvuntilS(<span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;bs</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#39;</span>)
+</span></span><span style="display:flex;"><span>        conn<span style="color:#7a8478">.</span>sendline(plaintext)
+</span></span><span style="display:flex;"><span>        keystream <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(conn<span style="color:#7a8478">.</span>recvS()<span style="color:#7a8478">.</span>split()[<span style="color:#d699b6">3</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">try</span>:
+</span></span><span style="display:flex;"><span>            pt <span style="color:#7a8478">=</span> xor(keystream, words[words_offset])<span style="color:#7a8478">.</span>decode()
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;recovered </span><span style="color:#b2c98f">{</span>pt<span style="color:#b2c98f">}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>            recovered<span style="color:#7a8478">.</span>append(pt)
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">{</span>i<span style="color:#b2c98f">=}</span><span style="color:#b2c98f">, word number </span><span style="color:#b2c98f">{</span>words_offset<span style="color:#b2c98f">}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>            words_offset <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>            counter_offsets<span style="color:#7a8478">.</span>append(i)
+</span></span><span style="display:flex;"><span>            i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span> <span style="color:#859289;font-style:italic"># this line changed my whole perception of life</span>
+</span></span><span style="display:flex;"><span>            conn <span style="color:#7a8478">=</span> remote(host, port) <span style="color:#859289;font-style:italic"># reset connexion</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">except</span> <span style="color:#e67e80">Exception</span> <span style="color:#e67e80">as</span> e:
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">continue</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> <span style="color:#d699b6">len</span>(words) <span style="color:#7a8478">==</span> words_offset:
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    flag <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#39;&#39;</span><span style="color:#7a8478">.</span>join(<span style="color:#d699b6">map</span>(<span style="color:#d699b6">chr</span>, counter_offsets))
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#39;</span><span style="color:#b2c98f">{</span>flag<span style="color:#b2c98f">=}</span><span style="color:#b2c98f">&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">with</span> <span style="color:#d699b6">open</span>(<span style="color:#b2c98f">&#39;decrypted.txt&#39;</span>, <span style="color:#b2c98f">&#39;w&#39;</span>) <span style="color:#e67e80">as</span> f:
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> dec <span style="color:#7a8478">in</span> recovered:
+</span></span><span style="display:flex;"><span>            f<span style="color:#7a8478">.</span>write(dec<span style="color:#7a8478">+</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">if</span> __name__ <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    decrypt_words()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>flag: <code>CTF{d6bd1954527310f3f831baa46582f553a9e780d8fa747637d25da1281c24edaf}</code></p>
+<p>Now i understand why there weren&rsquo;t any source codes&hellip;</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Please chall makers, respect our mental health and limit the guessing.</p>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

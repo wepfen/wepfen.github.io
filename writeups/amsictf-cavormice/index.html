@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="description here">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="description here" />
+  <meta property="og:image" content="https://wepfen.github.io/images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/amsictf-cavormice/">
+  <meta property="og:title" content="🇫🇷 AMSI CTF 2025 - Cavormice [reverse]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/amsictf-cavormice/">
+  <meta name="twitter:title" content="🇫🇷 AMSI CTF 2025 - Cavormice [reverse]">
+  <meta name="twitter:description" content="description here">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/avatar.png">
+  
+  <title>
+    
+      🇫🇷 AMSI CTF 2025 - Cavormice [reverse]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-06-16 20:13:54 &#43;0200 CEST">
+            2025-06-16
+        </time>
+    </p>
+
+    <h1>🇫🇷 AMSI CTF 2025 - Cavormice [reverse]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#prise-en-main">Prise en main</a></li>
+    <li><a href="#repérage-dans-la-mémoire">Repérage dans la mémoire</a></li>
+    <li><a href="#décompilation-du-jeu">Décompilation du jeu</a></li>
+    <li><a href="#recomposition-du-bon-chemin">Recomposition du bon chemin</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Medium</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks 2600</p>
+</blockquote>
+<blockquote>
+<p><a href="http://amsi-sorbonne.fr:4080/files/5e0ea2f969ebdbbcebd89136320886f9/Cavormice.gb?token=eyJ1c2VyX2lkIjo0MCwidGVhbV9pZCI6MTQsImZpbGVfaWQiOjMyfQ.aFHOig.t3qfFW96wRksPIMxGk4jXoPiMcs">Source files</a></p>
+</blockquote>
+<blockquote>
+<p>Description : La petite souris est perdue dans cette grotte labyrinthique ! Peux-tu l’aider à trouver le chemin vers le trésor dans la salle du haut ?
+<br> <br> Le format du drapeau est AMSI{XXXXXXXX&hellip;} où X est une direction parmi {U,D,L,R}, respectivement pour Up, Down, Left, Right.
+<br> <br> Trouve le bon chemin.</p>
+</blockquote>
+<blockquote>
+<p>Author :  <a href="https://hexwreaker.github.io/">Hexwreaker</a></p>
+</blockquote>
+<blockquote>
+<p>Topics :</p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>Il y a un endroit en mémoire qui stocke tous nos déplacements.</li>
+<li>Et chaque paire de déplacement sera xorée et comparée avec un octet prédeterminé, si on arrive à valider ces valeurs, on valide le jeu et on peut gagner la partie.</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>Ce challenge sort du lot car il s&rsquo;agit de faire du reverse sur un jeu de gameboy. Le but est de mener notre souris vers le bon chemin pour découvrir un trésor.
+Voici un quoi ressemble le jeu :</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/09e5ee774ecab572f950a45dfbf7cd10f4fef484/writeups/AMSI/cavormice/cavormice-main-menu.png" alt="main menu"></p>
+<h1 id="prise-en-main">Prise en main</h1>
+<p>Pour émuler le jeu j&rsquo;ai utilisé <code>mgba-qt</code> qui peut émuler des jeu gameboy et gameboy advance et intégre une fonction pour voir la mémoire et chercher des valeurs à l&rsquo;intérieur.</p>
+<p>Je me baladais mais je trouvais rien de spécial, j&rsquo;ai remarqué que la salle du haut était toujours la meme peut importe à quel point on se baladait avec la souris, même si on descendait puis on remontait, la salle est toujours là..</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/09e5ee774ecab572f950a45dfbf7cd10f4fef484/writeups/AMSI/cavormice/promenade-de-souris.gif" alt="promenade de souris"></p>
+<p>Et au bout d&rsquo;un moment après avoir assez joué, on finit par perdre, et notre souris rebrousse chemin sans un sou.</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/09e5ee774ecab572f950a45dfbf7cd10f4fef484/writeups/AMSI/cavormice/souris-demunie.png" alt="pauvre souris"></p>
+<p>Donc on comprend qu&rsquo;il y a des conditions à remplir pour pouvoir gagner.</p>
+<hr>
+<h1 id="repérage-dans-la-mémoire">Repérage dans la mémoire</h1>
+<p>J&rsquo;ai décidé de jeter un oeil en mémoire car il devrait y avoir des valeurs qui changent comme notamment la position de ma souris. Avec <code>mgba-qt</code> on peut afficher la mémoire depuis <code>outils &gt; game state view &gt; voir la mémoire</code>.</p>
+<p>L&rsquo;espace mémoire est petit, de 0 à 0xFFFF donc 65535 octets. Et à certain endroits il y a des valeurs qui bougent en permanence.</p>
+<p>Donc j&rsquo;ai pensé chercher l&rsquo;endroit ou sont écrits les déplacement de la souris. J&rsquo;ai noté mes déplacements, (<strong>haut/haut/bas/droite -&gt; UUDR</strong>) d&rsquo;ailleurs  un déplacement correspond à une salle visitée et non à un pas de souris. Puis je les ai cherché en mémoire avec un autre utilitaire de <code>mgba-qt</code> :</p>
+<video width="960" height="720" controls>
+  <source src="https://rawcdn.githack.com/wepfen/cdn/7502ff2bc7400ccf140b0c2e6e621678ace88c1c/writeups/AMSI/cavormice/trouver-deplacement-en-memoire.mp4" type="video/mp4">
+</video> 
+<p>On découvre qu&rsquo;à l&rsquo;adresse <strong>0xC808</strong> se trouve l&rsquo;historique des déplacements, ainsi que deux octets qui gèrent la position de la souris (pas très important mais bon à savoir).</p>
+<p>Et lorsqu&rsquo;on continue de jouer, le 33ème déplacement met fin à la partie.</p>
+<p>Maintenant l&rsquo;objectif est de savoir quelles sont les conditions de victoire.</p>
+<hr>
+<h1 id="décompilation-du-jeu">Décompilation du jeu</h1>
+<p>Vu que je ne sais pas lire une ROM Gameboy de tête, j&rsquo;ai cherché si c&rsquo;était faisable sur Ghidra et effectivement il y a une extension pour ça : <a href="https://github.com/Gekkio/GhidraBoy">https://github.com/Gekkio/GhidraBoy</a>.</p>
+<p>Il y a le même nombre d&rsquo;octet qui sont lus (0xFFFF, 65535) et à des endroits on retrouve du code.</p>
+<p>En regardant à l&rsquo;adresse <strong>0xC808</strong>, celle où les déplacements sont stockés on voit qu&rsquo;un espace de 32 octets est réservée. <br>
+Et qu&rsquo;il y a 3 références croisées vers cette addresse:</p>
+<p>image cross references</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/ec46701de647a936bb425b9fc2a4406088e590db/writeups/AMSI/cavormice/cross-ref-c808.png" alt="références croisées"></p>
+<p>dont une est plutôt intéressante :</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/ec46701de647a936bb425b9fc2a4406088e590db/writeups/AMSI/cavormice/fun_0729.png" alt="fun_0729"></p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">FUN_0729</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>undefined <span style="color:#b2c98f">FUN_0729</span>(<span style="color:#dbbc7f">void</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#dbbc7f">char</span> cVar1;
+</span></span><span style="display:flex;"><span>  <span style="color:#dbbc7f">int</span> iVar2;
+</span></span><span style="display:flex;"><span>  byte bVar3;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  DAT_c807 <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">if</span> (DAT_c838 <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#39; &#39;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">for</span> (iVar2 <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; bVar3 <span style="color:#7a8478">=</span> (byte)((uint)iVar2 <span style="color:#7a8478">&gt;&gt;</span> <span style="color:#d699b6">8</span>),
+</span></span><span style="display:flex;"><span>        (byte)(<span style="color:#7a8478">!</span>(<span style="color:#dbbc7f">bool</span>)(bVar3 <span style="color:#7a8478">&gt;&gt;</span> <span style="color:#d699b6">7</span>) <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">7</span> <span style="color:#7a8478">|</span> bVar3 <span style="color:#7a8478">&amp;</span> <span style="color:#d699b6">0x7f</span>) <span style="color:#7a8478">&lt;</span> (byte)(((byte)iVar2 <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">0x10</span>) <span style="color:#7a8478">+</span> <span style="color:#d699b6">0x80U</span>);
+</span></span><span style="display:flex;"><span>        iVar2 <span style="color:#7a8478">=</span> iVar2 <span style="color:#7a8478">+</span> <span style="color:#d699b6">1</span>) {
+</span></span><span style="display:flex;"><span>      cVar1 <span style="color:#7a8478">=</span> (byte)iVar2 <span style="color:#7a8478">*</span> <span style="color:#b2c98f">&#39;\x02&#39;</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">if</span> ((<span style="color:#7a8478">&amp;</span>DAT_c828)[iVar2] <span style="color:#7a8478">!=</span> ((<span style="color:#7a8478">&amp;</span>DAT_c808)[(<span style="color:#dbbc7f">char</span>)(cVar1 <span style="color:#7a8478">+</span> <span style="color:#b2c98f">&#39;\x01&#39;</span>)] <span style="color:#7a8478">^</span> (<span style="color:#7a8478">&amp;</span>DAT_c808)[cVar1])) {
+</span></span><span style="display:flex;"><span>        DAT_c807 <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    DAT_c807 <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">return</span> DAT_c807;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>On voit que la valeur à l&rsquo;indice <code>cVar1</code> de <code>DAT_c808</code> est xorée avec l&rsquo;a valeur à l&rsquo;indice <code>cVar1+1</code> de <code>DAT_c808</code> puis comparée à la valeur à l&rsquo;indice <code>iVar2</code> de <code>&amp;DAT_c828</code>.</p>
+<p>Si la valeur est différente, la fonction s&rsquo;arrête grâce à un <code>return 0</code>, sinon la boucle continue et <code>cVar1</code> et <code>iVar2</code> sont incrémentés.</p>
+<p>On comprend qu&rsquo;il faut éviter que la fonction s&rsquo;arrête prématurément, mais aussi que nos déplacements sont pris par paires, xorés et comparés avec une valeur à l&rsquo;adresse <strong>0xC828</strong>.</p>
+<p>Par ailleurs, cette valeur n&rsquo;est pas écrite en dur dans Ghidra mais on a l&rsquo;espace d&rsquo;adressage et il est sur 16 octets. Si on veut la valeur cependant il faudra émuler le jeu.</p>
+<p>La valeur est la suivante : <code>191908160700191108161119001E0711</code></p>
+<h1 id="recomposition-du-bon-chemin">Recomposition du bon chemin</h1>
+<p>Ainsi la chaine à obtenir est le resultat de 16 opérations de XOR entre différentes directions parmi : D,U,L,R.</p>
+<p>Et selon la chaine, il y a 7 valeurs de XOR possible:</p>
+<ul>
+<li>19</li>
+<li>08</li>
+<li>16</li>
+<li>07</li>
+<li>00</li>
+<li>11</li>
+<li>1e</li>
+</ul>
+<p>On va donc commencer par générer une tables qui fait correspondre les paires de direction avec le résultat du XOR qu&rsquo;elles donnent.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> itertools <span style="color:#e67e80">import</span> product
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>to_get <span style="color:#7a8478">=</span> [<span style="color:#d699b6">0x19</span>, <span style="color:#d699b6">0x08</span>, <span style="color:#d699b6">0x16</span>, <span style="color:#d699b6">0x07</span>, <span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x11</span>, <span style="color:#d699b6">0x1e</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>directions <span style="color:#7a8478">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;U&#34;</span> : <span style="color:#d699b6">0x55</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;D&#34;</span> : <span style="color:#d699b6">0x44</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;R&#34;</span> : <span style="color:#d699b6">0x52</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;L&#34;</span> : <span style="color:#d699b6">0x4C</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xor_values <span style="color:#7a8478">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> a,b <span style="color:#7a8478">in</span> product(directions<span style="color:#7a8478">.</span>values(), repeat<span style="color:#7a8478">=</span><span style="color:#d699b6">2</span>):
+</span></span><span style="display:flex;"><span>	r <span style="color:#7a8478">=</span> a<span style="color:#7a8478">^</span>b 
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">if</span> r <span style="color:#7a8478">in</span> to_get:
+</span></span><span style="display:flex;"><span>		pair <span style="color:#7a8478">=</span> <span style="color:#d699b6">chr</span>(a)<span style="color:#7a8478">+</span><span style="color:#d699b6">chr</span>(b)
+</span></span><span style="display:flex;"><span>		xor_values[pair] <span style="color:#7a8478">=</span> <span style="color:#d699b6">hex</span>(r)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>On obtient ces valeurs :</p>
+<pre tabindex="0"><code>UU 0x0
+UD 0x11
+UR 0x7
+UL 0x19
+DU 0x11
+DD 0x0
+DR 0x16
+DL 0x8
+RU 0x7
+RD 0x16
+RR 0x0
+RL 0x1e
+LU 0x19
+LD 0x8
+LR 0x1e
+LL 0x0
+</code></pre><p>On peut même recomposer à la main le chemin satisfaisant.<br>
+Mais il faut garder à l&rsquo;esprit ces contraintes :</p>
+<ul>
+<li>Le premier mouvement de la partie est toujours <code>U</code>, car c&rsquo;est le seul mouvement possible au lancement du jeu.</li>
+<li>une fois entrée dans la grotte, tout déplacement de la souris vers le haut ne peut donner suite qu&rsquo;à un déplacement vers le bas (on est bloqué dans la caverne).</li>
+</ul>
+<p>Par exemple, pour le début on doit avoir <code>19 19</code> donc soit <code>UL</code> soit <code>LU</code>. Etant donné qu&rsquo;au début on va vers le haut pour rentrer dans la grotte, on ne peut commencer que par <code>U</code> donc <code>UL</code>.</p>
+<p>Puis on a un deuxième <strong>0x19</strong>. Soit UL soit LU, mais si on choisit <strong>UL</strong>, une fois monté avec <code>U</code>, on sera bloqué dans la grotte et on ne pourra faire qu&rsquo;un mouvement vers le bas pour en sortir. Donc on lieu d&rsquo;avoir <strong>UL</strong> on aurait un <strong>UD</strong>.</p>
+<p>Donc le bon choix est <strong>LU</strong>. En continuant ainsi on peut commencer à construire notre chemin. <br></p>
+<blockquote>
+<p>Il y a parfois des choix avec plusieurs solutions valides comme <strong>RL</strong> et <strong>LR</strong> donnant lieu à une multitude de chemins menant chacun vers la victoire. Ces chemins étaient tout de même valide pour obtenir le flag après avoir demandé au chall maker.</p>
+</blockquote>
+<p>Au final avec ces raisonnements on obtient par exemple ce chemin avec un script :  <code>ULLUDLDRRUDDLUDUDLDRUDLUDDLRRUDU</code></p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">solve.py</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> itertools <span style="color:#e67e80">import</span> product
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>to_get <span style="color:#7a8478">=</span> [<span style="color:#d699b6">0x19</span>, <span style="color:#d699b6">0x08</span>, <span style="color:#d699b6">0x16</span>, <span style="color:#d699b6">0x07</span>, <span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x11</span>, <span style="color:#d699b6">0x1e</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>directions <span style="color:#7a8478">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;U&#34;</span> : <span style="color:#d699b6">0x55</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;D&#34;</span> : <span style="color:#d699b6">0x44</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;R&#34;</span> : <span style="color:#d699b6">0x52</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#b2c98f">&#34;L&#34;</span> : <span style="color:#d699b6">0x4C</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xor_values <span style="color:#7a8478">=</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> a,b <span style="color:#7a8478">in</span> product(directions<span style="color:#7a8478">.</span>values(), repeat<span style="color:#7a8478">=</span><span style="color:#d699b6">2</span>):
+</span></span><span style="display:flex;"><span>    r <span style="color:#7a8478">=</span> a<span style="color:#7a8478">^</span>b
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> r <span style="color:#7a8478">in</span> to_get:
+</span></span><span style="display:flex;"><span>        pair <span style="color:#7a8478">=</span> <span style="color:#d699b6">chr</span>(a)<span style="color:#7a8478">+</span><span style="color:#d699b6">chr</span>(b)
+</span></span><span style="display:flex;"><span>        xor_values[pair] <span style="color:#7a8478">=</span> <span style="color:#d699b6">hex</span>(r)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xor_values<span style="color:#7a8478">.</span>pop(<span style="color:#b2c98f">&#34;UU&#34;</span>)
+</span></span><span style="display:flex;"><span>xor_values<span style="color:#7a8478">.</span>pop(<span style="color:#b2c98f">&#34;UR&#34;</span>)
+</span></span><span style="display:flex;"><span>xor_values<span style="color:#7a8478">.</span>pop(<span style="color:#b2c98f">&#34;UD&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>password <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(<span style="color:#b2c98f">&#34;191908160700191108161119001E0711&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>result <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> val <span style="color:#7a8478">in</span> password:
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> result <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#34;&#34;</span>:
+</span></span><span style="display:flex;"><span>        result <span style="color:#7a8478">+=</span> <span style="color:#b2c98f">&#34;UL&#34;</span>
+</span></span><span style="display:flex;"><span>        xor_values<span style="color:#7a8478">.</span>pop(<span style="color:#b2c98f">&#34;UL&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">for</span> i <span style="color:#7a8478">in</span> xor_values<span style="color:#7a8478">.</span>items():
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> <span style="color:#d699b6">int</span>(i[<span style="color:#d699b6">1</span>], <span style="color:#d699b6">16</span>) <span style="color:#7a8478">==</span> val:
+</span></span><span style="display:flex;"><span>            result <span style="color:#7a8478">+=</span> i[<span style="color:#d699b6">0</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(result)
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Qui nous permet de gagner :</p>
+<img src="https://rawcdn.githack.com/wepfen/cdn/7502ff2bc7400ccf140b0c2e6e621678ace88c1c/writeups/AMSI/cavormice/win.png" style="max-width:30%">
+<p>Flag : <code>AMSI{ULLUDLDRRUDDLUDUDLDRUDLUDDLRRUDU}</code></p>
+<p><img src="https://media.tenor.com/WDqU2tujxpMAAAAj/piola-thumb-up.gif" alt="lets go"></p>
+
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

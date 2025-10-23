@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="
+My solve from a noob point a view for the halloween challenge at heroCTF v6." />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/heroctfv6-halloween/">
+  <meta property="og:title" content="HeroCTF v6 - Halloween [crypto]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/heroctfv6-halloween/">
+  <meta name="twitter:title" content="HeroCTF v6 - Halloween [crypto]">
+  <meta name="twitter:description" content="
+My solve from a noob point a view for the halloween challenge at heroCTF v6.">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      HeroCTF v6 - Halloween [crypto]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},     
+        {left: '$', right: '$', display: false},  	  
+      ],
+      throwOnError : false
+    });
+  });
+</script>
+
+
+
+    
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-10-30 00:21:39 &#43;0100 CET">
+            2024-10-30
+        </time>
+    </p>
+
+    <h1>HeroCTF v6 - Halloween [crypto]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#solving">Solving</a>
+      <ul>
+        <li><a href="#challenge-source-code">Challenge source code</a></li>
+        <li><a href="#reading-gostcrypto-module-source-code">Reading gostcrypto module source code</a>
+          <ul>
+            <li><a href="#reading-the-parts-used-for-encryption">Reading the parts used for encryption</a></li>
+            <li><a href="#ctr-mode-execution-flow">CTR mode execution flow</a></li>
+            <li><a href="#analysis-of-the-counter-incrementation">Analysis of the counter incrementation</a></li>
+            <li><a href="#exploit">Exploit</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#links">Links</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <br>
+My solve from a noob point a view for the halloween challenge at heroCTF v6.
+<blockquote>
+<p>Difficulty : Hard</p>
+</blockquote>
+<blockquote>
+<p>Team : Langskip</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/HeroCTF/HeroCTF_v6/tree/main/Crypto/Halloween/halloween">Source files</a></p>
+</blockquote>
+<blockquote>
+<p>Boo! Do you believe in ghost ? I sure don&rsquo;t</p>
+</blockquote>
+<blockquote>
+<p>Author : alol</p>
+</blockquote>
+<br>
+<h1 id="tldr">TL;DR</h1>
+<p>The GOST cipher used for the challenge is badly implemented.</p>
+<p>Using the CTR mode, the counter reset after 256 count. So we can regenerate the keystream used to encrypt the flag and decrypt the flag.</p>
+<br>
+<h1 id="introduction">Introduction</h1>
+<p>For this challenge, a server sends us a welcome message with the encrypted flag inside.
+It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
+<p>The algorithm used is an implementation of <a href="https://en.wikipedia.org/wiki/GOST_(block_cipher)#">GOST</a>, a symmetrical algorithm like AES.</p>
+<br>
+<h1 id="solving">Solving</h1>
+<h2 id="challenge-source-code">Challenge source code</h2>
+<p>The challenge code is quite simple.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">chall.py</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> gostcrypto
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">with</span> <span style="color:#d699b6">open</span>(<span style="color:#b2c98f">&#34;flag.txt&#34;</span>, <span style="color:#b2c98f">&#34;rb&#34;</span>) <span style="color:#e67e80">as</span> f:
+</span></span><span style="display:flex;"><span>    flag <span style="color:#7a8478">=</span> f<span style="color:#7a8478">.</span>read()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>key, iv <span style="color:#7a8478">=</span> os<span style="color:#7a8478">.</span>urandom(<span style="color:#d699b6">32</span>), os<span style="color:#7a8478">.</span>urandom(<span style="color:#d699b6">8</span>)
+</span></span><span style="display:flex;"><span>cipher <span style="color:#7a8478">=</span> gostcrypto<span style="color:#7a8478">.</span>gostcipher<span style="color:#7a8478">.</span>new(
+</span></span><span style="display:flex;"><span>    <span style="color:#b2c98f">&#34;kuznechik&#34;</span>, key, gostcrypto<span style="color:#7a8478">.</span>gostcipher<span style="color:#7a8478">.</span>MODE_CTR, init_vect<span style="color:#7a8478">=</span>iv
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;It&#39;s almost Halloween, time to get sp00</span><span style="color:#b2c98f">{</span>cipher<span style="color:#7a8478">.</span>encrypt(flag)<span style="color:#7a8478">.</span>hex()<span style="color:#b2c98f">}</span><span style="color:#b2c98f">00ky 👻!&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">while</span> <span style="color:#e67e80">True</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">print</span>(cipher<span style="color:#7a8478">.</span>encrypt(<span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(<span style="color:#d699b6">input</span>()))<span style="color:#7a8478">.</span>hex())
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<ul>
+<li>A 32-byte random key is generated</li>
+<li>An 8-byte initialization vector is generated</li>
+<li><code>cipher</code> is initialized with gostcrypto with the CTR mode, the key, the IV and the algorithm we don&rsquo;t yet know &lsquo;kuznechik&rsquo;.</li>
+</ul>
+<p>Once this is done, the server sends us a string with the encrypted flag in it, for example :</p>
+<pre tabindex="0"><code>It&#39;s almost Halloween, time to get sp00361e2084c41bd4ddf3748a49442d2c99670f6d235d2429e3d6e445f07d5415f2ebd38bee6bf50fecd23ae33db8a76c48d1ab7bb7591512b354762afbfa7153e494f8eb3bd93ad1151d3c36f4c1913400ky 👻!
+</code></pre><p>So far, there&rsquo;s no obvious vulnerability, so you&rsquo;ll have to dive into the source code (it&rsquo;s a tough challenge, though!).</p>
+<p>And then you can send strings of characters encoded in hex and the server will reply with its encrypted version.</p>
+<h2 id="reading-gostcrypto-module-source-code">Reading gostcrypto module source code</h2>
+<p>For python modules, just look on pypi.</p>
+<p>After a quick google search on pypi you&rsquo;ll find <a href="https://pypi.org/project/gostcrypto/">this page</a>.</p>
+<p>And in &ldquo;project links&rdquo; you&rsquo;ll find a link to github with all the <a href="https://github.com/drobotun/gostcrypto">source code</a> and a <a href="https://gostcrypto.readthedocs.io/en/stable/intro.html#overview">user doc</a> but the doc won&rsquo;t be useful.</p>
+<h3 id="reading-the-parts-used-for-encryption">Reading the parts used for encryption</h3>
+<p>Let&rsquo;s dive straight into the source code, i.e. the <code>gostcrypto.gostcipher</code> module at this <a href="https://github.com/drobotun/gostcrypto/tree/master/gostcrypto/gostcipher">page</a>.</p>
+<p>There are two files:</p>
+<ul>
+<li>gost_34_12_2015.py</li>
+<li>gost_34_13_2015.py</li>
+</ul>
+<p>A quick look at the first file reveals that this is where the &lsquo;kuznechik&rsquo; and &lsquo;magma&rsquo; algo are defined. Here we have the source code for encrypting plaintext in ECB mode. In other words, classic encryption without mode, as with AES:</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/ECB_encryption.svg" style="filter: invert(70%) sepia(100%) saturate(700%) " alt="ECB encryption mode"/>
+<br> 
+<p>In the second file, all modes are defined, including <code>CTR</code> on line 802 in the <code>GOST34132015ctr</code> class: <code>class GOST34132015ctr(GOST34132015Cipher):</code>.</p>
+<p>It contains the <code>encrypt()</code>, <code>decrypt()</code>, <code>counter()</code>, <code>_inc_ctr()</code> methods.</p>
+<p>The simplest is the <code>decrypt()</code> method:</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">gost_34_13_2015.py:GOST34132015Cipher:decrypt()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt</span>(<span style="color:#d699b6">self</span>, data: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">        Ciphertext decryption in CTR mode.
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">        Args:
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">            data: Ciphertext data to be decrypted (as a byte object).
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">        Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">            Plaintext data (as a byte object).
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">        Raises:
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">            GOSTCipherError(&#39;GOSTCipherError: invalid ciphertext data&#39;): In
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">              case where the ciphertext data is not byte object.
+</span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">        &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        data <span style="color:#7a8478">=</span> <span style="color:#d699b6">super</span>()<span style="color:#7a8478">.</span>decrypt(data)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>encrypt(data)
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p><code>super().decrypt(data)</code> will not alter data, it corresponds to the <code>decrypt()</code> method of the <code>GOST34132015Cipher</code> class inherited by <code>GOST34132015ctr</code> which does :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">gost_34_13_2015.py:GOST34132015ctr:decrypt()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt</span>(<span style="color:#d699b6">self</span>, data: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">if</span> <span style="color:#7a8478">not</span> <span style="color:#d699b6">isinstance</span>(data, (<span style="color:#d699b6">bytes</span>, <span style="color:#d699b6">bytearray</span>)):
+</span></span><span style="display:flex;"><span>		<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>clear()
+</span></span><span style="display:flex;"><span>		<span style="color:#e67e80">raise</span> GOSTCipherError(<span style="color:#b2c98f">&#39;GOSTCipherError: invalid ciphertext data&#39;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">return</span> data
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>So <code>super().decrypt(data)</code> checks whether the data is of type <code>bytes or bytearray</code> and then encrypts it with <code>self.encrypt(data)</code>.</p>
+<p>Encrypting a ciphertext with CTR mode is like deciphering it.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/CTR_encryption_2.svg" style="filter: invert(70%) sepia(100%) saturate(700%) " alt="CTR encryption mode"/>
+<blockquote>
+<p>The CTR mode is a <a href="https://en.wikipedia.org/wiki/Stream_cipher">stream cipher</a> which means that the cipher can be xoried with the plaintext and therefore the plaintext size is equal to the cipher size.
+If we know the plaintext, we can xor it with the ciphertext to recover the keystream, and if we know the keystream, we can xor it with the ciphertext to recover the plaintext.</p>
+</blockquote>
+<p>Then, the <code>counter()</code> method only returns the counter and the method <code>_inc_ctr()</code> increments the counter.</p>
+<p>At class initialization, <code>gostcrypto.gostcipher.new(&quot;kuznechik&quot;, key, gostcrypto.gostcipher.MODE_CTR, init_vect=iv)</code> in the challenge amounts to executing the <code>__init__()</code> method, which takes the algo, key and IV as parameters:</p>
+<ul>
+<li>A counter is defined as <code>iv + b&quot;\x00&quot;*8</code>, i.e. the first half of the counter is a random nonce and the lower half is the counter starting at 0.</li>
+<li>The <code>GOST34132015</code> class (and not <code>GOST34132015Cipher</code>, as the latter doesn&rsquo;t have a <code>__init__</code> method, so the class above is initialized instead) is initialized with <code>super().__init__(algorithm,key)</code>, which defines :
+<ul>
+<li>the algorithm, i.e. &lsquo;kuznechik&rsquo; for us</li>
+<li><code>self._cipher_obj: CipherObjType = GOST34122015Kuznechik(key)</code>, defines <code>_cipher_obj</code> with <code>kuznechik</code>, which will be used to encrypt our plain text.</li>
+</ul>
+</li>
+</ul>
+<h3 id="ctr-mode-execution-flow">CTR mode execution flow</h3>
+<p>The execution flow is defined in the <code>encrypt()</code> method <a href="https://github.com/drobotun/gostcrypto/blob/master/gostcrypto/gostcipher/gost_34_13_2015.py#L189">line 855</a></p>
+<ul>
+<li>The current counter (starting at 0) is encrypted and the result stored in <code>gamma</code>: <code>gamma = self._cipher_obj.encrypt(self._counter)</code>.</li>
+<li>The counter is incremented: <code>self._counter = self._inc_ctr(self._counter)</code></li>
+<li>a XOR operation is applied between the encrypted counter and the current block: <code>result + add_xor(self._get_block(data, i), gamma)</code></li>
+</ul>
+<p>The &lsquo;if&rsquo; block corresponds to the same thing, but for a block that isn&rsquo;t 16 characters long.
+By the way, block size is defined <a href="https://github.com/drobotun/gostcrypto/blob/1590311620d6d03d1d8e1b6abe1966da4c8550ed/gostcrypto/gostcipher/gost_34_12_2015.py#L26">here</a></p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">if</span> <span style="color:#d699b6">len</span>(data) <span style="color:#7a8478">%</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size <span style="color:#7a8478">!=</span> <span style="color:#d699b6">0</span>:
+</span></span><span style="display:flex;"><span>	gamma <span style="color:#7a8478">=</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_cipher_obj<span style="color:#7a8478">.</span>encrypt(<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_counter)
+</span></span><span style="display:flex;"><span>	<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_counter <span style="color:#7a8478">=</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_inc_ctr(<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_counter)
+</span></span><span style="display:flex;"><span>	result <span style="color:#7a8478">=</span> result <span style="color:#7a8478">+</span> add_xor(
+</span></span><span style="display:flex;"><span>		data[<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size <span style="color:#7a8478">*</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_get_num_block(data)::], gamma
+</span></span><span style="display:flex;"><span>	)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We could go and analyze the <code>kuznechik</code> function in depth, but there were no papers talking about an exploitable vulnerability there so i slowed down.</p>
+<p>So I decided to test all the functions of the <a href="https://github.com/drobotun/gostcrypto/blob/1590311620d6d03d1d8e1b6abe1966da4c8550ed/gostcrypto/gostcipher/gost_34_13_2015.py#L802C7-L802C22">GOST34132015ctr class</a>.</p>
+<h3 id="analysis-of-the-counter-incrementation">Analysis of the counter incrementation</h3>
+<p>Testing <code>_inc_ctr()</code>, we notice something interesting. Here&rsquo;s the code:</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">gost_34_13_2015.py:GOST34132015ctr:_inc_ctr()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">_inc_ctr</span>(<span style="color:#d699b6">self</span>, ctr: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
+</span></span><span style="display:flex;"><span>	internal <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>	bit <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytearray</span>(<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size)
+</span></span><span style="display:flex;"><span>	bit[<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size <span style="color:#7a8478">-</span> <span style="color:#d699b6">1</span>] <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x01</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">for</span> i <span style="color:#7a8478">in</span> <span style="color:#d699b6">range</span>(<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size):
+</span></span><span style="display:flex;"><span>		internal <span style="color:#7a8478">=</span> ctr[i] <span style="color:#7a8478">+</span> bit[i] <span style="color:#7a8478">+</span> (internal <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">8</span>)
+</span></span><span style="display:flex;"><span>		ctr[i] <span style="color:#7a8478">=</span> internal <span style="color:#7a8478">&amp;</span> <span style="color:#d699b6">0xff</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">return</span> ctr
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Actually i didn&rsquo;t see anything at first sight, i just put the fonction in a jupyter notebook and tested a lil.</p>
+<p>I discovered that by taking an example counter: <code>12916ac66cc1cbfe0000000000000000</code>, notice that the part that must be incremented is <code>0000000000000000</code> being 8 bytes long and therefore $ 256^{8} = 18446744073709551616 $ counter possibilities.</p>
+<p>Except that, in this implementation, the counter rises to <code>00000000000000ff</code> and then, on the next increment, resets to <code>0000000000000000</code>.</p>
+<p>As a result, there are only 256 possible counter values, which greatly reduces the list of possibilities and allows us to recover the keystream used to encrypt the flag.</p>
+<p>Knowing that the counter is incremented with each block, we need to find out how many times the counter has been incremented to encrypt the flag, subtract this number from 256, increment the counter by the number we obtain and recover the keystream by sending a null byte string of the same size as the flag (since the keystream is encrypted with the plaintext, sending null bytes enables us to directly recover the key because 0 xor n = n).</p>
+<h3 id="exploit">Exploit</h3>
+<details>
+  <summary style="color: #F99417; cursor: pointer">solve_halloween.py</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> pwn <span style="color:#e67e80">import</span> remote, context, xor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> re
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>BLOCK_SIZE <span style="color:#7a8478">=</span> <span style="color:#d699b6">16</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>context<span style="color:#7a8478">.</span>log_level <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#39;CRITICAL&#39;</span>
+</span></span><span style="display:flex;"><span>host <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;crypto.heroctf.fr&#34;</span>
+</span></span><span style="display:flex;"><span>port <span style="color:#7a8478">=</span> <span style="color:#d699b6">9001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>conn <span style="color:#7a8478">=</span> remote(host, port)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>welcome_message <span style="color:#7a8478">=</span> conn<span style="color:#7a8478">.</span>recvS()
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;Got message : </span><span style="color:#b2c98f">{</span>welcome_message<span style="color:#b2c98f">}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>flag_ct <span style="color:#7a8478">=</span> re<span style="color:#7a8478">.</span>search(<span style="color:#b2c98f">r</span><span style="color:#b2c98f">&#34;(?&lt;=sp00).*(?=00ky)&#34;</span>, welcome_message)<span style="color:#7a8478">.</span>group() <span style="color:#859289;font-style:italic"># regex to extract the encrypted flag, test it here: https://regex101.com/r/fb0QSo/1</span>
+</span></span><span style="display:flex;"><span>flag_ct <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(flag_ct)
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;Got ciphertext : </span><span style="color:#b2c98f">{</span>flag_ct<span style="color:#7a8478">.</span>hex()<span style="color:#b2c98f">}</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>counter_offset <span style="color:#7a8478">=</span> <span style="color:#d699b6">len</span>(flag_ct)<span style="color:#7a8478">//</span>BLOCK_SIZE <span style="color:#7a8478">+</span> <span style="color:#d699b6">1</span> <span style="color:#e67e80">if</span> <span style="color:#d699b6">len</span>(flag_ct)<span style="color:#7a8478">%</span>BLOCK_SIZE<span style="color:#7a8478">!=</span><span style="color:#d699b6">0</span> <span style="color:#e67e80">else</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(<span style="color:#b2c98f">&#34;Sending payload&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"># payload to reset the counter</span>
+</span></span><span style="display:flex;"><span>payload_size <span style="color:#7a8478">=</span> <span style="color:#d699b6">256</span> <span style="color:#7a8478">-</span> counter_offset
+</span></span><span style="display:flex;"><span>reset_counter_payload <span style="color:#7a8478">=</span> <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\x00</span><span style="color:#b2c98f">&#34;</span><span style="color:#7a8478">*</span>payload_size<span style="color:#7a8478">*</span>BLOCK_SIZE
+</span></span><span style="display:flex;"><span>conn<span style="color:#7a8478">.</span>sendline(reset_counter_payload<span style="color:#7a8478">.</span>hex()<span style="color:#7a8478">.</span>encode())
+</span></span><span style="display:flex;"><span>conn<span style="color:#7a8478">.</span>recvuntilS(<span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\n</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"># payload to get the keystream</span>
+</span></span><span style="display:flex;"><span>keystream_payload <span style="color:#7a8478">=</span> <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#34;</span><span style="color:#b2c98f">\x00</span><span style="color:#b2c98f">&#34;</span> <span style="color:#7a8478">*</span> counter_offset <span style="color:#7a8478">*</span> BLOCK_SIZE
+</span></span><span style="display:flex;"><span>conn<span style="color:#7a8478">.</span>sendline(keystream_payload<span style="color:#7a8478">.</span>hex()<span style="color:#7a8478">.</span>encode())
+</span></span><span style="display:flex;"><span>keystream <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytes</span><span style="color:#7a8478">.</span>fromhex(conn<span style="color:#7a8478">.</span>recvS()<span style="color:#7a8478">.</span>rstrip())
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;Got keystream </span><span style="color:#b2c98f">{</span>keystream<span style="color:#7a8478">.</span>hex()<span style="color:#b2c98f">}</span><span style="color:#b2c98f"> with length </span><span style="color:#b2c98f">{</span><span style="color:#d699b6">len</span>(keystream)<span style="color:#b2c98f">}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#7a8478">=</span> xor(keystream, flag_ct)
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(<span style="color:#b2c98f">f</span><span style="color:#b2c98f">&#34;Recovered : </span><span style="color:#b2c98f">{</span>flag<span style="color:#b2c98f">}</span><span style="color:#b2c98f">&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<br>
+<p>flag : <code>Hero{5p00ky_5c4ry_fl4w3d_cryp70_1mpl3m3n74710ns_53nd_5h1v3r5_d0wn_y0ur_5p1n3}</code></p>
+<br>
+<h1 id="conclusion">Conclusion</h1>
+<p>I really liked the challenge and found it intersting. I learned source code &ldquo;auditing&rdquo; and a new cipher.</p>
+<p>The code was well written so easy to understand, and there was no horrible mathematics only understandable by PhDs.</p>
+<h1 id="links">Links</h1>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Stream_cipher">https://en.wikipedia.org/wiki/Stream_cipher</a></li>
+<li><a href="https://pypi.org/project/gostcrypto/">https://pypi.org/project/gostcrypto/</a></li>
+<li><a href="https://gostcrypto.readthedocs.io/en/stable/intro.html#overview">https://gostcrypto.readthedocs.io/en/stable/intro.html#overview</a></li>
+<li><a href="https://github.com/drobotun/gostcrypto">https://github.com/drobotun/gostcrypto</a></li>
+</ul>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

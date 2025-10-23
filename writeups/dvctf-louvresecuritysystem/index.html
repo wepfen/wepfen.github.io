@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Short writeup of hardware challenge LouvreSecuritySystem from DVCTF 2025.">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Short writeup of hardware challenge LouvreSecuritySystem from DVCTF 2025." />
+  <meta property="og:image" content="https://www.phreaks2600.fr/images/blog/dvctf-2025.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/dvctf-louvresecuritysystem/">
+  <meta property="og:title" content="DVCTF 2025 -  LouvreSecuritySystem [Hardware]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/dvctf-louvresecuritysystem/">
+  <meta name="twitter:title" content="DVCTF 2025 -  LouvreSecuritySystem [Hardware]">
+  <meta name="twitter:description" content="Short writeup of hardware challenge LouvreSecuritySystem from DVCTF 2025.">
+  <meta name="twitter:image" content="https://www.phreaks2600.fr/images/blog/dvctf-2025.png">
+  
+  <title>
+    
+      DVCTF 2025 -  LouvreSecuritySystem [Hardware]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-05-26 09:51:49 &#43;0200 CEST">
+            2025-05-26
+        </time>
+    </p>
+
+    <h1>DVCTF 2025 -  LouvreSecuritySystem [Hardware]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#challenge">Challenge</a>
+      <ul>
+        <li><a href="#the-board">The board</a></li>
+        <li><a href="#uart-restricted-shell">UART restricted shell</a></li>
+        <li><a href="#uart-shell-with-admin-features">UART shell with admin features</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Easy</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks 2600</p>
+</blockquote>
+<blockquote>
+<p>Topics : hardware, DVID, UART</p>
+</blockquote>
+
+
+	
+
+
+
+
+
+
+	<br><br>
+	<div>
+		<img src="https://www.phreaks2600.fr/images/blog/dvctf-2025.png" class="image-cover">
+	</div>
+	<br><br>
+
+
+
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/af848042495875c6aa025ad36b1318428bed0996/writeups/dvctf/2025/description.png" alt="Description"></p>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>Connect to the UART port of the board with a baudrate of 9600 and log with &ldquo;visitor:monalisa&rdquo;</li>
+<li>Read welcome.txt and understand you have to log to &ldquo;leonardo&rdquo; account</li>
+<li>Recover the pw.txt file and grep &rsquo;leonardo'</li>
+<li>Try the 3 passwords possiblities and</li>
+<li>Once logged, get the MQTT channel <code>/var/log/security.log</code></li>
+<li>Use the available MQTT commands : <code>mqtt --connect</code> and then <code>mqtt --validate devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0</code></li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>During the DaVinci CTF 24th May 2025, we participated with Phreaks 2600 at the on-cite competition of the CTF. There were 3 hardware challenges were we flagged 2 out of 3.
+Here&rsquo;s the writeup of the easy one.</p>
+<h1 id="challenge">Challenge</h1>
+<h2 id="the-board">The board</h2>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/8dac5ad25c2247143da65d0926b7380ec390fcf7/writeups/dvctf/2025/wiring.png" alt="board"></p>
+<p>The challenge was hosted on a <a href="https://experience.dvid.eu/static/img/dvid.jpg">DVID v2 board</a> and we were supposed to connect to the UART debug port.
+This board need to get a power supply to work, so with the USB to TTL (UART to USB) we had to connect a wire from the <code>5V</code> on it to the <code>5V</code> on the board with jumper wires and plug the <code>GND</code> to any <code>GND</code> on the board and then the screen boot up.</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/8dac5ad25c2247143da65d0926b7380ec390fcf7/writeups/dvctf/2025/screen.jpg" alt="screen"></p>
+<p>On the screen we have got the correct baudrate (9600) to connect so we can directly use it with <code>screen</code> or <code>minicom</code>, tool to interact with serial ports:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>screen /dev/ttyUSB0 <span style="color:#d699b6">9600</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And we can press the reset button on the board to get the initialisation screen :</p>
+<h2 id="uart-restricted-shell">UART restricted shell</h2>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yth��b@<span style="color:#7a8478">)</span>s!BY��<span style="color:#7a8478">[</span>    16<span style="color:#7a8478">][</span>I<span style="color:#7a8478">][</span>esp32-hal-i2c.c:75<span style="color:#7a8478">]</span> i2cInit<span style="color:#7a8478">()</span>: Initialising I2C Master: sda<span style="color:#7a8478">=</span><span style="color:#d699b6">15</span> scl<span style="color:#7a8478">=</span><span style="color:#d699b6">4</span> freq<span style="color:#7a8478">=</span><span style="color:#d699b6">100000</span>
+</span></span><span style="display:flex;"><span>ESP32 architecture detected
+</span></span><span style="display:flex;"><span>Louvre Museum UART Security Challenge
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>   242<span style="color:#7a8478">][</span>W<span style="color:#7a8478">][</span>Wire.cpp:301<span style="color:#7a8478">]</span> begin<span style="color:#7a8478">()</span>: Bus already started in Master Mode.
+</span></span><span style="display:flex;"><span>*****************************************************
+</span></span><span style="display:flex;"><span>*                                                   *
+</span></span><span style="display:flex;"><span>*             LOUVRE MUSEUM SECURITY                *
+</span></span><span style="display:flex;"><span>*                SYSTEM TERMINAL                    *
+</span></span><span style="display:flex;"><span>*                                                   *
+</span></span><span style="display:flex;"><span>*                                                   *
+</span></span><span style="display:flex;"><span>*                         /<span style="color:#b2c98f">\ </span>                       *
+</span></span><span style="display:flex;"><span>*                        /  <span style="color:#b2c98f">\ </span>                      *
+</span></span><span style="display:flex;"><span>*                       /    <span style="color:#b2c98f">\ </span>                     *
+</span></span><span style="display:flex;"><span>*                      /      <span style="color:#b2c98f">\ </span>                    *
+</span></span><span style="display:flex;"><span>*                     /        <span style="color:#b2c98f">\ </span>                   *
+</span></span><span style="display:flex;"><span>*                    /          <span style="color:#b2c98f">\ </span>                  *
+</span></span><span style="display:flex;"><span>*                   /            <span style="color:#b2c98f">\ </span>                 *
+</span></span><span style="display:flex;"><span>*                  /______/<span style="color:#b2c98f">\_</span>_____<span style="color:#b2c98f">\ </span>                *
+</span></span><span style="display:flex;"><span>*                                                   *
+</span></span><span style="display:flex;"><span>*               RESTRICTED ACCESS ONLY              *
+</span></span><span style="display:flex;"><span>*                                                   *
+</span></span><span style="display:flex;"><span>*****************************************************
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Please login to <span style="color:#e67e80">continue</span>.
+</span></span><span style="display:flex;"><span>Usage: login username:password:hJMQgiul
+</span></span><span style="display:flex;"><span>&gt; login
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We enter the logins given in the description : <code>login visitor:monalisa:hJMQgiul</code>
+And the we get in a kind of linux shell :</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/8dac5ad25c2247143da65d0926b7380ec390fcf7/writeups/dvctf/2025/ls.png" alt="shell"></p>
+<p>Reading the description I learnt that I had to &ldquo;access administrative features&rdquo; so I thought I had to privesc put trying <code>sudo -l</code> returned that the command was unknown. Typing <code>help</code> showed the available functions : <code>logout, cat, ls ...</code>. So we were on a restricted shell.</p>
+<p>Reading the <code>welcome.txt</code> we get this :</p>
+<pre tabindex="0"><code>Welcome to the Louvre Museum Security System
+For visitor inquiries, please contact the information desk.
+For administrative access, please use the leonardo account
+</code></pre><p>So we get to log to <code>leonardo</code> account, the only information we got is the file <code>pw.txt</code>.
+There were 100 passwords in it so I had the idea to brute force it with python <code>serial</code> but it just didn&rsquo;t work.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">pw.txt</summary>
+  <pre tabindex="0"><code>GlassPyramid235%HdimaryPssalG
+VenusDeMilo625&amp;BoliMeDsuneV
+VenusDeMilo497&amp;BoliMeDsuneV
+RomanPortraiture856#HerutiartroPnamoR
+VenusDeMilo268!JoliMeDsuneV
+AncientEgypt213!JtpygEtneicnA
+AncientEgypt933&amp;C
+MedievalWell625$DlleWlaveideM
+EugeneDelacroix331$J
+CycladicArt199&amp;ItrAcidalcyC
+GlassPyramid448%G
+PaoloVeronese844!IesenoreVoloaP
+MedievalWell882$AlleWlaveideM
+JeanFrancoisChampollion706&amp;F
+CycladicArt250#B
+JeanFrancoisChampollion831*AnoillopmahCsiocnarFnaeJ
+RomanPortraiture589!EerutiartroPnamoR
+WeddingAtCana979%JanaCtAgniddeW
+RomanPortraiture525*JerutiartroPnamoR
+TheodoreGericault161$A
+JacquesLouisDavid622&amp;EdivaDsiuoLseuqcaJ
+WingedVictory243$A
+VenusDeMilo992*ColiMeDsuneV
+RomanPortraiture898&amp;G
+GreekAntiquities993@CseitiuqitnAkeerG
+RomanPortraiture174#AerutiartroPnamoR
+JacquesLouisDavid100@E
+CoronationOfNapoleon484$D
+VenusDeMilo326%C
+WeddingAtCana660$DanaCtAgniddeW
+CoronationOfNapoleon584&amp;EnoelopaNfOnoitanoroC
+EugeneDelacroix604!GxiorcaleDeneguE
+Napoleon315$JnoelopaN
+FrenchSculptures712&amp;GserutplucShcnerF
+WingedVictory977*CyrotciVdegniW
+WeddingAtCana557#E
+WeddingAtCana161!B
+WingedVictory866!HyrotciVdegniW
+LibertyLeadingThePeople263#IelpoePehTgnidaeLytrebiL
+WeddingAtCana529@EanaCtAgniddeW
+RomanPortraiture506*J
+AncientEgypt655$ItpygEtneicnA
+EugeneDelacroix899@D
+MedievalWell358$D
+JacquesLouisDavid906%IdivaDsiuoLseuqcaJ
+RomanPortraiture813@C
+PaoloVeronese870#B
+FrenchSculptures511%FserutplucShcnerF
+Napoleon152$C
+CycladicArt618!AtrAcidalcyC
+EugeneDelacroix434!G
+TheodoreGericault239!D
+GlassPyramid707@DdimaryPssalG
+LeonardoDaVinci488#BicniVaDodranoeL
+FrenchSculptures583$HserutplucShcnerF
+RaftOfTheMedusa898*F
+LeonardoDaVinci743$BicniVaDodranoeL
+IslamicArt396#A
+TheodoreGericault353@AtluacireGerodoehT
+GreekAntiquities161%AseitiuqitnAkeerG
+PaoloVeronese303#DesenoreVoloaP
+PaoloVeronese621%I
+WingedVictory982&amp;ByrotciVdegniW
+WeddingAtCana144#I
+RomanPortraiture518*D
+AncientEgypt563&amp;J
+CoronationOfNapoleon369%G
+AncientEgypt414*B
+CoronationOfNapoleon764@DnoelopaNfOnoitanoroC
+CycladicArt811&amp;DtrAcidalcyC
+GrandGallery835@ByrellaGdnarG
+JacquesLouisDavid462#D
+Napoleon409!GnoelopaN
+RomanPortraiture895&amp;A
+EugeneDelacroix354@FxiorcaleDeneguE
+MedievalWell160$D
+GrandGallery547$A
+RomanPortraiture296%BerutiartroPnamoR
+FrenchSculptures874@BserutplucShcnerF
+Napoleon616*G
+VenusDeMilo153%C
+CoronationOfNapoleon647#J
+PaoloVeronese606&amp;H
+RaftOfTheMedusa216&amp;D
+MedievalWell892@I
+CoronationOfNapoleon880@I
+WeddingAtCana215!C
+EugeneDelacroix828$JxiorcaleDeneguE
+CoronationOfNapoleon916@E
+MonaLisa457#GasiLanoM
+LeonardoDaVinci905@JicniVaDodranoeL
+GlassPyramid141%EdimaryPssalG
+GreekAntiquities244@I
+RaftOfTheMedusa736&amp;C
+TheodoreGericault312&amp;B
+TheodoreGericault349#AtluacireGerodoehT
+IslamicArt196$J
+EugeneDelacroix671*BxiorcaleDeneguE
+JeanFrancoisChampollion367%JnoillopmahCsiocnarFnaeJ
+GlassPyramid474&amp;H
+</code></pre>
+</details>
+
+<p>But as I&rsquo;m smart, I grep&rsquo;d &ldquo;leonardo&rdquo; on the file and got three matches :</p>
+<pre tabindex="0"><code>LeonardoDaVinci488#BicniVaDodranoeL
+LeonardoDaVinci743$BicniVaDodranoeL
+LeonardoDaVinci905@JicniVaDodranoeL
+</code></pre><p>It ended that <code>LeonardoDaVinci743$BicniVaDodranoeL</code> was the correct password with the login <code>leonardo</code>.</p>
+<h2 id="uart-shell-with-admin-features">UART shell with admin features</h2>
+<p>Here are the files :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-rw------- <span style="color:#d699b6">1</span> leonardo leonardo  <span style="color:#d699b6">220</span> Mar <span style="color:#d699b6">28</span> 09:15 .bash_history
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#d699b6">1</span> leonardo leonardo <span style="color:#d699b6">3526</span> Mar <span style="color:#d699b6">28</span> 09:15 .bashrc
+</span></span><span style="display:flex;"><span>drwx------ <span style="color:#d699b6">2</span> leonardo leonardo <span style="color:#d699b6">4096</span> Mar <span style="color:#d699b6">28</span> 09:15 .cache
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#d699b6">1</span> leonardo leonardo   <span style="color:#d699b6">56</span> Mar <span style="color:#d699b6">29</span> 12:43 notes.txt
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#d699b6">1</span> leonardo leonardo   <span style="color:#d699b6">21</span> Mar <span style="color:#d699b6">28</span> 09:15 security.log -&gt; /var/log/security.log
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And in <code>help</code> we got interesting commands :</p>
+<pre tabindex="0"><code>mqtt --connect
+mqtt --validate &lt;device&gt;
+mqtt --status
+</code></pre><p>In the <code>security.log</code> we learn about an MQTT device.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>leonardo@louvre:~# cat security.log
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">===</span> Security Log <span style="color:#7a8478">===</span>
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 08:15:23<span style="color:#7a8478">]</span> System startup
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 10:32:45<span style="color:#7a8478">]</span> Failed login attempt: username<span style="color:#7a8478">=</span>admin
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 12:45:18<span style="color:#7a8478">]</span> Backup completed successfully
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 14:03:52<span style="color:#7a8478">]</span> MQTT connection established: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
+</span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 15:30:11<span style="color:#7a8478">]</span> System check: All sensors operational
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We get the MQTT device ID.</p>
+<p>Running <code>mqtt --status</code> we learn that it isn&rsquo;t connect. So I connect it with <code>mqtt --connect</code>
+And then I can use <code>mqtt --connect devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0</code> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Attempting to validate with device ID: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
+</span></span><span style="display:flex;"><span>Device ID matched! Successfully validated!
+</span></span><span style="display:flex;"><span>MQTT validation complete.
+</span></span><span style="display:flex;"><span>FLAG: DVCTF<span style="color:#7a8478">{</span>L0uvr3_U4rt_Sh3ll_4rt1st<span style="color:#7a8478">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

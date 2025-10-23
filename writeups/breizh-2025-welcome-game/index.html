@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Welcome Game writeup, BreizhCTF 2025." />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/breizh-2025-welcome-game/">
+  <meta property="og:title" content="BreizhCTF 2025 - Welcome Game  [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/breizh-2025-welcome-game/">
+  <meta name="twitter:title" content="BreizhCTF 2025 - Welcome Game  [blockchain]">
+  <meta name="twitter:description" content="Welcome Game writeup, BreizhCTF 2025.">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      BreizhCTF 2025 - Welcome Game  [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-03-15 22:38:56 &#43;0100 CET">
+            2025-03-15
+        </time>
+    </p>
+
+    <h1>BreizhCTF 2025 - Welcome Game  [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#code-analysis">Code analysis</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p><strong>Welcome Game</strong> writeup, BreizhCTF 2025.</p>
+<blockquote>
+<p>Difficulty : Very Easy</p>
+</blockquote>
+<blockquote>
+<p>Team : So what if I&rsquo;m a Phreaks 2600</p>
+</blockquote>
+<blockquote>
+<p>Description : Bienvenue au BreizhCTF 2025 ! Pour commencer, nous allons jouer à un jeu, trouvez un moyen de réussir à gagner la partie pour obtenir le flag.</p>
+</blockquote>
+<blockquote>
+<p>Author : <a href="https://x.com/Clemhate2">K.L.M</a></p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>Notice that it&rsquo;s a sudoku grid</li>
+<li>Use an online solver</li>
+<li>Submit the sudoku solution and get the flag</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>We were given a solidity file with a 2-dimensions array of 9 lines and 9 columns.
+It was possible to submit an array with the same dimensions to <code>submitSolution()</code> and several checks were done to verify if we got the right solution, if yes, the challenge is solved.</p>
+<p>Here is the challenge source code :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Challenge.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">89
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// Author : K.L.M 
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// Difficulty : Easy
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Challenge {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bool</span> <span style="color:#e67e80">public</span> solved;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">public</span> initialGrid;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>() {
+</span></span><span style="display:flex;"><span>        solved <span style="color:#7a8478">=</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>        initialGrid <span style="color:#7a8478">=</span> [
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">3</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">4</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">1</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">7</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">5</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">9</span>]
+</span></span><span style="display:flex;"><span>        ];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">submitSolution</span>(<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> solution) <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (isValidSolution(solution)) {
+</span></span><span style="display:flex;"><span>            solved <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isValidSolution</span>(<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> solution) <span style="color:#e67e80">internal</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> j <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; j <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; j<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">if</span> (initialGrid[i][j] <span style="color:#7a8478">!=</span> <span style="color:#d699b6">0</span> <span style="color:#7a8478">&amp;&amp;</span> solution[i][j] <span style="color:#7a8478">!=</span> initialGrid[i][j]) {
+</span></span><span style="display:flex;"><span>                    <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isUnique(solution[i])) <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isUnique(getColumn(solution, i))) <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">3</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> j <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; j <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">3</span>; j<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isUnique(getSubgrid(solution, i <span style="color:#7a8478">*</span> <span style="color:#d699b6">3</span>, j <span style="color:#7a8478">*</span> <span style="color:#d699b6">3</span>))) <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>; 
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isUnique</span>(<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> arr) <span style="color:#e67e80">internal</span> <span style="color:#e67e80">pure</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bool</span>[<span style="color:#d699b6">10</span>] <span style="color:#e67e80">memory</span> seen;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">if</span> (arr[i] <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">||</span> arr[i] <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">9</span> <span style="color:#7a8478">||</span> seen[arr[i]]) {
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            seen[arr[i]] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">getColumn</span>(<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> grid, <span style="color:#dbbc7f">uint8</span> col) <span style="color:#e67e80">internal</span> <span style="color:#e67e80">pure</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> column;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            column[i] <span style="color:#7a8478">=</span> grid[i][col];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> column;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">getSubgrid</span>(<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> grid, <span style="color:#dbbc7f">uint8</span> row, <span style="color:#dbbc7f">uint8</span> col) <span style="color:#e67e80">internal</span> <span style="color:#e67e80">pure</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> subgrid;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> index <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">3</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> j <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; j <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">3</span>; j<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>                subgrid[index<span style="color:#7a8478">++</span>] <span style="color:#7a8478">=</span> grid[row <span style="color:#7a8478">+</span> i][col <span style="color:#7a8478">+</span> j];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> subgrid;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span>(<span style="color:#dbbc7f">bool</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> solved;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<h2 id="code-analysis">Code analysis</h2>
+<p>Through the constructor, an array is initialized :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> initialGrid <span style="color:#7a8478">=</span> [
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">3</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">4</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">1</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">7</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">5</span>],
+</span></span><span style="display:flex;"><span>            [<span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">9</span>]
+</span></span><span style="display:flex;"><span>        ];
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>I didn&rsquo;t got it at first but the next step will make it clear.</p>
+<p>The next function allow us to submit an array and verify it through <code>isValidSolution()</code> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">submitSolution</span>(<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> solution) <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">if</span> (isValidSolution(solution)) {
+</span></span><span style="display:flex;"><span>      solved <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And this next function run a series of checks :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">isValidSolution()</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isValidSolution</span>(<span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">memory</span> solution) <span style="color:#e67e80">internal</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> j <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; j <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; j<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">if</span> (initialGrid[i][j] <span style="color:#7a8478">!=</span> <span style="color:#d699b6">0</span> <span style="color:#7a8478">&amp;&amp;</span> solution[i][j] <span style="color:#7a8478">!=</span> initialGrid[i][j]) {
+</span></span><span style="display:flex;"><span>              <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">9</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isUnique(solution[i])) <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isUnique(getColumn(solution, i))) <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">3</span>; i<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">uint8</span> j <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; j <span style="color:#7a8478">&lt;</span> <span style="color:#d699b6">3</span>; j<span style="color:#7a8478">++</span>) {
+</span></span><span style="display:flex;"><span>          <span style="color:#e67e80">if</span> (<span style="color:#7a8478">!</span>isUnique(getSubgrid(solution, i <span style="color:#7a8478">*</span> <span style="color:#d699b6">3</span>, j <span style="color:#7a8478">*</span> <span style="color:#d699b6">3</span>))) <span style="color:#e67e80">return</span> <span style="color:#e67e80">false</span>; 
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e67e80">return</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Which check in his order :</p>
+<ol>
+<li>Check if the numbers from the initial grid (except zeros) are in the submitted grid by the user.</li>
+<li>Check if there are no duplicate numbers in a row</li>
+<li>Check if there are no duplicate numbers in a column</li>
+<li>Check if there are no duplicate in the 9 3x3 squares of the submitted grid.</li>
+</ol>
+<p>So we can understand that the challenge is actually a <strong>sudoku</strong>.</p>
+<h1 id="solving">Solving</h1>
+<p>Now we know that we have to solve the sudoku using the initial grid, we can use an online solver like <a href="https://www.dcode.fr/solveur-sudoku">https://www.dcode.fr/solveur-sudoku</a>.</p>
+<p>Then we get the following grid :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>[<span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">2</span>],
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">6</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">8</span>],
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">7</span>],
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">8</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">3</span>],
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">4</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">1</span>],    
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">7</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">6</span>],
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">9</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">4</span>],
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">5</span>],
+</span></span><span style="display:flex;"><span>[<span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">9</span>]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>I wrote a contract that send the grid because I didn&rsquo;t know how to submit an array with <a href="https://book.getfoundry.sh/reference/cast/cast-send">cast</a> :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Solve.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;./Challenge.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Solve {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span>[<span style="color:#d699b6">9</span>][<span style="color:#d699b6">9</span>] <span style="color:#e67e80">public</span> grid;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Challenge <span style="color:#e67e80">public</span> TARGET;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">address</span> _target) {
+</span></span><span style="display:flex;"><span>        grid <span style="color:#7a8478">=</span> [
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">2</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">6</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">8</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">7</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">8</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">3</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">4</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">1</span>],    
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">7</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">6</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">9</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">4</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">9</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">3</span>, <span style="color:#d699b6">5</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#d699b6">3</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">5</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">8</span>, <span style="color:#d699b6">6</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">7</span>, <span style="color:#d699b6">9</span>]
+</span></span><span style="display:flex;"><span>        ];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        TARGET <span style="color:#7a8478">=</span> Challenge(_target);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">submitSolution</span>() <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        TARGET.submitSolution(grid);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>And then we can deploy the contract :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>forge create --broadcast breizh/2025/blockchain/welcome-game/Solve.sol:Solve -r https://welcome-game-268.chall.ctf.bzh/rpc  --private-key $PKEY --constructor-args $TARGET
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And trigger the &ldquo;submitSolution()&rdquo; function from our deployed contract.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast send 0xF14165Da8e14d2AFdF75a448A057D460D13b0242 --private-key $PKEY  -r https://welcome-game-268.chall.ctf.bzh/rpc <span style="color:#b2c98f">&#34;submitSolution()&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>BZHCTF{W3lcome_t0_th3_BZHCTF25!}</code></p>
+<p>Another way to solve the challenge was published by <a href="https://blog.neoreo.fr/">neoreo</a> without deploying a contract by submitting directly the array formated as it would be written in a solidity file but without lines break :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast send $TARGET <span style="color:#b2c98f">&#34;submitSolution(uint8[9][9])&#34;</span>   <span style="color:#b2c98f">&#34;[[5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],[8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],[9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,9]]&#34;</span>  -r $RPC --private-key $PK
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

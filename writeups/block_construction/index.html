@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="braeker CTF 2024 - cryptography ">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="braeker CTF 2024 - cryptography " />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/block_construction/">
+  <meta property="og:title" content="BraekerCTF 2024 - Block construction [crypto]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/block_construction/">
+  <meta name="twitter:title" content="BraekerCTF 2024 - Block construction [crypto]">
+  <meta name="twitter:description" content="braeker CTF 2024 - cryptography ">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      BraekerCTF 2024 - Block construction [crypto]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-02-24 18:39:49 &#43;0100 CET">
+            2024-02-24
+        </time>
+    </p>
+
+    <h1>BraekerCTF 2024 - Block construction [crypto]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#source-code">Source code</a></li>
+        <li><a href="#code-explanation">Code explanation</a></li>
+        <li><a href="#solving">Solving</a>
+          <ul>
+            <li><a href="#understanding-the-encryption">Understanding the encryption</a></li>
+            <li><a href="#retrieving-the-correct-rand_printable">Retrieving the correct rand_printable</a></li>
+            <li><a href="#script">Script</a></li>
+          </ul>
+        </li>
+        <li><a href="#tldr">TL;DR</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Easy to medium</p>
+</blockquote>
+<blockquote>
+<p>Team : Crampting</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/spipm/BraekerCTF_2024_public/tree/main/challenges/crypto-hashcracking/block-construction">Source files</a></p>
+</blockquote>
+<blockquote>
+<p>Description : &ldquo;Sir, sir! This is a construction site.&rdquo; You look up at what you thought was a building
+being constructed, but you realize it is a construction bot. &ldquo;Sir please move aside.
+I had to have these blocks in order since last week, but some newbie construction bot shuffled them.&rdquo;
+&ldquo;I can move aside, &quot; you tell the bot, &ldquo;but I might be able to help you out.&rdquo;</p>
+</blockquote>
+<h2 id="source-code">Source code</h2>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> binascii 
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> Crypto.Cipher <span style="color:#e67e80">import</span> AES
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> os <span style="color:#e67e80">import</span> urandom
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> string <span style="color:#e67e80">import</span> printable
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> time <span style="color:#e67e80">import</span> time
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;brck</span><span style="color:#b2c98f">{not_a_flag}</span><span style="color:#b2c98f">&#34;</span>
+</span></span><span style="display:flex;"><span>key <span style="color:#7a8478">=</span> urandom(<span style="color:#d699b6">32</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">encrypt</span>(raw):
+</span></span><span style="display:flex;"><span>	cipher <span style="color:#7a8478">=</span> AES<span style="color:#7a8478">.</span>new(key, AES<span style="color:#7a8478">.</span>MODE_ECB)
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">return</span> binascii<span style="color:#7a8478">.</span>hexlify(cipher<span style="color:#7a8478">.</span>encrypt(raw<span style="color:#7a8478">.</span>encode()))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"># Generate random bytes</span>
+</span></span><span style="display:flex;"><span>random<span style="color:#7a8478">.</span>seed(<span style="color:#d699b6">int</span>(time()))
+</span></span><span style="display:flex;"><span>rand_printable <span style="color:#7a8478">=</span> [x <span style="color:#e67e80">for</span> x <span style="color:#7a8478">in</span> printable]
+</span></span><span style="display:flex;"><span>random<span style="color:#7a8478">.</span>shuffle(rand_printable)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"># Generate ciphertext</span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">with</span> <span style="color:#d699b6">open</span>(<span style="color:#b2c98f">&#39;ciphertext&#39;</span>,<span style="color:#b2c98f">&#39;w&#39;</span>) <span style="color:#e67e80">as</span> f:
+</span></span><span style="display:flex;"><span>	<span style="color:#e67e80">for</span> x <span style="color:#7a8478">in</span> flag:
+</span></span><span style="display:flex;"><span>		<span style="color:#e67e80">for</span> y <span style="color:#7a8478">in</span> rand_printable:
+</span></span><span style="display:flex;"><span>			<span style="color:#859289;font-style:italic"># add random padding to block and encrypt</span>
+</span></span><span style="display:flex;"><span>			f<span style="color:#7a8478">.</span>write(encrypt(x <span style="color:#7a8478">+</span> (y<span style="color:#7a8478">*</span><span style="color:#d699b6">31</span>))<span style="color:#7a8478">.</span>decode())
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="code-explanation">Code explanation</h2>
+<ul>
+<li>A seed based on the time is defined with <code>random.seed(x)</code>.</li>
+<li>The script shuffle <code>string.printable</code> from the string library and stock it in <code>rand_printable</code>.</li>
+<li>Concatenate a character of the <code>flag</code> with 31 times a caracter of <code>rand_printable</code> so the concatenation has a size of 32.</li>
+<li>Then encrypt the concatenation with AES ECB and a randomly generated key of size 32, and repeat the concatenation with every character of <code>rand_printable</code>. This process is repeated for every character of <code>flag</code>.</li>
+<li>Each encryption is encoded in hex and appended to the file <code>ciphertext</code></li>
+</ul>
+<h2 id="solving">Solving</h2>
+<h3 id="understanding-the-encryption">Understanding the encryption</h3>
+<p>First of all, we need to know that AES encrypt block of 16 characters.
+However, in this challenge, strings of 32 characters are encrypted. Meaning thatm the first 16 characters are encrypted, then the 16 other and finally the two cipher are concatenated to make the final ciphertext.</p>
+<p><img src="https://raw.githubusercontent.com/wepfen/writeups/main/braekerCTF/2024/crypto/block_construction/explanation_aes_encrypt.png" alt="Explanation of AES encryption"></p>
+<p>In this image, we can understand that if the two 16 chars halves of a 32 chars bloc are the same, thus the encryption of the two halves will be the same.</p>
+<p>For the challenge we have each character of the flag concatenated with every chars of <code>rand_printable</code>.</p>
+<p>Exemple for first knwon char &lsquo;b&rsquo;: Encrypt(&lsquo;b&rsquo; + 31 * &lsquo;M&rsquo;) , then encrypt(&lsquo;b&rsquo; + 31 * &lsquo;8&rsquo;) and so on for all 100 characters of <code>rand_printable</code>.</p>
+<blockquote>
+<p>I chose &lsquo;8&rsquo; and &lsquo;M&rsquo; randomly because <code>rand_printable</code> also is.</p>
+</blockquote>
+<p>So there will be a moment where our first character &lsquo;b&rsquo; will be concatened with 31 * &lsquo;b&rsquo; from rand_printable and as we said earlier, then the two halves of the 32 chars (64 chars in hex) of th 32 chars encrypted will be the same. It is how we know which character of the flag is actually encrypted.</p>
+<p>To get the flag, knowing all flag characters are encrypted 100 times into 64 hex blocs:</p>
+<ul>
+<li>loop every 6400 chars in <code>ciphertext</code></li>
+<li>inside this 6400 chars, loop 100 times until we find a 64 hex chars encrypted blocks where its first half is equal to its second half.</li>
+<li>Note the position of this block in his group of 100 encrypted blocks.</li>
+</ul>
+<p>This position will be the position of the char in <code>rand_printable</code>.</p>
+<p>For instance, if the good bloc is at the position <code>24</code>, then the corresponding character will be <code>rand_printable[24]</code>, supposing we know rand_printable.</p>
+<p>Now after getting every position, we need to find the right <code>rand_printable</code> shuffle to get the flag.</p>
+<h3 id="retrieving-the-correct-rand_printable">Retrieving the correct rand_printable</h3>
+<p>The list of the correct indices is the following:</p>
+<p><code>blocPositions = [85, 89, 11, 63, 32, 51, 84, 74, 40, 36, 42, 14, 23, 36, 84, 75]</code></p>
+<p>So <code>flag[0] = rand_printable[blocPositions[0]]</code> with of course the correct rand_printable.</p>
+<p>As said in the <strong>code explanation</strong> section, <code>rand_printable</code> is a <code>random.shuffle()</code> of <code>string.printable</code> with the random seed defined by the time.</p>
+<p>We can get the file creation date which is <code>2024:02:21 14:37:16+01:00</code> get the unix time of it : <code>1708526236</code>.</p>
+<p>In the description of the challenge, a bot said the blocks were in place a &ldquo;week&rdquo; ago, so i also got the unix time une week before and bruteforced the timestamp from here: <code>1707865200</code>.</p>
+<p>In a for loop, define the seed, generate a new <code>rand_printable</code>, reconstructing a flag with the indice list, and look for &lsquo;brck&rsquo; in the reconstructed flag.</p>
+<h3 id="script">Script</h3>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">59
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> string
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"># get the indice of blocks where block[:32] == block[32:]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">getLetterIndices</span>(blocs) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">list</span>: 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    indicesList <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">for</span> window <span style="color:#7a8478">in</span> <span style="color:#d699b6">range</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">len</span>(blocs), <span style="color:#d699b6">6400</span>): <span style="color:#859289;font-style:italic"># un caractère = 100 blocs de 64 caractères en hex</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        blocChunk <span style="color:#7a8478">=</span> blocs[window:window<span style="color:#7a8478">+</span><span style="color:#d699b6">6400</span>] 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">for</span> bloc <span style="color:#7a8478">in</span> <span style="color:#d699b6">range</span>(<span style="color:#d699b6">0</span>, <span style="color:#d699b6">len</span>(blocChunk), <span style="color:#d699b6">64</span>): <span style="color:#859289;font-style:italic"># un bloc fait 64 caractères</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            <span style="color:#859289;font-style:italic"># check if the two half are equal</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#e67e80">if</span> blocChunk[bloc:bloc<span style="color:#7a8478">+</span><span style="color:#d699b6">32</span>] <span style="color:#7a8478">==</span> blocChunk[bloc<span style="color:#7a8478">+</span><span style="color:#d699b6">32</span>:bloc<span style="color:#7a8478">+</span><span style="color:#d699b6">64</span>]:
+</span></span><span style="display:flex;"><span>                indicesList<span style="color:#7a8478">.</span>append(bloc<span style="color:#7a8478">//</span><span style="color:#d699b6">64</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#859289;font-style:italic"># passe au caractères chiffré suivant</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#e67e80">break</span>
+</span></span><span style="display:flex;"><span>                
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> indicesList
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">getFlag</span>(indicesList):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    initialTimestamp <span style="color:#7a8478">=</span> <span style="color:#d699b6">1707865200</span> <span style="color:#859289;font-style:italic"># a week before file creation</span>
+</span></span><span style="display:flex;"><span>    lastTimestamp <span style="color:#7a8478">=</span> <span style="color:#d699b6">1708556400</span> <span style="color:#859289;font-style:italic"># file creation timestamp</span>
+</span></span><span style="display:flex;"><span>    flag <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>    rollback <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    timestp <span style="color:#7a8478">=</span> initialTimestamp
+</span></span><span style="display:flex;"><span>    rand_printable <span style="color:#7a8478">=</span> string<span style="color:#7a8478">.</span>printable
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">while</span> flag[<span style="color:#d699b6">0</span>:<span style="color:#d699b6">4</span>] <span style="color:#7a8478">!=</span> <span style="color:#b2c98f">&#39;brck&#39;</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">#(re)define rand_printable</span>
+</span></span><span style="display:flex;"><span>        rand_printable <span style="color:#7a8478">=</span> <span style="color:#d699b6">list</span>(string<span style="color:#7a8478">.</span>printable)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">#define seed</span>
+</span></span><span style="display:flex;"><span>        random<span style="color:#7a8478">.</span>seed(timestp <span style="color:#7a8478">+</span> rollback)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">#shuffle string.printable</span>
+</span></span><span style="display:flex;"><span>        random<span style="color:#7a8478">.</span>shuffle(rand_printable)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        flag <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;&#34;</span><span style="color:#7a8478">.</span>join([rand_printable[i] <span style="color:#e67e80">for</span> i <span style="color:#7a8478">in</span> indicesList])
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">#if &#39;brck&#39; in flag:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">#    print(timestp)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        rollback <span style="color:#7a8478">+=</span> <span style="color:#d699b6">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> flag
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">if</span> __name__ <span style="color:#7a8478">==</span> <span style="color:#b2c98f">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    rawBlocs <span style="color:#7a8478">=</span> <span style="color:#d699b6">open</span>(<span style="color:#b2c98f">&#34;ciphertext.old&#34;</span>, <span style="color:#b2c98f">&#39;r&#39;</span>)<span style="color:#7a8478">.</span>read()
+</span></span><span style="display:flex;"><span>    indicesList <span style="color:#7a8478">=</span> getLetterIndices(rawBlocs)
+</span></span><span style="display:flex;"><span>    flag <span style="color:#7a8478">=</span> getFlag(indicesList)
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">print</span>(flag)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="tldr">TL;DR</h2>
+<ul>
+<li>
+<p>Each character are concatenated with 31 times a random character of a charset and then encrypted.</p>
+</li>
+<li>
+<p>Some times the random character will be the flag character</p>
+</li>
+<li>
+<p>In this case, the two halves of the encrypted block will be the same and we can determine the position of this block in his group of 100 other encrypted blocks.</p>
+</li>
+<li>
+<p>Get the flag like this:</p>
+<ul>
+<li>Set the seed of random with the timestamp of the file</li>
+<li>shuffle hte charset string.printable</li>
+<li>Map the blocks position with the chars position of the right charset like that: <code>flag[i] = rand_printable[blocPositions[i]]</code></li>
+<li>Try to find &lsquo;brck&rsquo; in the generated flag</li>
+<li>Iterate again till it works</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Flag: <code>brck{EZP3n9u1nZ}</code></p>
+</blockquote>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

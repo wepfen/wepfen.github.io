@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Bluehens CTF 2023 ">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Bluehens CTF 2023 " />
+  <meta property="og:image" content="https://wepfen.github.io//images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/least-significant-color/">
+  <meta property="og:title" content="BluehensCTF 2023 - Least Significant Color [misc]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/least-significant-color/">
+  <meta name="twitter:title" content="BluehensCTF 2023 - Least Significant Color [misc]">
+  <meta name="twitter:description" content="Bluehens CTF 2023 ">
+  <meta name="twitter:image" content="https://wepfen.github.io//images/avatar.png">
+  
+  <title>
+    
+      BluehensCTF 2023 - Least Significant Color [misc]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2023-11-01 23:11:27 &#43;0100 CET">
+            2023-11-01
+        </time>
+    </p>
+
+    <h1>BluehensCTF 2023 - Least Significant Color [misc]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#reminder">Reminder</a>
+          <ul>
+            <li><a href="#images">Images</a></li>
+            <li><a href="#least-significant-bit">Least Significant Bit</a></li>
+          </ul>
+        </li>
+        <li><a href="#solution">Solution</a>
+          <ul>
+            <li><a href="#script">Script</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <blockquote>
+<p><a href="https://ctftime.org/writeup/38123">CTFtime</a></p>
+</blockquote>
+<blockquote>
+<p>I can&rsquo;t decide which color is the least significant&hellip; red xor green?</p>
+<p>-azroberts</p>
+</blockquote>
+<blockquote>
+<p>Difficulty : Easy</p>
+</blockquote>
+<blockquote>
+<p>Team : 0xA28</p>
+</blockquote>
+<p><img src="https://github.com/wepfen/writeups/blob/main/Bluehens_CTF/2023/misc/least_significant_color/least_significant_color.png?raw=true" alt="encoded.png">
+So for this challenge we got an image file provided <code>encoded.png</code>. <br>
+All we have to know is in the title AND in the description.</p>
+<p>Before giving the solution, we need to have in mind two things: Least significant bit (LSB) and the representation of an image.</p>
+<h2 id="reminder">Reminder</h2>
+<h3 id="images">Images</h3>
+<p>An image is basically a 2D list of tuples (R=red, G=green, B=blue) of 3 values.
+The tuple define a number from 0 to 255 defining the intensity of each color</p>
+<p>The width of an image define the number of tuples per lines.<br>
+The height of an image define the number of lines.</p>
+<p><img src="https://raw.githubusercontent.com/wepfen/writeups/main/Bluehens_CTF/2023/misc/least_significant_color/pixel_in_image.png" alt="representation of an image"></p>
+<h3 id="least-significant-bit">Least Significant Bit</h3>
+<p>The least signifcant bit is the last bit of byte. It is used in stego to hide text or else.
+So we can get multiple bytes and get edit the LSB of each so if we concatenate the LSB of each we get a message.</p>
+<p>Here is in image before and after editing the LSB (no difference, i think)</p>
+<p><img src="https://raw.githubusercontent.com/wepfen/writeups/main/Bluehens_CTF/2023/misc/least_significant_color/lsb_orginal_vs_edited.png" alt="LSB vs original"></p>
+<h2 id="solution">Solution</h2>
+<p>As the description tell us, i will xor the red value of a tuple with it&rsquo;s green one and iterate this for 30 character = 30 bytes = 30*8 LSB = 240 pixels = 240 tuples.</p>
+<h3 id="script">Script</h3>
+<p>I will use a python script with the PIL module for image processing found after some research.</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> PIL <span style="color:#e67e80">import</span> Image
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#7a8478">=</span> Image<span style="color:#7a8478">.</span>open(<span style="color:#b2c98f">&#39;encoded.png&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>lsb <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>b <span style="color:#7a8478">=</span> <span style="color:#b2c98f">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pixels <span style="color:#7a8478">=</span> <span style="color:#d699b6">list</span>(flag<span style="color:#7a8478">.</span>getdata())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> c,p <span style="color:#7a8478">in</span> <span style="color:#d699b6">enumerate</span>(pixels):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    b<span style="color:#7a8478">+=</span><span style="color:#d699b6">bin</span>(p[<span style="color:#d699b6">1</span>]<span style="color:#7a8478">^</span>p[<span style="color:#d699b6">0</span>])[<span style="color:#7a8478">-</span><span style="color:#d699b6">1</span>]
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> <span style="color:#d699b6">len</span>(b) <span style="color:#7a8478">==</span> <span style="color:#d699b6">8</span>:
+</span></span><span style="display:flex;"><span>        lsb<span style="color:#7a8478">.</span>append(<span style="color:#d699b6">int</span>(b, <span style="color:#d699b6">2</span>))
+</span></span><span style="display:flex;"><span>        b<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">if</span> c <span style="color:#7a8478">==</span> <span style="color:#d699b6">240</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">break</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> char <span style="color:#7a8478">in</span> (lsb):
+</span></span><span style="display:flex;"><span>    <span style="color:#d699b6">print</span>(<span style="color:#d699b6">chr</span>(char), end<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;&#34;</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>XOR red with green and append the least significant bit to b</li>
+<li>If b is 8 bits, empty it&rsquo;s value in &rsquo;lsb&rsquo; list</li>
+<li>For each bytes in lsb[], print its ascii value</li>
+</ol>
+<p>Output after cleaning : <code>UDCTF{y0u_R_1mag3_wizZarD}</code></p>
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>

