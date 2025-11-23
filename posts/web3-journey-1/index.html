@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Here is the start of a mini series of posts where I will document my journey on the blockchain and blockhain security">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Here is the start of a mini series of posts where I will document my journey on the blockchain and blockhain security" />
+  <meta property="og:image" content="https://wepfen.github.io/images/avatar.png" />
+  <meta property="og:url" content="https://wepfen.github.io/posts/web3-journey-1/">
+  <meta property="og:title" content="My blockchain security journey - part 1">
+  <meta property="og:site_name" content="wepfen.github.io">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/posts/web3-journey-1/">
+  <meta name="twitter:title" content="My blockchain security journey - part 1">
+  <meta name="twitter:description" content="Here is the start of a mini series of posts where I will document my journey on the blockchain and blockhain security">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/avatar.png">
+  
+  <title>
+    
+      My blockchain security journey - part 1
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">~/</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-11-19 08:04:12 &#43;0100 CET">
+            2025-11-19
+        </time>
+    </p>
+
+    <h1>My blockchain security journey - part 1</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#where-it-all-started"><strong>Where It All Started</strong></a></li>
+    <li><a href="#how-i-started-to-learn"><strong>How I started to learn</strong></a>
+      <ul>
+        <li><a href="#what-i-have-missed-while-learning"><strong>What I have missed while learning</strong></a></li>
+        <li><a href="#what-i-would-recommend-to-a-beginner"><strong>What I would recommend to a beginner</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#what"><strong>What’s next for me ?</strong></a></li>
+    <li><a href="#references"><strong>References</strong></a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p>The subject is mainly solidity and EVM but it applies to any code base for the most part of this blogpost.</p>
+<h1 id="where-it-all-started"><strong>Where It All Started</strong></h1>
+<p>I was doing a CTF with my <a href="https://x.com/phreaks2600">school CTF team</a>, the <a href="https://github.com/GCC-ENSIBS/GCC-CTF-2024/tree/main/Web3">GCC CTF</a>.</p>
+<p>There was a blockchain category that no one solved in the team so I decided to give it try.</p>
+<p>And I absolutely <strong>flopped</strong>.</p>
+<p><img src="https://wepfen.github.io/images/favorites/airball/airball_sob.gif" alt="airball curry"></p>
+<p>I didn&rsquo;t even know what a wallet was &hellip;</p>
+<p>There were only solidity challenges, and I first found the language pretty straightforward to understand. The most weird part was understanding the concept of <strong>contract</strong>, <strong>constructor</strong></p>
+<p>However I had some idea to solve a challenge, but there were a gap between what I had in head and how to apply it. In cryptography I have got <strong>sagemath, pycryptodome and pwntools</strong>. But for web3 I had no idea. And I was too lazy to check blogs, writeups or ask chatGPT (free version btw so it is as dumb as me).</p>
+<p><img src="../../images/memes/me_and_gpt_dumb_asg.png" alt="me and gpt"></p>
+<p>After reading some writeups, it turns out it is not really different :</p>
+<table>
+  <thead>
+      <tr>
+          <th>Solidity challenge</th>
+          <th>Crypto challenge</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>RPC server</td>
+          <td>TCP server</td>
+      </tr>
+      <tr>
+          <td>foundry, web3.py, web3.js</td>
+          <td>pwntools, socket</td>
+      </tr>
+      <tr>
+          <td>python script, smart contract, javascript</td>
+          <td>python script</td>
+      </tr>
+      <tr>
+          <td>&ldquo;Contract is ERC20 {}&rdquo;</td>
+          <td>cipher = AES.new(key, mode)</td>
+      </tr>
+  </tbody>
+</table>
+<p>We still had zero flags in the category after the CTF, <strong>BUT</strong>, I was very hungry for knowledge so I started to grind on solidity and smart contracts.</p>
+<hr>
+<h1 id="how-i-started-to-learn"><strong>How I started to learn</strong></h1>
+<p>So after the CTF, I read somes writeups and tried to solve on my side.
+I then learn about <a href="https://remix.ethereum.org/">Remix</a>, about <a href="https://ethereum.org/fr/developers/docs/apis/json-rpc/">RPCs</a>, <a href="https://docs.soliditylang.org/en/latest/abi-spec.html">ABI</a>, about EVMs and more.</p>
+<p>I directly noticed that I needed many prior knowledge in EVM, of how works the smart contracts and how I can interact with it. The <a href="https://docs.soliditylang.org/en/v0.8.30/introduction-to-smart-contracts.html">solidity docs</a> helped a lot with that to just have picture of what are transactons, blocks, storage, gas and more.</p>
+<p>I then continued by doing CTFs on some wargames : <a href="https://www.root-me.org/fr/Challenges/Programmation/">rootme</a>, <a href="https://app.hackthebox.com/">hackthebox</a>.</p>
+<p>Then I heard that there are platfomrs made to learn like <a href="https://nodeguardians.io/">nodeguardians</a>.
+I would also recommend <a href="https://cryptozombies.io/fr/">cryptozombies</a> for beginners.</p>
+<h2 id="what-i-have-missed-while-learning"><strong>What I have missed while learning</strong></h2>
+<p>A mistake I&rsquo;ve made is to not be curious to get interested into the blockchain ecosystem. All I wanted to do is to flag challenge.</p>
+<p>The different cryptocurrencies, the most known, how do they work, how are they different from bitcoin, what is a DEX, what is a DAO, what are the different blockchain project and what do they do. Understand how the crypto are traded, how to buy/sell and the blockchain glossary, how people actually make money with cryptos.</p>
+<p>I am actually fixing this by picking a random word on <a href="https://www.cointracker.io/learn">https://www.cointracker.io/learn</a> and dig into it, or reading twitter (here is a <a href="https://x.com/i/lists/1957434582950646090">list</a> I try to fill everyday).</p>
+<h2 id="what-i-would-recommend-to-a-beginner"><strong>What I would recommend to a beginner</strong></h2>
+<p>For a total beginner in solidity I would recommand to first focus on the basics.</p>
+<p>I think that the best way to learn is to switch <strong>between theory and practice</strong>. Reading docs (for instance ERC20) and try to create an ERC20 Token (but don&rsquo;t reinvent the wheel and use existing <a href="https://docs.openzeppelin.com/contracts/4.x/erc20">contract framework)</a> and find a way to make it vulnerable, read a blogpost/POC and try to redo it in local , do a CTF once a month/week and <a href="https://github.com/DK27ss/BalancerV2-128M-PoC">so on</a>.</p>
+<ol>
+<li>
+<p><strong>Have an overview of what is the blockchain and what you are dealing with</strong> (use <a href="https://www.bullshitremover.com/">bullshit remover</a> if you&rsquo;re lazy to read)</p>
+<ul>
+<li><a href="https://cardanofoundation.org/blog/blockchain-basics-simple-guide-beginners">https://cardanofoundation.org/blog/blockchain-basics-simple-guide-beginners</a></li>
+<li><a href="https://www.web3isgoinggreat.com/">https://www.web3isgoinggreat.com/</a></li>
+<li><a href="https://www.geeksforgeeks.org/ethical-hacking/what-is-blockchain-ecosystem/">https://www.geeksforgeeks.org/ethical-hacking/what-is-blockchain-ecosystem/</a></li>
+<li>Why it has been created ? To answer to what problem ? Isn&rsquo;t the traditional banking system enough ?</li>
+</ul>
+</li>
+<li>
+<p><strong>Step up your game and get some solidity knowledge</strong></p>
+<ul>
+<li>Either go on <a href="https://cryptozombies.io/fr/">cryptozombies</a>.</li>
+<li>Or follow this <a href="https://rareskills.io/learn-solidity">rareskills tutorial</a> for beginners.</li>
+<li>Focus on foundry (used in the rareskills tutorial).</li>
+<li>Get to know the mains ERC (20, 721, 1155 &hellip;) and read the most common <a href="https://eips.ethereum.org/">EIPs</a> and understand how the works and they are used for.</li>
+</ul>
+</li>
+<li>
+<p><strong>Take additional times to understand how the EVM works</strong></p>
+<ul>
+<li>Reading blogsposts like <a href="https://www.alchemy.com/docs/how-does-solidity-work">alchemy</a> or reading this series of blog from <a href="https://www.openzeppelin.com/news/deconstructing-a-solidity-smart-contract-part-i-introduction-832efd2d7737">openzeppelin</a>.</li>
+<li>Play around with opcodes on <a href="https://www.evm.codes/">evm.codes</a>.</li>
+<li>The best way is to code a smart contract, inspect the opcodes by debugging with <a href="https://remix.ethereum.org/">remix</a> or <a href="https://getfoundry.sh/forge/debugger/">foundry debugger</a>.</li>
+<li>Tackle EVM reverse engineering and learn about existing tools made for this. Here is an interesting <a href="https://raoulschaffranek.github.io/">blog</a>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Do some CTFs</strong> :</p>
+<ul>
+<li><a href="https://nodeguardians.io/">nodeguardians</a></li>
+<li><a href="https://app.hackthebox.com/">HackTheBox</a></li>
+<li><a href="https://www.root-me.org/fr/Challenges/Programmation/">Rootme</a></li>
+<li>Train on <a href="https://github.com/minaminao/ctf-blockchain">archived CTF challenges</a></li>
+<li>Play some CTF like SekaiCTF, corCTF &hellip;</li>
+<li>Build a methodology and scripting game on vulnerable labs like <a href="https://www.damnvulnerabledefi.xyz/">DamnVulnerableDefi</a>.</li>
+</ul>
+</li>
+<li>
+<p><strong>And keep getting aware on what&rsquo;s going on the blockchain</strong> :</p>
+<ul>
+<li>Read a bit of twitter.</li>
+<li>Read articles and blogs (likely found by reading twitter).</li>
+<li>Read bug bounty and audit report.</li>
+<li>Know the existing tools for auditing.</li>
+</ul>
+</li>
+</ol>
+<p>Some wise words to finish :</p>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">One of the guaranteed ways to fail is to be overwhelmed with too many things.<br><br>Focus on 1-2 things max and truly master them.<br><br>Then move to the next thing and repeat.</p>&mdash; ddimitrov22 (@ddimitrovv22) <a href="https://twitter.com/ddimitrovv22/status/1991559370006815228?ref_src=twsrc%5Etfw">November 20, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">If it&#39;s doable, then you can do it.<br><br>No matter how complex it looks. There&#39;s nothing more to winning than that.<br><br>Especially for web3 security.</p>&mdash; ddimitrov22 (@ddimitrovv22) <a href="https://twitter.com/ddimitrovv22/status/1991949990030446863?ref_src=twsrc%5Etfw">November 21, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<hr>
+<h1 id="what"><strong>What&rsquo;s next for me ?</strong></h1>
+<p>For my side I have some catchup to do with the blockchain ecosystem. (I&rsquo;m remembering the time I was shamed by not knowing what is a <a href="https://www.coinbase.com/fr/learn/crypto-basics/what-is-a-bull-or-bear-market">bull run</a> &hellip;).</p>
+<p>I will sharpen my understanding of EVM, and other cryptos by reading whitepapers.</p>
+<p>And I&rsquo;m getting interested in bug bounty as CTF are good but I want to start to get into the real things.</p>
+<p>And finally learn rust as the core of many cryptos and infrastructure is in Rust (also Go but no thank you, <a href="https://x.com/ddimitrovv22/status/1991559370006815228">one thing at a time</a>).</p>
+<h1 id="references"><strong>References</strong></h1>
+<ul>
+<li><a href="https://x.com/phreaks2600">https://x.com/phreaks2600</a></li>
+<li><a href="https://github.com/DK27ss/BalancerV2-128M-PoC">https://github.com/DK27ss/BalancerV2-128M-PoC</a></li>
+<li><a href="https://github.com/GCC-ENSIBS/GCC-CTF-2024/tree/main/Web3">https://github.com/GCC-ENSIBS/GCC-CTF-2024/tree/main/Web3</a></li>
+<li><a href="https://remix.ethereum.org/">https://remix.ethereum.org/</a></li>
+<li><a href="https://ethereum.org/fr/developers/docs/apis/json-rpc/">https://ethereum.org/fr/developers/docs/apis/json-rpc/</a></li>
+<li><a href="https://docs.soliditylang.org/en/latest/abi-spec.html">https://docs.soliditylang.org/en/latest/abi-spec.html</a></li>
+<li><a href="https://docs.soliditylang.org/en/v0.8.30/introduction-to-smart-contracts.html">https://docs.soliditylang.org/en/v0.8.30/introduction-to-smart-contracts.html</a></li>
+<li><a href="https://www.root-me.org/fr/Challenges/Programmation/">https://www.root-me.org/fr/Challenges/Programmation/</a></li>
+<li><a href="https://app.hackthebox.com/">https://app.hackthebox.com/</a></li>
+<li><a href="https://nodeguardians.io/">https://nodeguardians.io/</a></li>
+<li><a href="https://cryptozombies.io/">https://cryptozombies.io/</a></li>
+<li><a href="https://www.cointracker.io/learn">https://www.cointracker.io/learn</a></li>
+<li><a href="https://x.com/i/lists/1957434582950646090">https://x.com/i/lists/1957434582950646090</a></li>
+<li><a href="https://docs.openzeppelin.com/contracts/4.x/erc20">https://docs.openzeppelin.com/contracts/4.x/erc20</a></li>
+<li><a href="https://www.bullshitremover.com/">https://www.bullshitremover.com/</a></li>
+<li><a href="https://cardanofoundation.org/blog/blockchain-basics-simple-guide-beginners">https://cardanofoundation.org/blog/blockchain-basics-simple-guide-beginners</a></li>
+<li><a href="https://www.web3isgoinggreat.com/">https://www.web3isgoinggreat.com/</a></li>
+<li><a href="https://www.geeksforgeeks.org/ethical-hacking/what-is-blockchain-ecosystem/">https://www.geeksforgeeks.org/ethical-hacking/what-is-blockchain-ecosystem/</a></li>
+<li><a href="https://rareskills.io/learn-solidity">https://rareskills.io/learn-solidity</a></li>
+<li><a href="https://eips.ethereum.org/">https://eips.ethereum.org/</a></li>
+<li><a href="https://www.alchemy.com/docs/how-does-solidity-work">https://www.alchemy.com/docs/how-does-solidity-work</a></li>
+<li><a href="https://www.openzeppelin.com/news/deconstructing-a-solidity-smart-contract-part-i-introduction-832efd2d7737">https://www.openzeppelin.com/news/deconstructing-a-solidity-smart-contract-part-i-introduction-832efd2d7737</a></li>
+<li><a href="https://www.evm.codes/">https://www.evm.codes/</a></li>
+<li><a href="https://getfoundry.sh/forge/debugger/">https://getfoundry.sh/forge/debugger/</a></li>
+<li><a href="https://raoulschaffranek.github.io/">https://raoulschaffranek.github.io/</a></li>
+<li><a href="https://github.com/minaminao/ctf-blockchain">https://github.com/minaminao/ctf-blockchain</a></li>
+<li><a href="https://www.damnvulnerabledefi.xyz/">https://www.damnvulnerabledefi.xyz/</a></li>
+<li><a href="https://twitter.com/ddimitrovv22">https://twitter.com/ddimitrovv22</a></li>
+<li><a href="https://www.coinbase.com/en-fr/learn/crypto-basics/what-is-a-bull-or-bear-market">https://www.coinbase.com/en-fr/learn/crypto-basics/what-is-a-bull-or-bear-market</a></li>
+</ul>
+
+</article>
+
+            </div>
+        </main>
+
+  
+    </body>
+</html>
