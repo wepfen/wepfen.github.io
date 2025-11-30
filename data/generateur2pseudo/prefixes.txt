@@ -55,6 +55,9 @@ saupoudreur
 savonneur
 siffloteur
 souffleur
+sniper
+ecraseur
+nettoyeur
 terrasseur
 traiteur
 transporteur
