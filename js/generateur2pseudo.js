@@ -43,7 +43,6 @@ const suffixes = [
   "marketeux",
   "khufar",
   "gothique",
-  "charia",
   "challmaker",
   "milf",
   "tana"
