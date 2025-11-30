@@ -83,7 +83,31 @@
         </aside>
     
 
-    <script src="/js/generateur2pseudo.js"></script>
+    <script>
+  
+  const prefixes = JSON.parse("[\"applicateur\",\"arracheur\",\"attrapeur\",\"avoineur\",\"balayeur\",\"bidouilleur\",\"bouffeur\",\"bousilleur\",\"captureur\",\"caresseur\",\"châtieur\",\"chercheur\",\"chevaucheur\",\"chiffoneur\",\"claqueur\",\"collectionneur\",\"connaisseur\",\"contrôleur\",\"croqueur\",\"débloqueur\",\"décrasseur\",\"delogeur\",\"démolisseur\",\"depouilleur\",\"devoreur\",\"dribbleur\",\"engraineur\",\"escaladeur\",\"extorqueur\",\"fetichiste\",\"frappeur\",\"gâcheur\",\"générateur\",\"grignoteur\",\"guesseur\",\"harceleur\",\"hebergeur\",\"kidnappeur\",\"kiffeur\",\"lécheur\",\"malaxeur\",\"mangeur\",\"marmonneur\",\"nettoyeur\",\"pataugeur\",\"présentateur\",\"purificateur\",\"ravageur\",\"réparateur\",\"renifleur\",\"repousseur\",\"rongeur\",\"saccageur\",\"saupoudreur\",\"savonneur\",\"siffloteur\",\"souffleur\",\"terrasseur\",\"traiteur\",\"transporteur\",\"tricoteur\",\"troubleur\",\"vaporisateur\",\"\"]");
+  const suffixes = JSON.parse("[\"00abris\",\"00papiers\",\"baddie\",\"challmaker\",\"civils\",\"cochon\",\"commercial\",\"gothique\",\"khufar\",\"LLM\",\"macaques\",\"marketeux\",\"nain\",\"paf\",\"pdf\",\"pieds\",\"slip\",\"tana\",\"\"]");
+
+  function getRandomItem(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function generateUsername() {
+  const pre = getRandomItem(prefixes);
+  const suf = getRandomItem(suffixes);
+  const username = `${pre}2${suf}`;
+
+  document.getElementById('username-display').textContent = username;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('generate-btn').addEventListener('click', generateUsername);
+
+});
+</script>
+
+
+
 <div class="username-generator">
   <div id="username-display">Clique sur le bouton</div>
 	<br> <br><br>
@@ -97,7 +121,7 @@
 	  align-items: center;
 	  justify-content: center;
 	  min-height: 100px; /* Adjust as needed */
-	  font-size: 2em;
+	  font-size: 3em;
 	  padding-top: 20%;
 	}
 
@@ -112,6 +136,11 @@
 	#generate-btn {
 	  font-size: 1.3em;
 	}
+
+	@media (max-width: 600px) {
+	  h1 {
+		font-size: 2em;
+	  }
 </style>
 
 </article>
