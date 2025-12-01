@@ -85,8 +85,11 @@
 
     <script>
   
-  const prefixes = JSON.parse("[\"applicateur\",\"arracheur\",\"attrapeur\",\"avoineur\",\"balayeur\",\"bidouilleur\",\"bouffeur\",\"bousilleur\",\"captureur\",\"caresseur\",\"châtieur\",\"chercheur\",\"chevaucheur\",\"chiffoneur\",\"claqueur\",\"collectionneur\",\"connaisseur\",\"contrôleur\",\"croqueur\",\"débloqueur\",\"décrasseur\",\"delogeur\",\"démolisseur\",\"depouilleur\",\"devoreur\",\"dribbleur\",\"engraineur\",\"escaladeur\",\"extorqueur\",\"fetichiste\",\"frappeur\",\"gâcheur\",\"générateur\",\"grignoteur\",\"guesseur\",\"harceleur\",\"hebergeur\",\"kidnappeur\",\"kiffeur\",\"lécheur\",\"malaxeur\",\"mangeur\",\"marmonneur\",\"nettoyeur\",\"pataugeur\",\"présentateur\",\"purificateur\",\"ravageur\",\"réparateur\",\"renifleur\",\"repousseur\",\"rongeur\",\"saccageur\",\"saupoudreur\",\"savonneur\",\"siffloteur\",\"souffleur\",\"terrasseur\",\"traiteur\",\"transporteur\",\"tricoteur\",\"troubleur\",\"vaporisateur\",\"\"]");
-  const suffixes = JSON.parse("[\"00abris\",\"00papiers\",\"baddie\",\"challmaker\",\"civils\",\"cochon\",\"commercial\",\"gothique\",\"khufar\",\"LLM\",\"macaques\",\"marketeux\",\"nain\",\"paf\",\"pdf\",\"pieds\",\"slip\",\"tana\",\"\"]");
+  var prefixes = JSON.parse("[\"applicateur\",\"appréciateur\",\"arracheur\",\"attrapeur\",\"avoineur\",\"balayeur\",\"bidouilleur\",\"bouffeur\",\"bousilleur\",\"captureur\",\"caresseur\",\"châtieur\",\"chercheur\",\"chevaucheur\",\"chiffoneur\",\"claqueur\",\"collectionneur\",\"connaisseur\",\"contrôleur\",\"croqueur\",\"créateur\",\"adorateur\",\"dealeur\",\"débloqueur\",\"décrasseur\",\"delogeur\",\"démolisseur\",\"depouilleur\",\"devoreur\",\"dilateur\",\"dribbleur\",\"ecraseur\",\"engraineur\",\"escaladeur\",\"extorqueur\",\"farmeur\",\"fetichiste\",\"frappeur\",\"gâcheur\",\"générateur\",\"grignoteur\",\"guesseur\",\"harceleur\",\"hebergeur\",\"invocateur\",\"kidnappeur\",\"kiffeur\",\"leader\",\"lécheur\",\"malaxeur\",\"mangeur\",\"marmonneur\",\"meneur\",\"nettoyeur\",\"pataugeur\",\"présentateur\",\"purificateur\",\"ravageur\",\"renifleur\",\"réparateur\",\"repousseur\",\"rongeur\",\"saccageur\",\"saupoudreur\",\"savonneur\",\"siffloteur\",\"sniper\",\"souffleur\",\"spammeur\",\"terrasseur\",\"traiteur\",\"transporteur\",\"tricoteur\",\"troubleur\",\"vaporisateur\",\"pourfendeur\",\"lapideur\",\"parseur\",\"vibecodeur\",\"compilateur\",\"\",\"\"]");
+  prefixes.pop();
+
+  var suffixes = JSON.parse("[\"00abris\",\"00papiers\",\"baddie\",\"challmaker\",\"civils\",\"cochon\",\"commercial\",\"gothique\",\"khufar\",\"LLM\",\"macaques\",\"marketeux\",\"nain\",\"paf\",\"pdf\",\"pieds\",\"slip\",\"tana\",\"réseaux\",\"cavu\",\"\"]");
+  suffixes.pop();
 
   function getRandomItem(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -122,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	  justify-content: center;
 	  min-height: 100px; /* Adjust as needed */
 	  font-size: 3em;
-	  padding-top: 20%;
+	  padding-top: 10%;
 	}
 
 
