@@ -147,7 +147,7 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(player <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>));
 </span></span><span style="display:flex;"><span>        player <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
 </span></span><span style="display:flex;"><span>        coin.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">1337</span>);    <span style="color:#859289;font-style:italic">// free coins for new players :)
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>For almost every blockchain interaction in this challenge, I used <a href="https://book.getfoundry.sh">foundry</a> toolkit.</p>
@@ -247,9 +247,9 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">play</span>(<span style="color:#dbbc7f">uint256</span> times) <span style="color:#e67e80">external</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// burn the coins
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(coin.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span> <span style="color:#7a8478">*</span> times));
+</span></span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(coin.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span> <span style="color:#7a8478">*</span> times));
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Have fun XD
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></td></tr></table>
 </div>
@@ -525,7 +525,7 @@
 </span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> ArcadeMachine(coin);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Assume that many people have played before you ;)
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>);
+</span></span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>);
 </span></span><span style="display:flex;"><span>        coin.deposit{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>}();
 </span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#dbbc7f">address</span>(arcadeMachine), <span style="color:#d699b6">19</span> <span style="color:#e67e80">ether</span>);
 </span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#d699b6">19</span>);
@@ -535,7 +535,7 @@
 </span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(player <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>));
 </span></span><span style="display:flex;"><span>        player <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
 </span></span><span style="display:flex;"><span>        coin.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">1337</span>);    <span style="color:#859289;font-style:italic">// free coins for new players :)
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> player <span style="color:#7a8478">!=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>) <span style="color:#7a8478">&amp;&amp;</span> player.<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">13</span>.<span style="color:#d699b6">37</span> <span style="color:#e67e80">ether</span>;
@@ -560,9 +560,9 @@
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">play</span>(<span style="color:#dbbc7f">uint256</span> times) <span style="color:#e67e80">external</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// burn the coins
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(coin.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span> <span style="color:#7a8478">*</span> times));
+</span></span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(coin.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span> <span style="color:#7a8478">*</span> times));
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Have fun XD
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    }
+</span></span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>It calls transferFrom(src, dst) so it transfer something from sender to address(0) (which is an address with only zero, so it corresponds to no one, its just here like a void, keeping all our gambled coins &hellip;) : <code>0x0000000000000000000000000000000000000000</code>)</p>
@@ -634,7 +634,7 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 </span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> ArcadeMachine(coin);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Assume that many people have played before you ;)
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>);
+</span></span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">value</span> <span style="color:#7a8478">==</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>);
 </span></span><span style="display:flex;"><span>        coin.deposit{<span style="color:#d699b6">value</span><span style="color:#7a8478">:</span> <span style="color:#d699b6">20</span> <span style="color:#e67e80">ether</span>}();
 </span></span><span style="display:flex;"><span>        coin.approve(<span style="color:#dbbc7f">address</span>(arcadeMachine), <span style="color:#d699b6">19</span> <span style="color:#e67e80">ether</span>);
 </span></span><span style="display:flex;"><span>        arcadeMachine.play(<span style="color:#d699b6">19</span>);

@@ -297,7 +297,7 @@ There is even the code that send the transaction to spin the wheel :</p>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span> <span style="color:#e67e80">const</span> tx <span style="color:#7a8478">=</span> <span style="color:#e67e80">await</span> contract.methods.playCasino(<span style="color:#d699b6">0</span>).send({ <span style="color:#859289;font-style:italic">// You&#39;re choosing to spin 0 everytime ? That&#39;s nice from you &lt;3
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    from<span style="color:#7a8478">:</span> sender,
+</span></span></span><span style="display:flex;"><span>    from<span style="color:#7a8478">:</span> sender,
 </span></span><span style="display:flex;"><span>    value<span style="color:#7a8478">:</span> web3.utils.toWei(<span style="color:#b2c98f">&#34;0.1&#34;</span>, <span style="color:#b2c98f">&#34;ether&#34;</span>),
 </span></span><span style="display:flex;"><span>    gas<span style="color:#7a8478">:</span> <span style="color:#d699b6">300000</span>,
 </span></span><span style="display:flex;"><span>});
@@ -332,7 +332,7 @@ There is even the code that send the transaction to spin the wheel :</p>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">26</span>;
+</span></span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">26</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> {CasinoPWNME} <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./Casino.sol&#34;</span>;
 </span></span><span style="display:flex;"><span>
@@ -398,7 +398,7 @@ There is even the code that send the transaction to spin the wheel :</p>
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">// SPDX-License-Identifier: MIT
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">26</span>;
+</span></span></span><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">26</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> CasinoPWNME {
 </span></span><span style="display:flex;"><span>
@@ -718,7 +718,7 @@ Luckily, even if a variable in a smart contract is private, we can recover it by
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#e67e80">#!/bin/bash
-</span></span></span><span style="display:flex;"><span><span style="color:#e67e80"></span>CASINO_ADDRESS<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;0xa13cf13ab19c0D418481360bE2667A8574435019&#34;</span>
+</span></span></span><span style="display:flex;"><span>CASINO_ADDRESS<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;0xa13cf13ab19c0D418481360bE2667A8574435019&#34;</span>
 </span></span><span style="display:flex;"><span>PRIVATE_KEY<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;0xa1a036976751622cc1a4037cf81c70bd5bf1c7d00b970679999cc8eb5819a395&#34;</span>
 </span></span><span style="display:flex;"><span>RPC_URL<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;https://mafia2.phreaks.fr/40ad4c81-b2a2-46c2-9c94-8da278f3ed5d&#34;</span>
 </span></span><span style="display:flex;"><span>MULTIPLIER<span style="color:#7a8478">=</span><span style="color:#b2c98f">&#34;14130161972673258133&#34;</span>

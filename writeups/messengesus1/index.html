@@ -142,7 +142,7 @@
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e67e80">#include</span> <span style="color:#e67e80;font-style:italic">&lt;stdio.h&gt;</span><span style="color:#e67e80">
 </span></span></span><span style="display:flex;"><span><span style="color:#e67e80">#include</span> <span style="color:#e67e80;font-style:italic">&lt;stdlib.h&gt;</span><span style="color:#e67e80">
 </span></span></span><span style="display:flex;"><span><span style="color:#e67e80">#include</span> <span style="color:#e67e80;font-style:italic">&lt;string.h&gt;</span><span style="color:#e67e80">
-</span></span></span><span style="display:flex;"><span><span style="color:#e67e80"></span>
+</span></span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#dbbc7f">int</span> <span style="color:#b2c98f">main</span>() {
 </span></span><span style="display:flex;"><span>
@@ -151,16 +151,16 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#dbbc7f">size_t</span> read_length, buffer_length <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
 </span></span><span style="display:flex;"><span>    
 </span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">// Read One Time Key
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    FILE <span style="color:#7a8478">*</span>random_bytes <span style="color:#7a8478">=</span> <span style="color:#b2c98f">fopen</span>(<span style="color:#b2c98f">&#34;/dev/urandom&#34;</span>, <span style="color:#b2c98f">&#34;r&#34;</span>); <span style="color:#859289;font-style:italic">//incassable comme d&#39;hab
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    read_length <span style="color:#7a8478">=</span> <span style="color:#b2c98f">getline</span>(<span style="color:#7a8478">&amp;</span>key, <span style="color:#7a8478">&amp;</span>buffer_length, random_bytes); 
+</span></span></span><span style="display:flex;"><span>    FILE <span style="color:#7a8478">*</span>random_bytes <span style="color:#7a8478">=</span> <span style="color:#b2c98f">fopen</span>(<span style="color:#b2c98f">&#34;/dev/urandom&#34;</span>, <span style="color:#b2c98f">&#34;r&#34;</span>); <span style="color:#859289;font-style:italic">//incassable comme d&#39;hab
+</span></span></span><span style="display:flex;"><span>    read_length <span style="color:#7a8478">=</span> <span style="color:#b2c98f">getline</span>(<span style="color:#7a8478">&amp;</span>key, <span style="color:#7a8478">&amp;</span>buffer_length, random_bytes); 
 </span></span><span style="display:flex;"><span>    <span style="color:#b2c98f">fclose</span>(random_bytes); 
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">// Encrypt
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">int</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#b2c98f">strlen</span>(secret); i<span style="color:#7a8478">++</span>)
+</span></span></span><span style="display:flex;"><span>    <span style="color:#e67e80">for</span> (<span style="color:#dbbc7f">int</span> i <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>; i <span style="color:#7a8478">&lt;</span> <span style="color:#b2c98f">strlen</span>(secret); i<span style="color:#7a8478">++</span>)
 </span></span><span style="display:flex;"><span>        secret[i] <span style="color:#7a8478">=</span> secret[i] <span style="color:#7a8478">^</span> key[i<span style="color:#7a8478">%</span>read_length];
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#859289;font-style:italic">// Return encrypted secret
-</span></span></span><span style="display:flex;"><span><span style="color:#859289;font-style:italic"></span>    <span style="color:#b2c98f">printf</span>(<span style="color:#b2c98f">&#34;%s&#34;</span>, secret);
+</span></span></span><span style="display:flex;"><span>    <span style="color:#b2c98f">printf</span>(<span style="color:#b2c98f">&#34;%s&#34;</span>, secret);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#b2c98f">free</span>(key);
 </span></span><span style="display:flex;"><span>    <span style="color:#e67e80">return</span> <span style="color:#d699b6">0</span>;
