@@ -38,7 +38,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.9bb372a616563f9ecafd6e5ea0d7760c487f35e7358f212b258b477fbfa75f5264ef33aaffa0334383ffc444b631b8dc5c496c67b5830ab2ac1f1e226a1125c3.css" integrity="sha512-m7NyphZWP57K/W5eoNd2DEh/Nec1jyErJYtHf7&#43;nX1Jk7zOq/6AzQ4P/xES2MbjcXElsZ7WDCrKsHx4iahElww==" />
+  <link rel="stylesheet" href="/css/main.844034d6d419a94206ebafde95ee4837d0c76fbc286c2b537ff70ed2bb2c2d78bedb5880b002216fea68426827b9aa9a422231aaa8cc57fe1c3f5260d75db765.css" integrity="sha512-hEA01tQZqUIG66/ele5IN9DHb7wobCtTf/cO0rssLXi&#43;21iAsAIhb&#43;poQmgnuaqaQiIxqqjMV/4cP1Jg1123ZQ==" />
 
   
 
@@ -90,7 +90,6 @@
     <li><a href="#thinking">Thinking</a></li>
     <li><a href="#typa-shih-bro-sends-me">Typa shih bro sends me</a></li>
     <li><a href="#twin">Twin</a></li>
-    <li><a href="#down-bad">Down bad</a></li>
     <li><a href="#infosec">Infosec</a></li>
   </ul>
 </nav>
@@ -150,8 +149,60 @@
 	}
 
 </style>
+<div class="search-container">
+  <input
+    type="text"
+    id="imageSearch"
+    placeholder="Search a meme (by filename)"
+  >
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("imageSearch");
+  const rows = document.querySelectorAll(".row");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+
+    rows.forEach(row => {
+      const links = row.querySelectorAll("a");
+      let visibleCount = 0;
+
+      links.forEach(link => {
+        const img = link.querySelector("img");
+        if (!img) return;
+
+        const filename = img.src.split("/").pop().toLowerCase();
+        const match = filename.includes(query);
+
+        link.style.display = match ? "" : "none";
+        if (match) visibleCount++;
+      });
+
+
+
+      // Show the row only if there is at least one match
+      row.style.display = visibleCount > 0 || query === "" ? "" : "none";
+
+      // Show or hide the preceding <h1>
+      const header = row.previousElementSibling;
+      if (header && header.tagName.toLowerCase() === "h1") {
+        header.style.display = visibleCount > 0 || query === "" ? "" : "none";
+      }
+	  if (row.id === "downbad" || row.id === "downbad-row") {
+        const downbadTitle = document.getElementById("downbad");
+        if (downbadTitle) {
+          downbadTitle.style.display = showSection ? "" : "none";
+        }
+      }
+    });
+
+
+  });
+});
+</script>
 <h1 id="evil">Evil</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/evil/albert.gif target="_blank"> <img src=../../images/favorites/evil/albert.gif > </a>
 <a href=../../images/favorites/evil/bien-malveillant.gif target="_blank"> <img src=../../images/favorites/evil/bien-malveillant.gif > </a>
 <a href=../../images/favorites/evil/burns-gossip.jpg target="_blank"> <img src=../../images/favorites/evil/burns-gossip.jpg > </a>
@@ -180,12 +231,8 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="locked-in">Locked in</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/locked-in/arracheur2lockin.gif target="_blank"> <img src=../../images/favorites/locked-in/arracheur2lockin.gif > </a>
 <a href=../../images/favorites/locked-in/lockin-asterion.gif target="_blank"> <img src=../../images/favorites/locked-in/lockin-asterion.gif > </a>
 <a href=../../images/favorites/locked-in/patrick-lock-in.gif target="_blank"> <img src=../../images/favorites/locked-in/patrick-lock-in.gif > </a>
@@ -198,12 +245,8 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="stare">Stare</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/stare/SIDE_EYE_emoji.png target="_blank"> <img src=../../images/favorites/stare/SIDE_EYE_emoji.png > </a>
 <a href=../../images/favorites/stare/abidal.gif target="_blank"> <img src=../../images/favorites/stare/abidal.gif > </a>
 <a href=../../images/favorites/stare/all_roads_rome.gif target="_blank"> <img src=../../images/favorites/stare/all_roads_rome.gif > </a>
@@ -250,18 +293,15 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="brainrot">Brainrot</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/brainrot/10_things_that_never_happened.jpg target="_blank"> <img src=../../images/favorites/brainrot/10_things_that_never_happened.jpg > </a>
 <a href=../../images/favorites/brainrot/50-cents-smile.jpg target="_blank"> <img src=../../images/favorites/brainrot/50-cents-smile.jpg > </a>
 <a href=../../images/favorites/brainrot/ai-baby-edited.gif target="_blank"> <img src=../../images/favorites/brainrot/ai-baby-edited.gif > </a>
 <a href=../../images/favorites/brainrot/ai-baby-lego.gif target="_blank"> <img src=../../images/favorites/brainrot/ai-baby-lego.gif > </a>
 <a href=../../images/favorites/brainrot/ai-baby.gif target="_blank"> <img src=../../images/favorites/brainrot/ai-baby.gif > </a>
 <a href=../../images/favorites/brainrot/almost-got-my-kids-back.png target="_blank"> <img src=../../images/favorites/brainrot/almost-got-my-kids-back.png > </a>
+<a href=../../images/favorites/brainrot/an-iq-to-high.jpg target="_blank"> <img src=../../images/favorites/brainrot/an-iq-to-high.jpg > </a>
 <a href=../../images/favorites/brainrot/andre-drummond-boy-slow-down.gif target="_blank"> <img src=../../images/favorites/brainrot/andre-drummond-boy-slow-down.gif > </a>
 <a href=../../images/favorites/brainrot/angry-birds-all-ears.jpg target="_blank"> <img src=../../images/favorites/brainrot/angry-birds-all-ears.jpg > </a>
 <a href=../../images/favorites/brainrot/angry-birds.jpg target="_blank"> <img src=../../images/favorites/brainrot/angry-birds.jpg > </a>
@@ -389,6 +429,7 @@
 <a href=../../images/favorites/brainrot/statement-no-one-could-do-anything.gif target="_blank"> <img src=../../images/favorites/brainrot/statement-no-one-could-do-anything.gif > </a>
 <a href=../../images/favorites/brainrot/statement-strange.gif target="_blank"> <img src=../../images/favorites/brainrot/statement-strange.gif > </a>
 <a href=../../images/favorites/brainrot/survival-bias.jpg target="_blank"> <img src=../../images/favorites/brainrot/survival-bias.jpg > </a>
+<a href=../../images/favorites/brainrot/tash-vs-garbage.jpg target="_blank"> <img src=../../images/favorites/brainrot/tash-vs-garbage.jpg > </a>
 <a href=../../images/favorites/brainrot/tf2-fridge.gif target="_blank"> <img src=../../images/favorites/brainrot/tf2-fridge.gif > </a>
 <a href=../../images/favorites/brainrot/the-rock-smell.gif target="_blank"> <img src=../../images/favorites/brainrot/the-rock-smell.gif > </a>
 <a href=../../images/favorites/brainrot/this-guy-chipmukns.gif target="_blank"> <img src=../../images/favorites/brainrot/this-guy-chipmukns.gif > </a>
@@ -418,12 +459,8 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="ragebait">Ragebait</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/ragebait/Shush.png target="_blank"> <img src=../../images/favorites/ragebait/Shush.png > </a>
 <a href=../../images/favorites/ragebait/absolute_ragebait.gif target="_blank"> <img src=../../images/favorites/ragebait/absolute_ragebait.gif > </a>
 <a href=../../images/favorites/ragebait/apple_ragebait.jpg target="_blank"> <img src=../../images/favorites/ragebait/apple_ragebait.jpg > </a>
@@ -460,12 +497,8 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="airball">Airball</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/airball/1_percent_shot_3_points.jpg target="_blank"> <img src=../../images/favorites/airball/1_percent_shot_3_points.jpg > </a>
 <a href=../../images/favorites/airball/3-points-fast-food.jpg target="_blank"> <img src=../../images/favorites/airball/3-points-fast-food.jpg > </a>
 <a href=../../images/favorites/airball/Xabi-Alonso.png target="_blank"> <img src=../../images/favorites/airball/Xabi-Alonso.png > </a>
@@ -547,12 +580,8 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="thinking">Thinking</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/thinking/0sur20.gif target="_blank"> <img src=../../images/favorites/thinking/0sur20.gif > </a>
 <a href=../../images/favorites/thinking/The-thinking-gorilla.jpg target="_blank"> <img src=../../images/favorites/thinking/The-thinking-gorilla.jpg > </a>
 <a href=../../images/favorites/thinking/cat-question.jpg target="_blank"> <img src=../../images/favorites/thinking/cat-question.jpg > </a>
@@ -578,12 +607,8 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="typa-shih-bro-sends-me">Typa shih bro sends me</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/typa-shih-bro-sends/L_phone.jpg target="_blank"> <img src=../../images/favorites/typa-shih-bro-sends/L_phone.jpg > </a>
 <a href=../../images/favorites/typa-shih-bro-sends/adult_baby_socials.jpg target="_blank"> <img src=../../images/favorites/typa-shih-bro-sends/adult_baby_socials.jpg > </a>
 <a href=../../images/favorites/typa-shih-bro-sends/bait_with_heart.jpg target="_blank"> <img src=../../images/favorites/typa-shih-bro-sends/bait_with_heart.jpg > </a>
@@ -650,12 +675,8 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
 <h1 id="twin">Twin</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/twin/artistics_twin.jpg target="_blank"> <img src=../../images/favorites/twin/artistics_twin.jpg > </a>
 <a href=../../images/favorites/twin/bob_patrick_tiwns.jpg target="_blank"> <img src=../../images/favorites/twin/bob_patrick_tiwns.jpg > </a>
 <a href=../../images/favorites/twin/chess_twin.png target="_blank"> <img src=../../images/favorites/twin/chess_twin.png > </a>
@@ -687,14 +708,10 @@
 
 </div>
 
-<br> <br>
-<br> <br>
-<br> <br>
-
-<h1 id="down-bad">Down bad</h1>
+<h1 id="downbad"> Down bad </h1>
 <details>
   <summary style="cursor: pointer">ITS VERY DANGEROUS DOWN HERE</summary>
-  <div class="row">
+  <div class="row" id="meme-section">
   <a href=../../images/favorites/down-bad/cat-eyebrow-freaky.gif target="_blank"> <img src=../../images/favorites/down-bad/cat-eyebrow-freaky.gif > </a>
   <a href=../../images/favorites/down-bad/daffy-duck-jerking.gif target="_blank"> <img src=../../images/favorites/down-bad/daffy-duck-jerking.gif > </a>
   <a href=../../images/favorites/down-bad/down-bad.gif target="_blank"> <img src=../../images/favorites/down-bad/down-bad.gif > </a>
@@ -705,23 +722,15 @@
   <a href=../../images/favorites/down-bad/stickman-freaky.jpg target="_blank"> <img src=../../images/favorites/down-bad/stickman-freaky.jpg > </a>
   
   </div>
-  
-  <br> <br>
-  <br> <br>
-  <br> <br>
 
 </details>
 <br><br><br>
 <h1 id="infosec">Infosec</h1>
-<div class="row">
+<div class="row" id="meme-section">
 <a href=../../images/favorites/infosec/bingo_ctf.png target="_blank"> <img src=../../images/favorites/infosec/bingo_ctf.png > </a>
 <a href=../../images/favorites/infosec/the-worst-be-the-worst-ctf.png target="_blank"> <img src=../../images/favorites/infosec/the-worst-be-the-worst-ctf.png > </a>
 
 </div>
-
-<br> <br>
-<br> <br>
-<br> <br>
 
 
 </article>
