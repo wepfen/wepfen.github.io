@@ -38,7 +38,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.844034d6d419a94206ebafde95ee4837d0c76fbc286c2b537ff70ed2bb2c2d78bedb5880b002216fea68426827b9aa9a422231aaa8cc57fe1c3f5260d75db765.css" integrity="sha512-hEA01tQZqUIG66/ele5IN9DHb7wobCtTf/cO0rssLXi&#43;21iAsAIhb&#43;poQmgnuaqaQiIxqqjMV/4cP1Jg1123ZQ==" />
+  <link rel="stylesheet" href="/css/main.c6d6512a1652812650d4b80abf977dc52b75b21a11aa56696bd12e5ae537bc3e81ea1577466b19d2ae86ac9e6daa79378cda3d367c85e16c0503edb89fe7a6db.css" integrity="sha512-xtZRKhZSgSZQ1LgKv5d9xSt1shoRqlZpa9EuWuU3vD6B6hV3RmsZ0q6GrJ5tqnk3jNo9NnyF4WwFA&#43;24n&#43;em2w==" />
 
   
 
@@ -153,7 +153,7 @@ Your browser does not support the video tag.
 <h1 id="introduction">Introduction</h1>
 <p>So we got a blockchain challenge with solidity smart contracts. One, <code>DinoPark</code> is used as the contract to check for the solve with <code>isSolve()</code> function and also deploy another useful contract : <code>Arena</code> where the real things happen.</p>
 <p><details>
-  <summary style="color: #F99417; cursor: pointer">Arena.sol</summary>
+  <summary>Arena.sol</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -313,7 +313,7 @@ Your browser does not support the video tag.
 
 <br></p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">DinoPark.sol</summary>
+  <summary>DinoPark.sol</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -686,7 +686,7 @@ Whis is at 0.5 ether at the start, here from the DinoPark contract which sends 0
 <p>BUT, there is an old trick to force a contract to receive fund which <a href="https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#deactivate-and-self-destruct">selfdestructing</a>, which send all the remaining ethers of a contract to the address we want.</p>
 <p>Then we write a contract, give it the ethers we want and send call selfdestruct to make it sends the values :</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">selfdestructing</summary>
+  <summary>selfdestructing</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -834,7 +834,7 @@ So Normal is accessed like <code>FIghtMode.Normal</code> and as it&rsquo;s the f
 <img alt="eric abidal" src="/images/memes/eric-abidal-non.gif">
 <p>So I made a first bash script that call fight with the same number and wait 10 seconds and call again :</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">first_script.sh</summary>
+  <summary>first_script.sh</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -871,7 +871,7 @@ So Normal is accessed like <code>FIghtMode.Normal</code> and as it&rsquo;s the f
 <p>Then my teammate got a great idea which was, making many call of <code>fight()</code> at the same block so there should be one that will be working.
 It didn&rsquo;t work either.</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">second_script.sh</summary>
+  <summary>second_script.sh</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -1046,7 +1046,7 @@ It didn&rsquo;t work either.</p>
 <p>And it is actually goated with all the things called <a href="https://getfoundry.sh/reference/cheatcodes/overview">cheatcodes</a> which allow us to read environment variables to make it easier, use console.log() to print values and many other utilities.</p>
 <p>Here is my script</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">almost_winning_script.sh</summary>
+  <summary>almost_winning_script.sh</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -1156,7 +1156,7 @@ By debuggin in local reading this <a href="https://github.com/foundry-rs/foundry
 <p>The strategy of this one is to look at the ways to get ethers.
 There is the <code>drainToChampion()</code> function it require us to be the parkContract which is not possible here, so it&rsquo;s a bait.</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">Evil.sol:RemoteFight</summary>
+  <summary>Evil.sol:RemoteFight</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
@@ -1253,7 +1253,7 @@ If a <code>fallback()</code> function is defined, the instruction in the latter 
 <p><img src="../../images/writeups/wwctf/reentrancy-cycle.png" alt="reentracy"></p>
 <p>Here is how it looks in solidity :</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">Evil.sol:RemoteFight</summary>
+  <summary>Evil.sol:RemoteFight</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1

@@ -38,7 +38,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/main.844034d6d419a94206ebafde95ee4837d0c76fbc286c2b537ff70ed2bb2c2d78bedb5880b002216fea68426827b9aa9a422231aaa8cc57fe1c3f5260d75db765.css" integrity="sha512-hEA01tQZqUIG66/ele5IN9DHb7wobCtTf/cO0rssLXi&#43;21iAsAIhb&#43;poQmgnuaqaQiIxqqjMV/4cP1Jg1123ZQ==" />
+  <link rel="stylesheet" href="/css/main.c6d6512a1652812650d4b80abf977dc52b75b21a11aa56696bd12e5ae537bc3e81ea1577466b19d2ae86ac9e6daa79378cda3d367c85e16c0503edb89fe7a6db.css" integrity="sha512-xtZRKhZSgSZQ1LgKv5d9xSt1shoRqlZpa9EuWuU3vD6B6hV3RmsZ0q6GrJ5tqnk3jNo9NnyF4WwFA&#43;24n&#43;em2w==" />
 
   
 
@@ -152,7 +152,7 @@
 <h1 id="solving">Solving</h1>
 <h2 id="reading-the-challenge-source-code">Reading the challenge source code</h2>
 <details>
-  <summary style="color: #F99417; cursor: pointer">chall.sage</summary>
+  <summary>chall.sage</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -317,7 +317,7 @@ And this list of points is sent to us.</li>
 <p>For the theory, we&rsquo;ll draw a curve that passes through a point thanks to an equation, reproduce this for all the submitted points and multiply all the equations, here&rsquo;s what the final equation looks like:</p>
 $$ l_{i}(X) = \prod_{j=0,j\neq i}^{n} \frac{X - x_{j}}{x_{i} - x_{j}} \ ... \ \frac{X - x_{0}}{x_{i} - x_{0}} \frac{X - x_{1}}{x_{i} - x_{1}} \ ... \ \frac{X - x_{n}}{x_{i} - x_{n}}  $$<p>The server sends us 23 points and we can try to reconstruct the polynomial with them:</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">trying to recover the polynomial</summary>
+  <summary>trying to recover the polynomial</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -402,7 +402,7 @@ Except that the first element of the list will be converted to a coefficient wit
 <p>We know that the coefficients are generated with chunks of four characters from this character set: &ldquo;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_{}&rdquo; (I&rsquo;ve added the braces). This gives us a total of $ 65 ^{4} = 17850625 $ possibilities (bruteforcable).</p>
 <p>We&rsquo;ll generate a dictionary of matches <code>value in int:plaintext</code> and see if it matches any of the integers in our list of coefficients:</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">building the rainbow table</summary>
+  <summary>building the rainbow table</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -460,7 +460,7 @@ Except that the first element of the list will be converted to a coefficient wit
 
 <h3 id="solve-final">Solve final</h3>
 <details>
-  <summary style="color: #F99417; cursor: pointer">solve_interpolation.py</summary>
+  <summary>solve_interpolation.py</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1

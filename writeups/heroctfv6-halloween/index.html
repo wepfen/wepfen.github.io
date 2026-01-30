@@ -40,7 +40,7 @@ My solve from a noob point a view for the halloween challenge at heroCTF v6.">
   
   
   
-  <link rel="stylesheet" href="/css/main.844034d6d419a94206ebafde95ee4837d0c76fbc286c2b537ff70ed2bb2c2d78bedb5880b002216fea68426827b9aa9a422231aaa8cc57fe1c3f5260d75db765.css" integrity="sha512-hEA01tQZqUIG66/ele5IN9DHb7wobCtTf/cO0rssLXi&#43;21iAsAIhb&#43;poQmgnuaqaQiIxqqjMV/4cP1Jg1123ZQ==" />
+  <link rel="stylesheet" href="/css/main.c6d6512a1652812650d4b80abf977dc52b75b21a11aa56696bd12e5ae537bc3e81ea1577466b19d2ae86ac9e6daa79378cda3d367c85e16c0503edb89fe7a6db.css" integrity="sha512-xtZRKhZSgSZQ1LgKv5d9xSt1shoRqlZpa9EuWuU3vD6B6hV3RmsZ0q6GrJ5tqnk3jNo9NnyF4WwFA&#43;24n&#43;em2w==" />
 
   
 
@@ -157,7 +157,7 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 <h2 id="challenge-source-code">Challenge source code</h2>
 <p>The challenge code is quite simple.</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">chall.py</summary>
+  <summary>chall.py</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -226,7 +226,7 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 <p>It contains the <code>encrypt()</code>, <code>decrypt()</code>, <code>counter()</code>, <code>_inc_ctr()</code> methods.</p>
 <p>The simplest is the <code>decrypt()</code> method:</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">gost_34_13_2015.py:GOST34132015Cipher:decrypt()</summary>
+  <summary>gost_34_13_2015.py:GOST34132015Cipher:decrypt()</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
@@ -270,7 +270,7 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 
 <p><code>super().decrypt(data)</code> will not alter data, it corresponds to the <code>decrypt()</code> method of the <code>GOST34132015Cipher</code> class inherited by <code>GOST34132015ctr</code> which does :</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">gost_34_13_2015.py:GOST34132015ctr:decrypt()</summary>
+  <summary>gost_34_13_2015.py:GOST34132015ctr:decrypt()</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
@@ -340,7 +340,7 @@ By the way, block size is defined <a href="https://github.com/drobotun/gostcrypt
 <h3 id="analysis-of-the-counter-incrementation">Analysis of the counter incrementation</h3>
 <p>Testing <code>_inc_ctr()</code>, we notice something interesting. Here&rsquo;s the code:</p>
 <details>
-  <summary style="color: #F99417; cursor: pointer">gost_34_13_2015.py:GOST34132015ctr:_inc_ctr()</summary>
+  <summary>gost_34_13_2015.py:GOST34132015ctr:_inc_ctr()</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
@@ -373,7 +373,7 @@ By the way, block size is defined <a href="https://github.com/drobotun/gostcrypt
 <p>Knowing that the counter is incremented with each block, we need to find out how many times the counter has been incremented to encrypt the flag, subtract this number from 256, increment the counter by the number we obtain and recover the keystream by sending a null byte string of the same size as the flag (since the keystream is encrypted with the plaintext, sending null bytes enables us to directly recover the key because 0 xor n = n).</p>
 <h3 id="exploit">Exploit</h3>
 <details>
-  <summary style="color: #F99417; cursor: pointer">solve_halloween.py</summary>
+  <summary>solve_halloween.py</summary>
   <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
