@@ -141,19 +141,19 @@ Here&rsquo;s the writeup of the easy one.</p>
 This board need to get a power supply to work, so with the USB to TTL (UART to USB) we had to connect a wire from the <code>5V</code> on it to the <code>5V</code> on the board with jumper wires and plug the <code>GND</code> to any <code>GND</code> on the board and then the screen boot up.</p>
 <p><img src="https://rawcdn.githack.com/wepfen/cdn/8dac5ad25c2247143da65d0926b7380ec390fcf7/writeups/dvctf/2025/screen.jpg" alt="screen"></p>
 <p>On the screen we have got the correct baudrate (9600) to connect so we can directly use it with <code>screen</code> or <code>minicom</code>, tool to interact with serial ports:</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>screen /dev/ttyUSB0 <span style="color:#d699b6">9600</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>screen /dev/ttyUSB0 <span style="color:#d699b6">9600</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And we can press the reset button on the board to get the initialisation screen :</p>
 <h2 id="uart-restricted-shell">UART restricted shell</h2>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -181,7 +181,7 @@ This board need to get a power supply to work, so with the USB to TTL (UART to U
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yth��b@<span style="color:#7a8478">)</span>s!BY��<span style="color:#7a8478">[</span>    16<span style="color:#7a8478">][</span>I<span style="color:#7a8478">][</span>esp32-hal-i2c.c:75<span style="color:#7a8478">]</span> i2cInit<span style="color:#7a8478">()</span>: Initialising I2C Master: sda<span style="color:#7a8478">=</span><span style="color:#d699b6">15</span> scl<span style="color:#7a8478">=</span><span style="color:#d699b6">4</span> freq<span style="color:#7a8478">=</span><span style="color:#d699b6">100000</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>yth��b@<span style="color:#7a8478">)</span>s!BY��<span style="color:#7a8478">[</span>    16<span style="color:#7a8478">][</span>I<span style="color:#7a8478">][</span>esp32-hal-i2c.c:75<span style="color:#7a8478">]</span> i2cInit<span style="color:#7a8478">()</span>: Initialising I2C Master: sda<span style="color:#7a8478">=</span><span style="color:#d699b6">15</span> scl<span style="color:#7a8478">=</span><span style="color:#d699b6">4</span> freq<span style="color:#7a8478">=</span><span style="color:#d699b6">100000</span>
 </span></span><span style="display:flex;"><span>ESP32 architecture detected
 </span></span><span style="display:flex;"><span>Louvre Museum UART Security Challenge
 </span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>   242<span style="color:#7a8478">][</span>W<span style="color:#7a8478">][</span>Wire.cpp:301<span style="color:#7a8478">]</span> begin<span style="color:#7a8478">()</span>: Bus already started in Master Mode.
@@ -331,16 +331,16 @@ LeonardoDaVinci905@JicniVaDodranoeL
 </code></pre><p>It ended that <code>LeonardoDaVinci743$BicniVaDodranoeL</code> was the correct password with the login <code>leonardo</code>.</p>
 <h2 id="uart-shell-with-admin-features">UART shell with admin features</h2>
 <p>Here are the files :</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-rw------- <span style="color:#d699b6">1</span> leonardo leonardo  <span style="color:#d699b6">220</span> Mar <span style="color:#d699b6">28</span> 09:15 .bash_history
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>-rw------- <span style="color:#d699b6">1</span> leonardo leonardo  <span style="color:#d699b6">220</span> Mar <span style="color:#d699b6">28</span> 09:15 .bash_history
 </span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#d699b6">1</span> leonardo leonardo <span style="color:#d699b6">3526</span> Mar <span style="color:#d699b6">28</span> 09:15 .bashrc
 </span></span><span style="display:flex;"><span>drwx------ <span style="color:#d699b6">2</span> leonardo leonardo <span style="color:#d699b6">4096</span> Mar <span style="color:#d699b6">28</span> 09:15 .cache
 </span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#d699b6">1</span> leonardo leonardo   <span style="color:#d699b6">56</span> Mar <span style="color:#d699b6">29</span> 12:43 notes.txt
@@ -352,9 +352,9 @@ LeonardoDaVinci905@JicniVaDodranoeL
 mqtt --validate &lt;device&gt;
 mqtt --status
 </code></pre><p>In the <code>security.log</code> we learn about an MQTT device.</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
@@ -363,7 +363,7 @@ mqtt --status
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>leonardo@louvre:~# cat security.log
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>leonardo@louvre:~# cat security.log
 </span></span><span style="display:flex;"><span><span style="color:#7a8478">===</span> Security Log <span style="color:#7a8478">===</span>
 </span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 08:15:23<span style="color:#7a8478">]</span> System startup
 </span></span><span style="display:flex;"><span><span style="color:#7a8478">[</span>2025-03-29 10:32:45<span style="color:#7a8478">]</span> Failed login attempt: username<span style="color:#7a8478">=</span>admin
@@ -375,15 +375,15 @@ mqtt --status
 </div><p>We get the MQTT device ID.</p>
 <p>Running <code>mqtt --status</code> we learn that it isn&rsquo;t connect. So I connect it with <code>mqtt --connect</code>
 And then I can use <code>mqtt --connect devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0</code> :</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Attempting to validate with device ID: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Attempting to validate with device ID: devices/0a56eecf-2955-4756-8f5d-80adc2e55ac0
 </span></span><span style="display:flex;"><span>Device ID matched! Successfully validated!
 </span></span><span style="display:flex;"><span>MQTT validation complete.
 </span></span><span style="display:flex;"><span>FLAG: DVCTF<span style="color:#7a8478">{</span>L0uvr3_U4rt_Sh3ll_4rt1st<span style="color:#7a8478">}</span>

@@ -139,9 +139,9 @@
 <p>En se branchant en USB on peut directement se connecter à un des composants (teensy). Maintenant pour surveiller ce qu&rsquo;il se passe, on peut utiliser un outil qui va directement lire ce que la teensy nous envoie avec des outils comme <a href="https://man.archlinux.org/man/minicom.1.en">minicom</a> ou <a href="https://wiki.archlinux.org/title/GNU_Screen">screen</a>.</p>
 <p>En connectant le cable, en redémarrant le circuit électronique et en lançant rapidement <code>screen /dev/ttyACM0</code>, on voit apparaitre des messages d&rsquo;initialisation du circuit.
 Puis ensuite en appuyant sur n&rsquo;importe qu&rsquo;elle touche on voit <code>Unknown command</code> s&rsquo;afficher. Donc en faisant un script pour pouvoir entrer plus de caractères, on arrive à faire afficher un menu avec la commande <code>help</code>. Voici le script:</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -155,7 +155,7 @@ Puis ensuite en appuyant sur n&rsquo;importe qu&rsquo;elle touche on voit <code>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> serial
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> serial
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> time
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> random
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> string
@@ -170,12 +170,12 @@ Puis ensuite en appuyant sur n&rsquo;importe qu&rsquo;elle touche on voit <code>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Puis les commandes dispos étaient :</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Available commands: help, reset_screen, gyro_reset, gyro_stop_update, gyro_resume_update, craft_can_message, flag, secret
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Available commands: help, reset_screen, gyro_reset, gyro_stop_update, gyro_resume_update, craft_can_message, flag, secret
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>En envoyant <code>flag</code> on récupère : <code>COB{FEnw3mfUFlopd_0c=MuWi_2T70C4wUeiE2o3-tHE}</code>.</p>
@@ -212,9 +212,9 @@ Après une courte recherche on tombe sur une datahseet du fabricant MICROCHIP : 
 <p>Maintenant qu&rsquo;on a notre baudrate les données sont lisibles et on voit que le meme type de paquets CAN sont envoyés en boucle.</p>
 <p>Il fallait garder les valeurs qui ne bougent pas dans les paquets et mettre des zéros pour celles qui varient.
 Sauf que, le drone continue à avoir ses valeurs qui se mettent à jour donc ça nous empechait de tout mettre à zéro. Il y avait une commande intéressante durant le challenge <a href="#serial-killer-exposed">serial killer exposed</a> qui était <code>gyro_stop_update</code>. En faisant ça, il n&rsquo;y a plus rien qui s&rsquo;envoie sauf nous paquets à nous, on peut ainsi envoyer plein des paquets avec zéro comme valeur en boucle :</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -242,7 +242,7 @@ Sauf que, le drone continue à avoir ses valeurs qui se mettent à jour donc ça
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">26
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> serial
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">import</span> serial
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> time
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> random
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> string

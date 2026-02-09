@@ -158,9 +158,9 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 <p>The challenge code is quite simple.</p>
 <details>
   <summary>chall.py</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -178,7 +178,7 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#!/usr/bin/env python3</span>
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#859289;font-style:italic">#!/usr/bin/env python3</span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> gostcrypto
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> os
 </span></span><span style="display:flex;"><span>
@@ -227,9 +227,9 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 <p>The simplest is the <code>decrypt()</code> method:</p>
 <details>
   <summary>gost_34_13_2015.py:GOST34132015Cipher:decrypt()</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -247,7 +247,7 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt</span>(<span style="color:#d699b6">self</span>, data: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>    <span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt</span>(<span style="color:#d699b6">self</span>, data: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
 </span></span><span style="display:flex;"><span>        <span style="color:#b2c98f">&#34;&#34;&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">        Ciphertext decryption in CTR mode.
 </span></span></span><span style="display:flex;"><span><span style="color:#b2c98f">
@@ -271,16 +271,16 @@ It will then encrypt each message (encoded in hexadecimal) we send to it.</p>
 <p><code>super().decrypt(data)</code> will not alter data, it corresponds to the <code>decrypt()</code> method of the <code>GOST34132015Cipher</code> class inherited by <code>GOST34132015ctr</code> which does :</p>
 <details>
   <summary>gost_34_13_2015.py:GOST34132015ctr:decrypt()</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt</span>(<span style="color:#d699b6">self</span>, data: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">decrypt</span>(<span style="color:#d699b6">self</span>, data: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
 </span></span><span style="display:flex;"><span>	<span style="color:#e67e80">if</span> <span style="color:#7a8478">not</span> <span style="color:#d699b6">isinstance</span>(data, (<span style="color:#d699b6">bytes</span>, <span style="color:#d699b6">bytearray</span>)):
 </span></span><span style="display:flex;"><span>		<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>clear()
 </span></span><span style="display:flex;"><span>		<span style="color:#e67e80">raise</span> GOSTCipherError(<span style="color:#b2c98f">&#39;GOSTCipherError: invalid ciphertext data&#39;</span>)
@@ -317,9 +317,9 @@ If we know the plaintext, we can xor it with the ciphertext to recover the keyst
 </ul>
 <p>The &lsquo;if&rsquo; block corresponds to the same thing, but for a block that isn&rsquo;t 16 characters long.
 By the way, block size is defined <a href="https://github.com/drobotun/gostcrypto/blob/1590311620d6d03d1d8e1b6abe1966da4c8550ed/gostcrypto/gostcipher/gost_34_12_2015.py#L26">here</a></p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
@@ -327,7 +327,7 @@ By the way, block size is defined <a href="https://github.com/drobotun/gostcrypt
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">if</span> <span style="color:#d699b6">len</span>(data) <span style="color:#7a8478">%</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size <span style="color:#7a8478">!=</span> <span style="color:#d699b6">0</span>:
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">if</span> <span style="color:#d699b6">len</span>(data) <span style="color:#7a8478">%</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size <span style="color:#7a8478">!=</span> <span style="color:#d699b6">0</span>:
 </span></span><span style="display:flex;"><span>	gamma <span style="color:#7a8478">=</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_cipher_obj<span style="color:#7a8478">.</span>encrypt(<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_counter)
 </span></span><span style="display:flex;"><span>	<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_counter <span style="color:#7a8478">=</span> <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_inc_ctr(<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>_counter)
 </span></span><span style="display:flex;"><span>	result <span style="color:#7a8478">=</span> result <span style="color:#7a8478">+</span> add_xor(
@@ -341,9 +341,9 @@ By the way, block size is defined <a href="https://github.com/drobotun/gostcrypt
 <p>Testing <code>_inc_ctr()</code>, we notice something interesting. Here&rsquo;s the code:</p>
 <details>
   <summary>gost_34_13_2015.py:GOST34132015ctr:_inc_ctr()</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
@@ -353,7 +353,7 @@ By the way, block size is defined <a href="https://github.com/drobotun/gostcrypt
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">_inc_ctr</span>(<span style="color:#d699b6">self</span>, ctr: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">_inc_ctr</span>(<span style="color:#d699b6">self</span>, ctr: <span style="color:#d699b6">bytearray</span>) <span style="color:#7a8478">-&gt;</span> <span style="color:#d699b6">bytearray</span>:
 </span></span><span style="display:flex;"><span>	internal <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>
 </span></span><span style="display:flex;"><span>	bit <span style="color:#7a8478">=</span> <span style="color:#d699b6">bytearray</span>(<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size)
 </span></span><span style="display:flex;"><span>	bit[<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>block_size <span style="color:#7a8478">-</span> <span style="color:#d699b6">1</span>] <span style="color:#7a8478">=</span> <span style="color:#d699b6">0x01</span>
@@ -374,9 +374,9 @@ By the way, block size is defined <a href="https://github.com/drobotun/gostcrypt
 <h3 id="exploit">Exploit</h3>
 <details>
   <summary>solve_halloween.py</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -415,7 +415,7 @@ By the way, block size is defined <a href="https://github.com/drobotun/gostcrypt
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">37
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> pwn <span style="color:#e67e80">import</span> remote, context, xor
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> pwn <span style="color:#e67e80">import</span> remote, context, xor
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> re
 </span></span><span style="display:flex;"><span>

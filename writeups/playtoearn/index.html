@@ -121,29 +121,29 @@
 <p>We got three contracts <code>ArcadeMachine.sol</code>, <code>Coin.sol</code> and <code>Setup.sol</code></p>
 <p>The main contract is <code>Coin.sol</code> which have the ether to steal.</p>
 <p>To solve the challenge we need to have 13.37 or more ether on our balance and be registered, in <code>Setup</code> contract :</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">isSolved</span>() <span style="color:#e67e80">external</span> <span style="color:#e67e80">view</span> <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>) {
 </span></span><span style="display:flex;"><span>        <span style="color:#e67e80">return</span> player <span style="color:#7a8478">!=</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>) <span style="color:#7a8478">&amp;&amp;</span> player.<span style="color:#d699b6">balance</span> <span style="color:#7a8478">&gt;=</span> <span style="color:#d699b6">13</span>.<span style="color:#d699b6">37</span> <span style="color:#e67e80">ether</span>;
 </span></span><span style="display:flex;"><span>    }
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>To register we have to interact with <code>Setup</code> contract by calling the function <code>Register</code>.</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">register</span>() <span style="color:#e67e80">external</span> {
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">register</span>() <span style="color:#e67e80">external</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(player <span style="color:#7a8478">==</span> <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>));
 </span></span><span style="display:flex;"><span>        player <span style="color:#7a8478">=</span> <span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>;
 </span></span><span style="display:flex;"><span>        coin.<span style="color:#d699b6">transfer</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#d699b6">1337</span>);    <span style="color:#859289;font-style:italic">// free coins for new players :)
@@ -156,9 +156,9 @@
 <code>ncat --ssl play-to-earn.chals.sekai.team 1337</code>.</p>
 <p>And it will give us the setup address, my address, my private key, and URL and a personnal UUID for identifiying myself and get the flag.</p>
 <p>And we can get <strong>Coin</strong> and <strong>ArcadeMachine</strong> contracts addresses by using cast on Setup contract as they are public and defined in the latter:</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
@@ -168,7 +168,7 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Setup {
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Setup {
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    Coin <span style="color:#e67e80">public</span> coin;
 </span></span><span style="display:flex;"><span>    ArcadeMachine <span style="color:#e67e80">public</span> arcadeMachine;
@@ -181,9 +181,9 @@
 </div><p>For Coin : <code>cast call -r $RPC $SETUP &quot;coin()&quot;</code></p>
 <p>For ArcadeMachine : <code>cast call -r $RPC $SETUP &quot;arcadeMachine()&quot;</code></p>
 <p>I set up an environment variable via a file <code>.env</code> file to go faster and hardcoded a way to get <code>Coin</code> and <code>ArcadeMachine</code> address automatically each time I source the <code>.env</code> file with <code>source .env</code>.</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -195,7 +195,7 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>MY_UUID<span style="color:#7a8478">=</span>05d37b3f-db11-4398-a036-fe2de2532bdd
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>MY_UUID<span style="color:#7a8478">=</span>05d37b3f-db11-4398-a036-fe2de2532bdd
 </span></span><span style="display:flex;"><span>RPC<span style="color:#7a8478">=</span>https://play-to-earn.chals.sekai.team/05d37b3f-db11-4398-a036-fe2de2532bdd
 </span></span><span style="display:flex;"><span>PKEY<span style="color:#7a8478">=</span>0x9f9ab104ea0ea88cbfea172e21ef9ad3c779039b16d0403ea4b69714b68570fc
 </span></span><span style="display:flex;"><span>ADDRESS<span style="color:#7a8478">=</span>0x7689DDAcC618C9FABca377B7630E5C5546726139
@@ -211,9 +211,9 @@
 <h2 id="recon">Recon</h2>
 <details>
   <summary>ArcadeMachine.sol</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -233,7 +233,7 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { Coin } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./Coin.sol&#34;</span>;
 </span></span><span style="display:flex;"><span>
@@ -258,9 +258,9 @@
 
 <details>
   <summary>Coin.sol</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">  4
@@ -363,7 +363,7 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">101
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/access/Ownable.sol&#34;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> <span style="color:#b2c98f">&#34;@openzeppelin/contracts/utils/cryptography/EIP712.sol&#34;</span>;
@@ -471,9 +471,9 @@
 
 <details>
   <summary>Setup.sol</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -508,7 +508,7 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">33
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { Coin } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./Coin.sol&#34;</span>;
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">import</span> { ArcadeMachine } <span style="color:#e67e80">from</span> <span style="color:#b2c98f">&#34;./ArcadeMachine.sol&#34;</span>;
@@ -549,16 +549,16 @@
 <p>I can register by interacting with setup contract : <code>cast send -r $RPC --private-key $PKEY $SETUP &quot;register()&quot;</code> which grant me 1337 coins.</p>
 <p>Using <code>withdraw()</code> from Coin contract I can convert those coins to ether.</p>
 <p>Also the challenge name <code>Play to earn</code> stand for the ability to play the arcade machine using the function <code>play(uint256)</code>. <code>uint256</code> is the type of the argument taken by the function <strong>play()</strong>.</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">play</span>(<span style="color:#dbbc7f">uint256</span> times) <span style="color:#e67e80">external</span> {
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">play</span>(<span style="color:#dbbc7f">uint256</span> times) <span style="color:#e67e80">external</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// burn the coins
 </span></span></span><span style="display:flex;"><span>        <span style="color:#d699b6">require</span>(coin.transferFrom(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>, <span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>), <span style="color:#d699b6">1</span> <span style="color:#e67e80">ether</span> <span style="color:#7a8478">*</span> times));
 </span></span><span style="display:flex;"><span>        <span style="color:#859289;font-style:italic">// Have fun XD
@@ -567,9 +567,9 @@
 </div>
 </div><p>It calls transferFrom(src, dst) so it transfer something from sender to address(0) (which is an address with only zero, so it corresponds to no one, its just here like a void, keeping all our gambled coins &hellip;) : <code>0x0000000000000000000000000000000000000000</code>)</p>
 <p>Let&rsquo;s look at <code>transferFrom()</code>:</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -589,7 +589,7 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">transferFrom</span>(<span style="color:#dbbc7f">address</span> src, <span style="color:#dbbc7f">address</span> dst, <span style="color:#dbbc7f">uint</span> wad)
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">transferFrom</span>(<span style="color:#dbbc7f">address</span> src, <span style="color:#dbbc7f">address</span> dst, <span style="color:#dbbc7f">uint</span> wad)
 </span></span><span style="display:flex;"><span>        <span style="color:#e67e80">public</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#e67e80">returns</span> (<span style="color:#dbbc7f">bool</span>)
 </span></span><span style="display:flex;"><span>    {
@@ -615,9 +615,9 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 <p>So it transfers coin from <code>src</code> account to <code>dst</code> account (and if src != msg.sender, substract the value to transfer from msg.sender allowance on allowance[src][msg.sender] so we can&rsquo;t transfer an infinite amount) and then substract the transferred amount from <code>src</code> coin balance and increase <code>dst</code> balance.</p>
 <p>Then, <code>play(uint256 times)</code> function transfer 1 ether == 10**18 * times to msg.sender coin balance to address(0) coin balance. So you&rsquo;re coin balance needs to have at least 10^18 coins.</p>
 <p>From the challenge scenario, <code>play(19)</code> is used at setup that&rsquo;s why there is a comment saying people played before us.</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -629,7 +629,7 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>() <span style="color:#e67e80">payable</span> {
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span>    <span style="color:#e67e80">constructor</span>() <span style="color:#e67e80">payable</span> {
 </span></span><span style="display:flex;"><span>        coin <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> Coin();
 </span></span><span style="display:flex;"><span>        arcadeMachine <span style="color:#7a8478">=</span> <span style="color:#e67e80">new</span> ArcadeMachine(coin);
 </span></span><span style="display:flex;"><span>
@@ -645,9 +645,9 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 <p>To get these we need to find a way to transfer coins from address(0) balance to our balance using <code>transferFrom()</code>, for that we need to have an allowance amount superior or equal to the value we want to transfer and then withdraw them.</p>
 <p>To make short, we have two interesting functions, <code>privilegeWithdraw</code> and <code>permit</code>.</p>
 <p>The first one transfer address(0) coin to msg.sender but we need to be the owner of the contract so it sucks.</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">4
@@ -655,7 +655,7 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">privilegedWithdraw</span>() onlyOwner <span style="color:#e67e80">external</span> {
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">function</span> <span style="color:#b2c98f">privilegedWithdraw</span>() onlyOwner <span style="color:#e67e80">external</span> {
 </span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint</span> wad <span style="color:#7a8478">=</span> balanceOf[<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>)];
 </span></span><span style="display:flex;"><span>        balanceOf[<span style="color:#dbbc7f">address</span>(<span style="color:#d699b6">0</span>)] <span style="color:#7a8478">=</span> <span style="color:#d699b6">0</span>;
 </span></span><span style="display:flex;"><span>        <span style="color:#e67e80">payable</span>(<span style="color:#d699b6">msg</span>.<span style="color:#d699b6">sender</span>).<span style="color:#d699b6">transfer</span>(wad);
@@ -664,9 +664,9 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The second one allow us to set allowance value for a <code>spender</code> address on <code>owner</code> address if we manage to confirm that <code>spender</code> is the <code>owner</code> (specified in the function, not the contract owner) by verifiying a signature with ecdsa.</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -685,7 +685,7 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#e67e80">function</span> <span style="color:#b2c98f">permit</span>(
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span> <span style="color:#e67e80">function</span> <span style="color:#b2c98f">permit</span>(
 </span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> owner,
 </span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">address</span> spender,
 </span></span><span style="display:flex;"><span>        <span style="color:#dbbc7f">uint256</span> <span style="color:#d699b6">value</span>,
@@ -709,9 +709,9 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 <p>Here the vulnerability is that we can choose the v, r and s parameter in order to get a null signature.</p>
 <p>Testing <code>ecrecover()</code> locally i found that with any <code>h</code> if <code>v = r = s = 0</code> , then <code>ecrecover(h,v,r,s) == 0 == address(0)</code></p>
 <p>With this test contract :</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -731,7 +731,7 @@ Meaning that if you want to transfer coins from another account you&rsquo;re not
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">18
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-solidity" data-lang="solidity"><span style="display:flex;"><span><span style="color:#e67e80">pragma solidity</span> <span style="color:#7a8478">^</span><span style="color:#d699b6">0</span>.<span style="color:#d699b6">8</span>.<span style="color:#d699b6">25</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">contract</span> Testsignatures {
 </span></span><span style="display:flex;"><span>

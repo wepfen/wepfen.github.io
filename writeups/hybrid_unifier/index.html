@@ -162,14 +162,14 @@
 <p>sending a post request to <code>/request-session-parameters</code> give us the generator $g$ and the prime number $p$ :</p>
 <p><code>POST /api/request-session-parameters HTTP/1.1</code> gives <code>{&quot;g&quot;:&quot;0x2&quot;,&quot;p&quot;:&quot;0xf4ac926dddb699f4cb03c005a9f6f89c7505ab5282a3557d2aaf41e822372edd69c2a9d4906a943340bfd87fc08f9743&quot;} </code></p>
 <p>Then we can init a session with <code>/api/init-session</code> in JSON by sending our public key, here is the challenge source code part:</p>
-<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">establish_session_key</span>(<span style="color:#d699b6">self</span>, client_public_key):
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">def</span> <span style="color:#b2c98f">establish_session_key</span>(<span style="color:#d699b6">self</span>, client_public_key):
 </span></span><span style="display:flex;"><span>	key <span style="color:#7a8478">=</span> <span style="color:#d699b6">pow</span>(client_public_key, <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>a, <span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>p)
 </span></span><span style="display:flex;"><span>	<span style="color:#d699b6">self</span><span style="color:#7a8478">.</span>session_key <span style="color:#7a8478">=</span> sha256(<span style="color:#d699b6">str</span>(key)<span style="color:#7a8478">.</span>encode())<span style="color:#7a8478">.</span>digest()
 </span></span></code></pre></td></tr></table>
@@ -205,9 +205,9 @@ $$ B^{a} \equiv (p+1)^{a} \equiv 1^{a} \equiv 1 \mod p $$<p>For the challeng I u
 </ul>
 <details>
   <summary>solve_hybrid_unifier.py</summary>
-  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+  <div class="highlight"><div style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;">
 <table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 1
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 2
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 3
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a"> 4
@@ -292,7 +292,7 @@ $$ B^{a} \equiv (p+1)^{a} \equiv 1^{a} \equiv 1 \mod p $$<p>For the challeng I u
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#6b655a">83
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> base64 <span style="color:#e67e80">import</span> b64encode <span style="color:#e67e80">as</span> be, b64decode <span style="color:#e67e80">as</span> bd
+<pre tabindex="0" style="color:#d6cbb4;background-color:#252b2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e67e80">from</span> base64 <span style="color:#e67e80">import</span> b64encode <span style="color:#e67e80">as</span> be, b64decode <span style="color:#e67e80">as</span> bd
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> Crypto.Cipher <span style="color:#e67e80">import</span> AES
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> Crypto.Util.Padding <span style="color:#e67e80">import</span> pad, unpad
 </span></span><span style="display:flex;"><span><span style="color:#e67e80">from</span> Crypto.Util.number <span style="color:#e67e80">import</span> getPrime, long_to_bytes <span style="color:#e67e80">as</span> l2b
