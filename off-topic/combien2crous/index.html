@@ -96,7 +96,7 @@
     >
     <span>€</span>
   </div>
-  <div id="results" class="">
+  <div id="results" class="hidden">
     <h2>Qui équivaut à :</h2>
     <p id="crous"><strong>0</strong> repas crous à 3.30€</p>
     <p id="crous-bourse"><strong>0</strong> repas crous de boursier</p>
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function() {
   input.addEventListener("input", function() {
     const value = parseFloat(this.value);
 
-    if (!value || value <= 0) {
+	if (!value || value <= 0) {
       crousText.textContent = "0";
       crousBourse.textContent = "0";
       pizzaText.textContent = "0";
