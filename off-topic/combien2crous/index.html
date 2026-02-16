@@ -207,6 +207,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const value = parseFloat(this.value);
 
     if (!value || value <= 0) {
+      crousText.textContent = "0";
+      crousBourse.textContent = "0";
+      pizzaText.textContent = "0";
+      bolo.textContent = "0";
+      robux.textContent = "0";
+      gems.textContent = "0";
+      tastycrousty.textContent = "0";
+      jnr28k.textContent = "0";
+      hexacon.textContent = "0";
+      results.classList.add("hidden");
       return;
     }
 
