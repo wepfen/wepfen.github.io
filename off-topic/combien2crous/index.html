@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="description here">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="description here" />
+  <meta property="og:image" content="https://risibank.fr/cache/medias/0/14/1446/144621/full.jpeg" />
+  <meta property="og:url" content="https://wepfen.github.io/off-topic/combien2crous/">
+  <meta property="og:title" content="Combien ça coûte en CROUS ?">
+  <meta property="og:site_name" content="wepfen.crampté">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/off-topic/combien2crous/">
+  <meta name="twitter:title" content="Combien ça coûte en CROUS ?">
+  <meta name="twitter:description" content="description here">
+  <meta name="twitter:image" content="https://risibank.fr/cache/medias/0/14/1446/144621/full.jpeg">
+  
+  <title>
+    
+      Combien ça coûte en CROUS ?
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.af598405e945854a026183e5b6377879d63b93fa8dcc743eec2f38aaa4a8a0c9920347fc904268f16bb063a24b733dd1a63e84f47b81e464db22b69cd347a698.css" integrity="sha512-r1mEBelFhUoCYYPltjd4edY7k/qNzHQ&#43;7C84qqSooMmSA0f8kEJo8WuwY6JLcz3Rpj6E9HuB5GTbIrac00emmA==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">/home</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2026-02-16 17:34:05 &#43;0100 CET">
+            2026-02-16
+        </time>
+    </p>
+
+    <h1>Combien ça coûte en CROUS ?</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents"></nav>
+        </aside>
+    
+
+    <div class="crous">
+  <div class="crous-input">
+    <input 
+      id="amount" 
+      type="number" 
+      placeholder="0"
+      class="searchbar"
+    >
+    <span>€</span>
+  </div>
+  <div id="results" class="">
+    <h2>Qui équivaut à :</h2>
+    <p id="crous"><strong>0</strong> repas crous à 3.30€</p>
+    <p id="crous-bourse"><strong>0</strong> repas crous de boursier à 1€</p>
+    <p id="pizza"><strong>0</strong> pizzas delamama six fromaggio</p>
+    <p id="bolo"><strong>0</strong> Portions de pâtes bolognaises maison</p>
+  </div>
+</div>
+<style>
+
+h1 {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px; /* Adjust as needed */
+  font-size: 3em;
+}
+
+.crous {
+  text-align: center;
+  margin-top: 5rem;
+  font-family: sans-serif;
+}
+
+.crous-input {
+  position: relative;
+  display: inline-block;
+}
+
+input {
+  font-size: 3rem;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  width: 200px;
+  padding-right: 30px;
+  background-color: black;
+  -webkit-appearance: none;
+  -moz-appearance:textfield
+
+}
+
+.crous-input span {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#results:not(.hidden) {
+  opacity: 1;
+}
+
+
+@media (max-width: 600px) {
+  h1 {
+  font-size: 2em;
+  }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const input = document.getElementById("amount");
+  const results = document.getElementById("results");
+  const crousText = document.getElementById("crous").querySelector("strong");
+  const crousBourse = document.getElementById("crous-bourse").querySelector("strong");
+  const pizzaText = document.getElementById("pizza").querySelector("strong");
+  const bolo = document.getElementById("bolo").querySelector("strong");
+
+  const CROUS_PRICE = 2.5;
+  const PIZZA_PRICE = 4.79;
+  const CROUS_BOURSE_PRICE = 1;
+  const BOLO = 3.50;
+
+  input.addEventListener("input", function() {
+    const value = parseFloat(this.value);
+
+    if (!value || value <= 0) {
+      return;
+    }
+
+    crousText.textContent = Math.round((value / CROUS_PRICE)* 100) /100;
+    crousBourse.textContent = Math.round((value / CROUS_BOURSE_PRICE)* 100) /100;
+    pizzaText.textContent = Math.round((value / PIZZA_PRICE)* 100) /100;
+    bolo.textContent = Math.round((value / BOLO)* 100) /100;
+
+    results.classList.remove("hidden");
+  });
+});
+</script>
+
+
+</article>
+<br>
+<hr>
+
+<ul style="display: flex; list-style-type:none; justify-content: center; gap: 10px; ">
+
+    <li><a href="https://512kb.club" target=_blank><img src="../../../images/512kb.gif" width="88" height="31" alt="a proud member of the green team of 512KB club" /> </a>
+
+    <li><a href="https://stackoverflow.com/questions/11828270/how-do-i-exit-vim" target=_blank><img src="../../../images/vim_love.gif" width="88" height="31" alt="edited with VIM !" /></a>
+
+    <li><a href="https://endeavouros.com/" target=_blank><img src="../../../images/endeavouros.png" width="88" height="31" alt="powered by endeavourOS !" /></a>
+
+    <li><a href="https://themes.gohugo.io/themes/hugo-theme-nostyleplease/" target=_blank><img src="../../../images/hugo.png" width="88" height="31" alt="powered by hugo !" /></a>
+
+</ul>
+</div>
+        </main>
+
+  
+    </body>
+</html>
