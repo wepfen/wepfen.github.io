@@ -83,7 +83,10 @@
         </aside>
     
 
-    <div class="crous">
+    <p align="center">
+  Une idée de <a href="https://github.com/p4st1s/"> p4st1s</a> parce que les repas <a href="https://www.crous-paris.fr/se-restaurer/">CROUS</a> c'est le bon plan !
+</p>
+<div class="crous">
   <div class="crous-input">
     <input 
       id="amount" 
@@ -99,6 +102,11 @@
     <p id="crous-bourse"><strong>0</strong> repas crous de boursier</p>
     <p id="pizza"><strong>0</strong> pizzas delamama six fromaggio</p>
     <p id="bolo"><strong>0</strong> Portions de pâtes bolognaises maison</p>
+    <p id="robux"><strong>0</strong> Robux <a href="https://www.roblox.com/fr/upgrades/robux">(environ)</a></p>
+    <p id="gems"><strong>0</strong> Gemmes Clash Royale <a href="https://clashroyale.fandom.com/wiki/Gems">(environ)</a></p>
+    <p id="tastycrousty"><strong>0</strong> Tasty Crousty sans boisson</p>
+    <p id="jnr28k"><strong>0</strong> puffs JNR 28 K</p>
+    <p id="hexacon"><strong>0</strong>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
   </div>
 </div>
 <style>
@@ -110,6 +118,12 @@ h1 {
   justify-content: center;
   min-height: 100px; /* Adjust as needed */
   font-size: 3em;
+
+}
+
+h2 {
+  padding-bottom: 2.5rem;
+  font-style: strong;
 }
 
 .crous {
@@ -134,8 +148,8 @@ input {
   background-color: black;
   -webkit-appearance: none;
   -moz-appearance:textfield
-
 }
+
 
 .crous-input span {
   position: absolute;
@@ -154,6 +168,10 @@ input {
   opacity: 1;
 }
 
+#results {
+  line-height: 1;
+}
+
 
 @media (max-width: 600px) {
   h1 {
@@ -168,11 +186,22 @@ document.addEventListener("DOMContentLoaded", function() {
   const crousBourse = document.getElementById("crous-bourse").querySelector("strong");
   const pizzaText = document.getElementById("pizza").querySelector("strong");
   const bolo = document.getElementById("bolo").querySelector("strong");
+  const robux = document.getElementById("robux").querySelector("strong");
+  const gems = document.getElementById("gems").querySelector("strong");
+  const tastycrousty = document.getElementById("tastycrousty").querySelector("strong");
+  const jnr28k = document.getElementById("jnr28k").querySelector("strong");
+  const hexacon = document.getElementById("hexacon").querySelector("strong");
 
-  const CROUS_PRICE = 2.5;
+  const CROUS_PRICE = 3.3;
   const PIZZA_PRICE = 4.79;
   const CROUS_BOURSE_PRICE = 1;
-  const BOLO = 3.50;
+  const BOLO_PRICE = 3.50;
+  const ROBUX_PRICE = 0.01;
+  const CLASH_ROYALE_GEM = 0.0125;
+  const CROUSTY = 9;
+  const JNR_28_K = 14;
+  const HEXACON = 660;
+
 
   input.addEventListener("input", function() {
     const value = parseFloat(this.value);
@@ -184,7 +213,12 @@ document.addEventListener("DOMContentLoaded", function() {
     crousText.textContent = Math.round((value / CROUS_PRICE)* 100) /100;
     crousBourse.textContent = Math.round((value / CROUS_BOURSE_PRICE)* 100) /100;
     pizzaText.textContent = Math.round((value / PIZZA_PRICE)* 100) /100;
-    bolo.textContent = Math.round((value / BOLO)* 100) /100;
+    bolo.textContent = Math.round((value / BOLO_PRICE)* 100) /100;
+    robux.textContent = Math.round((value / ROBUX_PRICE)* 100) /100;
+    gems.textContent = Math.round((value / CLASH_ROYALE_GEM)* 100) /100;
+    tastycrousty.textContent = Math.round((value / CROUSTY)* 100) /100;
+    jnr28k.textContent = Math.round((value / JNR_28_K)* 100) /100;
+    hexacon.textContent = Math.round((value / HEXACON)* 100);
 
     results.classList.remove("hidden");
   });
