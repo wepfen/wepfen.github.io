@@ -98,6 +98,7 @@
   </div>
   <div id="results" class="hidden">
     <h2>Qui équivaut à :</h2>
+<<<<<<< HEAD
     <p id="crous"><b>0</b> repas crous à 3.30€</p>
     <p id="crous-bourse"><b>0</b> repas crous de boursier</p>
     <p id="pizza"><b>0</b> pizzas delamama six fromaggio</p>
@@ -108,6 +109,18 @@
     <p id="jnr28k"><b>0</b> puffs JNR 28 K</p>
     <p id="hexacon"><b>0</b>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
     <p id="retraite"><b>0 ms</b> de financement des retraites (France, 2024)</p>
+=======
+    <p id="crous"><strong>0</strong> repas crous à 3.30€</p>
+    <p id="crous-bourse"><strong>0</strong> repas crous de boursier</p>
+    <p id="pizza"><strong>0</strong> pizzas delamama six fromaggio</p>
+    <p id="bolo"><strong>0</strong> Portions de pâtes bolognaises maison</p>
+    <p id="robux"><strong>0</strong> Robux <a href="https://www.roblox.com/fr/upgrades/robux">(environ)</a></p>
+    <p id="gems"><strong>0</strong> Gemmes Clash Royale <a href="https://clashroyale.fandom.com/wiki/Gems">(environ)</a></p>
+    <p id="tastycrousty"><strong>0</strong> Tasty Crousty sans boisson</p>
+    <p id="jnr28k"><strong>0</strong> puffs JNR 28 K</p>
+    <p id="hexacon"><strong>0</strong>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
+	<p id="retraite"><strong>0 ms</strong> de financement des retraites (France, 2024)</p>
+>>>>>>> 0f99aab6cd11042f976e22398b10848786478802
   </div>
 </div>
 <style>
@@ -183,6 +196,7 @@ input {
 document.addEventListener("DOMContentLoaded", function() {
   const input = document.getElementById("amount");
   const results = document.getElementById("results");
+<<<<<<< HEAD
   const crousText = document.getElementById("crous").querySelector("b");
   const crousBourse = document.getElementById("crous-bourse").querySelector("b");
   const pizzaText = document.getElementById("pizza").querySelector("b");
@@ -193,6 +207,18 @@ document.addEventListener("DOMContentLoaded", function() {
   const jnr28k = document.getElementById("jnr28k").querySelector("b");
   const hexacon = document.getElementById("hexacon").querySelector("b");
    const retraite = document.getElementById("retraite").querySelector("b");
+=======
+  const crousText = document.getElementById("crous").querySelector("strong");
+  const crousBourse = document.getElementById("crous-bourse").querySelector("strong");
+  const pizzaText = document.getElementById("pizza").querySelector("strong");
+  const bolo = document.getElementById("bolo").querySelector("strong");
+  const robux = document.getElementById("robux").querySelector("strong");
+  const gems = document.getElementById("gems").querySelector("strong");
+  const tastycrousty = document.getElementById("tastycrousty").querySelector("strong");
+  const jnr28k = document.getElementById("jnr28k").querySelector("strong");
+  const hexacon = document.getElementById("hexacon").querySelector("strong");
+  const retraite = document.getElementById("retraite").querySelector("strong");
+>>>>>>> 0f99aab6cd11042f976e22398b10848786478802
 
   const CROUS_PRICE = 3.3;
   const PIZZA_PRICE = 4.79;
@@ -207,6 +233,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; 
   const RETRAITE_EUR_PER_SECOND = RETRAITE_ANNUAL_COST_EUR / SECONDS_PER_YEAR;
 
+<<<<<<< HEAD
 https:
 
 
@@ -238,7 +265,40 @@ https:
     return parts.join(" ");
   }
 	
+=======
+  const RETRAITE_ANNUAL_COST_EUR = 407e9; // Retraites (France, 2024) arrondi cf. https://www.vie-publique[.]fr/lettre_essentiel/21 & retraites[.]fr/sites/default/files/2025-06/RA_2025_def_publi.pdf
+  const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; 
+  const RETRAITE_EUR_PER_SECOND = RETRAITE_ANNUAL_COST_EUR / SECONDS_PER_YEAR;
+>>>>>>> 0f99aab6cd11042f976e22398b10848786478802
 
+  function formatDuration(seconds) {
+    if (!isFinite(seconds) || seconds <= 0) return "0 ms";
+
+    if (seconds < 0.001) return `${(seconds * 1e6).toFixed(2)} µs`;
+    if (seconds < 1) return `${(seconds * 1000).toFixed(2)} ms`;
+
+    let s = Math.floor(seconds);
+
+    const yearSec = SECONDS_PER_YEAR;
+    const daySec = 24 * 60 * 60;
+    const hourSec = 60 * 60;
+    const minSec = 60;
+
+    const years = Math.floor(s / yearSec); s -= years * yearSec;
+    const days = Math.floor(s / daySec); s -= days * daySec;
+    const hours = Math.floor(s / hourSec); s -= hours * hourSec;
+    const mins = Math.floor(s / minSec); s -= mins * minSec;
+
+    const parts = [];
+    if (years) parts.push(`${years} an${years > 1 ? "s" : ""}`);
+    if (days || years) parts.push(`${days} j`);
+    if (hours || days || years) parts.push(`${hours} h`);
+    parts.push(`${mins} min`);
+    parts.push(`${s} s`);
+
+    return parts.join(" ");
+  }
+	
   input.addEventListener("input", function() {
     const value = parseFloat(this.value);
 
@@ -252,7 +312,11 @@ https:
       tastycrousty.textContent = "0";
       jnr28k.textContent = "0";
       hexacon.textContent = "0";
+<<<<<<< HEAD
       retraite.textContent = "0 ms";
+=======
+	  retraite.textContent = "0 ms";
+>>>>>>> 0f99aab6cd11042f976e22398b10848786478802
       results.classList.add("hidden");
       return;
     }
@@ -266,9 +330,16 @@ https:
     tastycrousty.textContent = Math.round((value / CROUSTY)* 100) /100;
     jnr28k.textContent = Math.round((value / JNR_28_K)* 100) /100;
     hexacon.textContent = Math.round((value / HEXACON)* 100);
+<<<<<<< HEAD
     const fundedSeconds = value / RETRAITE_EUR_PER_SECOND;
 	  retraite.textContent = formatDuration(fundedSeconds);
     
+=======
+	
+	const fundedSeconds = value / RETRAITE_EUR_PER_SECOND;
+	retraite.textContent = formatDuration(fundedSeconds);
+	  
+>>>>>>> 0f99aab6cd11042f976e22398b10848786478802
     results.classList.remove("hidden");
   });
 });
