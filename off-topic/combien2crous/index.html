@@ -107,6 +107,7 @@
     <p id="tastycrousty"><b>0</b> Tasty Crousty sans boisson</p>
     <p id="jnr28k"><b>0</b> puffs JNR 28 K</p>
     <p id="hexacon"><b>0</b>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
+    <p id="vody"><strong>0</strong> Vody 22% (25cl)</p>
     <p id="retraite"><b>0 ms</b> de financement des retraites (France, 2024)</p>
   </div>
 </div>
@@ -192,7 +193,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const tastycrousty = document.getElementById("tastycrousty").querySelector("b");
   const jnr28k = document.getElementById("jnr28k").querySelector("b");
   const hexacon = document.getElementById("hexacon").querySelector("b");
-   const retraite = document.getElementById("retraite").querySelector("b");
+  const vody = document.getElementById("vody").querySelector("strong");
+  const retraite = document.getElementById("retraite").querySelector("b");
 
   const CROUS_PRICE = 3.3;
   const PIZZA_PRICE = 4.79;
@@ -203,7 +205,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const CROUSTY = 9;
   const JNR_28_K = 14;
   const HEXACON = 660;
-  const RETRAITE_ANNUAL_COST_EUR = 407e9; 
+  const VODY_22_25CL = 4.25; // € (prix moyen "magasin" estimé)
+
+  const RETRAITE_ANNUAL_COST_EUR = 407e9; // Retraites (France, 2024) arrondi cf. https://www.vie-publique[.]fr/lettre_essentiel/21 & retraites[.]fr/sites/default/files/2025-06/RA_2025_def_publi.pdf
   const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; 
   const RETRAITE_EUR_PER_SECOND = RETRAITE_ANNUAL_COST_EUR / SECONDS_PER_YEAR;
 
@@ -252,6 +256,7 @@ https:
       tastycrousty.textContent = "0";
       jnr28k.textContent = "0";
       hexacon.textContent = "0";
+      vody.textContent = "0";
       retraite.textContent = "0 ms";
       results.classList.add("hidden");
       return;
@@ -266,9 +271,11 @@ https:
     tastycrousty.textContent = Math.round((value / CROUSTY)* 100) /100;
     jnr28k.textContent = Math.round((value / JNR_28_K)* 100) /100;
     hexacon.textContent = Math.round((value / HEXACON)* 100);
-    const fundedSeconds = value / RETRAITE_EUR_PER_SECOND;
-	  retraite.textContent = formatDuration(fundedSeconds);
-    
+  	vody.textContent = Math.round((value / VODY_22_25CL) * 100) / 100;
+	
+	const fundedSeconds = value / RETRAITE_EUR_PER_SECOND;
+	retraite.textContent = formatDuration(fundedSeconds);
+	  
     results.classList.remove("hidden");
   });
 });
