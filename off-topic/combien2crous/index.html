@@ -107,6 +107,8 @@
     <p id="tastycrousty"><b>0</b> Tasty Crousty sans boisson</p>
     <p id="jnr28k"><b>0</b> puffs JNR 28 K</p>
     <p id="hexacon"><b>0</b>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
+    <p id="kebab"><b>0</b> Kebabs</p>
+    <p id="vbucks"><b>0</b> V-Bucks <a href="https://www.fortnite.com/vbuckscard">(Fortnite)</a></p>
     <p id="vody"><b>0</b> Vody 22% (25cl)</p>
     <p id="retraite"><b>0 ms</b> de financement des <a href="https://www.vie-publique.fr/lettre_essentiel/21">retraites</a> (France, 2024)</p>
   </div>
@@ -193,6 +195,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const tastycrousty = document.getElementById("tastycrousty").querySelector("b");
   const jnr28k = document.getElementById("jnr28k").querySelector("b");
   const hexacon = document.getElementById("hexacon").querySelector("b");
+  const kebab = document.getElementById("kebab").querySelector("b");
+  const vbucks = document.getElementById("vbucks").querySelector("b");
   const vody = document.getElementById("vody").querySelector("b");
   const retraite = document.getElementById("retraite").querySelector("b");
 
@@ -207,7 +211,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const HEXACON = 660;
   const RETRAITE_ANNUAL_COST_EUR = 407e9; 
   const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; 
-  const VODY_22_25CL = 4.25; 
+  const KEBAB_PRICE = 5;
+  const VBUCKS_PRICE = 8.99 / 1000; // 1000 V-Bucks = 8.99€
+  const VODY_22_25CL = 4.25;
   const RETRAITE_EUR_PER_SECOND = RETRAITE_ANNUAL_COST_EUR / SECONDS_PER_YEAR;
 
 https:
@@ -255,6 +261,8 @@ https:
       tastycrousty.textContent = "0";
       jnr28k.textContent = "0";
       hexacon.textContent = "0";
+      kebab.textContent = "0";
+      vbucks.textContent = "0";
       vody.textContent = "0";
       retraite.textContent = "0 ms";
       results.classList.add("hidden");
@@ -270,6 +278,8 @@ https:
     tastycrousty.textContent = Math.round((value / CROUSTY)* 100) /100;
     jnr28k.textContent = Math.round((value / JNR_28_K)* 100) /100;
     hexacon.textContent = Math.round((value / HEXACON)* 100);
+    kebab.textContent = Math.round((value / KEBAB_PRICE)* 100) /100;
+    vbucks.textContent = Math.round((value / VBUCKS_PRICE)* 100) /100;
   	vody.textContent = Math.round((value / VODY_22_25CL) * 100) / 100;
 	  const fundedSeconds = value / RETRAITE_EUR_PER_SECOND;
 	  retraite.textContent = formatDuration(fundedSeconds);
