@@ -107,9 +107,9 @@
     <p id="tastycrousty"><b>0</b> Tasty Crousty sans boisson</p>
     <p id="jnr28k"><b>0</b> puffs JNR 28 K</p>
     <p id="hexacon"><b>0</b>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
-    <p id="kebab"><b>0</b> Kebabs</p>
-    <p id="vbucks"><b>0</b> V-Bucks <a href="https://www.fortnite.com/vbuckscard">(Fortnite)</a></p>
     <p id="vody"><b>0</b> Vody 22% (25cl)</p>
+	<p id="kebab"><b>0</b> Kebabs</p>
+    <p id="vbucks"><b>0</b> V-Bucks <a href="https://www.fortnite.com/vbuckscard"></a></p>
     <p id="retraite"><b>0 ms</b> de financement des <a href="https://www.vie-publique.fr/lettre_essentiel/21">retraites</a> (France, 2024)</p>
   </div>
 </div>
@@ -209,14 +209,12 @@ document.addEventListener("DOMContentLoaded", function() {
   const CROUSTY = 9;
   const JNR_28_K = 14;
   const HEXACON = 660;
+  const KEBAB_PRICE = 5;
+  const VBUCKS_PRICE = 8.99 / 1000; 
   const RETRAITE_ANNUAL_COST_EUR = 407e9; 
   const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; 
-  const KEBAB_PRICE = 5;
-  const VBUCKS_PRICE = 8.99 / 1000; // 1000 V-Bucks = 8.99€
-  const VODY_22_25CL = 4.25;
+  const VODY_22_25CL = 4.25; 
   const RETRAITE_EUR_PER_SECOND = RETRAITE_ANNUAL_COST_EUR / SECONDS_PER_YEAR;
-
-https:
 
 
   function formatDuration(seconds) {
