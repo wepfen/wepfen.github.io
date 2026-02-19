@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 
-  
+
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Vois combien de repas Crous t&#39;aurais pu avoir avant de faire une connerie">  
+  <meta name="description" content="Vois combien de repas Crous t&#39;aurais pu avoir avant de faire une connerie">
 
 
-  
+
   <meta property="og:type" content="website">
   <meta property="og:description" content="Vois combien de repas Crous t&#39;aurais pu avoir avant de faire une connerie" />
   <meta property="og:image" content="https://risibank.fr/cache/medias/0/14/1446/144621/full.jpeg" />
@@ -16,32 +16,33 @@
   <meta property="og:title" content="Combien ça coûte en CROUS ?">
   <meta property="og:site_name" content="wepfen.crampté">
 
-  
+
   <meta name="twitter:card" content="summary_large_image">
   <meta property="twitter:domain" content="wepfen.github.io">
   <meta property="twitter:url" content="https://wepfen.github.io/off-topic/combien2crous/">
   <meta name="twitter:title" content="Combien ça coûte en CROUS ?">
   <meta name="twitter:description" content="Vois combien de repas Crous t&#39;aurais pu avoir avant de faire une connerie">
   <meta name="twitter:image" content="https://risibank.fr/cache/medias/0/14/1446/144621/full.jpeg">
-  
+
   <title>
-    
+
       Combien ça coûte en CROUS ?
-    
+
   </title>
 
 
   <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
-   
 
-  
-  
-  
-  
+
+
+
+
+
   <link rel="stylesheet" href="/css/main.af598405e945854a026183e5b6377879d63b93fa8dcc743eec2f38aaa4a8a0c9920347fc904268f16bb063a24b733dd1a63e84f47b81e464db22b69cd347a698.css" integrity="sha512-r1mEBelFhUoCYYPltjd4edY7k/qNzHQ&#43;7C84qqSooMmSA0f8kEJo8WuwY6JLcz3Rpj6E9HuB5GTbIrac00emmA==" />
 
-  
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
 </head>
 
@@ -66,8 +67,6 @@
 
 
 
-
-
 <article>
     <p class="post-meta">
         <time datetime="2026-02-16 17:34:05 &#43;0100 CET">
@@ -75,63 +74,200 @@
         </time>
     </p>
 
-    <h1>Combien ça coûte en CROUS ?</h1>
+    <div class="crous-hero">
+      <h1 class="crous-title">
+        <span class="title-line">Combien ça coûte</span>
+        <span class="title-accent">en CROUS ?</span>
+      </h1>
+      <p class="crous-subtitle">
+        Une idée de <a href="https://github.com/p4st1s/">p4st1s</a> parce que les repas <a href="https://www.crous-paris.fr/se-restaurer/">CROUS</a> c'est le bon plan !
+      </p>
+    </div>
 
-    
+
         <aside >
             <nav id="TableOfContents"></nav>
         </aside>
-    
 
-    <p align="center">
-  Une idée de <a href="https://github.com/p4st1s/"> p4st1s</a> parce que les repas <a href="https://www.crous-paris.fr/se-restaurer/">CROUS</a> c'est le bon plan !
-</p>
+
 <div class="crous">
-  <div class="crous-input">
-    <input 
-      id="amount" 
-      type="number" 
-      placeholder="0"
-      class="searchbar"
-    >
-    <span>€</span>
+  <div class="crous-input-wrapper">
+    <div class="crous-input">
+      <input
+        id="amount"
+        type="number"
+        placeholder="0"
+        class="searchbar"
+        autocomplete="off"
+      >
+      <span class="currency-sign">€</span>
+    </div>
+    <div class="input-glow"></div>
   </div>
-  <div id="results" class="hidden">
-    <h2>Qui équivaut à :</h2>
-    <p id="crous"><b>0</b> repas crous à 3.30€</p>
-    <p id="crous-bourse"><b>0</b> repas crous de boursier</p>
-    <p id="pizza"><b>0</b> pizzas delamama six fromaggio</p>
-    <p id="bolo"><b>0</b> Portions de pâtes bolognaises maison</p>
-    <p id="robux"><b>0</b> Robux <a href="https://www.roblox.com/fr/upgrades/robux">(environ)</a></p>
-    <p id="gems"><b>0</b> Gemmes Clash Royale <a href="https://clashroyale.fandom.com/wiki/Gems">(environ)</a></p>
-    <p id="tastycrousty"><b>0</b> Tasty Crousty sans boisson</p>
-    <p id="jnr28k"><b>0</b> puffs JNR 28 K</p>
-    <p id="hexacon"><b>0</b>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
-    <p id="vody"><b>0</b> Vody 22% (25cl)</p>
-    <p id="retraite"><b>0 ms</b> de financement des <a href="https://www.vie-publique.fr/lettre_essentiel/21">retraites</a> (France, 2024)</p>
+
+  <div id="results" class="results-grid hidden">
+    <h2 class="results-heading">Qui équivaut à :</h2>
+
+    <div class="card" id="crous" style="--i:0">
+      <span class="card-icon">🍽️</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">repas crous à 3.30€</span>
+    </div>
+
+    <div class="card" id="crous-bourse" style="--i:1">
+      <span class="card-icon">🎓</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">repas crous de boursier</span>
+    </div>
+
+    <div class="card" id="pizza" style="--i:2">
+      <span class="card-icon">🍕</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">pizzas delamama six fromaggio</span>
+    </div>
+
+    <div class="card" id="bolo" style="--i:3">
+      <span class="card-icon">🍝</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">Portions de pâtes bolo maison</span>
+    </div>
+
+    <div class="card" id="robux" style="--i:4">
+      <span class="card-icon">🟢</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">Robux <a href="https://www.roblox.com/fr/upgrades/robux">(environ)</a></span>
+    </div>
+
+    <div class="card" id="gems" style="--i:5">
+      <span class="card-icon">💎</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">Gemmes Clash Royale <a href="https://clashroyale.fandom.com/wiki/Gems">(environ)</a></span>
+    </div>
+
+    <div class="card" id="tastycrousty" style="--i:6">
+      <span class="card-icon">🥖</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">Tasty Crousty sans boisson</span>
+    </div>
+
+    <div class="card" id="jnr28k" style="--i:7">
+      <span class="card-icon">💨</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">puffs JNR 28 K</span>
+    </div>
+
+    <div class="card" id="hexacon" style="--i:8">
+      <span class="card-icon">🏴‍☠️</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">% d'un billet réduit <a href="https://hexacon.fr/">Hexacon</a></span>
+    </div>
+
+    <div class="card" id="vody" style="--i:9">
+      <span class="card-icon">🍷</span>
+      <span class="card-value"><b>0</b></span>
+      <span class="card-label">Vody 22% (25cl)</span>
+    </div>
+
+    <div class="card card-wide" id="retraite" style="--i:10">
+      <span class="card-icon">🏛️</span>
+      <span class="card-value"><b>0 ms</b></span>
+      <span class="card-label">de financement des <a href="https://www.vie-publique.fr/lettre_essentiel/21">retraites</a> (France, 2024)</span>
+    </div>
   </div>
 </div>
-<style>
 
-h1 {
+<style>
+/* ═══════════════════════════════════════════
+   CROUS CALCULATOR — NEON ARCADE EDITION
+   ═══════════════════════════════════════════ */
+
+:root {
+  --neon-cyan: #00f0ff;
+  --neon-magenta: #ff2d95;
+  --neon-green: #39ff14;
+  --neon-yellow: #ffe600;
+  --bg-deep: #0a0e17;
+  --bg-card: rgba(15, 22, 40, 0.75);
+  --bg-card-hover: rgba(25, 35, 65, 0.85);
+  --text-primary: #e8eaf0;
+  --text-muted: #8892a4;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shine: rgba(255, 255, 255, 0.03);
+}
+
+/* Override parent theme for this page */
+article {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* ── HERO ── */
+.crous-hero {
   text-align: center;
+  padding: 2rem 0 1rem;
+  position: relative;
+}
+
+.crous-title {
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-weight: 700;
+  font-size: 2.4em;
+  line-height: 1.15;
+  margin: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100px; /* Adjust as needed */
-  font-size: 3em;
-
+  min-height: auto;
+  letter-spacing: -0.02em;
 }
 
-h2 {
-  padding-bottom: 2.5rem;
-  font-style: strong;
+.title-line {
+  opacity: 0;
+  animation: slideDown 0.6s ease forwards;
 }
 
+.title-accent {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.3em;
+  opacity: 0;
+  animation: slideDown 0.6s ease 0.15s forwards;
+  filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.3));
+}
+
+.crous-subtitle {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.4s forwards;
+}
+
+.crous-subtitle a {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+  transition: border-color 0.2s;
+}
+
+.crous-subtitle a:hover {
+  border-bottom-color: var(--neon-cyan);
+}
+
+/* ── INPUT ── */
 .crous {
   text-align: center;
-  margin-top: 5rem;
-  font-family: sans-serif;
+  margin-top: 2.5rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.crous-input-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .crous-input {
@@ -139,47 +275,293 @@ h2 {
   display: inline-block;
 }
 
-input {
+.crous-input input {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
   font-size: 3rem;
   text-align: center;
-  border: none;
-  border-bottom: 1px solid black;
+  border: 2px solid rgba(0, 240, 255, 0.25);
+  border-radius: 16px;
   outline: none;
-  width: 200px;
-  padding-right: 30px;
-  background-color: black;
+  width: 240px;
+  padding: 0.6rem 2.5rem 0.6rem 1.5rem;
+  background: var(--bg-card);
+  color: var(--neon-cyan);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.3s, box-shadow 0.3s;
   -webkit-appearance: none;
-  -moz-appearance:textfield
+  -moz-appearance: textfield;
 }
 
+.crous-input input::placeholder {
+  color: rgba(0, 240, 255, 0.2);
+}
 
-.crous-input span {
+.crous-input input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow:
+    0 0 20px rgba(0, 240, 255, 0.15),
+    0 0 60px rgba(0, 240, 255, 0.05),
+    inset 0 0 20px rgba(0, 240, 255, 0.03);
+}
+
+.crous-input input::-webkit-inner-spin-button,
+.crous-input input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.currency-sign {
   position: absolute;
-  right: 5px;
+  right: 18px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 2rem;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: rgba(0, 240, 255, 0.4);
+  pointer-events: none;
 }
 
-.hidden {
+.input-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
   opacity: 0;
-  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(20px);
+  transition: opacity 0.4s;
 }
 
-#results:not(.hidden) {
+.crous-input input:focus ~ .input-glow,
+.crous-input-wrapper:has(input:focus) .input-glow {
+  opacity: 0.15;
+}
+
+/* ── RESULTS GRID ── */
+.results-grid {
+  margin-top: 3rem;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  line-height: normal;
+}
+
+.results-grid.hidden {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.results-grid:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.results-heading {
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.8rem;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.results-heading {
+  grid-column: 1 / -1;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 1.2rem 1rem;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  opacity: 0;
+  animation: cardIn 0.4s ease forwards;
+  animation-delay: calc(var(--i) * 0.05s + 0.1s);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass-shine), transparent);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 240, 255, 0.15);
+  background: var(--bg-card-hover);
+}
+
+.card-wide {
+  grid-column: 1 / -1;
+}
+
+.card-icon {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  filter: saturate(0.85);
+}
+
+.card-value {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--neon-cyan);
+  display: block;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.card-value b {
+  font-weight: 700;
+}
+
+.card-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 0.35rem;
+  line-height: 1.4;
+}
+
+.card-label a {
+  color: var(--neon-magenta);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.card-label a:hover {
   opacity: 1;
 }
 
-#results {
-  line-height: 0.5;
+/* Different accent colors for variety */
+.card:nth-child(3) .card-value { color: var(--neon-green); }
+.card:nth-child(5) .card-value { color: var(--neon-yellow); }
+.card:nth-child(6) .card-value { color: #b36dff; }
+.card:nth-child(7) .card-value { color: #ff6b9d; }
+.card:nth-child(8) .card-value { color: var(--neon-green); }
+.card:nth-child(10) .card-value { color: var(--neon-yellow); }
+.card:nth-child(11) .card-value { color: #b36dff; }
+.card:nth-child(12) .card-value { color: var(--neon-magenta); }
+
+/* ── ANIMATIONS ── */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-@media (max-width: 600px) {
-  h1 {
-  font-size: 2em;
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .crous-title {
+    font-size: 1.6em;
+  }
+
+  .crous-input input {
+    font-size: 2.2rem;
+    width: 200px;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-wide {
+    grid-column: 1;
+  }
+
+  .card-value {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.3);
+}
+
+/* ── LIGHT THEME OVERRIDES ── */
+body[a="light"] .crous-input input {
+  background: rgba(240, 243, 250, 0.9);
+  color: #0a4a5c;
+  border-color: rgba(0, 180, 200, 0.3);
+}
+
+body[a="light"] .card {
+  background: rgba(240, 243, 250, 0.85);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+body[a="light"] .card:hover {
+  background: rgba(230, 236, 248, 0.95);
+  border-color: rgba(0, 180, 200, 0.2);
+}
+
+body[a="light"] .card-label {
+  color: #5a6577;
+}
+
+body[a="light"] .crous-subtitle {
+  color: #5a6577;
+}
+
+body[a="light"] .results-heading {
+  color: #5a6577;
+}
+
+body[a="light"] .currency-sign {
+  color: rgba(0, 140, 160, 0.4);
+}
 </style>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const input = document.getElementById("amount");
@@ -205,9 +587,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const CROUSTY = 9;
   const JNR_28_K = 14;
   const HEXACON = 660;
-  const RETRAITE_ANNUAL_COST_EUR = 407e9; 
-  const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; 
-  const VODY_22_25CL = 4.25; 
+  const RETRAITE_ANNUAL_COST_EUR = 407e9;
+  const SECONDS_PER_YEAR = 365 * 24 * 60 * 60;
+  const VODY_22_25CL = 4.25;
   const RETRAITE_EUR_PER_SECOND = RETRAITE_ANNUAL_COST_EUR / SECONDS_PER_YEAR;
 
 https:
@@ -240,7 +622,7 @@ https:
 
     return parts.join(" ");
   }
-	
+
 
   input.addEventListener("input", function() {
     const value = parseFloat(this.value);
@@ -298,6 +680,6 @@ https:
 </div>
         </main>
 
-  
+
     </body>
 </html>
