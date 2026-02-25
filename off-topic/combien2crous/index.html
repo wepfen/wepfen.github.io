@@ -184,6 +184,7 @@ input {
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+
   const input = document.getElementById("amount");
   const results = document.getElementById("results");
   const crousText = document.getElementById("crous").querySelector("b");
@@ -258,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function() {
       gems.textContent = "0";
       tastycrousty.textContent = "0";
       jnr28k.textContent = "0";
-      hexacon.textContent = "0";
+      hexacon.textContent = "0";  
       kebab.textContent = "0";
       vbucks.textContent = "0";
       vody.textContent = "0";
@@ -284,6 +285,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     results.classList.remove("hidden");
   });
+
+  
+
+  const params = new URLSearchParams(window.location.search);
+  const price = params.get("prix");
+
+  if (!isNaN(price) && price.trim() !== "") {
+    document.getElementById("amount").value = Number(price);
+    input.dispatchEvent(new Event("input"));
+  }
+
+
 });
 </script>
 
