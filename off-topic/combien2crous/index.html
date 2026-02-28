@@ -83,9 +83,14 @@
         </aside>
     
 
-    <p align="center">
+    
+<link rel="stylesheet" href="/css/crous.css">
+<script src="/js/crous.js"></script>
+
+<p align="center">
   Une idée de <a href="https://github.com/p4st1s/"> p4st1s</a> parce que les repas <a href="https://www.crous-paris.fr/se-restaurer/">CROUS</a> c'est le bon plan !
 </p>
+
 <div class="crous">
   <div class="crous-input">
     <input 
@@ -96,209 +101,121 @@
     >
     <span>€</span>
   </div>
+
   <div id="results" class="hidden">
-    <h2>Qui équivaut à :</h2>
-    <p id="crous"><b>0</b> repas crous à 3.30€</p>
-    <p id="crous-bourse"><b>0</b> repas crous de boursier</p>
-    <p id="pizza"><b>0</b> pizzas delamama six fromaggio</p>
-    <p id="bolo"><b>0</b> Portions de pâtes bolognaises maison</p>
-    <p id="robux"><b>0</b> Robux <a href="https://www.roblox.com/fr/upgrades/robux">(environ)</a></p>
-    <p id="gems"><b>0</b> Gemmes Clash Royale <a href="https://clashroyale.fandom.com/wiki/Gems">(environ)</a></p>
-    <p id="tastycrousty"><b>0</b> Tasty Crousty sans boisson</p>
-    <p id="jnr28k"><b>0</b> puffs JNR 28 K</p>
-    <p id="hexacon"><b>0</b>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p>
-    <p id="vody"><b>0</b> Vody 22% (25cl)</p>
-	<p id="kebab"><b>0</b> Kebabs</p>
-    <p id="vbucks"><b>0</b> V-Bucks <a href="https://www.fortnite.com/vbuckscard"></a></p>
-    <p id="retraite"><b>0 ms</b> de financement des <a href="https://www.vie-publique.fr/lettre_essentiel/21">retraites</a> (France, 2024)</p>
+    <h2>Scroll pour savoir ce que t'as (ou aurais) perdu :</h2>
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+      <g id="SVGRepo_iconCarrier"> 
+        <path d="M17 16L12 21M12 21L7 16M12 21V3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> </path> 
+      </g>
+    </svg>
   </div>
 </div>
-<style>
 
-h1 {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100px; /* Adjust as needed */
-  font-size: 3em;
+<div class="wrapper" id="intro">
 
-}
+  <div class="result-panel result-crous hidden" style="display: none;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Logo_Crous_vectorisé.svg/250px-Logo_Crous_vectorisé.svg.png" alt="crous logo" class="logo rotating">
+    <img src="https://risibank.fr/cache/medias/0/14/1446/144621/full.jpeg" alt="crous logo" class="logo rotating">
+      <h3> <p id="crous"><b>0</b> repas crous à 3.30€</p> </h3>
+      OU
+      <h3> <p id="crous-bourse"><b>0</b> repas crous de boursier++ </p> </h3>
+      Supplément riz qui croustille
+  </div>
 
-h2 {
-  padding-bottom: 2.5rem;
-  font-style: strong;
-}
+  <div class="result-panel result-vody hidden">
+    <img src="https://www.araratgroup.fr/images/imagecache/500x500/png/VODY-Vodka-Energy-22-vol-250ML-x24-05853.webp" alt="vody rouge" class="logo rotating">
+    <img src="https://www.araratgroup.fr/images/imagecache/500x500/png/VODY-Vodka-Energy-TROPICAL-18-vol-250ML-x24-05855.webp" alt="vody verte" class="logo rotating">
+    <img src="https://www.araratgroup.fr/images/imagecache/215x300/png/Bantu.webp" alt="vody bantu" class="logo rotating">
+    <img src="https://www.araratgroup.fr/images/imagecache/215x300/png/VODY-Vodka-Energy-18-vol-250ML-x24-05854.webp" alt="vody noir" class="logo rotating">
+      <h3> <p id="vody"><b>0</b> Vody 22% (25cl)</p> </h3>
+      Pire qu'une 86
+  </div>
 
-.crous {
-  text-align: center;
-  margin-top: 5rem;
-  font-family: sans-serif;
-}
+  <div class="result-panel result-tastycrousty hidden" style="display: none;">
+    <img src="https://upload.wikimedia.org/wikipedia/fr/4/4c/Logo_Tasty_Crousty.webp" alt="tastycrousty logo" class="logo rotating">
+    <img src="https://risibank.fr/cache/medias/0/41/4123/412350/full.png" alt="tastycrousty logo" class="logo rotating">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwyQguDb-0lEcgAmkj5BrIu1TxA3iuJkWM1w&s" alt="tastycrousty logo" class="logo rotating">
+    <img src="    https://cdn.prod.website-files.com/68e26a5b53e6344f24d9f861/68e506c702cfd65e79484a44_Logo%20TastyCrousty%20%20Krousty%20Sabai%CC%88di%20CroustyOne%20Tasty%20Crousty%20Restaurant%20meilleur.svg" alt="crousty game logo" class="logo rotating">
+    <div class="text-content">
+      <h3> <p id="tastycrousty"><b>0</b> Tasty Crousty sans boisson</p> </h3>
+      Sauce blanche et curry prime
+    </div>
+  </div>
 
-.crous-input {
-  position: relative;
-  display: inline-block;
-}
+  <div class="result-panel result-jnr28k hidden" style="display: none;">
+    <img src="https://preview.redd.it/blursed-vape-v0-8ii0u9mi74od1.jpeg?width=640&crop=smart&auto=webp&s=e13f2197bff50bac279360bf17b5de6712f9d294" alt="puff jnr 28k logo" class="logo rotating">
+    <img src="https://risibank.fr/cache/medias/0/33/3377/337742/full.png" alt="puff jnr 28k logo" class="logo rotating">
+    <img src="https://risibank.fr/cache/medias/0/41/4161/416120/full.jpeg" alt="puff jnr 28k logo" class="logo rotating">
+    <img src="https://jnrpuff.fr/wp-content/uploads/2025/07/12345678.png" alt="puff jnr 28k logo" class="logo rotating">
+      <h3> <p id="jnr28k"><b>0</b> puffs JNR 28 K</p> </h3>
+      Ice strawberry évidemment,
+      pour être prêt pour la doroparty
+  </div>
 
-input {
-  font-size: 3rem;
-  text-align: center;
-  border: none;
-  border-bottom: 1px solid black;
-  outline: none;
-  width: 200px;
-  padding-right: 30px;
-  background-color: black;
-  -webkit-appearance: none;
-  -moz-appearance:textfield
-}
+  <div class="result-panel result-robux hidden" style="display: none;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Robux_2019_Logo_gold.svg/250px-Robux_2019_Logo_gold.svg.png" alt="robux logo" class="logo rotating">
+    <img src="https://risibank.fr/cache/medias/0/13/1384/138463/full.png" alt="robux logo" class="logo rotating">
+      <h3> <p id="robux"><b>0</b> Robux <a href="https://www.roblox.com/fr/upgrades/robux">(environ)</a></p> </h3>
+      Penses à tous les brainrots que tu vas louper
+  </div>
 
+  <div class="result-panel result-pizza hidden" style="display: none;">
+    <img src="https://cdn-www.konbini.com/files/2023/12/te%CC%81le%CC%81chargement.webp" alt="pizza logo" class="logo rotating">
+      <h3> <p id="pizza"><b>0</b> pizzas delamama six fromaggio</p> </h3>
+      Totti il mondo a tablo !
+  </div>
 
-.crous-input span {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-}
+  <div class="result-panel result-gems hidden" style="display: none;">
+    <img src="https://static.wikia.nocookie.net/clashroyale/images/6/6f/Fistful_of_Gems.jpg/revision/latest?cb=20160110135616" alt="gems logo" class="logo rotating">
+    <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/59/Clash_Royale_Logo.PNG/500px-Clash_Royale_Logo.PNG" alt="gems logo" class="logo rotating">
+      <h3> <p id="gems"><b>0</b> Gemmes Clash Royale <a href="https://clashroyale.fandom.com/wiki/Gems">(environ)</a></p> </h3>
+      Meme si ça n'achète pas le skill
+  </div>
 
-.hidden {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-#results:not(.hidden) {
-  opacity: 1;
-}
-
-#results {
-  line-height: 0.5;
-}
-
-
-@media (max-width: 600px) {
-  h1 {
-  font-size: 2em;
-  }
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-
-  const input = document.getElementById("amount");
-  const results = document.getElementById("results");
-  const crousText = document.getElementById("crous").querySelector("b");
-  const crousBourse = document.getElementById("crous-bourse").querySelector("b");
-  const pizzaText = document.getElementById("pizza").querySelector("b");
-  const bolo = document.getElementById("bolo").querySelector("b");
-  const robux = document.getElementById("robux").querySelector("b");
-  const gems = document.getElementById("gems").querySelector("b");
-  const tastycrousty = document.getElementById("tastycrousty").querySelector("b");
-  const jnr28k = document.getElementById("jnr28k").querySelector("b");
-  const hexacon = document.getElementById("hexacon").querySelector("b");
-  const kebab = document.getElementById("kebab").querySelector("b");
-  const vbucks = document.getElementById("vbucks").querySelector("b");
-  const vody = document.getElementById("vody").querySelector("b");
-  const retraite = document.getElementById("retraite").querySelector("b");
-
-  const CROUS_PRICE = 3.3;
-  const PIZZA_PRICE = 4.79;
-  const CROUS_BOURSE_PRICE = 1;
-  const BOLO_PRICE = 3.50;
-  const ROBUX_PRICE = 0.01;
-  const CLASH_ROYALE_GEM = 0.0125;
-  const CROUSTY = 9;
-  const JNR_28_K = 14;
-  const HEXACON = 660;
-  const KEBAB_PRICE = 5;
-  const VBUCKS_PRICE = 8.99 / 1000; 
-  const RETRAITE_ANNUAL_COST_EUR = 407e9; 
-  const SECONDS_PER_YEAR = 365 * 24 * 60 * 60; 
-  const VODY_22_25CL = 4.25; 
-  const RETRAITE_EUR_PER_SECOND = RETRAITE_ANNUAL_COST_EUR / SECONDS_PER_YEAR;
+  <div class="result-panel result-hexacon hidden" style="display: none;">
+    <img src="https://2023.hexacon.fr/img/sponsors/synacktiv-mono.svg" alt="synacktiv logo" class="logo rotating">
+    <img src="https://pbs.twimg.com/profile_images/1859366734504894464/yBCCDPkl_400x400.jpg" alt="hexacon logo" class="logo rotating">
+      <h3> <p id="hexacon"><b>0</b>% d'un billet à prix réduit pour l'<a href="https://hexacon.fr/">Hexacon</a></p> </h3>
+  </div>
 
 
-  function formatDuration(seconds) {
-    if (!isFinite(seconds) || seconds <= 0) return "0 ms";
+  <div class="result-panel result-kebab hidden" style="display: none;">
+    <img src="https://risibank.fr/cache/medias/0/23/2343/234394/thumb.jpeg" alt="risitas kebab" class="logo rotating">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Kebab.JPG/330px-Kebab.JPG" alt="kebab" class="logo rotating">
+      <h3> <p id="kebab"><b>0</b> Kebabs à 5€</p> </h3>
+      tah l'époque de nos grands-frères
+  </div>
 
-    if (seconds < 0.001) return `${(seconds * 1e6).toFixed(2)} µs`;
-    if (seconds < 1) return `${(seconds * 1000).toFixed(2)} ms`;
 
-    let s = Math.floor(seconds);
+  <div class="result-panel result-vbucks hidden" style="display: none;">
+    <img src="https://static.wikia.nocookie.net/fortnite/images/e/eb/V-Bucks_-_Icon_-_Fortnite.png/revision/latest?cb=20170806013747" alt="vbucks" class="logo rotating">
+      <h3> <p id="vbucks"><b>0</b> Vbucks <a href="https://www.fortnite.com/vbuckscard"></a></p> </h3>
+      Tu pourrais les investir dans le skin Kim Kardashian
+  </div>
 
-    const yearSec = SECONDS_PER_YEAR;
-    const daySec = 24 * 60 * 60;
-    const hourSec = 60 * 60;
-    const minSec = 60;
 
-    const years = Math.floor(s / yearSec); s -= years * yearSec;
-    const days = Math.floor(s / daySec); s -= days * daySec;
-    const hours = Math.floor(s / hourSec); s -= hours * hourSec;
-    const mins = Math.floor(s / minSec); s -= mins * minSec;
-
-    const parts = [];
-    if (years) parts.push(`${years} an${years > 1 ? "s" : ""}`);
-    if (days || years) parts.push(`${days} j`);
-    if (hours || days || years) parts.push(`${hours} h`);
-    parts.push(`${mins} min`);
-    parts.push(`${s} s`);
-
-    return parts.join(" ");
-  }
-	
-
-  input.addEventListener("input", function() {
-    const value = parseFloat(this.value);
-
-	if (!value || value <= 0) {
-      crousText.textContent = "0";
-      crousBourse.textContent = "0";
-      pizzaText.textContent = "0";
-      bolo.textContent = "0";
-      robux.textContent = "0";
-      gems.textContent = "0";
-      tastycrousty.textContent = "0";
-      jnr28k.textContent = "0";
-      hexacon.textContent = "0";  
-      kebab.textContent = "0";
-      vbucks.textContent = "0";
-      vody.textContent = "0";
-      retraite.textContent = "0 ms";
-      results.classList.add("hidden");
-      return;
-    }
-
-    crousText.textContent = Math.round((value / CROUS_PRICE)* 100) /100;
-    crousBourse.textContent = Math.round((value / CROUS_BOURSE_PRICE)* 100) /100;
-    pizzaText.textContent = Math.round((value / PIZZA_PRICE)* 100) /100;
-    bolo.textContent = Math.round((value / BOLO_PRICE)* 100) /100;
-    robux.textContent = Math.round((value / ROBUX_PRICE)* 100) /100;
-    gems.textContent = Math.round((value / CLASH_ROYALE_GEM)* 100) /100;
-    tastycrousty.textContent = Math.round((value / CROUSTY)* 100) /100;
-    jnr28k.textContent = Math.round((value / JNR_28_K)* 100) /100;
-    hexacon.textContent = Math.round((value / HEXACON)* 100);
-    kebab.textContent = Math.round((value / KEBAB_PRICE)* 100) /100;
-    vbucks.textContent = Math.round((value / VBUCKS_PRICE)* 100) /100;
-  	vody.textContent = Math.round((value / VODY_22_25CL) * 100) / 100;
-	  const fundedSeconds = value / RETRAITE_EUR_PER_SECOND;
-	  retraite.textContent = formatDuration(fundedSeconds);
-
-    results.classList.remove("hidden");
-  });
-
+  <div class="result-panel result-retraite hidden" style="display: none;">
+    <img src="https://risibank.fr/cache/medias/0/22/2281/228135/full.jpeg" alt="retraite" class="logo rotating">
+    <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/50/Bloc_Marianne.svg/1280px-Bloc_Marianne.svg.png" alt="gouvernement marianne" class="logo rotating">
+    <img src="https://upload.wikimedia.org/wikipedia/fr/6/6d/Logo_DGFP-fr.svg" alt="logo finances publiques" class="logo rotating">
+    <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/2/22/Republique-francaise-logo.svg/1280px-Republique-francaise-logo.svg.png" alt="logo republiques francaise" class="logo rotating">
+    <h3> <p id="retraite"><b>0 ms</b> de financement des <a href="https://www.vie-publique.fr/lettre_essentiel/21">retraites</a> (France, 2024)</p> </a></p> </h3>
+    
+  </div>
   
+  <div class="share hidden" style="display: none;">
+    Partage à un pote fauché et gourmand qui aime trop manger dehors
 
-  const params = new URLSearchParams(window.location.search);
-  const price = params.get("prix");
+    
 
-  if (!isNaN(price) && price.trim() !== "") {
-    document.getElementById("amount").value = Number(price);
-    input.dispatchEvent(new Event("input"));
-  }
+  </div>
 
 
-});
-</script>
+
+</div>
 
 
 </article>
