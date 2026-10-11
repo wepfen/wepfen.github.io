@@ -195,3 +195,55 @@
     max-height: 200px;
   }
 }
+
+.gif-clip-name {
+  font: inherit;
+  font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gif-result {
+  text-align: center;
+}
+
+/* Progress / scrub bars: filled part = text color, remaining track = site bg */
+#gif-scrub {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border: thin solid var(--primary-text-color);
+  background: linear-gradient(to right, var(--primary-text-color) var(--fill, 0%), var(--bg-color) var(--fill, 0%));
+}
+
+#gif-scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--primary-text-color);
+  border: 2px solid #000;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+#gif-scrub::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--primary-text-color);
+  border: 2px solid #000;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+#gif-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  border: thin solid var(--primary-text-color);
+  background: var(--bg-color);
+  color: var(--primary-text-color);
+}
+
+#gif-progress::-webkit-progress-bar { background: var(--bg-color); }
+#gif-progress::-webkit-progress-value { background: var(--primary-text-color); }
+#gif-progress::-moz-progress-bar { background: var(--primary-text-color); }

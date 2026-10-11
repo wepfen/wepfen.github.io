@@ -221,6 +221,11 @@ function pickWidth(srcW) {
   return fit.length ? Math.max(...fit) : 0;
 }
 
+function paintScrub() {
+  const max = +ui.scrub.max || 1;
+  ui.scrub.style.setProperty('--fill', `${(ui.scrub.value / max) * 100}%`);
+}
+
 // ---------- Clip cards ----------
 
 const options = (map, sel) => Object.entries(map)
@@ -234,7 +239,7 @@ function buildCard(c) {
     <div class="gif-clip-head">
       <div class="gif-clip-media"></div>
       <div class="gif-clip-title">
-        <b>${esc(c.name)}</b>
+        <input class="gif-clip-name" data-k="name" type="text" value="${esc(c.name)}" title="Rename clip" aria-label="Clip name">
         <small>${c.kind === 'video' ? 'video' : animated ? 'GIF' : 'image'} ${c.width}×${c.height}${animated ? `, ${round2(c.srcDuration)} s` : ''}</small>
       </div>
       <div class="gif-clip-tools">
@@ -269,7 +274,7 @@ function buildCard(c) {
     const k = e.target.dataset.k;
     if (!k) return;
     const v = e.target.value;
-    c[k] = ['top', 'bottom', 'effect', 'filter', 'transition'].includes(k) ? v : +v || 0;
+    c[k] = ['name', 'top', 'bottom', 'effect', 'filter', 'transition'].includes(k) ? v : +v || 0;
     refresh();
   });
   card.addEventListener('click', (e) => {
@@ -355,7 +360,7 @@ function refresh() {
   const { total } = timeline();
   ui.scrub.max = total;
   previewT = Math.min(previewT, total);
-  ui.scrub.value = previewT;
+  ui.scrub.value = previewT; paintScrub();
   schedulePreview();
 }
 
@@ -586,7 +591,7 @@ async function playLoop() {
     previewT += (now - last) / 1000;
     last = now;
     if (previewT >= timeline().total) previewT = 0;
-    ui.scrub.value = previewT;
+    ui.scrub.value = previewT; paintScrub();
     await drawPreview();
     await new Promise(requestAnimationFrame);
   }
@@ -604,6 +609,7 @@ function setPlaying(on) {
 ui.play.onclick = () => setPlaying(!playing);
 ui.scrub.addEventListener('input', () => {
   previewT = +ui.scrub.value;
+  paintScrub();
   schedulePreview();
 });
 
