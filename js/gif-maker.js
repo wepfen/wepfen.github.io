@@ -353,7 +353,7 @@ function refresh() {
   ui.workspace.hidden = clips.length === 0;
   ui.result.hidden = true;
   clips.forEach((c, i) => {
-    ui.clips.appendChild(c.card);
+    if (ui.clips.children[i] !== c.card) ui.clips.insertBefore(c.card, ui.clips.children[i] || null);
     c.card.querySelector('.gif-transition').hidden = i === clips.length - 1;
   });
   if (!clips.length) return;
