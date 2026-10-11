@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+  
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Paste a tweet, a video or a GIF and get a clean GIF for Discord. Montage, transitions and meme text included.">  
+
+
+  
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Paste a tweet, a video or a GIF and get a clean GIF for Discord. Montage, transitions and meme text included." />
+  <meta property="og:image" content="https://wepfen.github.io/images/oia-uia.gif" />
+  <meta property="og:url" content="https://wepfen.github.io/off-topic/gif-maker/">
+  <meta property="og:title" content="Discord GIF Maker">
+  <meta property="og:site_name" content="wepfen.crampté">
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="wepfen.github.io">
+  <meta property="twitter:url" content="https://wepfen.github.io/off-topic/gif-maker/">
+  <meta name="twitter:title" content="Discord GIF Maker">
+  <meta name="twitter:description" content="Paste a tweet, a video or a GIF and get a clean GIF for Discord. Montage, transitions and meme text included.">
+  <meta name="twitter:image" content="https://wepfen.github.io/images/oia-uia.gif">
+  
+  <title>
+    
+      Discord GIF Maker
+    
+  </title>
+
+
+  <link rel="icon" type="image/gif" href="/images/oia-uia.gif" />
+   
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.172337ef84f99f2bca4381d38e762eff1bce578a5b64f9dd982c8483c010d8edeb36c0c6b44bfed8d571d5d853ae6af0350a0b927be06e4e6676bf8cb17bae57.css" integrity="sha512-FyM374T5nyvKQ4HTjnYu/xvOV4pbZPndmCyEg8AQ2O3rNsDGtEv&#43;2NVx1dhTrmrwNQoLknvgbk5mdr&#43;MsXuuVw==" />
+
+  
+
+
+</head>
+
+    <body a="dark">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">/home</a>
+
+
+
+
+<script src="/js/theme-toggle.f10bb0c6283b259e63664053a20ccc48c8b0980e44bceece1c10401c529c2040.js" integrity="sha256-8Quwxig7JZ5jZkBTogzMSMiwmA5EvO7OHBBAHFKcIEA="></script>
+
+<button style="float: right; background: none; outline: none;" onclick="toggleTheme()">
+
+<svg class="w-6 h-6 text-gray-800 dark:text-white theme" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M7.05 4.05A7 7 0 0 1 19 9c0 2.407-1.197 3.874-2.186 5.084l-.04.048C15.77 15.362 15 16.34 15 18a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1c0-1.612-.77-2.613-1.78-3.875l-.045-.056C6.193 12.842 5 11.352 5 9a7 7 0 0 1 2.05-4.95ZM9 21a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Zm1.586-13.414A2 2 0 0 1 12 7a1 1 0 1 0 0-2 4 4 0 0 0-4 4 1 1 0 0 0 2 0 2 2 0 0 1 .586-1.414Z" clip-rule="evenodd"/>
+</svg>
+
+</button>
+
+
+
+
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2026-10-11 12:00:00 &#43;0200 CEST">
+            2026-10-11
+        </time>
+    </p>
+
+    <h1>Discord GIF Maker</h1>
+
+<link rel="stylesheet" href="/css/gif-maker.css">
+<script type="module" src="/js/gif-maker.js"></script>
+
+<p>
+  Paste a tweet link (GIF or video), a Giphy / Imgur link, a direct link to a .mp4, .webm or .gif,
+  or drop files (videos, GIFs that are too heavy, pictures). You get a <code>.gif</code> that fits under
+  Discord's upload limit and that you can star ⭐. Add several clips to stitch them together with transitions,
+  zooms, filters and meme text. Everything happens in your browser, nothing gets uploaded.
+</p>
+
+<div class="gifeur">
+  <div class="gif-row">
+    <input id="gif-url" type="url" placeholder="https://x.com/someone/status/123..." autocomplete="off">
+    <button id="gif-go" type="button">Add</button>
+  </div>
+
+  <label class="gif-drop" id="gif-drop">
+    <input id="gif-file" type="file" accept="video/*,image/*" multiple>
+    Drop files here, click to pick some, or Ctrl+V anywhere
+  </label>
+
+  <div id="gif-status" class="gif-status" role="status"></div>
+  <div id="gif-picker" class="gif-picker"></div>
+
+  <div id="gif-workspace" class="gifeur" hidden>
+    <div class="gif-preview-box">
+      <canvas id="gif-canvas" width="320" height="180"></canvas>
+      <div class="gif-row">
+        <button id="gif-play" type="button">▶ Play</button>
+        <input id="gif-scrub" type="range" min="0" max="1" step="0.01" value="0" aria-label="Preview position">
+        <span id="gif-time"></span>
+      </div>
+    </div>
+
+    <h3>Clips</h3>
+    <div id="gif-clips" class="gif-clips"></div>
+    <p><button id="gif-clear" type="button">Remove all clips</button></p>
+
+    <h3>Output</h3>
+    <div class="gif-settings">
+      <label>Width
+        <select id="gif-width">
+          <option value="160">160 px</option>
+          <option value="240">240 px</option>
+          <option value="320" selected>320 px</option>
+          <option value="400">400 px</option>
+          <option value="480">480 px</option>
+          <option value="640">640 px</option>
+          <option value="0">original</option>
+        </select>
+      </label>
+      <label>Aspect ratio
+        <select id="gif-aspect">
+          <option value="auto">same as first clip</option>
+          <option value="1:1">1:1 square</option>
+          <option value="16:9">16:9</option>
+          <option value="4:3">4:3</option>
+          <option value="9:16">9:16 vertical</option>
+        </select>
+      </label>
+      <label>Fit
+        <select id="gif-fit">
+          <option value="contain">contain (bars)</option>
+          <option value="cover">cover (crop)</option>
+        </select>
+      </label>
+      <label>Background
+        <select id="gif-bg">
+          <option value="black">black</option>
+          <option value="white">white</option>
+          <option value="transparent">transparent</option>
+        </select>
+      </label>
+      <label>Frames per second
+        <select id="gif-fps">
+          <option>8</option>
+          <option>10</option>
+          <option>12</option>
+          <option selected>15</option>
+          <option>20</option>
+          <option>25</option>
+          <option>30</option>
+        </select>
+      </label>
+      <label>Colors
+        <select id="gif-colors">
+          <option>256</option>
+          <option>128</option>
+          <option>64</option>
+          <option>32</option>
+        </select>
+      </label>
+      <label>Size limit
+        <select id="gif-limit">
+          <option value="10" selected>10 MB (Discord free)</option>
+          <option value="50">50 MB (Nitro Basic)</option>
+          <option value="500">500 MB (Nitro)</option>
+          <option value="0">none</option>
+        </select>
+      </label>
+      <label class="gif-check"><input id="gif-auto" type="checkbox" checked> auto-shrink if too heavy</label>
+      <label class="gif-check"><input id="gif-fade-in" type="checkbox"> fade in</label>
+      <label class="gif-check"><input id="gif-fade-out" type="checkbox"> fade out</label>
+      <label class="gif-check"><input id="gif-boomerang" type="checkbox"> boomerang (back and forth)</label>
+    </div>
+
+    <p class="gif-row">
+      <button id="gif-make" class="gif-big" type="button">Make GIF</button>
+      <button id="gif-cancel" type="button" hidden>Cancel</button>
+    </p>
+    <progress id="gif-progress" hidden value="0"></progress>
+  </div>
+
+  <div id="gif-result" class="gif-result" hidden>
+    <img id="gif-out" alt="Generated GIF">
+    <p id="gif-out-info"></p>
+    <p><a id="gif-download" href="#" class="gif-big">⬇ Download the .gif</a></p>
+  </div>
+</div>
+
+</article>
+<br>
+<hr>
+
+<ul style="display: flex; list-style-type:none; justify-content: center; gap: 10px; ">
+
+    <li><a href="https://512kb.club" target=_blank><img src="../../../images/512kb.gif" width="88" height="31" alt="a proud member of the green team of 512KB club" /> </a>
+
+    <li><a href="https://stackoverflow.com/questions/11828270/how-do-i-exit-vim" target=_blank><img src="../../../images/vim_love.gif" width="88" height="31" alt="edited with VIM !" /></a>
+
+    <li><a href="https://endeavouros.com/" target=_blank><img src="../../../images/endeavouros.png" width="88" height="31" alt="powered by endeavourOS !" /></a>
+
+    <li><a href="https://themes.gohugo.io/themes/hugo-theme-nostyleplease/" target=_blank><img src="../../../images/hugo.png" width="88" height="31" alt="powered by hugo !" /></a>
+
+</ul>
+</div>
+        </main>
+
+  
+    </body>
+</html>
