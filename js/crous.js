@@ -15,9 +15,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const vody = document.getElementById("vody").querySelector("b");
   const retraite = document.getElementById("retraite").querySelector("b");
 
-  const CROUS_PRICE = 3.3;
+  const CROUS_PRICE = 1;
   const PIZZA_PRICE = 4.79;
-  const CROUS_BOURSE_PRICE = 1;
   const ROBUX_PRICE = 0.01;
   const CLASH_ROYALE_GEM = 0.0125;
   const CROUSTY = 9;
@@ -112,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     crousText.textContent = Math.round((value / CROUS_PRICE)* 100) /100;
-    crousBourse.textContent = Math.round((value / CROUS_BOURSE_PRICE)* 100) /100;
     pizzaText.textContent = Math.round((value / PIZZA_PRICE)* 100) /100;
     robux.textContent = Math.round((value / ROBUX_PRICE)* 100) /100;
     gems.textContent = Math.round((value / CLASH_ROYALE_GEM)* 100) /100;
